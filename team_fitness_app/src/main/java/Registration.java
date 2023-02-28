@@ -18,11 +18,15 @@ public class Registration {
         }
     }
 
-    private boolean isUsernameAvailable(String username) {
+    public boolean isUsernameAvailable(String username) {
         for (User user : userList)
             if (user.getUsername().equals(username))
                 return false;  // username is already taken
 
         return true;  // username is available
+    }
+
+    public List<User> getUserList() {
+        return userList;
     }
 }
