@@ -23,7 +23,7 @@ class UserListApplication {
             switch (userChoice) {
                 case 1 -> userListApplication.registerUser();
                 case 2 -> userListApplication.login();
-                case 3 -> userListApplication.deleteUser();
+                case 3 -> userListApplication.deleteUser(userList);
                 case 4 -> {
                     System.out.println("Good by!");
                     System.exit(0);
@@ -42,7 +42,8 @@ class UserListApplication {
         return false;
     }
 
-    void deleteUser() {
+    void deleteUser(List userList) {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter username: ");
         String username = scanner.nextLine();
         System.out.println("Enter password: ");

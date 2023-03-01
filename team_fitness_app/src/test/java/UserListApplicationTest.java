@@ -1,16 +1,7 @@
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class UserListApplicationTest extends TestCase {
+class UserListApplicationTest {
 
-    public static void main(String[] args) {
-        var test = new UserListApplicationTest();
-        test.deleteTest1();
-    }
-    private void deleteTest1(){
-        var testProgramme = new UserListApplication();
-        testProgramme.login();
-        testProgramme.deleteUser();
-        assertEquals(testProgramme.getUserList().size());
-    }
+    private UserListApplication userListApplication;
 
 }
