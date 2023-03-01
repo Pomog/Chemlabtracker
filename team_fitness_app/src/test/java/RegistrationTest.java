@@ -1,5 +1,9 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RegistrationTest {
@@ -7,7 +11,8 @@ class RegistrationTest {
 
     @BeforeEach
     void setUp() {
-        registration = new Registration();
+        List userList = new ArrayList<>();
+        registration = new Registration(userList);
     }
 
     @Test
