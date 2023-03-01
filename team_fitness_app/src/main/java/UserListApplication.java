@@ -36,24 +36,18 @@ class UserListApplication {
 
     }
 
-    private void login(List<User> userList) {
-
-    }
-
     private void registerUser() {
     }
 
-
-    boolean login(String userName, String password) {
+    private void login(List<User> userList) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter username: ");
         String username = scanner.nextLine();
         System.out.println("Enter password: ");
-        password = scanner.nextLine();
+        String password = scanner.nextLine();
         System.out.println("You are connected successfully!");
-        return false;
-    }
 
+    }
 
     void deleteUser(List userList) {
         Scanner scanner = new Scanner(System.in);
