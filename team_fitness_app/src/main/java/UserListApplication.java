@@ -47,7 +47,6 @@ class UserListApplication {
         UserInput userInput = scanUserInput();
         userList.remove(new User(userInput.username, userInput.password));
         System.out.println("Your username was removed from list.");
-        System.out.println(userList);
     }
 
      public UserInput scanUserInput() {
