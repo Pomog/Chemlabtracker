@@ -44,17 +44,6 @@ class UserListApplication {
     }
 
 
-    void registerUser(List userList) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.println("Enter password: ");
-        String password = scanner.nextLine();
-        userList.add(new User(username, password));
-        System.out.println("You are registered successfully!");
-
-    }
-
     boolean login(String userName, String password) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter username: ");
@@ -76,4 +65,5 @@ class UserListApplication {
         System.out.println("Your username was removed from list.");
 
     }
+
 }
