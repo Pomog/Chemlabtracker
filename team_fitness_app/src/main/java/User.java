@@ -7,18 +7,25 @@ public class User {
     private static int lastId = 0;
     private int id;
 
-    public User(String username, String password, int lastId, int id) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.id = ++lastId;
     }
 
-    public String getUsername() {
+    String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    void setUsername(String username) {
         this.username = username;
+    }
+
+    String getPassword(String password) {
+        return password;
+    }
+
+    int getId(int id) {
+        return id;
     }
 
     @Override
