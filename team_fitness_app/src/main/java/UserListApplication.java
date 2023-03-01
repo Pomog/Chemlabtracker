@@ -43,6 +43,12 @@ class UserListApplication {
     }
 
     void deleteUser() {
+        System.out.println("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.println("Enter password: ");
+        String password = scanner.nextLine();
+        userList.remove(new User(username, password));
+        System.out.println("Your username was removed from list.");
 
     }
 }
