@@ -1,3 +1,5 @@
+import jdk.internal.icu.text.UnicodeSet;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,7 +24,7 @@ class UserListApplication {
             int userChoice = Integer.parseInt(scanner.nextLine());
             switch (userChoice) {
                 case 1 -> userListApplication.registerUser();
-                case 2 -> userListApplication.login();
+                case 2 -> userListApplication.login(userList);
                 case 3 -> userListApplication.deleteUser(userList);
                 case 4 -> {
                     System.out.println("Good by!");
@@ -34,13 +36,35 @@ class UserListApplication {
 
     }
 
-    void registerUser() {
+    private void login(List<User> userList) {
 
     }
 
-    boolean login() {
+    private void registerUser() {
+    }
+
+
+    void registerUser(List userList) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.println("Enter password: ");
+        String password = scanner.nextLine();
+        userList.add(new User(username, password));
+        System.out.println("You are registered successfully!");
+
+    }
+
+    boolean login(String userName, String password) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.println("Enter password: ");
+        password = scanner.nextLine();
+        System.out.println("You are connected successfully!");
         return false;
     }
+
 
     void deleteUser(List userList) {
         Scanner scanner = new Scanner(System.in);
