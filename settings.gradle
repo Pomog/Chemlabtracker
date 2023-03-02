@@ -16,4 +16,5 @@ include 'teacher:lesson_4_git_brancing_pull_request_code_review:step_3_paging'
 include 'team_team_name'
 include 'team_fitness_app'
 include 'team_servify'
+include 'team_eln'
 
