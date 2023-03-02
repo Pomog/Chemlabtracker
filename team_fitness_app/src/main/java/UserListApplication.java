@@ -22,7 +22,7 @@ class UserListApplication {
             int userChoice = Integer.parseInt(scanner.nextLine());
             switch (userChoice) {
                 case 1 -> userListApplication.registerUser(userList);
-                case 2 -> userListApplication.login();
+                case 2 -> userListApplication.login(userList);
                 case 3 -> userListApplication.deleteUser(userList);
                 case 4 -> {
                     System.out.println("Good bye!");
@@ -38,15 +38,33 @@ class UserListApplication {
         registration.registerUser(userInput.username, userInput.password);
     }
 
-    boolean login() {
+    void login(List<User> userList) {
         UserInput userInput = scanUserInput();
-        return false;
+        for (User user: userList) {
+           boolean userHasRecord = user.getUsername().equals(userInput.username)
+                   && user.getPassword().equals(userInput.password);
+           if(userHasRecord) {
+               System.out.println("Login successful!\n");
+               return;
+           }
+        }
+        System.out.println("Login / password is incorrect, try again!\n");
     }
 
-    void deleteUser(List userList) {
+    void deleteUser(List<User> userList) {
         UserInput userInput = scanUserInput();
-        userList.remove(new User(userInput.username, userInput.password));
-        System.out.println("Your username was removed from list.");
+        boolean userHasRecord = false;
+        for (User user: userList) {
+             userHasRecord = user.getUsername().equals(userInput.username)
+                    && user.getPassword().equals(userInput.password);
+
+            if(userHasRecord){
+                userList.remove(user);
+                System.out.println("Your record was removed from list.\n");
+                return;
+            }
+        }
+        System.out.println("Login / password is incorrect, try again!\n");
     }
 
      public UserInput scanUserInput() {
