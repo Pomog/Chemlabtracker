@@ -21,7 +21,7 @@ public class User {
         this.username = username;
     }
 
-    String getPassword(String password) {
+    String getPassword() {
         return password;
     }
 
