@@ -1,5 +1,3 @@
-import jdk.internal.icu.text.UnicodeSet;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,41 +21,46 @@ class UserListApplication {
             Scanner scanner = new Scanner(System.in);
             int userChoice = Integer.parseInt(scanner.nextLine());
             switch (userChoice) {
-                case 1 -> userListApplication.registerUser();
-                case 2 -> userListApplication.login(userList);
+                case 1 -> userListApplication.registerUser(userList);
+                case 2 -> userListApplication.login();
                 case 3 -> userListApplication.deleteUser(userList);
                 case 4 -> {
-                    System.out.println("Good by!");
+                    System.out.println("Good bye!");
                     System.exit(0);
                 }
             }
-
         }
-
     }
 
-    private void registerUser() {
+    void registerUser(List userList) {
+        UserInput userInput = scanUserInput();
+        Registration registration = new Registration(userList);
+        registration.registerUser(userInput.username, userInput.password);
     }
 
-    private void login(List<User> userList) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.println("Enter password: ");
-        String password = scanner.nextLine();
-        System.out.println("You are connected successfully!");
-
+    boolean login() {
+        UserInput userInput = scanUserInput();
+        return false;
     }
 
     void deleteUser(List userList) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.println("Enter password: ");
-        String password = scanner.nextLine();
-        userList.remove(new User(username, password));
+        UserInput userInput = scanUserInput();
+        userList.remove(new User(userInput.username, userInput.password));
         System.out.println("Your username was removed from list.");
-
     }
 
+     public UserInput scanUserInput() {
+         UserInput userInput = new UserInput();
+         Scanner scanner = new Scanner(System.in);
+         System.out.println("Enter username: ");
+         userInput.username = scanner.nextLine();
+         System.out.println("Enter password: ");
+         userInput.password = scanner.nextLine();
+         return userInput;
+    }
+
+     class UserInput {
+        private String username;
+        private String password;
+    }
 }
