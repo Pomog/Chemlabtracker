@@ -48,22 +48,6 @@ class UserListApplication {
         */
     }
 
-    void deleteUser(List<User> userList) {
-        UserInput userInput = scanUserInput();
-        boolean userHasRecord = false;
-        for (User user: userList) {
-             userHasRecord = user.getUsername().equals(userInput.username)
-                    && user.getPassword().equals(userInput.password);
-
-            if(userHasRecord){
-                userList.remove(user);
-                System.out.println("Your record was removed from list.\n");
-                return;
-            }
-        }
-        System.out.println("Login / password is incorrect, try again!\n");
-    }
-
      public UserInput scanUserInput() {
          UserInput userInput = new UserInput();
          Scanner scanner = new Scanner(System.in);
