@@ -38,7 +38,7 @@ class UserListApplication {
         registration.registerUser(userInput.username, userInput.password);
     }
 
-    void login(List userList) {
+    void login(List<User> userList) {
         UserInput userInput = scanUserInput();
         /*
             access to username: userInput.username
