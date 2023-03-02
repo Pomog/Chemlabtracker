@@ -32,23 +32,20 @@ class UserListApplication {
         }
     }
 
-    void registerUser(List userList) {
-        UserInput userInput = scanUserInput();
-        Registration registration = new Registration(userList);
-        registration.registerUser(userInput.username, userInput.password);
-    }
-
     void login(List<User> userList) {
         UserInput userInput = scanUserInput();
-        for (User user: userList) {
-           boolean userHasRecord = user.getUsername().equals(userInput.username)
-                   && user.getPassword().equals(userInput.password);
-           if(userHasRecord) {
-               System.out.println("Login successful!\n");
-               return;
-           }
-        }
-        System.out.println("Login / password is incorrect, try again!\n");
+        /*
+            access to username: userInput.username
+            access to password: userInput.password
+        */        
+    }
+
+    void deleteUser(List<User> userList) {
+        UserInput userInput = scanUserInput();
+        /*
+            access to username: userInput.username
+            access to password: userInput.password
+        */
     }
 
     void deleteUser(List<User> userList) {
