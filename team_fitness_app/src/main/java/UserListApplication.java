@@ -31,19 +31,19 @@ class UserListApplication {
             }
         }
     }
-    
+
     void registerUser(List userList) {
         UserInput userInput = scanUserInput();
         Registration registration = new Registration(userList);
         registration.registerUser(userInput.username, userInput.password);
     }
-    
+
     void login(List<User> userList) {
         UserInput userInput = scanUserInput();
         /*
             access to username: userInput.username
             access to password: userInput.password
-        */        
+        */
     }
 
     void deleteUser(List<User> userList) {
@@ -52,19 +52,30 @@ class UserListApplication {
             access to username: userInput.username
             access to password: userInput.password
         */
+        for (User user : userList) {
+            boolean hasRecord = user.getUsername().equals(userInput.username) && user.getPassword().equals(userInput.password);
+
+            if (hasRecord) {
+                userList.remove(user);
+                System.out.println(" User deleted successfully");
+                return;
+            } else {
+                System.out.println(" No such user ");
+            }
+        }
     }
 
-     public UserInput scanUserInput() {
-         UserInput userInput = new UserInput();
-         Scanner scanner = new Scanner(System.in);
-         System.out.println("Enter username: ");
-         userInput.username = scanner.nextLine();
-         System.out.println("Enter password: ");
-         userInput.password = scanner.nextLine();
-         return userInput;
+    public UserInput scanUserInput() {
+        UserInput userInput = new UserInput();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter username: ");
+        userInput.username = scanner.nextLine();
+        System.out.println("Enter password: ");
+        userInput.password = scanner.nextLine();
+        return userInput;
     }
 
-     class UserInput {
+    class UserInput {
         private String username;
         private String password;
     }
