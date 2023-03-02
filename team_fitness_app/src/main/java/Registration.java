@@ -2,10 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Registration {
+    
     private List<User> userList;
 
-    public Registration() {
-        userList = new ArrayList<User>();
+    public Registration(List userList) {
+        this.userList = userList;
     }
 
     public void registerUser(String username, String password) {
