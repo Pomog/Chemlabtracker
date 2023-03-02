@@ -48,10 +48,10 @@ class UserListApplication {
             boolean hasRecord = user.getUsername().equals(userInput.username) && user.getPassword().equals(userInput.password);
 
             if (hasRecord) {
-                System.out.println(" You are successfully logged-in!");
+                System.out.println("You are successfully logged-in!");
                 return;
             } else {
-                System.out.println(" No such user ");
+                System.out.println("No such user!");
             }
         }
     }
