@@ -7,7 +7,8 @@ class RegistrationTest {
 
     @BeforeEach
     void setUp() {
-        registration = new Registration();
+        List userList = new ArrayList<>();
+        registration = new Registration(userList);
     }
 
     @Test
