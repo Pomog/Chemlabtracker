@@ -44,6 +44,16 @@ class UserListApplication {
             access to username: userInput.username
             access to password: userInput.password
         */
+        for (User user : userList) {
+            boolean hasRecord = user.getUsername().equals(userInput.username) && user.getPassword().equals(userInput.password);
+
+            if (hasRecord) {
+                System.out.println(" You are successfully logged-in!");
+                return;
+            } else {
+                System.out.println(" No such user ");
+            }
+        }
     }
 
     void deleteUser(List<User> userList) {
@@ -79,4 +89,5 @@ class UserListApplication {
         private String username;
         private String password;
     }
+
 }
