@@ -31,7 +31,13 @@ class UserListApplication {
             }
         }
     }
-
+    
+    void registerUser(List userList) {
+        UserInput userInput = scanUserInput();
+        Registration registration = new Registration(userList);
+        registration.registerUser(userInput.username, userInput.password);
+    }
+    
     void login(List<User> userList) {
         UserInput userInput = scanUserInput();
         /*
