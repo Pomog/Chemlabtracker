@@ -50,9 +50,8 @@ class UserListApplication {
             if (hasRecord) {
                 System.out.println("You are successfully logged-in!");
                 return;
-            } else {
-                System.out.println("No such user!");
             }
+            System.out.println("No such user!");
         }
     }
 
