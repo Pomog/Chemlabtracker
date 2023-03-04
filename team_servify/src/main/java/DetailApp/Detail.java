@@ -3,7 +3,7 @@ package DetailApp;
 import java.util.Objects;
 
 public class Detail {
-    public String type;
+    private String type;
     // Bonnet – капот.
     // Door – дверь.
     // Boot  – багажник.
