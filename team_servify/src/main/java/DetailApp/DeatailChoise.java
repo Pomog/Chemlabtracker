@@ -6,11 +6,10 @@ import java.util.Scanner;
 
 public class DeatailChoise {
     Scanner scanner = new Scanner(System.in);
-    List<Detail> details = new ArrayList<>();
     String detailType = null;
     String detailLocation = null;
     String detailSide = null;
-    Detail detail = new Detail(detailType,detailLocation,detailSide);
+
 
     Detail detailChose() {
         System.out.println("Enter detail type:");
@@ -31,7 +30,7 @@ public class DeatailChoise {
             }
             break;
             case 2: {
-                System.out.println("You choosed is boot");
+                System.out.println("You choosed boot");
                 detailType = "Boot";
                 detailLocation = "";
                 detailSide = "";
