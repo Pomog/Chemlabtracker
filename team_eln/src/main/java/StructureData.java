@@ -13,6 +13,8 @@ public class StructureData {
     private double mw;
     private String casNumber;
     private String name;
+    private String internalCode;
+    private double mass;
 
     public String getName() {
         return name;
@@ -59,5 +61,21 @@ public class StructureData {
     public void getMW(){
         String message = String.format("MW = [%.2f]", mw);
         System.out.println(message);
+    }
+
+    public String getInternalCode() {
+        return internalCode;
+    }
+
+    public void setInternalCode(String internalCode) {
+        this.internalCode = internalCode;
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
+    public void setMass(double mass) {
+        this.mass = mass;
     }
 }

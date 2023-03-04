@@ -5,6 +5,8 @@ public class ReactionData {
     private final String code;
     private final String name;
     private List<StructureData> startingMaterials;
+
+    private conditionData conditions;
     private List<StructureData> products;
     private StructureData mainProduct;
     private List<File> analyticalResults;
@@ -35,6 +37,13 @@ public class ReactionData {
 
     public List<StructureData> getStartingMaterials() {
         return startingMaterials;
+    }
+
+    public void setConditions(conditionData conditions) {
+        this.conditions = conditions;
+    }
+    public conditionData getConditions() {
+        return conditions;
     }
 
     public List<StructureData> getProducts() {
