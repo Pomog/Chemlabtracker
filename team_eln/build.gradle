@@ -1,3 +1,10 @@
 dependencies {
 	testImplementation('junit:junit:4.13.1')
 }
+
+repositories {
+	mavenCentral()
+}
+dependencies {
+	implementation 'org.openscience.cdk:cdk:2.8'
+}
