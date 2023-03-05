@@ -12,7 +12,7 @@ public class DeatailChoise {
 
 
 
-    Detail detailChose() {
+    Detail detailChoise() {
         System.out.println("Enter detail type:");
         System.out.println("1. Bonnet\n" +
                 "2. Boot\n" +

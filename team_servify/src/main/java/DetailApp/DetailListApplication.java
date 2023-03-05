@@ -29,13 +29,13 @@ public class DetailListApplication {
 
                 case 1: {
 
-                        details.add(deatailChoise.detailChose());
+                        details.add(deatailChoise.detailChoise());
                         System.out.println("Your detail was added to list.");
                         break;
                 }
                 case 2: {
 
-                    details.remove(deatailChoise.detailChose());
+                    details.remove(deatailChoise.detailChoise());
                     System.out.println("Your detail was removed from list.");
                     break;
                 }
