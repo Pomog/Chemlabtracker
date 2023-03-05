@@ -3,7 +3,7 @@ package DetailApp;
 import java.util.Objects;
 
 public class Detail {
-    public String type;
+    private String type;
     // Bonnet – капот.
     // Door – дверь.
     // Boot  – багажник.
@@ -13,9 +13,35 @@ public class Detail {
     // Wing mirror  – боковое зеркало.
     // Windscreen  – лобовое стекло.
     // Headlight  – фара.
-    public String location;
+    private String location;
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setSide(String side) {
+        this.side = side;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     // front , rear
-    public String side;
+    private String side;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getSide() {
+        return side;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
     // left , right
     private double price;
 

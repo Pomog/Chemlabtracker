@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class DetailListApplication {
     public static void main(String[] args) {
         List<Detail> details = new ArrayList<>();
+        DeatailChoise deatailChoise = new DeatailChoise();
+
 
         while (true) {
             System.out.println("Program menu:");
@@ -21,45 +23,36 @@ public class DetailListApplication {
             Scanner scanner = new Scanner(System.in);
             int userChoice = Integer.parseInt(scanner.nextLine());
 
+
             switch (userChoice) {
-                case 1: {
-                    System.out.println("Enter detail type: ");
-                    String detailType = scanner.nextLine();
-                    System.out.println("Enter detail location: ");
-                    String detailLocation = scanner.nextLine();
-                    System.out.println("Enter detail side: ");
-                    String detailSide = scanner.nextLine();
-                    Detail detail = new Detail(detailType,detailLocation,detailSide);
-                    details.add(detail);
+                case 1 -> {
+
+                    details.add(deatailChoise.detailChoise());
                     System.out.println("Your detail was added to list.");
-                    break;
                 }
-                case 2: {
-                    System.out.println("Enter detail type: ");
-                    String detailType = scanner.nextLine();
-                    System.out.println("Enter detail location: ");
-                    String detailLocation = scanner.nextLine();
-                    System.out.println("Enter detail side: ");
-                    String detailSide = scanner.nextLine();
-                    details.remove(new Detail(detailType, detailLocation, detailSide));
+                case 2 -> {
+
+                    details.remove(deatailChoise.detailChoise());
                     System.out.println("Your detail was removed from list.");
-                    break;
                 }
-                case 3: {
+                case 3 -> {
+
                     System.out.println("Detail list: ");
                     for (Detail detail : details) {
                         System.out.println(detail);
                     }
                     System.out.println("Detail list end.");
-                    break;
                 }
-                case 4: {
+                case 4 -> {
+
                     System.out.println("Good by!");
                     System.exit(0);
                 }
             }
-            System.out.println("");
+                System.out.println("");
+            }
+
         }
 
     }
-}
+
