@@ -6,9 +6,12 @@ import java.util.Scanner;
 
 public class DeatailChoise {
     Scanner scanner = new Scanner(System.in);
+    DetailLocationChoise detailLocationChoise = new DetailLocationChoise();
+    DetailSideChose detailSideChose = new DetailSideChose();
     String detailType = null;
     String detailLocation = null;
     String detailSide = null;
+
 
 
     Detail detailChose() {
@@ -40,15 +43,7 @@ public class DeatailChoise {
                 System.out.println("You choosed bumper");
                 detailType = "Bumper";
                 detailSide = "";
-                System.out.println("Enter detail location: ");
-                System.out.println("1.Front\n" +
-                        "2.Rear");
-                int locationChoise = Integer.parseInt(scanner.nextLine());
-                if (locationChoise == 1) {
-                    detailLocation = "Front";
-                } else if (locationChoise == 2) {
-                    detailLocation = "Rear";
-                }
+                detailLocation = detailLocationChoise.detailLocationChoise();
             }
             break;
             case 4: {
@@ -57,50 +52,19 @@ public class DeatailChoise {
                 detailLocation = "";
                 detailSide = "";
             }
+            break;
             case 5: {
                 System.out.println("You choosed door");
                 detailType = "Door";
-                System.out.println("Enter detail location: ");
-                System.out.println("1.Front\n" +
-                        "2.Rear");
-                int locationChoise = Integer.parseInt(scanner.nextLine());
-                if (locationChoise == 1) {
-                    detailLocation = "Front";
-                } else if (locationChoise == 2) {
-                    detailLocation = "Rear";
-                }
-                System.out.println("Enter detail side: ");
-                System.out.println("1.Left\n" +
-                        "2.Right");
-                int sideChose = Integer.parseInt(scanner.nextLine());
-                if (sideChose == 1) {
-                    detailSide = "Left";
-                } else if (sideChose == 2) {
-                    detailSide = "Right";
-                }
+                detailLocation = detailLocationChoise.detailLocationChoise();
+                detailSide = detailSideChose.NewDetailSide();
             }
             break;
             case 6: {
                 System.out.println("You choosed wing");
                 detailType = "Wing";
-                System.out.println("Enter detail location: ");
-                System.out.println("1.Front\n" +
-                        "2.Rear");
-                int locationChoise = Integer.parseInt(scanner.nextLine());
-                if (locationChoise == 1) {
-                    detailLocation = "Front";
-                } else if (locationChoise == 2) {
-                    detailLocation = "Rear";
-                }
-                System.out.println("Enter detail side: ");
-                System.out.println("1.Left\n" +
-                        "2.Right");
-                int sideChose = Integer.parseInt(scanner.nextLine());
-                if (sideChose == 1) {
-                    detailSide = "Left";
-                } else if (sideChose == 2) {
-                    detailSide = "Right";
-                }
+                detailLocation = detailLocationChoise.detailLocationChoise();
+                detailSide = detailSideChose.NewDetailSide();
 
             }
             break;
@@ -108,15 +72,7 @@ public class DeatailChoise {
                 System.out.println("You choosed wing miror");
                 detailType = "Wing mirror";
                 detailLocation = "";
-                System.out.println("Enter detail side: ");
-                System.out.println("1.Left\n" +
-                        "2.Right");
-                int sideChose = Integer.parseInt(scanner.nextLine());
-                if (sideChose == 1) {
-                    detailSide = "Left";
-                } else if (sideChose == 2) {
-                    detailSide = "Right";
-                }
+                detailSide = detailSideChose.NewDetailSide();
             }
             break;
         }
