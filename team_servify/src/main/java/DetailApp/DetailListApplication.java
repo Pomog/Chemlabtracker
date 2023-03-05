@@ -24,36 +24,31 @@ public class DetailListApplication {
             int userChoice = Integer.parseInt(scanner.nextLine());
 
 
-
             switch (userChoice) {
+                case 1 -> {
 
-                case 1: {
-
-                        details.add(deatailChoise.detailChoise());
-                        System.out.println("Your detail was added to list.");
-                        break;
+                    details.add(deatailChoise.detailChoise());
+                    System.out.println("Your detail was added to list.");
                 }
-                case 2: {
+                case 2 -> {
 
                     details.remove(deatailChoise.detailChoise());
                     System.out.println("Your detail was removed from list.");
-                    break;
                 }
-                case 3: {
+                case 3 -> {
 
-                        System.out.println("Detail list: ");
-                      for (Detail detail : details) {
-                          System.out.println(detail);
-                       }
-                        System.out.println("Detail list end.");
-                        break;
-                }
-                case 4: {
-
-                        System.out.println("Good by!");
-                        System.exit(0);
+                    System.out.println("Detail list: ");
+                    for (Detail detail : details) {
+                        System.out.println(detail);
                     }
+                    System.out.println("Detail list end.");
                 }
+                case 4 -> {
+
+                    System.out.println("Good by!");
+                    System.exit(0);
+                }
+            }
                 System.out.println("");
             }
 

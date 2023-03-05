@@ -8,19 +8,18 @@ public class DetailLocationChoise {
 
     String detailLocationChoise() {
         while (newDetailLocation == null) {
-            System.out.println("Enter detail location: \n" +
-                    "1.Front\n" +
-                    "2.Rear");
+            System.out.println("""
+                    Enter detail location:\s
+                    1.Front
+                    2.Rear""");
             int userInput = Integer.parseInt(scanner.nextLine());
             switch (userInput) {
-                case 1:{
+                case 1 -> {
                     newDetailLocation = "Front";
                 }
-                break;
-                case 2:{
+                case 2 -> {
                     newDetailLocation = "Rear";
                 }
-                break;
             }
         }
 

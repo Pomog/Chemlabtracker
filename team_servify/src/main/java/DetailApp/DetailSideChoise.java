@@ -8,19 +8,18 @@ public class DetailSideChoise {
 
     String newDetailSide() {
         while (newDetailSide == null) {
-            System.out.println("Enter detail side: \n" +
-                    "1.Left\n" +
-                    "2.Right");
+            System.out.println("""
+                    Enter detail side:\s
+                    1.Left
+                    2.Right""");
             int userInput = Integer.parseInt(scanner.nextLine());
             switch (userInput) {
-                case 1: {
+                case 1 -> {
                     newDetailSide = "Left";
                 }
-                break;
-                case 2: {
+                case 2 -> {
                     newDetailSide = "Right";
                 }
-                break;
             }
         }
         return newDetailSide;
