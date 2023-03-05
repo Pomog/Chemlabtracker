@@ -10,5 +10,13 @@ public class DemoForStructureData {
         System.out.println(demoStructure2.getName());
         demoStructure2.getBruttoFormula();
         demoStructure2.getMW();
+
+        ReactionData demoReactionLog = new ReactionData("TP1", "The Friedel-Crafts acylation");
+        CreateStructure newMaterial = new CreateStructure();
+        demoReactionLog.addStartingMaterial(newMaterial.readFromFile("SM1"));
+        demoReactionLog.addStartingMaterial(newMaterial.readFromFile("SM2"));
+        demoReactionLog.addStartingMaterial(newMaterial.readFromFile("SM3"));
+        demoReactionLog.addStartingMaterial(newMaterial.readFromFile("Solvent"));
+        demoReactionLog.setMainProduct(newMaterial.readFromFile("MP"));
     }
 }

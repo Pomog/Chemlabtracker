@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReactionData {
@@ -14,6 +15,7 @@ public class ReactionData {
     public ReactionData(String code, String name) {
         this.code = code;
         this.name = name;
+        this.startingMaterials = new ArrayList<StructureData>();
     }
     public String getCode() {
         return code;
