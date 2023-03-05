@@ -55,14 +55,14 @@ public class DeatailChoise {
                 System.out.println("You choosed door");
                 detailType = "Door";
                 detailLocation = detailLocationChoise.detailLocationChoise();
-                detailSide = detailSideChoise.NewDetailSide();
+                detailSide = detailSideChoise.newDetailSide();
             }
             break;
             case 6: {
                 System.out.println("You choosed wing");
                 detailType = "Wing";
                 detailLocation = detailLocationChoise.detailLocationChoise();
-                detailSide = detailSideChoise.NewDetailSide();
+                detailSide = detailSideChoise.newDetailSide();
 
             }
             break;
@@ -70,7 +70,7 @@ public class DeatailChoise {
                 System.out.println("You choosed wing miror");
                 detailType = "Wing mirror";
                 detailLocation = "";
-                detailSide = detailSideChoise.NewDetailSide();
+                detailSide = detailSideChoise.newDetailSide();
             }
             break;
         }
