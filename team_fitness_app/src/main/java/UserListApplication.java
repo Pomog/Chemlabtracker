@@ -37,7 +37,7 @@ class UserListApplication {
     }
 
     private static void exitProgramAction() {
-        System.out.println("Good by!");
+        System.out.println("Goodbye!");
         System.exit(0);
     }
 

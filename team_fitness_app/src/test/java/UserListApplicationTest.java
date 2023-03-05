@@ -7,14 +7,14 @@ class UserListApplicationTest {
     Database database = new InMemoryDatabaseImpl();
 
     @Test
-    private void registerUser() {
+    public void registerUser() {
         User user = new User("A", "a");
         database.registerNewUser(user);
         assertEquals(1, database.getUsers().size());
     }
 
     @Test
-    private void deleteUser() {
+    public void deleteUser() {
         User user1 = new User("A", "a");
         User user2 = new User("B", "b");
         database.registerNewUser(user1);
@@ -23,7 +23,8 @@ class UserListApplicationTest {
         assertEquals(1, database.getUsers().size());
     }
 
-    private void login() {
+    @Test
+    public void login() {
         User user1 = new User("A", "a");
         database.registerNewUser(user1);
         assertTrue(database.login(1L, "a"));
