@@ -1,5 +1,11 @@
 SM1: Isobutylbenzene, CC(C)CC1=CC=CC=C1
 SM2: Acetic anhydride, CC(=O)OC(=O)C
 SM3: Aluminum chloride, [Al](Cl)(Cl)Cl
-Solvent: Dichloromethane, ClCCl
 MP: 4-Isobutylacetophenone, CC(C)CC1=CC=C(C=C1)C(=O)C
+
+conditions:
+Solvent: Dichloromethane, ClCCl
+temperature: 0
+environment: air
+pressure: 1
+reactionTime: PT45M
