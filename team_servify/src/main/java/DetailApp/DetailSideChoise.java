@@ -2,7 +2,7 @@ package DetailApp;
 
 import java.util.Scanner;
 
-public class DetailSideChose {
+public class DetailSideChoise {
     Scanner scanner = new Scanner(System.in);
     String newDetailSide;
     String NewDetailSide(){

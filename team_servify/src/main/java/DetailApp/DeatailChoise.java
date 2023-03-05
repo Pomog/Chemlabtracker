@@ -1,13 +1,11 @@
 package DetailApp;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class DeatailChoise {
     Scanner scanner = new Scanner(System.in);
     DetailLocationChoise detailLocationChoise = new DetailLocationChoise();
-    DetailSideChose detailSideChose = new DetailSideChose();
+    DetailSideChoise detailSideChoise = new DetailSideChoise();
     String detailType = null;
     String detailLocation = null;
     String detailSide = null;
@@ -57,14 +55,14 @@ public class DeatailChoise {
                 System.out.println("You choosed door");
                 detailType = "Door";
                 detailLocation = detailLocationChoise.detailLocationChoise();
-                detailSide = detailSideChose.NewDetailSide();
+                detailSide = detailSideChoise.NewDetailSide();
             }
             break;
             case 6: {
                 System.out.println("You choosed wing");
                 detailType = "Wing";
                 detailLocation = detailLocationChoise.detailLocationChoise();
-                detailSide = detailSideChose.NewDetailSide();
+                detailSide = detailSideChoise.NewDetailSide();
 
             }
             break;
@@ -72,7 +70,7 @@ public class DeatailChoise {
                 System.out.println("You choosed wing miror");
                 detailType = "Wing mirror";
                 detailLocation = "";
-                detailSide = detailSideChose.NewDetailSide();
+                detailSide = detailSideChoise.NewDetailSide();
             }
             break;
         }
