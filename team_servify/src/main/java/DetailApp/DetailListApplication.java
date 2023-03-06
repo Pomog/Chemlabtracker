@@ -35,8 +35,12 @@ class DetailListApplication {
                     if (app.details.isEmpty()) {
                         System.out.println("You don't have any detail to remove!");
                     } else {
-                        app.details.remove(app.detailChoice.detailChoice());
-                        System.out.println("Your detail was removed from list.");
+                        Detail detailToRemove = app.detailChoice.detailChoice();
+                        if (app.details.contains(detailToRemove)) {
+                            app.details.remove(detailToRemove);
+                            System.out.println("Your detail " + detailToRemove + " was removed from list.");
+                        }
+                        else System.out.println("You don't have " + detailToRemove + " in your list!");
                     }
                 }
                 case 3 -> {
