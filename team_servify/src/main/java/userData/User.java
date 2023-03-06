@@ -1,6 +1,8 @@
-package users;
+package userData;
 
 public class User {
+
+    private Long id;
     private String firstName;
     private String secondName;
     private String nickName;
