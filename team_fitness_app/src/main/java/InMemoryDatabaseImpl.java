@@ -20,12 +20,19 @@ class InMemoryDatabaseImpl implements Database{
     }
 
     @Override
-    public void deleteUser(Long id, String password) {
-        users.stream()
-                .filter(user -> user.getId().equals(id))
-                .findFirst()
-                .filter(user -> user.getPassword().equals(password))
-                .ifPresent(user -> users.remove(user));
+    public boolean deleteUser(Long id, String password) {
+         boolean userExists = users.stream()
+                 .anyMatch(user -> user.getId().equals(id) && user.getPassword().equals(password));
+         if(userExists){
+             users.stream()
+                     .filter(user -> user.getId().equals(id))
+                     .findFirst()
+                     .filter(user -> user.getPassword().equals(password))
+                     .ifPresent(user -> users.remove(user));
+             return true;
+         }else {
+             return false;
+         }
     }
 
     @Override
