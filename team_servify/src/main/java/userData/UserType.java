@@ -3,6 +3,7 @@ package userData;
 public enum UserType {
 
     CUSTOMER,
-    MANAGER
+    MANAGER,
+    SYSTEM
 
 }
