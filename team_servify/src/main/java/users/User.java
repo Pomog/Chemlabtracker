@@ -1,12 +1,11 @@
 package users;
 
 public class User {
-
     private String firstName;
     private String secondName;
     private String nickName;
     private int phoneNumber;
-    private String userType;
+    private UserType userType;
     private String email;
     private Address address;
 
@@ -42,11 +41,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
