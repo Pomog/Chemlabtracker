@@ -78,4 +78,17 @@ public class StructureData {
     public void setMass(double mass) {
         this.mass = mass;
     }
+
+    @Override
+    public String toString() {
+        return "StructureData{" +
+                "smiles='" + smiles + '\'' +
+                ", formula=" + MolecularFormulaManipulator.getString(formula) +
+                ", mw=" + String.format("%.2f", mw) +
+                ", casNumber='" + casNumber + '\'' +
+                ", name='" + name + '\'' +
+                ", internalCode='" + internalCode + '\'' +
+                ", mass=" + mass +
+                '}';
+    }
 }

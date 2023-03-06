@@ -1,92 +1,73 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 class UserListApplication {
 
     public static void main(String[] args) {
-        UserListApplication userListApplication = new UserListApplication();
-        List<User> userList = new ArrayList<>();
-
+        Database database = new InMemoryDatabaseImpl();
         while (true) {
-            System.out.println("Program menu:");
-            System.out.println("1. Register new user");
-            System.out.println("2. Login");
-            System.out.println("3. Delete user");
-            System.out.println("4. Exit");
-
-            System.out.println();
-
-            System.out.println("Enter menu item number to execute:");
-            Scanner scanner = new Scanner(System.in);
-            int userChoice = Integer.parseInt(scanner.nextLine());
-            switch (userChoice) {
-                case 1 -> userListApplication.registerUser(userList);
-                case 2 -> userListApplication.login(userList);
-                case 3 -> userListApplication.deleteUser(userList);
-                case 4 -> {
-                    System.out.println("Good bye!");
-                    System.exit(0);
-                }
-            }
+            printProgramMenu();
+            int menuNumber = getMenuNumberFromUser();
+            executeSelectedMenuItem(database, menuNumber);
         }
     }
 
-    void registerUser(List userList) {
-        UserInput userInput = scanUserInput();
-        Registration registration = new Registration(userList);
-        registration.registerUser(userInput.username, userInput.password);
+    private static void printProgramMenu() {
+        System.out.println();
+        System.out.println("Program menu:");
+        System.out.println("1. Register new user.");
+        System.out.println("2. Login.");
+        System.out.println("3. Delete user from database.");
+        System.out.println("4. Exit");
+        System.out.println();
     }
 
-    void login(List<User> userList) {
-        UserInput userInput = scanUserInput();
-        /*
-            access to username: userInput.username
-            access to password: userInput.password
-        */
-        for (User user : userList) {
-            boolean hasRecord = user.getUsername().equals(userInput.username) && user.getPassword().equals(userInput.password);
+    private static int getMenuNumberFromUser() {
+        System.out.println("Enter menu item number to execute:");
+        Scanner scanner = new Scanner(System.in);
+        return Integer.parseInt(scanner.nextLine());
+    }
 
-            if (hasRecord) {
-                System.out.println("You are successfully logged-in!");
-                return;
-            }
-            System.out.println("Invalid username or password. Please try again.");
+    private static void executeSelectedMenuItem(Database database, int selectedMenu) {
+        switch (selectedMenu) {
+            case 1 -> registerUser(database);
+            case 2 -> validateUser(database);
+            case 3 -> removeUser(database);
+            case 4 -> exitProgramAction();
         }
     }
 
-    void deleteUser(List<User> userList) {
-        UserInput userInput = scanUserInput();
-        /*
-            access to username: userInput.username
-            access to password: userInput.password
-        */
-        for (User user : userList) {
-            boolean hasRecord = user.getUsername().equals(userInput.username) && user.getPassword().equals(userInput.password);
-
-            if (hasRecord) {
-                userList.remove(user);
-                System.out.println(" User deleted successfully");
-                return;
-            } else {
-                System.out.println(" No such user ");
-            }
-        }
+    private static void exitProgramAction() {
+        System.out.println("Goodbye!");
+        System.exit(0);
     }
 
-    public UserInput scanUserInput() {
-        UserInput userInput = new UserInput();
+    private static void registerUser(Database database) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter username: ");
-        userInput.username = scanner.nextLine();
+        String username = scanner.nextLine();
         System.out.println("Enter password: ");
-        userInput.password = scanner.nextLine();
-        return userInput;
+        String password = scanner.nextLine();
+        User user = new User(username, password);
+        database.registerNewUser(user);
+        System.out.println("User registered with user ID " + user.getId());
     }
 
-    class UserInput {
-        private String username;
-        private String password;
+    private static boolean validateUser(Database database) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter user ID");
+        Long id = Long.parseLong(scanner.nextLine());
+        System.out.println("Enter password: ");
+        String password = scanner.nextLine();
+        return database.login(id, password);
     }
 
+    private static void removeUser(Database database) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter user ID");
+        Long id = Long.parseLong(scanner.nextLine());
+        System.out.println("Enter password: ");
+        String password = scanner.nextLine();
+        database.deleteUser(id, password);
+        System.out.println("User was removed from database.");
+    }
 }

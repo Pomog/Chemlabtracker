@@ -1,6 +1,6 @@
 import java.time.Duration;
 
-public class conditionData {
+public class ConditionData {
     private StructureData solvent;
     private int temperature;
     private String environment;
@@ -45,5 +45,17 @@ public class conditionData {
 
     public void setReactionTime(Duration reactionTime) {
         this.reactionTime = reactionTime;
+    }
+
+    @Override
+    public String toString() {
+        double hours = (double)reactionTime.toMinutes() / 60;
+        return "** ConditionData {" +
+                "\n solvent=" + solvent +
+                "\n temperature=" + temperature +
+                "\n environment='" + environment + '\'' +
+                "\n pressure=" + pressure +
+                "\n reactionTime=" + String.format("%.2f", hours) + " h" +
+                "}";
     }
 }

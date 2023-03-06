@@ -2,54 +2,51 @@ package DetailApp;
 
 import java.util.Objects;
 
-public class Detail {
+class Detail {
     private String type;
     // Bonnet – капот.
-    // Door – дверь.
     // Boot  – багажник.
     // Bumper  – бампер.
     // Roof - крыша.
+    // Door – дверь.
     // Wing - крыло автомобиля
     // Wing mirror  – боковое зеркало.
-    // Windscreen  – лобовое стекло.
-    // Headlight  – фара.
+
     private String location;
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setSide(String side) {
-        this.side = side;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    // front , rear
+    private double price;
     private String side;
 
-    public String getLocation() {
-        return location;
-    }
-
-    public String getSide() {
-        return side;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    // left , right
-    private double price;
-
-    public Detail(String type, String location, String side) {
+    Detail(String type, String location, String side) {
         this.type = type;
         this.location = location;
         this.side = side;
     }
+
+    void setLocation(String location) {
+        this.location = location;
+    }
+
+    void setSide(String side) {
+        this.side = side;
+    }
+
+    void setPrice(double price) {
+        this.price = price;
+    }
+
+    // front , rear
+    String getLocation() {
+        return location;
+    }
+
+    String getSide() {
+        return side;
+    }
+
+    double getPrice() {
+        return price;
+    }
+    // left , right
 
     @Override
     public String toString() {
@@ -71,4 +68,5 @@ public class Detail {
     public int hashCode() {
         return Objects.hash(type, location, side, price);
     }
+
 }
