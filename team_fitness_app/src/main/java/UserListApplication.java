@@ -70,7 +70,11 @@ class UserListApplication {
         Long id = Long.parseLong(scanner.nextLine());
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-        database.deleteUser(id, password);
-        System.out.println("User was removed from database.");
+
+        if(database.deleteUser(id, password))
+            System.out.println("User was removed from database.");
+        else
+            System.out.println("Id or Password is Incorrect!");
     }
+
 }
