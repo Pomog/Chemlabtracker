@@ -32,8 +32,12 @@ class DetailListApplication {
                     System.out.println("Your detail was added to list.");
                 }
                 case 2 -> {
-                    app.details.remove(app.detailChoice.detailChoice());
-                    System.out.println("Your detail was removed from list.");
+                    if (app.details.isEmpty()) {
+                        System.out.println("You don't have any detail to remove!");
+                    } else {
+                        app.details.remove(app.detailChoice.detailChoice());
+                        System.out.println("Your detail was removed from list.");
+                    }
                 }
                 case 3 -> {
                     System.out.println("Detail list: ");
