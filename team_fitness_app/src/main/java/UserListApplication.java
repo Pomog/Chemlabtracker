@@ -52,13 +52,16 @@ class UserListApplication {
         System.out.println("User registered with user ID " + user.getId());
     }
 
-    private static boolean validateUser(Database database) {
+    private static void validateUser(Database database) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter user ID");
         Long id = Long.parseLong(scanner.nextLine());
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-        return database.login(id, password);
+        if (database.login(id, password))
+            System.out.println("Login Successful!");
+        else
+            System.out.println("Id or Password is Incorrect!");
     }
 
     private static void removeUser(Database database) {
