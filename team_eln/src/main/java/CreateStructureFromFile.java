@@ -2,8 +2,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class CreateStructure {
+public class CreateStructureFromFile {
     String filename = "team_eln/src/data/demoReaction1.txt";
+
+    public CreateStructureFromFile(String filename) {
+        this.filename = filename;
+    }
 
     public StructureData readFromFile (String identifier) {
 

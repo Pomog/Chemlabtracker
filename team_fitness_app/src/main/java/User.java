@@ -1,32 +1,30 @@
 import java.util.Objects;
 
-public class User {
+class User {
 
-    private String username;
-    private String password;
-    private static int lastId = 0;
-    private int id;
+    private Long id;
+    private final String username;
+    private final String password;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.id = ++lastId;
     }
 
-    String getUsername() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
         return username;
     }
 
-    void setUsername(String username) {
-        this.username = username;
-    }
-
-    String getPassword() {
+    public String getPassword() {
         return password;
-    }
-
-    int getId(int id) {
-        return id;
     }
 
     @Override
@@ -34,20 +32,19 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password, id);
+        return Objects.hash(id, username, password);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", id=" + id +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 '}';
     }
 }

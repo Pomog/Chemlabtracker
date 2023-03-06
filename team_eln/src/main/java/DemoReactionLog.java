@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-/*
+
 public class DemoReactionLog {
     public static void main(String[] args) {
         boolean repeat = true;
@@ -22,17 +22,31 @@ public class DemoReactionLog {
 
             switch (userChoice) {
                 case 1: {
-                    System.out.println("Enter book title: ");
-                    String bookTitle = scanner.nextLine();
-                    System.out.println("Enter book author: ");
-                    String bookAuthor = scanner.nextLine();
-                    ReactionData reactionData = new ReactionData(bookTitle, bookAuthor);
+                    System.out.println("Enter reaction code: ");
+                    String reactionCode = scanner.nextLine();
+                    System.out.println("Enter reaction name: ");
+                    String reactionName = scanner.nextLine();
+                    System.out.println("Enter DataFile name for reaction: ");
+                    String path = scanner.nextLine();
+
+                    ReactionData reactionData = new ReactionData(reactionCode, reactionName);
+
+                    CreateStructureFromFile newMaterial = new CreateStructureFromFile(path);
+                    reactionData.addStartingMaterial(newMaterial.readFromFile("SM1"));
+                    reactionData.addStartingMaterial(newMaterial.readFromFile("SM2"));
+                    reactionData.addStartingMaterial(newMaterial.readFromFile("SM3"));
+                    reactionData.setMainProduct(newMaterial.readFromFile("MP"));
+                    CreateConditionDataFromFile newConditions = new CreateConditionDataFromFile(path);
+                    reactionData.setConditions(newConditions.readFromFile());
+
                     reactionsLog.add(reactionData);
+
                     System.out.println("reaction was added.");
                     break;
 
                 }
                 case 2: {
+                /*
                     System.out.println("Enter book title: ");
                     String bookTitle = scanner.nextLine();
                     System.out.println("Enter book author: ");
@@ -40,13 +54,14 @@ public class DemoReactionLog {
                     books.remove(new Book(bookTitle, bookAuthor));
                     System.out.println("Your book was removed from list.");
                     break;
+                    */
                 }
                 case 3: {
-                    System.out.println("Book list: ");
-                    for (Book book : books) {
-                        System.out.println(book);
+                    System.out.println("Reactions list: ");
+                    for (ReactionData reaction : reactionsLog) {
+                        System.out.println(reaction);
                     }
-                    System.out.println("Book list end.");
+                    System.out.println("Reactions list end.");
                     break;
                 }
                 case 4: {
@@ -59,4 +74,4 @@ public class DemoReactionLog {
     }
 }
 
- */
+
