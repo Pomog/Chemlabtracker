@@ -1,5 +1,3 @@
-package userData;
-
 public class User {
 
     private Long id;

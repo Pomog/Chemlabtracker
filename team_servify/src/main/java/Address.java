@@ -1,5 +1,3 @@
-package userData;
-
 public class Address {
 
     private String country;

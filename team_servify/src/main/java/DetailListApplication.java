@@ -1,5 +1,3 @@
-package DetailApp;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -32,6 +30,7 @@ class DetailListApplication {
                     System.out.println("Your detail was added to list.");
                 }
                 case 2 -> {
+                    System.out.println("You chose to remove details from the list. Please enter detail to remove:");
                     if (app.details.isEmpty()) {
                         System.out.println("You don't have any detail to remove!");
                     } else {

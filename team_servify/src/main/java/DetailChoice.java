@@ -1,5 +1,3 @@
-package DetailApp;
-
 import java.util.Scanner;
 
 class DetailChoice {
