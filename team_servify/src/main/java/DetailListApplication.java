@@ -6,61 +6,90 @@ class DetailListApplication {
 
     private final List<Detail> details = new ArrayList<>();
     private final DetailChoice detailChoice = new DetailChoice();
+    private static final DetailListApplication APPLICATION = new DetailListApplication();
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
 
-        DetailListApplication app = new DetailListApplication();
-
         while (true) {
-            System.out.println("Program menu:");
-            System.out.println("1. Add detail to list");
-            System.out.println("2. Delete detail from list");
-            System.out.println("3. Show all detail in the list");
-            System.out.println("4. Exit");
-
-            System.out.println();
+            APPLICATION.printMenu();
 
             System.out.println("Enter menu item number to execute:");
-            Scanner scanner = new Scanner(System.in);
-            int userChoice = Integer.parseInt(scanner.nextLine());
 
-            switch (userChoice) {
-                case 1 -> {
-                    app.details.add(app.detailChoice.detailChoice());
-                    System.out.println("Your detail was added to list.");
-                }
-                case 2 -> {
-                    System.out.println("You chose to remove details from the list. Please enter detail to remove:");
-                    if (app.details.isEmpty()) {
-                        System.out.println("You don't have any detail to remove!");
-                    } else {
-                        Detail detailToRemove = app.detailChoice.detailChoice();
-                        if (app.details.remove(detailToRemove)) {
-                            System.out.println("Your detail " + detailToRemove + " was removed from list.");
-                        } else {
-                            System.out.println("You don't have " + detailToRemove + " in your list!");
-                        }
-                    }
-                }
-                case 3 -> {
-                    System.out.println("Detail list: ");
-                    for (Detail detail : app.details) {
-                        System.out.println(detail);
-                    }
-                    System.out.println("Detail list end.");
-                }
-                case 4 -> {
-                    System.out.println("Good bye!");
-                    System.exit(0);
-                }
-                default -> {
-                    System.out.println("Choose the variant from the menu, please.");
-                    continue;
-                }
+            int userChoice = APPLICATION.userChoiceFromMenu();
+
+            if (userChoice < 1 || userChoice > 4) {
+                System.out.println("Wrong input, try again, please");
+                continue;
+            } else {
+                APPLICATION.menuSwitchLogic(userChoice);
             }
             System.out.println();
         }
 
+    }
+
+    private void printMenu() {
+        System.out.println("Program menu:");
+        System.out.println("1. Add detail to list");
+        System.out.println("2. Delete detail from list");
+        System.out.println("3. Show all detail in the list");
+        System.out.println("4. Exit");
+        System.out.println();
+    }
+
+    private int userChoiceFromMenu(){
+        return Integer.parseInt(new Scanner(System.in).nextLine());
+    }
+
+    private void menuSwitchLogic(int userChoice) {
+        switch (userChoice) {
+            case 1 -> {
+                APPLICATION.addDetail();
+                System.out.println("Your detail was added to list.");
+            }
+            case 2 -> {
+                System.out.println("You chose to remove details from the list. Please enter detail to remove:");
+                APPLICATION.printDetailList();
+
+                if (details.isEmpty()) {
+                    System.out.println("You don't have any detail to remove!");
+                } else {
+                    if (APPLICATION.removeDetail(userChoiceFromMenu())) {
+                        System.out.println("Your detail was removed from the list.");
+                    } else {
+                        System.out.println("Wrong input, try again, please");
+                    }
+                }
+            }
+            case 3 -> {
+                System.out.println("Detail list: ");
+                APPLICATION.printDetailList();
+                System.out.println("Detail list end.");
+            }
+            case 4 -> {
+                System.out.println("Good bye!");
+                System.exit(0);
+            }
+        }
+    }
+
+    private void addDetail() {
+        APPLICATION.details.add(APPLICATION.detailChoice.detailChoice());
+    }
+
+    private void printDetailList() {
+        for (int i = 0; i < details.size(); i++) {
+            System.out.println((i + 1) + ". " + details.get(i).toString());
+        }
+    }
+
+    private boolean removeDetail(int removingDetailNumber) {
+        if (removingDetailNumber > 0 && removingDetailNumber <= details.size() + 1) {
+            details.remove(removingDetailNumber - 1);
+            return true;
+        }
+        return false;
     }
 
 }
