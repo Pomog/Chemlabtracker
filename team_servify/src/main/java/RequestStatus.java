@@ -1,5 +1,3 @@
-package userData;
-
 public enum RequestStatus {
     NEW,
     IN_PROGRESS,
