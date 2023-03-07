@@ -12,8 +12,10 @@ public class DemoForStructureData {
         System.out.println(demoStructure2.getName());
         demoStructure2.getBruttoFormula();
         demoStructure2.getMW();
+        System.out.println("");
 
         // Testing ReactionData class
+        System.out.println("ReactionData Object - from the text file data\n");
 
         ReactionData demoReactionLog = new ReactionData("TP1", "The Friedel-Crafts acylation");
 
