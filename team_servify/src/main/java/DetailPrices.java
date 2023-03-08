@@ -26,19 +26,25 @@ class DetailPrices {
     void setPrices(){
         bonnet.setPrice(BigDecimal.valueOf(200));
         boot.setPrice(BigDecimal.valueOf(180));
+
         frontBumper.setPrice(BigDecimal.valueOf(180));
         rearBumper.setPrice(BigDecimal.valueOf(150));
+
         roof.setPrice(BigDecimal.valueOf(250));
+
         frontLeftDoor.setPrice(BigDecimal.valueOf(180));
         frontRightDoor.setPrice(BigDecimal.valueOf(180));
         rearLeftDoor.setPrice(BigDecimal.valueOf(180));
         rearRightDoor.setPrice(BigDecimal.valueOf(180));
+
         frontLeftWing.setPrice(BigDecimal.valueOf(130));
         frontRightWing.setPrice(BigDecimal.valueOf(130));
+
         rearLeftWing.setPrice(BigDecimal.valueOf(160));
         rearRightWing.setPrice(BigDecimal.valueOf(160));
+
         leftWingMirror.setPrice(BigDecimal.valueOf(60));
-        rearRightWing.setPrice(BigDecimal.valueOf(60));
+        rightWingMirror.setPrice(BigDecimal.valueOf(60));
     }
 
 }
