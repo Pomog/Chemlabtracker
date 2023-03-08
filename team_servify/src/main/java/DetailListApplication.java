@@ -19,7 +19,7 @@ class DetailListApplication {
             int userChoice = APPLICATION.userChoiceFromMenu();
 
             if (userChoice < 1 || userChoice > 4) {
-                System.out.println("Wrong input, try again, please");
+                System.out.println("Wrong input, try again, please use only 1 .. 4 for main menu selection.");
                 continue;
             } else {
                 APPLICATION.menuSwitchLogic(userChoice);
@@ -38,8 +38,12 @@ class DetailListApplication {
         System.out.println();
     }
 
-    private int userChoiceFromMenu(){
-        return Integer.parseInt(new Scanner(System.in).nextLine());
+    private int userChoiceFromMenu() {
+        String userInput = new Scanner(System.in).nextLine();
+        if (!userInput.matches("[1-7]")) {
+            System.out.println("Wrong input, please enter only 1 .. 4 for main menu, 1 .. 7 for detail choice, 1 .. 2 for position and side menus!");
+        }
+        return Integer.parseInt(userInput);
     }
 
     private void menuSwitchLogic(int userChoice) {
