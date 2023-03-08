@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Detail {
@@ -11,7 +12,7 @@ public class Detail {
     // Wing mirror  – боковое зеркало.
 
     private String location;
-    private double price;
+    private BigDecimal price;
     private String side;
 
     Detail(String type, String location, String side) {
@@ -28,11 +29,6 @@ public class Detail {
         this.side = side;
     }
 
-    void setPrice(double price) {
-        this.price = price;
-    }
-
-    // front , rear
     String getLocation() {
         return location;
     }
@@ -41,10 +37,6 @@ public class Detail {
         return side;
     }
 
-    double getPrice() {
-        return price;
-    }
-    // left , right
 
     @Override
     public String toString() {
@@ -55,16 +47,23 @@ public class Detail {
                 '}';
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Detail detail)) return false;
-        return Double.compare(detail.price, price) == 0 && Objects.equals(type, detail.type) && Objects.equals(location, detail.location) && Objects.equals(side, detail.side);
+        return Objects.equals(type, detail.type) && Objects.equals(getLocation(), detail.getLocation()) && Objects.equals(price, detail.price) && Objects.equals(getSide(), detail.getSide());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, location, side, price);
+        return Objects.hash(type, getLocation(), price, getSide());
     }
-
 }
