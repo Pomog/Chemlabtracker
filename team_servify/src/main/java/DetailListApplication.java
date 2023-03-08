@@ -39,11 +39,12 @@ class DetailListApplication {
     }
 
     private int userChoiceFromMenu() {
+        int result = 0; // looks crappy, maybe can do somehow else...
         String userInput = new Scanner(System.in).nextLine();
         if (!userInput.matches("[1-7]")) {
             System.out.println("Wrong input, please enter only 1 .. 4 for main menu, 1 .. 7 for detail choice, 1 .. 2 for position and side menus!");
-        }
-        return Integer.parseInt(userInput);
+        } else result = Integer.parseInt(userInput); // this was causing error - allow parse ONLY if it's number.
+        return result;
     }
 
     private void menuSwitchLogic(int userChoice) {
