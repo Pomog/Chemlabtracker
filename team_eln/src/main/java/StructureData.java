@@ -24,9 +24,10 @@ public class StructureData {
         this.name = name;
     }
 
-    public StructureData(String smiles, String name) {
+    public StructureData(String smiles, String name, double mass) {
         this.smiles = smiles;
         this.name = name;
+        this.mass = mass;
         smilesConverter();
         calculateBruttoFormula();
         calculateMW();
