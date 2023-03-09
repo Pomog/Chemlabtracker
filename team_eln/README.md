@@ -1,2 +1,2 @@
 # Use Case Diagram
-<img src="https://github.com/javagurulv/-java_2_monday_february_2023_online/blob/main/team_eln/Use%20Case%20Diagram.png?raw=true">
+<img src="![image](https://user-images.githubusercontent.com/110051191/224141345-dd109863-c963-4e55-8579-587e84bb90a4.png)">
