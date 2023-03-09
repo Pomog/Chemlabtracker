@@ -6,21 +6,21 @@ class DetailPrices {
     public static void main(String[] args) {
 
 
-        Detail bonnet = new Detail("bonnet", "", "");
-        Detail boot = new Detail("boot", "", "");
-        Detail frontBumper = new Detail("bumper", "front", "");
-        Detail rearBumper = new Detail("bumper", "rear", "");
-        Detail roof = new Detail("roof", "", "");
-        Detail frontLeftDoor = new Detail("door", "front", "left");
-        Detail frontRightDoor = new Detail("door", "front", "right");
-        Detail rearLeftDoor = new Detail("door", "rear", "left");
-        Detail rearRightDoor = new Detail("door", "rear", "right");
-        Detail frontLeftWing = new Detail("wing", "front", "left");
-        Detail frontRightWing = new Detail("wing", "front", "right");
-        Detail rearLeftWing = new Detail("wing", "rear", "left");
-        Detail rearRightWing = new Detail("wing", "rear", "right");
-        Detail leftWingMirror = new Detail("wing mirror", "", "left");
-        Detail rightWingMirror = new Detail("wing mirror", "", "right");
+        Detail bonnet = new Detail("Bonnet", "", "");
+        Detail boot = new Detail("Boot", "", "");
+        Detail frontBumper = new Detail("Bumper", "Front", "");
+        Detail rearBumper = new Detail("Bumper", "Rear", "");
+        Detail roof = new Detail("Roof", "", "");
+        Detail frontLeftDoor = new Detail("Door", "Front", "Left");
+        Detail frontRightDoor = new Detail("Door", "Front", "Right");
+        Detail rearLeftDoor = new Detail("Door", "Rear", "Left");
+        Detail rearRightDoor = new Detail("Door", "Rear", "Right");
+        Detail frontLeftWing = new Detail("Wing", "Front", "Left");
+        Detail frontRightWing = new Detail("Wing", "Front", "Right");
+        Detail rearLeftWing = new Detail("Wing", "Rear", "Left");
+        Detail rearRightWing = new Detail("Wing", "Rear", "Right");
+        Detail leftWingMirror = new Detail("Wing mirror", "", "Left");
+        Detail rightWingMirror = new Detail("Wing mirror", "", "Right");
 
 
         List<Detail> detailPricesList = new ArrayList<>();
