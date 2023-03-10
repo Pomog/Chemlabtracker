@@ -17,10 +17,11 @@ public class CreateStructureFromFile {
             while (line != null) {
                 if (line.startsWith(identifier)) { // only process lines that start identifier
                     String[] fields = line.split(": "); // split the line into identifier and structure data
+                    double mass = Double.parseDouble(fields[1].split(", ")[2]); // extract the SMILES string
                     String smiles = fields[1].split(", ")[1]; // extract the SMILES string
                     String name = fields[1].split(", ")[0]; // extract the name
                     System.out.println(fields[0] + ": " + name + ", " + smiles + " was added");
-                    return new StructureData(smiles, name);
+                    return new StructureData(smiles, name, mass);
                 }
                 line = reader.readLine();
             }

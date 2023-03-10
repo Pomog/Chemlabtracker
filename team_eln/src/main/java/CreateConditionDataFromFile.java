@@ -15,6 +15,7 @@ public class CreateConditionDataFromFile {
         int temperature = 20, pressure = 1;
         String environment = null;
         Duration reactionTime = null;
+        double solventMass = 0;
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
@@ -22,6 +23,8 @@ public class CreateConditionDataFromFile {
             while (line != null) {
                 if (line.startsWith("Solvent:")) {
                     String[] fields = line.split(": "); // split the line into identifier and structure data
+                    System.out.println(fields[1].split(", ")[2]);
+                    solventMass = Double.parseDouble(fields[1].split(", ")[2]); // extract the mass
                     solventSMILES = fields[1].split(", ")[1]; // extract the SMILES string
                     solventName = fields[1].split(", ")[0]; // extract the name
                     System.out.println(fields[0] + ": " + solventName + ", " + solventSMILES + " was added");
@@ -46,7 +49,7 @@ public class CreateConditionDataFromFile {
             System.out.println("Error reading file: " + e.getMessage());
         }
 
-        StructureData solvent = new StructureData(solventSMILES, solventName);
+        StructureData solvent = new StructureData(solventSMILES, solventName, solventMass);
 
         ConditionData conditions = new ConditionData();
         conditions.setSolvent(solvent);
