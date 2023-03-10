@@ -1,6 +1,8 @@
+package database;
+
 import java.util.Objects;
 
-class User {
+public class User {
 
     private Long id;
     private final String username;
@@ -42,7 +44,7 @@ class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "database.User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 '}';
