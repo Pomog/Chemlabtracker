@@ -5,7 +5,6 @@ import java.util.List;
 class DetailPrices {
     public static void main(String[] args) {
 
-
         Detail bonnet = new Detail("Bonnet", "", "");
         Detail boot = new Detail("Boot", "", "");
         Detail frontBumper = new Detail("Bumper", "Front", "");
@@ -56,5 +55,7 @@ class DetailPrices {
         rearRightWing.setPrice(BigDecimal.valueOf(160));
         leftWingMirror.setPrice(BigDecimal.valueOf(60));
         rightWingMirror.setPrice(BigDecimal.valueOf(60));
+
+
     }
 }
