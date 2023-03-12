@@ -1,4 +1,4 @@
-package eln.database;
+package database;
 
 import cart_item.CartItem;
 import lombok.Data;
