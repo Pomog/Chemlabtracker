@@ -2,9 +2,11 @@ package eln;
 
 import consoleUI.AddReactionUIAction;
 import consoleUI.ExitUIAction;
+import consoleUI.GetAllReactionUIAction;
 import database.DatabaseIM;
 import database.InMemoryDatabaseImplIM;
 import services.AddReactionService;
+import services.GetAllReactionsService;
 
 import java.util.Scanner;
 
@@ -12,6 +14,8 @@ public class ELN_application {
     private static DatabaseIM inMemoryDataBase = new InMemoryDatabaseImplIM();
     private static AddReactionService addReactionService = new AddReactionService(inMemoryDataBase);
     private static AddReactionUIAction addReactionUIAction = new AddReactionUIAction(addReactionService);
+    private static GetAllReactionsService getAllReactionsService = new GetAllReactionsService(inMemoryDataBase);
+    private static GetAllReactionUIAction getAllReactionUIAction = new GetAllReactionUIAction(getAllReactionsService);
     private static ExitUIAction exitUIAction = new ExitUIAction();
 
 
@@ -51,7 +55,7 @@ public class ELN_application {
                 break;
             }
             case 3: {
-
+                getAllReactionUIAction.execute();
                 break;
             }
             case 4: {

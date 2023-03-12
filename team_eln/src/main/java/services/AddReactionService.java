@@ -26,6 +26,7 @@ public class AddReactionService {
         demoReactionLog.setConditions(newConditions.readFromFile());
     }
 
+    // try regex !!!
     private static void additionOfMaterials(String filename, ReactionData demoReactionLog) {
         CreateStructureFromFile newMaterial = new CreateStructureFromFile(filename);
         demoReactionLog.addStartingMaterial(newMaterial.readFromFile("SM1")); // starting material
