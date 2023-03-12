@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReactionData {
@@ -6,7 +7,7 @@ public class ReactionData {
     private final String name;
     private List<StructureData> startingMaterials;
 
-    private conditionData conditions;
+    private ConditionData conditions;
     private List<StructureData> products;
     private StructureData mainProduct;
     private List<File> analyticalResults;
@@ -14,6 +15,7 @@ public class ReactionData {
     public ReactionData(String code, String name) {
         this.code = code;
         this.name = name;
+        this.startingMaterials = new ArrayList<StructureData>();
     }
     public String getCode() {
         return code;
@@ -39,10 +41,10 @@ public class ReactionData {
         return startingMaterials;
     }
 
-    public void setConditions(conditionData conditions) {
+    public void setConditions(ConditionData conditions) {
         this.conditions = conditions;
     }
-    public conditionData getConditions() {
+    public ConditionData getConditions() {
         return conditions;
     }
 
@@ -52,5 +54,17 @@ public class ReactionData {
 
     public StructureData getMainProduct() {
         return mainProduct;
+    }
+
+    @Override
+    public String toString() {
+        return "*** ReactionData{" +
+                "\n code='" + code + '\'' +
+                "\n name='" + name + '\'' +
+                "\n startingMaterials=" + startingMaterials +
+                "\n products=" + products +
+                "\n mainProduct=" + mainProduct +
+                "\n Conditions: \n" + conditions +
+                "} ***";
     }
 }
