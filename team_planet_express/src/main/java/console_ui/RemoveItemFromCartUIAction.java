@@ -1,8 +1,8 @@
 package console_ui;
 
 import cart_item.CartItem;
-import eln.database.CartItemDatabase;
-import eln.database.ItemDatabase;
+import database.CartItemDatabase;
+import database.ItemDatabase;
 import item.Item;
 import user_input.UserCommunication;
 

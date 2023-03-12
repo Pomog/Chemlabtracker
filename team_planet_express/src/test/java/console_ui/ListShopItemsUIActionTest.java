@@ -1,6 +1,6 @@
 package console_ui;
 
-import eln.database.ItemDatabase;
+import database.ItemDatabase;
 import item.Item;
 import org.junit.jupiter.api.Test;
 import user_input.UserCommunication;

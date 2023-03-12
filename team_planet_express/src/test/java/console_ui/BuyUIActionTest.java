@@ -2,7 +2,7 @@ package console_ui;
 
 import cart.Cart;
 import cart.CartStatus;
-import eln.database.CartDatabase;
+import database.CartDatabase;
 import org.junit.jupiter.api.Test;
 import user_input.UserCommunication;
 

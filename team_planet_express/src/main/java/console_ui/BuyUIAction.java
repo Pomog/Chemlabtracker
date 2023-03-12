@@ -2,7 +2,7 @@ package console_ui;
 
 import cart.Cart;
 import cart.CartStatus;
-import eln.database.CartDatabase;
+import database.CartDatabase;
 import user_input.UserCommunication;
 
 import java.time.LocalDate;

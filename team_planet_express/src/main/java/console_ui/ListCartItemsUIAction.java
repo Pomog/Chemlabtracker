@@ -1,6 +1,6 @@
 package console_ui;
 
-import eln.database.CartItemDatabase;
+import database.CartItemDatabase;
 import user_input.UserCommunication;
 
 public class ListCartItemsUIAction implements UIAction {

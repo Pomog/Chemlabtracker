@@ -1,6 +1,6 @@
 package console_ui;
 
-import eln.database.ItemDatabase;
+import database.ItemDatabase;
 import user_input.UserCommunication;
 
 public class ListShopItemsUIAction implements UIAction {

@@ -1,8 +1,8 @@
 package console_ui;
 
-import eln.database.CartDatabase;
-import eln.database.CartItemDatabase;
-import eln.database.ItemDatabase;
+import database.CartDatabase;
+import database.CartItemDatabase;
+import database.ItemDatabase;
 import user_input.UserCommunication;
 
 import java.util.HashMap;

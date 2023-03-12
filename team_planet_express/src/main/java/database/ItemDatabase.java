@@ -1,4 +1,4 @@
-package eln.database;
+package database;
 
 import item.Item;
 
