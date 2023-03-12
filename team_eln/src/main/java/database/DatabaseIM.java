@@ -5,7 +5,7 @@ import baseClasses.ReactionData;
 import java.util.List;
 
 
-public interface Database {
+public interface DatabaseIM {
 
     void addReaction(ReactionData reaction);
 

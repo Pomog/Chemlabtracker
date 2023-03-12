@@ -5,7 +5,7 @@ import baseClasses.ReactionData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryDatabaseImpl implements Database{
+public class InMemoryDatabaseImplIM implements DatabaseIM {
     public List<ReactionData> reactions = new ArrayList<>();
 
     @Override

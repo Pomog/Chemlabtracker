@@ -1,14 +1,14 @@
 package services;
 
-import database.Database;
+import database.DatabaseIM;
 import baseClasses.ReactionData;
 
 public class AddReactionService {
-    private Database database;
+    private DatabaseIM databaseIM;
 
 
-    public AddReactionService(Database database) {
-        this.database = database;
+    public AddReactionService(DatabaseIM databaseIM) {
+        this.databaseIM = databaseIM;
     }
 
     public void execute(String code, String name, String filename) {
@@ -16,7 +16,7 @@ public class AddReactionService {
         additionOfMaterials(filename, demoReactionLog); // The Materials added to the ReactionData from the file
         additionOfConditions(filename, demoReactionLog); // The Reaction Conditions added to the ReactionData from the file
 
-        database.addReaction(demoReactionLog);
+        databaseIM.addReaction(demoReactionLog);
         consoleMessage(demoReactionLog);
     }
 
