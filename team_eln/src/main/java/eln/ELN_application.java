@@ -1,5 +1,7 @@
 package eln;
 
+import consoleUI.AddReactionUIAction;
+import consoleUI.ExitUIAction;
 import database.DatabaseIM;
 import database.InMemoryDatabaseImplIM;
 import services.AddReactionService;
@@ -9,6 +11,8 @@ import java.util.Scanner;
 public class ELN_application {
     private static DatabaseIM inMemoryDataBase = new InMemoryDatabaseImplIM();
     private static AddReactionService addReactionService = new AddReactionService(inMemoryDataBase);
+    private static AddReactionUIAction addReactionUIAction = new AddReactionUIAction(addReactionService);
+    private static ExitUIAction exitUIAction = new ExitUIAction();
 
 
     public static void main(String[] args) {
@@ -39,7 +43,7 @@ public class ELN_application {
     private static void executeSelectedMenuItem(int selectedMenu) {
         switch (selectedMenu) {
             case 1: {
-
+                addReactionUIAction.execute();
                 break;
             }
             case 2: {
@@ -51,7 +55,7 @@ public class ELN_application {
                 break;
             }
             case 4: {
-
+                exitUIAction.execute();
                 break;
             }
         }

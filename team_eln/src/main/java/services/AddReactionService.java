@@ -12,7 +12,8 @@ public class AddReactionService {
     }
 
     public void execute(String code, String name, String filename) {
-        ReactionData demoReactionLog = new ReactionData("TP1", "The Friedel-Crafts acylation");
+        //ReactionData demoReactionLog = new ReactionData("TP1", "The Friedel-Crafts acylation"); // as part of TEST
+        ReactionData demoReactionLog = new ReactionData(code, name);
         additionOfMaterials(filename, demoReactionLog); // The Materials added to the ReactionData from the file
         additionOfConditions(filename, demoReactionLog); // The Reaction Conditions added to the ReactionData from the file
 
