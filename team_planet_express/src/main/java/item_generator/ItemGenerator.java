@@ -1,6 +1,6 @@
 package item_generator;
 
-import data.Item;
+import item.Item;
 
 import java.util.List;
 
