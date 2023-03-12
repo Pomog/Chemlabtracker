@@ -1,4 +1,4 @@
-package database;
+package eln.database;
 
 import cart_item.CartItem;
 import org.junit.jupiter.api.Test;

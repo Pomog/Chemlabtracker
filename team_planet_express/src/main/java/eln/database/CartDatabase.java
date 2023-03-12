@@ -1,4 +1,4 @@
-package database;
+package eln.database;
 
 import cart.Cart;
 import cart.CartStatus;

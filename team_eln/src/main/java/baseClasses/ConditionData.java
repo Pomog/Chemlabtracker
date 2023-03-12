@@ -1,3 +1,5 @@
+package baseClasses;
+
 import java.time.Duration;
 
 public class ConditionData {
@@ -50,7 +52,7 @@ public class ConditionData {
     @Override
     public String toString() {
         double hours = (double)reactionTime.toMinutes() / 60;
-        return "** ConditionData {" +
+        return "** baseClasses.ConditionData {" +
                 "\n solvent=" + solvent +
                 "\n temperature=" + temperature +
                 "\n environment='" + environment + '\'' +

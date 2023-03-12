@@ -1,7 +1,7 @@
 import cart.Cart;
 import console_ui.UIActionsMap;
 import console_ui.UIMenu;
-import database.*;
+import eln.database.*;
 import item.Item;
 import item_generator.RandomItemGeneratorImpl;
 import user_input.UserCommunication;

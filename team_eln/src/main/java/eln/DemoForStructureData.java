@@ -1,7 +1,14 @@
+package eln;
+
+import baseClasses.ReactionData;
+import baseClasses.StructureData;
+import services.CreateConditionDataFromFile;
+import services.CreateStructureFromFile;
+
 public class DemoForStructureData {
     public static void main(String[] args) {
 
-        // Testing StructureData class
+        // Testing baseClasses.StructureData class
 
         StructureData demoStructure = new StructureData("CC(=O)O", "Acetic acid", 1);
         System.out.println(demoStructure.getName());
@@ -14,8 +21,8 @@ public class DemoForStructureData {
         demoStructure2.getMW();
         System.out.println("");
 
-        // Testing ReactionData class
-        System.out.println("ReactionData Object - from the text file data\n");
+        // Testing baseClasses.ReactionData class
+        System.out.println("baseClasses.ReactionData Object - reading from the text file data\n");
 
         ReactionData demoReactionLog = new ReactionData("TP1", "The Friedel-Crafts acylation");
 

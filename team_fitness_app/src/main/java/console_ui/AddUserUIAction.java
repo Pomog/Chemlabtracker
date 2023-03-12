@@ -1,7 +1,7 @@
 package console_ui;
 
-import database.Database;
-import database.User;
+import eln.database.Database;
+import eln.database.User;
 
 import java.util.Scanner;
 
@@ -21,6 +21,6 @@ public class AddUserUIAction implements UIAction {
         String password = scanner.nextLine();
         User user = new User(username, password);
         database.registerNewUser(user);
-        System.out.println("database.User registered with user ID " + user.getId());
+        System.out.println("eln.database.User registered with user ID " + user.getId());
     }
 }

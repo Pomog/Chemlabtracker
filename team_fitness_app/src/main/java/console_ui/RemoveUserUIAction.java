@@ -1,6 +1,6 @@
 package console_ui;
 
-import database.Database;
+import eln.database.Database;
 
 import java.util.Scanner;
 
@@ -20,7 +20,7 @@ public class RemoveUserUIAction implements UIAction{
         String password = scanner.nextLine();
 
         if (database.deleteUser(id, password))
-            System.out.println("database.User was removed from database.");
+            System.out.println("eln.database.User was removed from eln.database.");
         else
             System.out.println("Id or Password is Incorrect!");
     }

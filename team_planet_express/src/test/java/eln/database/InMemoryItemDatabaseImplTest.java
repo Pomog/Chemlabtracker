@@ -1,4 +1,4 @@
-package database;
+package eln.database;
 
 import item.Item;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package database;
+package eln.database;
 
 import java.util.List;
 

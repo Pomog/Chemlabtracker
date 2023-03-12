@@ -1,3 +1,5 @@
+package baseClasses;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -5,8 +7,7 @@ import java.util.List;
 public class ReactionData {
     private final String code;
     private final String name;
-    private List<StructureData> startingMaterials;
-
+    private final List<StructureData> startingMaterials;
     private ConditionData conditions;
     private List<StructureData> products;
     private StructureData mainProduct;
@@ -15,7 +16,7 @@ public class ReactionData {
     public ReactionData(String code, String name) {
         this.code = code;
         this.name = name;
-        this.startingMaterials = new ArrayList<StructureData>();
+        this.startingMaterials = new ArrayList<>();
     }
     public String getCode() {
         return code;
@@ -58,7 +59,7 @@ public class ReactionData {
 
     @Override
     public String toString() {
-        return "*** ReactionData{" +
+        return "*** baseClasses.ReactionData{" +
                 "\n code='" + code + '\'' +
                 "\n name='" + name + '\'' +
                 "\n startingMaterials=" + startingMaterials +

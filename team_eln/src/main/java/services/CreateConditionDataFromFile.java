@@ -1,3 +1,8 @@
+package services;
+
+import baseClasses.ConditionData;
+import baseClasses.StructureData;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,7 +28,6 @@ public class CreateConditionDataFromFile {
             while (line != null) {
                 if (line.startsWith("Solvent:")) {
                     String[] fields = line.split(": "); // split the line into identifier and structure data
-                    System.out.println(fields[1].split(", ")[2]);
                     solventMass = Double.parseDouble(fields[1].split(", ")[2]); // extract the mass
                     solventSMILES = fields[1].split(", ")[1]; // extract the SMILES string
                     solventName = fields[1].split(", ")[0]; // extract the name

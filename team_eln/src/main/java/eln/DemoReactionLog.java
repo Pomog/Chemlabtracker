@@ -1,3 +1,9 @@
+package eln;
+
+import baseClasses.ReactionData;
+import services.CreateConditionDataFromFile;
+import services.CreateStructureFromFile;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

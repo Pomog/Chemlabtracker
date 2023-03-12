@@ -1,3 +1,5 @@
+package baseClasses;
+
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -82,7 +84,7 @@ public class StructureData {
 
     @Override
     public String toString() {
-        return "StructureData{" +
+        return "baseClasses.StructureData{" +
                 "smiles='" + smiles + '\'' +
                 ", formula=" + MolecularFormulaManipulator.getString(formula) +
                 ", mw=" + String.format("%.2f", mw) +
