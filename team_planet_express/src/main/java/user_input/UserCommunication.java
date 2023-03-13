@@ -24,4 +24,12 @@ public class UserCommunication {
         return scanner.nextInt();
     }
 
+    public void clearBuffer() {
+        scanner.nextLine();
+    }
+
+    public Integer getMenuActionNumber() {
+        return Integer.parseInt(scanner.nextLine());
+    }
+
 }

@@ -1,23 +1,40 @@
 package cart;
 
-import data.Item;
-import data.OrderedItem;
-import shop.Shop;
+import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Objects;
 
+@Data
 public class Cart {
 
-    List<OrderedItem> orders = new ArrayList<>();
+    private Long id;
+    private CartStatus cartStatus;
+    private LocalDate lastActionDate;
 
-    public List<OrderedItem> getOrders() {
-        return orders;
+    public Cart() {
+        this.cartStatus = CartStatus.OPEN;
+        this.lastActionDate = LocalDate.now();
     }
 
-    public void addItem(Item item, Integer orderedQuantity, Shop shop) {
-        orders.add(new OrderedItem(item, orderedQuantity));
-        shop.decreaseItemQuantity(item, orderedQuantity);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return Objects.equals(id, cart.id) && Objects.equals(lastActionDate, cart.lastActionDate) && cartStatus == cart.cartStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastActionDate, cartStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", last cart action date=" + lastActionDate +
+                ", cart status=" + cartStatus;
     }
 
 }

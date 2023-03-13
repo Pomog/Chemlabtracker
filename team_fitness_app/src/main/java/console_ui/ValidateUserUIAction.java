@@ -1,6 +1,6 @@
 package console_ui;
 
-import database.Database;
+import eln.database.Database;
 
 import java.util.Scanner;
 
