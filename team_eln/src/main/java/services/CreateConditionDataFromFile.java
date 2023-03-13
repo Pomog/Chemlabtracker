@@ -31,20 +31,15 @@ public class CreateConditionDataFromFile {
                     solventMass = Double.parseDouble(fields[1].split(", ")[2]); // extract the mass
                     solventSMILES = fields[1].split(", ")[1]; // extract the SMILES string
                     solventName = fields[1].split(", ")[0]; // extract the name
-                    System.out.println(fields[0] + ": " + solventName + ", " + solventSMILES + " was added");
                 } else if (line.startsWith("temperature:")) {
                     temperature = Integer.parseInt(line.split(": ")[1]);
-                    System.out.println("temperature :" + temperature);
                 } else if (line.startsWith("pressure:")) {
                     pressure = Integer.parseInt(line.split(": ")[1]);
-                    System.out.println("pressure :" + pressure);
                 } else if (line.startsWith("environment:")) {
                     environment = line.split(": ")[1];
-                    System.out.println("environment :" + environment);
                 } else if (line.startsWith("reactionTime:")) {
                     String durationString = line.split(": ")[1];
                     reactionTime = Duration.parse(durationString);
-                    System.out.println("reactionTime :" + reactionTime);
                 }
                 line = reader.readLine();
             }
