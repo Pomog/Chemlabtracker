@@ -12,11 +12,13 @@ public class ReactionData {
     private List<StructureData> products;
     private StructureData mainProduct;
     private List<File> analyticalResults;
+    private double reactionYield;
 
     public ReactionData(String code, String name) {
         this.code = code;
         this.name = name;
         this.startingMaterials = new ArrayList<>();
+
     }
     public String getCode() {
         return code;
@@ -57,8 +59,15 @@ public class ReactionData {
         return mainProduct;
     }
 
+    public void getReactionYield (){
+        double sm1Mole = (startingMaterials.get(0).getMass()/startingMaterials.get(0).getMW());
+        double mpMole = (mainProduct.getMass()/mainProduct.getMW());
+        this.reactionYield = mpMole/sm1Mole;
+    }
+
     @Override
     public String toString() {
+        getReactionYield();
         return "*** baseClasses.ReactionData{" +
                 "\n code='" + code + '\'' +
                 "\n name='" + name + '\'' +
@@ -66,6 +75,7 @@ public class ReactionData {
                 "\n products=" + products +
                 "\n mainProduct=" + mainProduct +
                 "\n Conditions: \n" + conditions +
+                "\n reaction yield: " + String.format("%.2f", reactionYield*100) + "%" +
                 "} ***";
     }
 }

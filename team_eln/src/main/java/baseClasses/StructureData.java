@@ -61,9 +61,12 @@ public class StructureData {
     private void calculateMW(){
         mw = MolecularFormulaManipulator.getMass(formula);
     }
-    public void getMW(){
+    public void printMW(){
         String message = String.format("MW = [%.2f]", mw);
         System.out.println(message);
+    }
+    public double getMW() {
+        return mw;
     }
 
     public String getInternalCode() {
