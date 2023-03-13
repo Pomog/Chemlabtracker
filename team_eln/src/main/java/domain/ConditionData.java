@@ -1,4 +1,4 @@
-package baseClasses;
+package domain;
 
 import java.time.Duration;
 

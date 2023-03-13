@@ -1,6 +1,6 @@
 package database;
 
-import baseClasses.ReactionData;
+import domain.ReactionData;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package services;
 
-import baseClasses.ConditionData;
-import baseClasses.StructureData;
+import domain.ConditionData;
+import domain.StructureData;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

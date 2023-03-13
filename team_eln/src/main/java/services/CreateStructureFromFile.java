@@ -1,6 +1,6 @@
 package services;
 
-import baseClasses.StructureData;
+import domain.StructureData;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

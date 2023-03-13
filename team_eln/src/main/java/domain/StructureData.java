@@ -1,4 +1,4 @@
-package baseClasses;
+package domain;
 
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
