@@ -1,9 +1,6 @@
 package eln;
 
-import consoleUI.AddReactionUIAction;
-import consoleUI.DelReactionUIACtion;
-import consoleUI.ExitUIAction;
-import consoleUI.GetAllReactionUIAction;
+import consoleUI.*;
 import database.DatabaseIM;
 import database.InMemoryDatabaseImplIM;
 import services.AddReactionService;
@@ -15,12 +12,12 @@ import java.util.Scanner;
 public class ELN_application {
     private static DatabaseIM inMemoryDataBase = new InMemoryDatabaseImplIM();
     private static AddReactionService addReactionService = new AddReactionService(inMemoryDataBase);
-    private static AddReactionUIAction addReactionUIAction = new AddReactionUIAction(addReactionService);
+    private static UIAction addReactionUIAction = new AddReactionUIAction(addReactionService);
     private static GetAllReactionsService getAllReactionsService = new GetAllReactionsService(inMemoryDataBase);
-    private static GetAllReactionUIAction getAllReactionUIAction = new GetAllReactionUIAction(getAllReactionsService);
+    private static UIAction getAllReactionUIAction = new GetAllReactionUIAction(getAllReactionsService);
     private static DelReactionService delReactionService = new DelReactionService(inMemoryDataBase);
-    private static DelReactionUIACtion delReactionUIACtion = new DelReactionUIACtion(delReactionService);
-    private static ExitUIAction exitUIAction = new ExitUIAction();
+    private static UIAction delReactionUIACtion = new DelReactionUIACtion(delReactionService);
+    private static UIAction exitFormApplication = new ExitUIAction();
 
 
     public static void main(String[] args) {
@@ -50,20 +47,20 @@ public class ELN_application {
 
     private static void executeSelectedMenuItem(int selectedMenu) {
         switch (selectedMenu) {
-            case 1: {
+            case 1 -> {
                 addReactionUIAction.execute();
                 break;
             }
-            case 2: {
+            case 2 -> {
                 delReactionUIACtion.execute();
                 break;
             }
-            case 3: {
+            case 3 -> {
                 getAllReactionUIAction.execute();
                 break;
             }
-            case 4: {
-                exitUIAction.execute();
+            case 4 -> {
+                exitFormApplication.execute();
                 break;
             }
         }

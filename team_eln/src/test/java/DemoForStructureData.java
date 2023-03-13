@@ -1,5 +1,3 @@
-package eln;
-
 import baseClasses.ReactionData;
 import baseClasses.StructureData;
 import services.CreateConditionDataFromFile;

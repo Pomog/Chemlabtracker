@@ -6,13 +6,11 @@ import baseClasses.ReactionData;
 public class AddReactionService {
     private DatabaseIM databaseIM;
 
-
     public AddReactionService(DatabaseIM databaseIM) {
         this.databaseIM = databaseIM;
     }
 
-    public void execute(String code, String name, String filename) {
-        //ReactionData demoReactionLog = new ReactionData("TP1", "The Friedel-Crafts acylation"); // as part of TEST
+     public void execute(String code, String name, String filename) {
         ReactionData demoReactionLog = new ReactionData(code, name);
         additionOfMaterials(filename, demoReactionLog); // The Materials added to the ReactionData from the file
         additionOfConditions(filename, demoReactionLog); // The Reaction Conditions added to the ReactionData from the file
@@ -38,4 +36,5 @@ public class AddReactionService {
     private static void consoleMessage(ReactionData addedReaction) {
         System.out.println("baseClasses.ReactionData object with code " + addedReaction.getCode() + " has been successfully added.");
     }
+
 }

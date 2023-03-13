@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReactionData {
-    private final String code;
-    private final String name;
-    private final List<StructureData> startingMaterials;
+    private String code;
+    private  String name;
+    private  List<StructureData> startingMaterials;
     private ConditionData conditions;
     private List<StructureData> products;
     private StructureData mainProduct;
