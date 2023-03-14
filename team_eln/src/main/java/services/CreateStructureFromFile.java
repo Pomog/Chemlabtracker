@@ -1,6 +1,6 @@
 package services;
 
-import baseClasses.StructureData;
+import domain.StructureData;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,10 +21,9 @@ public class CreateStructureFromFile {
             while (line != null) {
                 if (line.startsWith(identifier)) { // only process lines that start identifier
                     String[] fields = line.split(": "); // split the line into identifier and structure data
-                    double mass = Double.parseDouble(fields[1].split(", ")[2]); // extract the SMILES string
+                    double mass = Double.parseDouble(fields[1].split(", ")[2]); // extract mass
                     String smiles = fields[1].split(", ")[1]; // extract the SMILES string
                     String name = fields[1].split(", ")[0]; // extract the name
-                    System.out.println(fields[0] + ": " + name + ", " + smiles + " was added");
                     return new StructureData(smiles, name, mass);
                 }
                 line = reader.readLine();
@@ -33,7 +32,7 @@ public class CreateStructureFromFile {
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
-        return null;
+        return new StructureData("C", "No name", 0.0);
     }
 }
 

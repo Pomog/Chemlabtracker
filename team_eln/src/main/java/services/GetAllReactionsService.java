@@ -1,6 +1,6 @@
 package services;
 
-import baseClasses.ReactionData;
+import domain.ReactionData;
 import database.DatabaseIM;
 
 import java.util.List;
