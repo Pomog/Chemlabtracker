@@ -1,6 +1,6 @@
-import eln.database.Database;
-import eln.database.InMemoryDatabaseImpl;
-import eln.database.User;
+import users.database.Database;
+import users.database.InMemoryDatabaseImpl;
+import users.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

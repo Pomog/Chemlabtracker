@@ -1,16 +1,23 @@
-package eln.database;
+package users;
 
-import console_ui.*;
+import users.console_ui.*;
+import users.database.Database;
+import users.database.InMemoryDatabaseImpl;
+import users.services.AddUserService;
+import users.services.RemoveUserService;
+import users.services.ValidateUserService;
 
 import java.util.Scanner;
 
 public class UserListApplication {
 
-
     private static Database database = new InMemoryDatabaseImpl();
-    private static UIAction addUserUIAction = new AddUserUIAction(database);
-    private static UIAction removeUserUIAction = new RemoveUserUIAction(database);
-    private static UIAction validateUserUIAction = new ValidateUserUIAction(database);
+    private static AddUserService addUserService = new AddUserService(database);
+    private static UIAction addUserUIAction = new AddUserUIAction(addUserService);
+    private static RemoveUserService removeUserService = new RemoveUserService(database);
+    private static UIAction removeUserUIAction = new RemoveUserUIAction(removeUserService);
+    private static ValidateUserService validateUserService = new ValidateUserService(database);
+    private static UIAction validateUserUIAction = new ValidateUserUIAction(validateUserService);
     private static UIAction exitUIAction = new ExitUIAction();
 
     public static void main(String[] args) {

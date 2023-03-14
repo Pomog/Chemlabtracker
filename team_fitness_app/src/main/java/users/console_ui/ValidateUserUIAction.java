@@ -1,15 +1,16 @@
-package console_ui;
+package users.console_ui;
 
-import eln.database.Database;
+import users.database.Database;
+import users.services.ValidateUserService;
 
 import java.util.Scanner;
 
-public class ValidateUserUIAction implements UIAction{
+public class ValidateUserUIAction implements UIAction {
 
-    private Database database;
+    private ValidateUserService validateUserService;
 
-    public ValidateUserUIAction(Database database) {
-        this.database = database;
+    public ValidateUserUIAction(ValidateUserService validateUserService) {
+        this.validateUserService = validateUserService;
     }
 
     public void execute() {
@@ -18,7 +19,7 @@ public class ValidateUserUIAction implements UIAction{
         Long id = Long.parseLong(scanner.nextLine());
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-        if (database.login(id, password))
+        if (validateUserService.execute(id, password))
             System.out.println("Login Successful!");
         else
             System.out.println("Id or Password is Incorrect!");

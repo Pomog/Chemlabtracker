@@ -1,4 +1,4 @@
-package eln.database;
+package users;
 
 import java.util.Objects;
 
@@ -44,7 +44,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "eln.database.User{" +
+        return "users.User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 '}';

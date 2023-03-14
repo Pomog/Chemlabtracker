@@ -1,4 +1,4 @@
-package console_ui;
+package users.console_ui;
 
 public interface UIAction {
 

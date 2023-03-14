@@ -1,4 +1,6 @@
-package eln.database;
+package users.database;
+
+import users.User;
 
 import java.util.ArrayList;
 import java.util.List;

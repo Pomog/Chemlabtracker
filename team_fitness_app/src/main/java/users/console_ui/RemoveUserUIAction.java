@@ -1,15 +1,15 @@
-package console_ui;
+package users.console_ui;
 
-import eln.database.Database;
+import users.services.RemoveUserService;
 
 import java.util.Scanner;
 
 public class RemoveUserUIAction implements UIAction{
 
-    private Database database;
+    private RemoveUserService removeUserService;
 
-    public RemoveUserUIAction(Database database) {
-        this.database = database;
+    public RemoveUserUIAction(RemoveUserService removeUserService) {
+        this.removeUserService = removeUserService;
     }
 
     public void execute() {
@@ -19,8 +19,8 @@ public class RemoveUserUIAction implements UIAction{
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
 
-        if (database.deleteUser(id, password))
-            System.out.println("eln.database.User was removed from eln.database.");
+        if (removeUserService.execute(id, password))
+            System.out.println("users.User was removed from eln.database.");
         else
             System.out.println("Id or Password is Incorrect!");
     }
