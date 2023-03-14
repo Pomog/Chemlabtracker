@@ -14,6 +14,7 @@ public class AddUserUIAction implements UIAction {
         this.addUserService = addUserService;
     }
 
+    @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter username: ");
