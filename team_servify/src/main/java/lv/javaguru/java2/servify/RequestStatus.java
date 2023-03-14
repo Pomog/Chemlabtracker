@@ -1,3 +1,5 @@
+package lv.javaguru.java2.servify;
+
 public enum RequestStatus {
     NEW,
     IN_PROGRESS,

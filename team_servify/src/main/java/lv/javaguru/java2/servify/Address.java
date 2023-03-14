@@ -1,3 +1,5 @@
+package lv.javaguru.java2.servify;
+
 public class Address {
 
     private String country;
