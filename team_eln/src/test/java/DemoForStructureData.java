@@ -1,7 +1,5 @@
-package eln;
-
-import baseClasses.ReactionData;
-import baseClasses.StructureData;
+import domain.ReactionData;
+import domain.StructureData;
 import services.CreateConditionDataFromFile;
 import services.CreateStructureFromFile;
 

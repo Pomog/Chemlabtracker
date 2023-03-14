@@ -13,6 +13,7 @@ public class ValidateUserUIAction implements UIAction {
         this.validateUserService = validateUserService;
     }
 
+    @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter user ID");

@@ -12,7 +12,7 @@ public class GetAllReactionUIAction implements UIAction{
     @Override
     public void execute() {
         System.out.println("Reaction IMDataBase :");
-       getAllReactionsService.execute().forEach(System.out::println);
+        getAllReactionsService.execute().forEach(System.out::println);
         System.out.println("Reaction log end.");
 
     }

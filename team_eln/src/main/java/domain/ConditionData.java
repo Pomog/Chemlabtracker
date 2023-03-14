@@ -1,4 +1,4 @@
-package baseClasses;
+package domain;
 
 import java.time.Duration;
 
@@ -53,10 +53,10 @@ public class ConditionData {
     public String toString() {
         double hours = (double)reactionTime.toMinutes() / 60;
         return "** baseClasses.ConditionData {" +
-                "\n solvent=" + solvent +
-                "\n temperature=" + temperature +
-                "\n environment='" + environment + '\'' +
-                "\n pressure=" + pressure +
+                "\n solvent = " + solvent +
+                "\n temperature = " + temperature +
+                "\n environment = '" + environment + '\'' +
+                "\n pressure = " + pressure + " Bar" +
                 "\n reactionTime=" + String.format("%.2f", hours) + " h" +
                 "}";
     }
