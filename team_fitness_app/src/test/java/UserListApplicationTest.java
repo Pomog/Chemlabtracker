@@ -1,6 +1,6 @@
-import database.Database;
-import database.InMemoryDatabaseImpl;
-import database.User;
+import users.database.Database;
+import users.database.InMemoryDatabaseImpl;
+import users.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
