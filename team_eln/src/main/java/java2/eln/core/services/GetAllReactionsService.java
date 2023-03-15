@@ -1,7 +1,7 @@
-package java2.eln.services;
+package java2.eln.core.services;
 
+import java2.eln.core.database.DatabaseIM;
 import java2.eln.domain.ReactionData;
-import java2.eln.database.DatabaseIM;
 
 import java.util.List;
 

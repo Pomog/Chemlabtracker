@@ -1,4 +1,4 @@
-package java2.eln.database;
+package java2.eln.core.database;
 
 import java2.eln.domain.ReactionData;
 

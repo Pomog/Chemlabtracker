@@ -1,6 +1,6 @@
 package java2.eln.console_ui;
 
-import java2.eln.services.GetAllReactionsService;
+import java2.eln.core.services.GetAllReactionsService;
 
 public class GetAllReactionUIAction implements UIAction{
     private GetAllReactionsService getAllReactionsService;

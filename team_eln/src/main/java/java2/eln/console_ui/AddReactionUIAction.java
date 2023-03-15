@@ -1,6 +1,8 @@
 package java2.eln.console_ui;
 
-import java2.eln.services.AddReactionService;
+import java2.eln.core.requests.AddReactionRequest;
+import java2.eln.core.responses.AddReactionResponse;
+import java2.eln.core.services.AddReactionService;
 
 import java.util.Scanner;
 
@@ -22,8 +24,9 @@ public class AddReactionUIAction implements UIAction{
         System.out.println("Enter file path with Reaction Data: " + "example: team_eln/data/demoReaction1.txt");
         String dataFilePath = scanner.nextLine();
 
-        addReactionService.execute(reactionCode, reactionName, dataFilePath);
+        AddReactionRequest addReactionRequest = new AddReactionRequest(reactionCode, reactionName, dataFilePath);
+        AddReactionResponse addReactionResponse = addReactionService.execute(addReactionRequest);
 
-        System.out.println("Reaction was added");
+        System.out.printf("Reaction %s has been successfully added.", addReactionResponse.getReactionData().getCode());
     }
 }

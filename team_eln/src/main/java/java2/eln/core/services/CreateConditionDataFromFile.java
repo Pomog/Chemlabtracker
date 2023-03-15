@@ -1,4 +1,4 @@
-package java2.eln.services;
+package java2.eln.core.services;
 
 import java2.eln.domain.ConditionData;
 import java2.eln.domain.StructureData;

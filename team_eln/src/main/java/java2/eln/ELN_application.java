@@ -1,11 +1,11 @@
 package java2.eln;
 
 import java2.eln.console_ui.*;
-import java2.eln.database.DatabaseIM;
-import java2.eln.database.InMemoryDatabaseImplIM;
-import java2.eln.services.AddReactionService;
-import java2.eln.services.DelReactionService;
-import java2.eln.services.GetAllReactionsService;
+import java2.eln.core.database.DatabaseIM;
+import java2.eln.core.database.InMemoryDatabaseImplIM;
+import java2.eln.core.services.AddReactionService;
+import java2.eln.core.services.DelReactionService;
+import java2.eln.core.services.GetAllReactionsService;
 
 import java.util.Scanner;
 

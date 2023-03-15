@@ -1,6 +1,6 @@
 package java2.eln.console_ui;
 
-import java2.eln.services.DelReactionService;
+import java2.eln.core.services.DelReactionService;
 
 import java.util.Scanner;
 
