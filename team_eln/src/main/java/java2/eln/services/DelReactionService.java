@@ -1,6 +1,6 @@
-package services;
+package java2.eln.services;
 
-import database.DatabaseIM;
+import java2.eln.database.DatabaseIM;
 
 public class DelReactionService {
     private DatabaseIM databaseIM;

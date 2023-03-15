@@ -1,7 +1,7 @@
-package services;
+package java2.eln.services;
 
-import database.DatabaseIM;
-import domain.ReactionData;
+import java2.eln.database.DatabaseIM;
+import java2.eln.domain.ReactionData;
 
 public class AddReactionService {
     private DatabaseIM databaseIM;

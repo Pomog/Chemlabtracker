@@ -1,4 +1,4 @@
-package domain;
+package java2.eln.domain;
 
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;

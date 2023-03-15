@@ -1,6 +1,6 @@
-import domain.ReactionData;
-import services.CreateConditionDataFromFile;
-import services.CreateStructureFromFile;
+import java2.eln.domain.ReactionData;
+import java2.eln.services.CreateConditionDataFromFile;
+import java2.eln.services.CreateStructureFromFile;
 
 import java.util.ArrayList;
 import java.util.List;

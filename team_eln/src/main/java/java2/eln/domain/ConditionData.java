@@ -1,4 +1,4 @@
-package domain;
+package java2.eln.domain;
 
 import java.time.Duration;
 

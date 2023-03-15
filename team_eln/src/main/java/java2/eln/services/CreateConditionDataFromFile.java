@@ -1,7 +1,7 @@
-package services;
+package java2.eln.services;
 
-import domain.ConditionData;
-import domain.StructureData;
+import java2.eln.domain.ConditionData;
+import java2.eln.domain.StructureData;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

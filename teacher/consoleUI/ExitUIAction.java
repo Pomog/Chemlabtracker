@@ -1,4 +1,4 @@
-package consoleUI;
+package console_ui;
 
 public class ExitUIAction implements UIAction {
 

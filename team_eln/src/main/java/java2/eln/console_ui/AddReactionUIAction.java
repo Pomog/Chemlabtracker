@@ -1,6 +1,6 @@
-package consoleUI;
+package java2.eln.console_ui;
 
-import services.AddReactionService;
+import java2.eln.services.AddReactionService;
 
 import java.util.Scanner;
 
@@ -19,7 +19,7 @@ public class AddReactionUIAction implements UIAction{
         String reactionCode = scanner.nextLine();
         System.out.println("Enter Reaction Name: ");
         String reactionName = scanner.nextLine();
-        System.out.println("Enter file path with Reaction Data: " + "example: team_eln/src/data/demoReaction1.txt");
+        System.out.println("Enter file path with Reaction Data: " + "example: team_eln/data/demoReaction1.txt");
         String dataFilePath = scanner.nextLine();
 
         addReactionService.execute(reactionCode, reactionName, dataFilePath);
