@@ -3,6 +3,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class UserLogin {
 
@@ -18,8 +19,8 @@ public class UserLogin {
         List<User> users = new ArrayList<>();
 
         String[] options = {    "1 - Login",
-                                "2 - Register",
-                                "3 - Exit",
+                "2 - Register",
+                "3 - Exit",
         };
 
         Scanner scanner = new Scanner(System.in);
@@ -76,15 +77,16 @@ public class UserLogin {
     }
 
     private static void register(List<User> users) {
-            System.out.println("User registration");
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter login: ");
-            String userLogin = scanner.nextLine();
-            System.out.println("Enter password: ");
-            String userPassword = scanner.nextLine();
-            User user = new User(userLogin, userPassword);
-            users.add(user);
-            System.out.println("Registration complete!");
+        System.out.println("User registration");
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter login: ");
+        String userLogin = scanner.nextLine();
+        System.out.println("Enter password: ");
+        String userPassword = scanner.nextLine();
+        String userID = UUID.randomUUID().toString().substring(0, 8);
+        User user = new User(userID, userLogin, userPassword);
+        users.add(user);
+        System.out.println("Registration complete!");
     }
 
     private static void exit() {

@@ -10,15 +10,12 @@ public class AddReactionRequest {
         this.name = name;
         this.filename = filename;
     }
-
     public String getCode() {
         return code;
     }
-
     public String getName() {
         return name;
     }
-
     public String getFilename() {
         return filename;
     }
