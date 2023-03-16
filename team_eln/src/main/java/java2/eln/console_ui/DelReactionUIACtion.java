@@ -17,6 +17,5 @@ public class DelReactionUIACtion implements UIAction{
         System.out.println("Enter Reaction Code to delete: ");
         String  reactionCode = scanner.nextLine();
         delReactionService.execute(reactionCode);
-
     }
 }
