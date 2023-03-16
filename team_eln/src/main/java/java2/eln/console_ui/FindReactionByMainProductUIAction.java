@@ -20,7 +20,6 @@ public class FindReactionByMainProductUIAction implements UIAction{
         String  smile = scanner.nextLine();
 
         GetStructureFromSMILE getStructureFromSMILE = new GetStructureFromSMILE(smile);
-
         StructureData searchedStructure = getStructureFromSMILE.execute();
 
         System.out.println("Search Results :");

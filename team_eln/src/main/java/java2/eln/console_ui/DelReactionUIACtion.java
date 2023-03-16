@@ -4,10 +4,10 @@ import java2.eln.core.services.DelReactionService;
 
 import java.util.Scanner;
 
-public class DelReactionUIAction implements UIAction{
+public class DelReactionUIACtion implements UIAction{
     private DelReactionService delReactionService;
 
-    public DelReactionUIAction(DelReactionService delReactionService) {
+    public DelReactionUIACtion(DelReactionService delReactionService) {
         this.delReactionService = delReactionService;
     }
 
@@ -17,5 +17,6 @@ public class DelReactionUIAction implements UIAction{
         System.out.println("Enter Reaction Code to delete: ");
         String  reactionCode = scanner.nextLine();
         delReactionService.execute(reactionCode);
+
     }
 }

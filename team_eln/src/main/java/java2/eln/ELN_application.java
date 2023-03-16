@@ -17,12 +17,13 @@ public class ELN_application {
     private static GetAllReactionsService getAllReactionsService = new GetAllReactionsService(inMemoryDataBase);
     private static UIAction getAllReactionUIAction = new GetAllReactionUIAction(getAllReactionsService);
     private static DelReactionService delReactionService = new DelReactionService(inMemoryDataBase);
-    private static UIAction delReactionUIACtion = new DelReactionUIAction(delReactionService);
+    private static UIAction delReactionUIACtion = new DelReactionUIACtion(delReactionService);
     private static FindReactionByMainProductService findReactionByMainProductService =
             new FindReactionByMainProductService(inMemoryDataBase);
     private static FindReactionByMainProductUIAction findReactionByMainProductUIAction =
             new FindReactionByMainProductUIAction(findReactionByMainProductService);
     private static UIAction exitFormApplication = new ExitUIAction();
+
 
     public static void main(String[] args) {
         while (true) {
@@ -31,6 +32,7 @@ public class ELN_application {
             executeSelectedMenuItem(menuNumber);
         }
     }
+
     private static void printProgramMenu() {
         System.out.println();
         System.out.println("Program menu:");
@@ -41,11 +43,13 @@ public class ELN_application {
         System.out.println("5. Exit");
         System.out.println();
     }
+
     private static int getMenuNumberFromUser() {
         System.out.println("Enter menu item number to execute:");
         Scanner scanner = new Scanner(System.in);
         return Integer.parseInt(scanner.nextLine());
     }
+
     private static void executeSelectedMenuItem(int selectedMenu) {
         switch (selectedMenu) {
             case 1 -> {
@@ -70,5 +74,6 @@ public class ELN_application {
             }
         }
     }
+
 }
 

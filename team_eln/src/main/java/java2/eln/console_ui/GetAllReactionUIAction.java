@@ -4,6 +4,7 @@ import java2.eln.core.services.GetAllReactionsService;
 
 public class GetAllReactionUIAction implements UIAction{
     private GetAllReactionsService getAllReactionsService;
+
     public GetAllReactionUIAction(GetAllReactionsService getAllReactionsService) {
         this.getAllReactionsService = getAllReactionsService;
     }
@@ -13,5 +14,6 @@ public class GetAllReactionUIAction implements UIAction{
         System.out.println("Reaction IMDataBase :");
         getAllReactionsService.execute().forEach(System.out::println);
         System.out.println("Reaction log end.");
+
     }
 }
