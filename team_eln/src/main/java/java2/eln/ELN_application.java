@@ -17,7 +17,7 @@ public class ELN_application {
     private static GetAllReactionsService getAllReactionsService = new GetAllReactionsService(inMemoryDataBase);
     private static UIAction getAllReactionUIAction = new GetAllReactionUIAction(getAllReactionsService);
     private static DelReactionService delReactionService = new DelReactionService(inMemoryDataBase);
-    private static UIAction delReactionUIACtion = new DelReactionUIACtion(delReactionService);
+    private static UIAction delReactionUIACtion = new DelReactionUIAction(delReactionService);
     private static FindReactionByMainProductService findReactionByMainProductService =
             new FindReactionByMainProductService(inMemoryDataBase);
     private static FindReactionByMainProductUIAction findReactionByMainProductUIAction =

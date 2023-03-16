@@ -4,10 +4,10 @@ import java2.eln.core.services.DelReactionService;
 
 import java.util.Scanner;
 
-public class DelReactionUIACtion implements UIAction{
+public class DelReactionUIAction implements UIAction{
     private DelReactionService delReactionService;
 
-    public DelReactionUIACtion(DelReactionService delReactionService) {
+    public DelReactionUIAction(DelReactionService delReactionService) {
         this.delReactionService = delReactionService;
     }
 
