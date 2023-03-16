@@ -1,26 +1,22 @@
 public class User {
 
-    private String userID;
     private String username;
     private String password;
     private String name;
     private String email;
 
-    public User (String userID, String username, String password){
-        this.userID = userID;
+    public User (String username, String password, String name, String email){
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
     }
 
-    String getUserID() {return userID;}
     String getUsername() {return username;}
     String getPassword() {return password;}
     String getName() {return name;}
     String getEmail() {return email;}
 
-    void setUserID (String userID) {this.userID = userID;}
     void setUsername (String username) {this.username = username;}
     void setPassword (String password) {this.password = password;}
     void setName (String name) {this.name = name;}
@@ -32,7 +28,6 @@ public class User {
         if (!(o instanceof User)) {return false;}
         User user = (User) o;
         return
-                userID.equals(user.userID) &&
                 username.equals(user.username) &&
                 password.equals(user.password) &&
                 name.equals(user.name) &&
@@ -42,7 +37,6 @@ public class User {
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result * userID.hashCode();
         result = 31 * result + username.hashCode();
         result = 31 * result + password.hashCode();
         result = 31 * result + name.hashCode();
@@ -53,7 +47,6 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userID='" + userID + '\'' +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
