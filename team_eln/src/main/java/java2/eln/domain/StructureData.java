@@ -21,9 +21,19 @@ public class StructureData {
     public String getName() {
         return name;
     }
+    public IAtomContainer getMol() {
+        return mol;
+    }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public StructureData(String smiles) {
+        this.smiles = smiles;
+        smilesConverter();
+        calculateBruttoFormula();
+        calculateMW();
     }
 
     public StructureData(String smiles, String name, double mass) {
