@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserListApplicationTest {
+public class UserListApplicationTest {
 
     Database database = new InMemoryDatabaseImpl();
 
@@ -32,5 +32,12 @@ class UserListApplicationTest {
         database.registerNewUser(user1);
         assertTrue(database.login(1L, "a"));
     }
-
+    @Test
+    public void getUsers() {
+        User user1 = new User("A", "a");
+        User user2 = new User("B", "b");
+        database.registerNewUser(user1);
+        database.registerNewUser(user2);
+        assertEquals(2, database.getUsers().size());
+    }
 }

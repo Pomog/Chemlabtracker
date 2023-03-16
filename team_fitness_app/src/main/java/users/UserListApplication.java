@@ -4,6 +4,7 @@ import users.console_ui.*;
 import users.database.Database;
 import users.database.InMemoryDatabaseImpl;
 import users.services.AddUserService;
+import users.services.GetUsersService;
 import users.services.RemoveUserService;
 import users.services.ValidateUserService;
 
@@ -18,6 +19,8 @@ public class UserListApplication {
     private static UIAction removeUserUIAction = new RemoveUserUIAction(removeUserService);
     private static ValidateUserService validateUserService = new ValidateUserService(database);
     private static UIAction validateUserUIAction = new ValidateUserUIAction(validateUserService);
+    private static GetUsersService getUsersService = new GetUsersService(database);
+    private static UIAction getUsersUIAction = new GetUsersUIAction(getUsersService);
     private static UIAction exitUIAction = new ExitUIAction();
 
     public static void main(String[] args) {
@@ -35,7 +38,8 @@ public class UserListApplication {
         System.out.println("1. Register new user.");
         System.out.println("2. Login.");
         System.out.println("3. Delete user from database.");
-        System.out.println("4. Exit");
+        System.out.println("4. Show all users in the list");
+        System.out.println("5. Exit");
         System.out.println();
     }
 
@@ -51,7 +55,8 @@ public class UserListApplication {
             case 1 -> addUserUIAction.execute();
             case 2 -> validateUserUIAction.execute();
             case 3 -> removeUserUIAction.execute();
-            case 4 -> exitUIAction.execute();
+            case 4 -> getUsersUIAction.execute();
+            case 5 -> exitUIAction.execute();
         }
     }
 }
