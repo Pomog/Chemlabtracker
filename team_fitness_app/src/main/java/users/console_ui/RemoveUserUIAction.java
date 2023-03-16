@@ -21,7 +21,7 @@ public class RemoveUserUIAction implements UIAction{
         String password = scanner.nextLine();
 
         if (removeUserService.execute(id, password))
-            System.out.println("users.User was removed from user database.");
+            System.out.println("User was removed from user database.");
         else
             System.out.println("Id or Password is Incorrect!");
     }

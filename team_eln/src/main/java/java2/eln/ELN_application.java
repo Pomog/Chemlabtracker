@@ -1,11 +1,12 @@
-package eln;
+package java2.eln;
 
-import consoleUI.*;
-import database.DatabaseIM;
-import database.InMemoryDatabaseImplIM;
-import services.AddReactionService;
-import services.DelReactionService;
-import services.GetAllReactionsService;
+import java2.eln.console_ui.*;
+import java2.eln.core.database.DatabaseIM;
+import java2.eln.core.database.InMemoryDatabaseImplIM;
+import java2.eln.core.services.AddReactionService;
+import java2.eln.core.services.DelReactionService;
+import java2.eln.core.services.FindReactionByMainProductService;
+import java2.eln.core.services.GetAllReactionsService;
 
 import java.util.Scanner;
 
@@ -17,6 +18,10 @@ public class ELN_application {
     private static UIAction getAllReactionUIAction = new GetAllReactionUIAction(getAllReactionsService);
     private static DelReactionService delReactionService = new DelReactionService(inMemoryDataBase);
     private static UIAction delReactionUIACtion = new DelReactionUIACtion(delReactionService);
+    private static FindReactionByMainProductService findReactionByMainProductService =
+            new FindReactionByMainProductService(inMemoryDataBase);
+    private static FindReactionByMainProductUIAction findReactionByMainProductUIAction =
+            new FindReactionByMainProductUIAction(findReactionByMainProductService);
     private static UIAction exitFormApplication = new ExitUIAction();
 
 
@@ -26,7 +31,6 @@ public class ELN_application {
             int menuNumber = getMenuNumberFromUser();
             executeSelectedMenuItem(menuNumber);
         }
-
     }
 
     private static void printProgramMenu() {
@@ -35,7 +39,8 @@ public class ELN_application {
         System.out.println("1. Add Reaction to list");
         System.out.println("2. Delete Reaction from list");
         System.out.println("3. Show all Reactions in the list");
-        System.out.println("4. Exit");
+        System.out.println("4. Find reactions by main product");
+        System.out.println("5. Exit");
         System.out.println();
     }
 
@@ -60,6 +65,10 @@ public class ELN_application {
                 break;
             }
             case 4 -> {
+                findReactionByMainProductUIAction.execute();
+                break;
+            }
+            case 5 -> {
                 exitFormApplication.execute();
                 break;
             }

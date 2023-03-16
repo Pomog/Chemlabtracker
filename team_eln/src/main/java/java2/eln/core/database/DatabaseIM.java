@@ -1,6 +1,6 @@
-package database;
+package java2.eln.core.database;
 
-import domain.ReactionData;
+import java2.eln.domain.ReactionData;
 
 import java.util.List;
 

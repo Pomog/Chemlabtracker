@@ -34,7 +34,7 @@ public class UserListApplication {
         System.out.println("Program menu:");
         System.out.println("1. Register new user.");
         System.out.println("2. Login.");
-        System.out.println("3. Delete user from eln.database.");
+        System.out.println("3. Delete user from database.");
         System.out.println("4. Exit");
         System.out.println();
     }

@@ -1,4 +1,4 @@
-package domain;
+package java2.eln.domain;
 
 import java.io.File;
 import java.util.ArrayList;

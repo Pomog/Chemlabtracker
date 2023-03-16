@@ -1,7 +1,3 @@
-repositories {
-	mavenCentral()
-}
-
 dependencies {
 	implementation group: 'org.openscience.cdk', name: 'cdk-bundle', version: '2.8'
 

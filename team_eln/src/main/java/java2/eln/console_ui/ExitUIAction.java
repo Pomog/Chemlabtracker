@@ -1,4 +1,4 @@
-package consoleUI;
+package java2.eln.console_ui;
 
 public class ExitUIAction implements UIAction{
     @Override
