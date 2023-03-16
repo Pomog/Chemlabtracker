@@ -3,6 +3,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class UserLogin {
 
@@ -82,7 +83,8 @@ public class UserLogin {
             String userLogin = scanner.nextLine();
             System.out.println("Enter password: ");
             String userPassword = scanner.nextLine();
-            User user = new User(userLogin, userPassword);
+            String userID = UUID.randomUUID().toString().substring(0, 8);
+            User user = new User(userID, userLogin, userPassword);
             users.add(user);
             System.out.println("Registration complete!");
     }
