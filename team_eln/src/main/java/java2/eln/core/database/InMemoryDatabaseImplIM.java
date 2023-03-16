@@ -14,8 +14,8 @@ public class InMemoryDatabaseImplIM implements DatabaseIM {
     }
 
     @Override
-    public void delReactionByCode(String code) {
-        reactions.removeIf(reactionData -> reactionData.getCode().equals(code));
+    public boolean delReactionByCode(String code) {
+        return reactions.removeIf(reactionData -> reactionData.getCode().equals(code));
     }
 
     @Override

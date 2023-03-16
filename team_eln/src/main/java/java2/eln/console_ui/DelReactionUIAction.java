@@ -1,5 +1,7 @@
 package java2.eln.console_ui;
 
+import java2.eln.core.requests.DelReactionRequest;
+import java2.eln.core.responses.DelRectionResponse;
 import java2.eln.core.services.DelReactionService;
 
 import java.util.Scanner;
@@ -16,7 +18,10 @@ public class DelReactionUIAction implements UIAction{
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Reaction Code to delete: ");
         String  reactionCode = scanner.nextLine();
-        delReactionService.execute(reactionCode);
 
+        DelReactionRequest delReactionRequest = new DelReactionRequest(reactionCode);
+        DelRectionResponse delRectionResponse = delReactionService.execute(delReactionRequest);
+
+        System.out.printf("Reaction has been successfully deleted: %s", delRectionResponse.getDelResult());
     }
 }
