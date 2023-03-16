@@ -12,7 +12,7 @@ public class GetTotalPriceUIAction implements UIAction {
 
     @Override
     public void execute() {
-        System.out.println("Total price: " + getTotalPriceService.execute());
+        System.out.println("Total price: " + getTotalPriceService.execute() + " EUR");
     }
 
 }

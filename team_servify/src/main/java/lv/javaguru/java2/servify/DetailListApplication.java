@@ -8,9 +8,6 @@ import lv.javaguru.java2.servify.service.GetAllDetailsService;
 import lv.javaguru.java2.servify.service.GetTotalPriceService;
 import lv.javaguru.java2.servify.service.RemoveDetailService;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 class DetailListApplication {
@@ -31,6 +28,9 @@ class DetailListApplication {
 
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
+        System.out.println("|-----------------------------------------------------------------|");
+        System.out.println("| Welcome to the SERVIFY APP - calculate price for your paint job |");
+        System.out.println("|-----------------------------------------------------------------|");
 
         while (true) {
             printProgramMenu();

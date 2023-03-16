@@ -21,7 +21,7 @@ public class RemoveDetailUIAction implements UIAction {
 
         getAllDetailsService.execute().forEach(System.out::println);
 
-        System.out.println("Enter detail id to remove: ");
+        System.out.println("Enter detail id to remove (only use id that is visible in the list!): ");
         Long detailId = Long.parseLong(scanner.nextLine());
         removeDetailService.execute(detailId);
         System.out.println("Your detail was removed from list.");
