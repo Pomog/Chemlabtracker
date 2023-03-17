@@ -9,7 +9,7 @@ public interface DatabaseIM {
 
     void addReaction(ReactionData reaction);
 
-    void delReactionByCode(String code);
+    boolean delReactionByCode(String code);
 
     List<ReactionData> getAllReactions();
 }
