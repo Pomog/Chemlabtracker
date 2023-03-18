@@ -5,7 +5,7 @@ import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.database.InMemoryDatabaseImplIM;
 import java2.eln.core.services.AddReactionService;
 import java2.eln.core.services.DelReactionService;
-import java2.eln.core.services.FindReactionByMainProductService;
+import java2.eln.core.services.FindReactionsByMainProductService;
 import java2.eln.core.services.GetAllReactionsService;
 
 import java.util.Scanner;
@@ -18,8 +18,8 @@ public class ELN_application {
     private static UIAction getAllReactionUIAction = new GetAllReactionUIAction(getAllReactionsService);
     private static DelReactionService delReactionService = new DelReactionService(inMemoryDataBase);
     private static UIAction delReactionUIACtion = new DelReactionUIAction(delReactionService);
-    private static FindReactionByMainProductService findReactionByMainProductService =
-            new FindReactionByMainProductService(inMemoryDataBase);
+    private static FindReactionsByMainProductService findReactionByMainProductService =
+            new FindReactionsByMainProductService(inMemoryDataBase);
     private static FindReactionByMainProductUIAction findReactionByMainProductUIAction =
             new FindReactionByMainProductUIAction(findReactionByMainProductService);
     private static UIAction exitFormApplication = new ExitUIAction();
