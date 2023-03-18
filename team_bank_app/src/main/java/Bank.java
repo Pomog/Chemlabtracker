@@ -5,7 +5,6 @@ class Bank {
 
 
 
-
     void deposit(int amount) {
         if (amount <= 0) {
             System.out.println("Deposit failure :(");
