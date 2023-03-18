@@ -123,6 +123,7 @@ class BankApp {
         int newAge = scanner.nextInt();
         database.deleteUsers(new User(newName, newSurname, newGender, newAge));
         System.out.println("Your Username was removed from list.");
+
     }
 
     private static void addUsers(UsersDatabase database) {
