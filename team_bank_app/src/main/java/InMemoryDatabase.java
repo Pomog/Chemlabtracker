@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class InMemoryUsersDatabase implements UsersDatabase{
+
     private List<User> users = new ArrayList<>();
 
     @Override
