@@ -1,7 +1,12 @@
+import product.Product;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 class Order {
+    List<Product> productList = new ArrayList<>();
     private int orderId;
     private int userId;
     private int productId;
