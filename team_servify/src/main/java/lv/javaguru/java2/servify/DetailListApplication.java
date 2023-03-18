@@ -3,10 +3,9 @@ package lv.javaguru.java2.servify;
 import lv.javaguru.java2.servify.console_ui.*;
 import lv.javaguru.java2.servify.database.Database;
 import lv.javaguru.java2.servify.database.InMemoryDatabaseImpl;
-import lv.javaguru.java2.servify.service.AddDetailService;
-import lv.javaguru.java2.servify.service.GetAllDetailsService;
-import lv.javaguru.java2.servify.service.GetTotalPriceService;
-import lv.javaguru.java2.servify.service.RemoveDetailService;
+import lv.javaguru.java2.servify.database.UsersDatabase;
+import lv.javaguru.java2.servify.database.UsersInMemoryDatabaseImpl;
+import lv.javaguru.java2.servify.service.*;
 
 import java.util.Scanner;
 
@@ -25,6 +24,10 @@ class DetailListApplication {
     private static UIAction getAllDetailsUIAction = new GetAllDetailsUIAction(getAllDetailsService);
     private static UIAction getTotalPriceUIAction = new GetTotalPriceUIAction(getTotalPriceService);
     private static UIAction exitUIAction = new ExitUIAction();
+    private static UsersDatabase userDB = new UsersInMemoryDatabaseImpl();
+    private static AddUserService addUserService = new AddUserService(userDB);
+    private static AddUserUIAction addUserUIAction = new AddUserUIAction(addUserService);
+    //private static UserListApp userListApp = new UserListApp();
 
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
@@ -39,7 +42,7 @@ class DetailListApplication {
 
             int userChoice = userChoiceFromMenu();
 
-            if (userChoice < 1 || userChoice > 5) {
+            if (userChoice < 1 || userChoice > 7) {
                 System.out.println("Wrong input, try again, please use only 1 .. 5 for main menu selection.");
                 continue;
             } else {
@@ -56,7 +59,9 @@ class DetailListApplication {
         System.out.println("2. Delete detail from list");
         System.out.println("3. Show all detail in the list");
         System.out.println("4. See total price");
-        System.out.println("5. Exit");
+        System.out.println("5. Registration");
+        System.out.println("6. Login");
+        System.out.println("7. Exit");
         System.out.println();
     }
 
@@ -236,7 +241,9 @@ class DetailListApplication {
             case 2 -> removeDetailUIAction.execute();
             case 3 -> getAllDetailsUIAction.execute();
             case 4 -> getTotalPriceUIAction.execute();
-            case 5 -> exitUIAction.execute();
+            case 5 -> addUserUIAction.execute();
+            case 6 -> System.out.println("ToDo");
+            case 7 -> exitUIAction.execute();
         }
 
     }
