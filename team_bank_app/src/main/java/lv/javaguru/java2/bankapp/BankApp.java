@@ -1,14 +1,38 @@
 package lv.javaguru.java2.bankapp;
 
+import lv.javaguru.java2.bankapp.bank_service.DepositMoneyService;
+import lv.javaguru.java2.bankapp.bank_service.PrintBalanceService;
+import lv.javaguru.java2.bankapp.bank_service.UniqueCardService;
+import lv.javaguru.java2.bankapp.bank_service.WithdrawMoneyService;
+import lv.javaguru.java2.bankapp.console_ui.*;
 import lv.javaguru.java2.bankapp.database.InMemoryUsersDatabase;
 import lv.javaguru.java2.bankapp.database.UsersDatabase;
+import lv.javaguru.java2.bankapp.domain.Bank;
+import lv.javaguru.java2.bankapp.services.AddUsersService;
+import lv.javaguru.java2.bankapp.services.DeleteUsersService;
+import lv.javaguru.java2.bankapp.services.PrintUsersService;
 
 import java.util.Scanner;
 
- public class BankApp {
+public class BankApp {
     public static void main(String[] args) {
-        UsersDatabase database=new InMemoryUsersDatabase();
+        UsersDatabase database = new InMemoryUsersDatabase();
+
+        AddUsersService addUsersService = new AddUsersService(database);
+        UIAction addUsersAction = new AddUsersUIAction(addUsersService);
+
+        DeleteUsersService deleteUsersService = new DeleteUsersService(database);
+        UIAction deleteUsersAction = new DeleteUsersUIAction(deleteUsersService);
+        PrintUsersService printUsersService = new PrintUsersService(database);
+        UIAction printUsersAction = new PrintUsersAction(printUsersService);
+
+        UIAction exitApplication = new ExitApplicationAction();
+
         Bank bank = new Bank();
+        WithdrawMoneyService withdrawMoneyService = new WithdrawMoneyService();
+        DepositMoneyService depositMoneyService = new DepositMoneyService();
+        PrintBalanceService printBalanceService = new PrintBalanceService();
+        UniqueCardService uniqueCardService = new UniqueCardService();
 
         while (true) {
             printMenu();
@@ -17,36 +41,36 @@ import java.util.Scanner;
 
             switch (userChoice) {
                 case 1: {
-                    addUsers(database);
+                    addUsersAction.execute();
                     break;
                 }
                 case 2: {
-                    deleteUsers(database);
+                    deleteUsersAction.execute();
                     break;
                 }
                 case 3: {
-                    depositMoney(bank);
+                    depositMoneyService.depositMoney(bank);
                     break;
                 }
                 case 4: {
-                    withdrawMoney(bank);
+                    withdrawMoneyService.withdrawMoney(bank);
                     break;
                 }
                 case 5: {
-                    printBalance(bank);
+                    printBalanceService.printBalance(bank);
                     break;
                 }
                 case 6: {
-                    uniqueCard();
+                    uniqueCardService.uniqueCard();
                     break;
                 }
 
                 case 7: {
-                    printUsers(database);
+                    printUsersAction.execute();
                     break;
                 }
                 case 8: {
-                    exitFromApplication();
+                    exitApplication.execute();
                 }
             }
             System.out.println("");
@@ -74,75 +98,12 @@ import java.util.Scanner;
         System.out.println("");
     }
 
-    private static void exitFromApplication() {
-        System.out.println("Good by!");
-        System.exit(0);
-    }
 
-    private static void printUsers(UsersDatabase database) {
-        System.out.println("Users list: ");
-        for (User user : database.getAllUsers()) {
-            System.out.println(user);
-        }
-        System.out.println("Users list end.");
-    }
-
-    private static void uniqueCard() {
-        System.out.println("Your unique card Number is :  ");
-        Bank banks = new Bank();
-        banks.BankNumber();
-    }
-
-    private static void printBalance(Bank bank) {
-        System.out.println("Current balance statement");
-        bank.printBalanceStatement();
-    }
-
-    private static void withdrawMoney(Bank bank) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to our bank app ,you choose withdraw option");
-        System.out.println("Please enter  desired amount,with you wanna withdraw :");
-        int withdrawAmount = scanner.nextInt();
-        bank.withdraw(withdrawAmount);
-    }
-
-    private static void depositMoney(Bank bank) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to our bank app ,you choose deposit option");
-        System.out.println("Please enter  desired amount :");
-        int depositAmount = scanner.nextInt();
-        bank.deposit(depositAmount);
-    }
-
-    private static void deleteUsers(UsersDatabase database) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your name: ");
-        String newName = scanner.nextLine();
-        System.out.println("Enter your surname: ");
-        String newSurname = scanner.nextLine();
-        System.out.println("Enter you gender : ");
-        String newGender = scanner.nextLine();
-        System.out.println("Enter you age: ");
-        int newAge = scanner.nextInt();
-        database.deleteUsers(new User(newName, newSurname, newGender, newAge));
-        System.out.println("Your Username was removed from list.");
-
-    }
-
-    private static void addUsers(UsersDatabase database) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your name: ");
-        String newName = scanner.nextLine();
-        System.out.println("Enter you surname: ");
-        String newSurname = scanner.nextLine();
-        System.out.println("Enter you gender : ");
-        String newGender = scanner.nextLine();
-        System.out.println("Enter you age: ");
-        int newAge = scanner.nextInt();
-        User user = new User(newName, newSurname, newGender, newAge);
-        database.addUsers(user);
-        System.out.println("Your Username was added to list.");
-    }
 }
+
+
+
+
+
 
 
