@@ -1,10 +1,11 @@
-import java.util.ArrayList;
-import java.util.List;
+import database.InMemoryUsersDatabase;
+import database.UsersDatabase;
+
 import java.util.Scanner;
 
-class BankApp {
+ public class BankApp {
     public static void main(String[] args) {
-        UsersDatabase database = new InMemoryUsersDatabase();
+        UsersDatabase database=new InMemoryUsersDatabase();
         Bank bank = new Bank();
 
         while (true) {
