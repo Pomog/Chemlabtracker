@@ -1,10 +1,13 @@
-import java.util.ArrayList;
-import java.util.List;
+package lv.javaguru.java2.bankapp;
+
+import lv.javaguru.java2.bankapp.database.InMemoryUsersDatabase;
+import lv.javaguru.java2.bankapp.database.UsersDatabase;
+
 import java.util.Scanner;
 
-class BankApp {
+ public class BankApp {
     public static void main(String[] args) {
-        UsersDatabase database = new InMemoryUsersDatabase();
+        UsersDatabase database=new InMemoryUsersDatabase();
         Bank bank = new Bank();
 
         while (true) {
