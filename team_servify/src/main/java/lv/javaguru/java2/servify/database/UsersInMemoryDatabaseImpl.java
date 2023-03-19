@@ -4,6 +4,7 @@ import lv.javaguru.java2.servify.domain.UserEntity;
 import lv.javaguru.java2.servify.domain.UserType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UsersInMemoryDatabaseImpl implements UsersDatabase {
@@ -28,6 +29,17 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
         return !user.getEmail().isEmpty() && !user.getEmail().isBlank() && user.getEmail() != null;
     }
 
+    private boolean UserAndPasswordValidation(String email, char[] password) {
+        for (UserEntity user : usersDB) {
+            if (user.getEmail().equals(email) && checkPassword(user.getPassword(), password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean checkPassword(char[] passDB, char[] password) {
+        return Arrays.equals(passDB, password);
+    }
     @Override
     public void deleteById(Long userId) {
         usersDB.stream()

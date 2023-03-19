@@ -11,8 +11,9 @@ public class GetAllUsersUIAction implements UIAction {
 
     @Override
     public void execute() {
-        System.out.println("Book list: ");
+        System.out.println("User list: ");
         getAllUsersService.act().forEach(System.out::println);
-        System.out.println("Book list end.");
+        System.out.println("User list end.");
+        System.out.println();
     }
 }

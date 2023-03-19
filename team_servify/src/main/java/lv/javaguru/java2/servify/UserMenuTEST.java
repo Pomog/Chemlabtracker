@@ -1,6 +1,10 @@
 package lv.javaguru.java2.servify;
 
-import lv.javaguru.java2.servify.console_ui.*;
+import lv.javaguru.java2.servify.console_ui.AddUserUIAction;
+import lv.javaguru.java2.servify.console_ui.ExitUIAction;
+import lv.javaguru.java2.servify.console_ui.GetAllUsersUIAction;
+import lv.javaguru.java2.servify.console_ui.SetUserNotActiveUIAction;
+import lv.javaguru.java2.servify.database.Database;
 import lv.javaguru.java2.servify.database.UsersDatabase;
 import lv.javaguru.java2.servify.database.UsersInMemoryDatabaseImpl;
 import lv.javaguru.java2.servify.service.AddUserService;
@@ -9,30 +13,24 @@ import lv.javaguru.java2.servify.service.SetUserNotActiveService;
 
 import java.util.Scanner;
 
-public class UserListApp {
-    private static UsersDatabase userDB = new UsersInMemoryDatabaseImpl();
-    private static AddUserService addUserService = new AddUserService(userDB);
-    private static UIAction addUserUIAction = new AddUserUIAction(addUserService);
-    private static GetAllUsersService getAllUsersService = new GetAllUsersService(userDB);
-    private static UIAction getAllUsersUIAction = new GetAllUsersUIAction(getAllUsersService);
-    private static SetUserNotActiveService setUserNotActiveService = new SetUserNotActiveService(userDB);
-    private static UIAction setUserNotActiveUIAction = new SetUserNotActiveUIAction(setUserNotActiveService);
-    private static ExitUIAction exitUIAction = new ExitUIAction();
-
-
-    public static void main(String[] args) {
+public class UserMenuTEST {
+    public void start(UsersDatabase userDB) {
+        AddUserService addUserService = new AddUserService(userDB);
+        AddUserUIAction addUserUIAction = new AddUserUIAction(addUserService);
+        GetAllUsersService getAllUsersService = new GetAllUsersService(userDB);
+        GetAllUsersUIAction getAllUsersUIAction = new GetAllUsersUIAction(getAllUsersService);
+        SetUserNotActiveService setUserNotActiveService = new SetUserNotActiveService(userDB);
+        SetUserNotActiveUIAction setUserNotActiveUIAction = new SetUserNotActiveUIAction(setUserNotActiveService);
+        ExitUIAction exitUIAction = new ExitUIAction();
 
         while (true) {
             printAdminMenu();
-            userDB.getAll();
             int userChoice = getUserChoice();
-
             switch (userChoice) {
                 case 1 -> addUserUIAction.execute();
                 case 2 -> setUserNotActiveUIAction.execute();
                 case 3 -> getAllUsersUIAction.execute();
                 case 4 -> exitUIAction.execute();
-
             }
         }
     }
@@ -49,8 +47,6 @@ public class UserListApp {
         System.out.println("2. Delete user from list");
         System.out.println("3. Show all users in the list");
         System.out.println("4. Exit");
-
         System.out.println("");
-
     }
 }

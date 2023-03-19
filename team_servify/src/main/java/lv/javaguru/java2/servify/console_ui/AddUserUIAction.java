@@ -25,7 +25,6 @@ public class AddUserUIAction implements UIAction {
         String email = input.nextLine();
         System.out.println("Enter your phone number");
         String phoneNumber = input.nextLine();
-        UserEntity user = new UserEntity(firstName, secondName, nickName, email, phoneNumber);
-        addUserService.act(user);
+        addUserService.act(firstName, secondName, nickName, email, phoneNumber);
     }
 }
