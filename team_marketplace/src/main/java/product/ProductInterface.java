@@ -1,5 +1,7 @@
 package product;
 
+import java.math.BigDecimal;
+
 public interface ProductInterface {
 
      int getId();
@@ -8,7 +10,7 @@ public interface ProductInterface {
      void setName(String name);
      String getDescription();
      void setDescription(String description);
-     double getPrice();
+     BigDecimal getPrice();
      void setPrice(double price);
     String getCategory();
      void setCategory(String category);
