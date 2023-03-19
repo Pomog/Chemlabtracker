@@ -3,10 +3,7 @@ package java2.eln;
 import java2.eln.console_ui.*;
 import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.database.InMemoryDatabaseImplIM;
-import java2.eln.core.services.AddReactionService;
-import java2.eln.core.services.DelReactionService;
-import java2.eln.core.services.FindReactionsByMainProductService;
-import java2.eln.core.services.GetAllReactionsService;
+import java2.eln.core.services.*;
 
 import java.util.Scanner;
 
@@ -22,7 +19,9 @@ public class ELN_application {
             new FindReactionsByMainProductService(inMemoryDataBase);
     private static FindReactionByMainProductUIAction findReactionByMainProductUIAction =
             new FindReactionByMainProductUIAction(findReactionByMainProductService);
-    private static UIAction exitFormApplication = new ExitUIAction();
+    private static ExitUIService exitUIService =
+            new ExitUIService();
+    private static UIAction exitFormApplication = new ExitUIAction(exitUIService);
 
 
     public static void main(String[] args) {
