@@ -1,6 +1,7 @@
 package lv.javaguru.java2.servify.database;
 
 import lv.javaguru.java2.servify.domain.UserEntity;
+import lv.javaguru.java2.servify.domain.UserType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,19 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
 
     @Override
     public void add(UserEntity user) {
-        user.setId(nextId);
-        nextId++;
-        usersDB.add(user);
+        if(eMailValidation(user)) {
+            user.setId(nextId);
+            nextId++;
+            user.setUserType(UserType.CUSTOMER);
+            if (user.getNickName().isEmpty()) {
+                user.setNickName(user.getEmail());
+            }
+            usersDB.add(user);
+        }
+    }
+
+    private boolean eMailValidation(UserEntity user) {
+        return !user.getEmail().isEmpty() && !user.getEmail().isBlank() && user.getEmail() != null;
     }
 
     @Override

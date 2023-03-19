@@ -13,6 +13,15 @@ public class UserEntity {
     private UserType userType;
     private Address address;
     private boolean isActive;
+    private char[] password;
+
+    public char[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(char[] password) {
+        this.password = password;
+    }
 
     @Override
     public boolean equals(Object o) {
