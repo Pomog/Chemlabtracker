@@ -1,5 +1,7 @@
-import bankapp.database.InMemoryUsersDatabase;
-import bankapp.database.UsersDatabase;
+package lv.javaguru.java2.bankapp;
+
+import lv.javaguru.java2.bankapp.database.InMemoryUsersDatabase;
+import lv.javaguru.java2.bankapp.database.UsersDatabase;
 
 import java.util.Scanner;
 

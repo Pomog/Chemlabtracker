@@ -1,3 +1,5 @@
+package lv.javaguru.java2.bankapp;
+
 import java.util.Random;
 
 class Bank {

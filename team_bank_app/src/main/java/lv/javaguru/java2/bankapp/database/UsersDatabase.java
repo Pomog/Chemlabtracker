@@ -1,4 +1,8 @@
-package bankapp.database;
+package lv.javaguru.java2.bankapp.database;
+
+import lv.javaguru.java2.bankapp.User;
+
+import java.util.List;
 
 public interface UsersDatabase {
 

@@ -1,6 +1,9 @@
-package bankapp.database;
+package lv.javaguru.java2.bankapp.database;
+
+import lv.javaguru.java2.bankapp.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InMemoryUsersDatabase implements UsersDatabase {
 

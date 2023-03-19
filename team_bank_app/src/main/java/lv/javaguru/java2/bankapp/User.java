@@ -1,3 +1,5 @@
+package lv.javaguru.java2.bankapp;
+
 import java.util.Objects;
 
  public class User {
@@ -61,7 +63,7 @@ import java.util.Objects;
 
     @Override
     public String toString() {
-        return "User{" +
+        return "lv.javaguru.java2.bankapp.User{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", gender='" + gender + '\'' +
