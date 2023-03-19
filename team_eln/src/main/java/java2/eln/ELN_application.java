@@ -9,7 +9,9 @@ import java.util.Scanner;
 
 public class ELN_application {
     private static DatabaseIM inMemoryDataBase = new InMemoryDatabaseImplIM();
-    private static AddReactionService addReactionService = new AddReactionService(inMemoryDataBase);
+    private static AddReactionValidator addReactionValidator = new AddReactionValidator();
+    private static AddReactionService addReactionService =
+            new AddReactionService(inMemoryDataBase, addReactionValidator);
     private static UIAction addReactionUIAction = new AddReactionUIAction(addReactionService);
     private static GetAllReactionsService getAllReactionsService = new GetAllReactionsService(inMemoryDataBase);
     private static UIAction getAllReactionUIAction = new GetAllReactionUIAction(getAllReactionsService);

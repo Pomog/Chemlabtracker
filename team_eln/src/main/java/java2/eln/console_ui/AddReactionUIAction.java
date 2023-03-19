@@ -27,6 +27,12 @@ public class AddReactionUIAction implements UIAction{
         AddReactionRequest addReactionRequest = new AddReactionRequest(reactionCode, reactionName, dataFilePath);
         AddReactionResponse addReactionResponse = addReactionService.execute(addReactionRequest);
 
-        System.out.printf("Reaction %s has been successfully added.", addReactionResponse.getReactionData().getCode());
+        if (addReactionResponse.hasErrors()) {
+            addReactionResponse.getErrors().forEach(coreError ->
+                    System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage())
+            );
+        } else {
+            System.out.printf("Reaction %s has been successfully added.", addReactionResponse.getReactionData().getCode());
+        }
     }
 }

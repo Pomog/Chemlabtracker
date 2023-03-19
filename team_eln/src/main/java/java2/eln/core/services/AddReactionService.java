@@ -3,16 +3,26 @@ package java2.eln.core.services;
 import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.responses.AddReactionResponse;
+import java2.eln.core.responses.CoreError;
 import java2.eln.domain.ReactionData;
+
+import java.util.List;
 
 public class AddReactionService {
     private DatabaseIM databaseIM;
+    private AddReactionValidator validator;
 
-    public AddReactionService(DatabaseIM databaseIM) {
+    public AddReactionService(DatabaseIM databaseIM, AddReactionValidator validator) {
         this.databaseIM = databaseIM;
+        this.validator = validator;
     }
 
      public AddReactionResponse execute(AddReactionRequest addReactionRequest) {
+        List<CoreError> errors = validator.validate(addReactionRequest);
+         if (!errors.isEmpty()) {
+             return new AddReactionResponse(errors);
+         }
+
         String code = addReactionRequest.getCode();
         String name = addReactionRequest.getName();
         String filename = addReactionRequest.getFilename();

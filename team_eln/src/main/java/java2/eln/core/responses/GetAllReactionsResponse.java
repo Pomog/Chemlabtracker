@@ -4,7 +4,7 @@ import java2.eln.domain.ReactionData;
 
 import java.util.List;
 
-public class GetAllReactionsResponse {
+public class GetAllReactionsResponse extends CoreResponse{
     private List<ReactionData> reactionsList;
 
     public GetAllReactionsResponse(List<ReactionData> reactionsList) {
