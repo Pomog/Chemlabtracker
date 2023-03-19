@@ -1,6 +1,6 @@
 package lv.javaguru.java2.bankapp.database;
 
-import lv.javaguru.java2.bankapp.User;
+import lv.javaguru.java2.bankapp.domain.User;
 
 import java.util.List;
 

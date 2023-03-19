@@ -1,13 +1,13 @@
-package lv.javaguru.java2.bankapp;
+package lv.javaguru.java2.bankapp.domain;
 
 import java.util.Random;
 
-class Bank {
+public class Bank {
     int balance;
 
 
 
-    void deposit(int amount) {
+    public void deposit(int amount) {
         if (amount <= 0) {
             System.out.println("Deposit failure :(");
             return;
@@ -18,7 +18,7 @@ class Bank {
     }
 
 
-    void withdraw(int amount) {
+    public void withdraw(int amount) {
         if (amount <= 0) {
             System.out.println("Withdrawal failure: amount is cannot be negative :(");
             return;
@@ -34,11 +34,11 @@ class Bank {
     }
 
 
-    void printBalanceStatement() {
+    public void printBalanceStatement() {
         System.out.println("Current Balance: " + balance);
     }
 
-    void BankNumber() {
+    public void BankNumber() {
         Random rand = new Random();
         String card = "BABALV";
         for (int i = 0; i < 14; i++) {
