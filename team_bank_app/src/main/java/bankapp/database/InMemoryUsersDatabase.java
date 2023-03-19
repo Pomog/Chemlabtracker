@@ -1,9 +1,6 @@
-package database;
-
-import database.UsersDatabase;
+package bankapp.database;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class InMemoryUsersDatabase implements UsersDatabase {
 

@@ -1,5 +1,5 @@
-import database.InMemoryUsersDatabase;
-import database.UsersDatabase;
+import bankapp.database.InMemoryUsersDatabase;
+import bankapp.database.UsersDatabase;
 
 import java.util.Scanner;
 

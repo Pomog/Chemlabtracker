@@ -1,6 +1,4 @@
-package database;
-
-import java.util.List;
+package bankapp.database;
 
 public interface UsersDatabase {
 
