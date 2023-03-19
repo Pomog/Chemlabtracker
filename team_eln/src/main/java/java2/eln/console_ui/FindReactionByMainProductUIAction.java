@@ -28,6 +28,7 @@ public class FindReactionByMainProductUIAction implements UIAction{
                 new FindReactionsByMainProductRequest(searchedStructure);
         FindReactionsByMainProductResponse findReactionsByMainProductResponse =
                 findReactionByMainProductService.execute(findReactionsByMainProductRequest);
+
         findReactionsByMainProductResponse.getSearchingResults().forEach(System.out::println);
     }
 }
