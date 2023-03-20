@@ -1,29 +1,24 @@
-import cart.Cart;
-import console_ui.UIActionsMap;
+import console_ui.UIActionsList;
 import console_ui.UIMenu;
-import database.*;
-import item.Item;
-import item_generator.RandomItemGeneratorImpl;
-import user_input.UserCommunication;
-
-import java.util.List;
+import console_ui.UserCommunication;
+import database.Database;
+import domain.user.CurrentUser;
+import domain.user.UserRole;
+import services.fake.FakeDatabaseInitializer;
 
 public class Shop {
 
     public static void main(String[] args) {
 
-        ItemDatabase itemDatabase = new InMemoryItemDatabaseImpl();
-        CartDatabase cartDatabase = new InMemoryCartDatabaseImpl();
-        CartItemDatabase cartItemDatabase = new InMemoryCartItemDatabaseImpl();
-        UserCommunication userCommunication = new UserCommunication();
-        UIActionsMap uiActionsMap = new UIActionsMap(itemDatabase, cartDatabase, cartItemDatabase, userCommunication);
-        UIMenu uiMenu = new UIMenu(uiActionsMap.getUiActionsMap(), userCommunication);
+        Database database = new Database();
+        new FakeDatabaseInitializer(database).initialize();
 
-        List<Item> fakeItems = new RandomItemGeneratorImpl().createItems();
-        for (Item item : fakeItems) {
-            itemDatabase.save(item);
-        }
-        cartDatabase.save(new Cart());
+        UserCommunication userCommunication = new UserCommunication();
+
+        CurrentUser currentUser = new CurrentUser(database.accessUserDatabase().findByRole(UserRole.GUEST).get().getId());
+
+        UIActionsList uiActionsList = new UIActionsList(database, currentUser, userCommunication);
+        UIMenu uiMenu = new UIMenu(uiActionsList, userCommunication);
 
         uiMenu.startUI();
 

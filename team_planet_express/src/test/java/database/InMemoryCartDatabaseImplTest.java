@@ -1,12 +1,13 @@
 package database;
 
-import cart.Cart;
-import cart.CartStatus;
+import domain.cart.Cart;
+import domain.cart.CartStatus;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class InMemoryCartDatabaseImplTest {
@@ -19,6 +20,22 @@ class InMemoryCartDatabaseImplTest {
     void shouldIncreaseInSizeAfterSave() {
         database.save(mockCart);
         assertEquals(1, database.getCarts().size());
+    }
+
+    @Test
+    void shouldReturnFoundOpenCart() {
+        when(mockCart.getUserId()).thenReturn(1L);
+        when(mockCart.getCartStatus()).thenReturn(CartStatus.OPEN);
+        database.getCarts().add(mockCart);
+        assertTrue(database.findOpenCartForUserId(1L).isPresent());
+    }
+
+    @Test
+    void shouldReturnEmptyOptionalWhenNoOpenCarts() {
+        when(mockCart.getUserId()).thenReturn(1L);
+        when(mockCart.getCartStatus()).thenReturn(CartStatus.CLOSED);
+        database.getCarts().add(mockCart);
+        assertTrue(database.findOpenCartForUserId(1L).isEmpty());
     }
 
     @Test

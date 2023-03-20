@@ -1,10 +1,12 @@
 package database;
 
-import cart_item.CartItem;
+import domain.cart_item.CartItem;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Data
 public class InMemoryCartItemDatabaseImpl implements CartItemDatabase {
@@ -17,6 +19,14 @@ public class InMemoryCartItemDatabaseImpl implements CartItemDatabase {
         cartItem.setId(nextId);
         nextId++;
         cartItems.add(cartItem);
+    }
+
+    @Override
+    public Optional<CartItem> findByCartIdAndItemId(Long cartId, Long itemId) {
+        return cartItems.stream()
+                .filter(cartItem -> cartItem.getCartId().equals(cartId))
+                .filter(cartItem -> cartItem.getItemId().equals(itemId))
+                .findFirst();
     }
 
     @Override
@@ -40,4 +50,10 @@ public class InMemoryCartItemDatabaseImpl implements CartItemDatabase {
         return cartItems;
     }
 
+    @Override
+    public List<CartItem> getAllCartItemsForCartId(Long cartId) {
+        return cartItems.stream()
+                .filter(cartItem -> cartItem.getCartId().equals(cartId))
+                .collect(Collectors.toList());
+    }
 }

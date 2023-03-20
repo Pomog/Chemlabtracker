@@ -1,9 +1,10 @@
 package database;
 
-import item.Item;
+import domain.item.Item;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class InMemoryItemDatabaseImplTest {
@@ -16,6 +17,34 @@ class InMemoryItemDatabaseImplTest {
     void shouldIncreaseInSizeAfterSave() {
         database.save(mockItem);
         assertEquals(1, database.getShopItems().size());
+    }
+
+    @Test
+    void shouldReturnFoundShopItemById() {
+        when(mockItem.getId()).thenReturn(1L);
+        database.getShopItems().add(mockItem);
+        assertTrue(database.findById(1L).isPresent());
+    }
+
+    @Test
+    void shouldReturnEmptyOptionalForNonexistentItemById() {
+        when(mockItem.getId()).thenReturn(2L);
+        database.getShopItems().add(mockItem);
+        assertTrue(database.findById(1L).isEmpty());
+    }
+
+    @Test
+    void shouldReturnFoundShopItemByName() {
+        when(mockItem.getName()).thenReturn("item");
+        database.getShopItems().add(mockItem);
+        assertTrue(database.findByName("item").isPresent());
+    }
+
+    @Test
+    void shouldReturnEmptyOptionalForNonexistentItemByName() {
+        when(mockItem.getName()).thenReturn("different item");
+        database.getShopItems().add(mockItem);
+        assertTrue(database.findByName("item").isEmpty());
     }
 
     @Test
