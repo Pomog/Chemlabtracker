@@ -22,7 +22,8 @@ public class UIMenu {
     public void startUI() {
         while (true) {
             userCommunication.informUser(MENU_HEADER);
-            List<UIAction> uiActionsListForUserRole = this.uiActionsList.getUIActionsListForUserRole();
+            //TODO get role here maybe ?
+            List<UIAction> uiActionsListForUserRole = uiActionsList.getUIActionsListForUserRole();
             for (int i = 0; i < uiActionsListForUserRole.size(); i++) {
                 userCommunication.informUser(i + 1 + ". " + uiActionsListForUserRole.get(i).getActionName());
             }
