@@ -9,7 +9,7 @@ public class LoginService {
         this.userDB = userDB;
     }
 
-    public boolean checkUserAndPass(String email, char[] password) {
+    public boolean checkCredentials(String email, String password) {
         return true;
     }
 }

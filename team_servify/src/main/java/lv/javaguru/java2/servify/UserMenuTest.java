@@ -4,16 +4,14 @@ import lv.javaguru.java2.servify.console_ui.AddUserUIAction;
 import lv.javaguru.java2.servify.console_ui.ExitUIAction;
 import lv.javaguru.java2.servify.console_ui.GetAllUsersUIAction;
 import lv.javaguru.java2.servify.console_ui.SetUserNotActiveUIAction;
-import lv.javaguru.java2.servify.database.Database;
 import lv.javaguru.java2.servify.database.UsersDatabase;
-import lv.javaguru.java2.servify.database.UsersInMemoryDatabaseImpl;
 import lv.javaguru.java2.servify.service.AddUserService;
 import lv.javaguru.java2.servify.service.GetAllUsersService;
 import lv.javaguru.java2.servify.service.SetUserNotActiveService;
 
 import java.util.Scanner;
 
-public class UserMenuTEST {
+public class UserMenuTest {
     public void start(UsersDatabase userDB) {
         AddUserService addUserService = new AddUserService(userDB);
         AddUserUIAction addUserUIAction = new AddUserUIAction(addUserService);
@@ -47,6 +45,6 @@ public class UserMenuTEST {
         System.out.println("2. Delete user from list");
         System.out.println("3. Show all users in the list");
         System.out.println("4. Exit");
-        System.out.println("");
+        System.out.println();
     }
 }

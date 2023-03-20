@@ -28,16 +28,16 @@ class DetailListApplication {
     private static AddUserService addUserService = new AddUserService(userDB);
     private static AddUserUIAction addUserUIAction = new AddUserUIAction(addUserService);
 
-    private static UserMenuTEST userMenuTEST = new UserMenuTEST();
+    private static UserMenuTest userMenuTEST = new UserMenuTest();
 
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
-        welcomeMessage();
+        showWelcomeMessage();
         while (true) {
             printProgramMenu();
             int userChoice = userChoiceFromMenu();
             if (userChoice < 1 || userChoice > 8) {
-                errorMessage();
+                showErrorMessage();
             } else {
                 executeSelectedMenuItem(userChoice);
             }
@@ -59,12 +59,12 @@ class DetailListApplication {
         System.out.println();
     }
 
-    private static void errorMessage() {
+    private static void showErrorMessage() {
         System.out.println("Wrong input, try again, please use only 1 .. 8 for main menu selection.");
         System.out.println();
     }
 
-    private static void welcomeMessage() {
+    private static void showWelcomeMessage() {
         System.out.println("|-----------------------------------------------------------------|");
         System.out.println("| Welcome to the SERVIFY APP - calculate price for your paint job |");
         System.out.println("|-----------------------------------------------------------------|");

@@ -18,9 +18,6 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
             user.setId(nextId);
             nextId++;
             user.setUserType(UserType.CUSTOMER);
-            if (user.getNickName().isEmpty()) {
-                user.setNickName(user.getEmail());
-            }
             usersDB.add(user);
         }
     }
@@ -29,7 +26,7 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
         return !user.getEmail().isEmpty() && !user.getEmail().isBlank() && user.getEmail() != null;
     }
 
-    private boolean UserAndPasswordValidation(String email, char[] password) {
+    private boolean credentialsValidation(String email, String password) {
         for (UserEntity user : usersDB) {
             if (user.getEmail().equals(email) && checkPassword(user.getPassword(), password)) {
                 return true;
@@ -37,8 +34,8 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
         }
         return false;
     }
-    private boolean checkPassword(char[] passDB, char[] password) {
-        return Arrays.equals(passDB, password);
+    private boolean checkPassword(String passDB, String password) {
+        return passDB.equals(password);
     }
     @Override
     public void deleteById(Long userId) {
