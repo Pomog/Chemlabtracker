@@ -1,6 +1,6 @@
-package users.services;
+package users.core.services;
 
-import users.database.Database;
+import users.core.requests.database.Database;
 
 public class RemoveUserService {
 

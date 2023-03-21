@@ -1,6 +1,6 @@
 package users.console_ui;
 
-import users.services.GetUsersService;
+import users.core.services.GetUsersService;
 
 public class GetUsersUIAction implements UIAction {
 

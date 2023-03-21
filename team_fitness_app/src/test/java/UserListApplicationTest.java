@@ -1,5 +1,5 @@
-import users.database.Database;
-import users.database.InMemoryDatabaseImpl;
+import users.core.requests.database.Database;
+import users.core.requests.database.InMemoryDatabaseImpl;
 import users.User;
 import org.junit.jupiter.api.Test;
 

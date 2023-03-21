@@ -1,6 +1,6 @@
 package users.console_ui;
 
-import users.services.RemoveUserService;
+import users.core.services.RemoveUserService;
 
 import java.util.Scanner;
 

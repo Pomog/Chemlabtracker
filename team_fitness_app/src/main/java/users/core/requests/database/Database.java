@@ -1,4 +1,4 @@
-package users.database;
+package users.core.requests.database;
 
 import users.User;
 

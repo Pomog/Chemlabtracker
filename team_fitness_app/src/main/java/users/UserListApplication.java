@@ -1,12 +1,12 @@
 package users;
 
 import users.console_ui.*;
-import users.database.Database;
-import users.database.InMemoryDatabaseImpl;
-import users.services.AddUserService;
-import users.services.GetUsersService;
-import users.services.RemoveUserService;
-import users.services.ValidateUserService;
+import users.core.requests.database.Database;
+import users.core.requests.database.InMemoryDatabaseImpl;
+import users.core.services.AddUserService;
+import users.core.services.GetUsersService;
+import users.core.services.RemoveUserService;
+import users.core.services.ValidateUserService;
 
 import java.util.Scanner;
 

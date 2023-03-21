@@ -1,7 +1,6 @@
 package users.console_ui;
 
-import users.database.Database;
-import users.services.ValidateUserService;
+import users.core.services.ValidateUserService;
 
 import java.util.Scanner;
 
