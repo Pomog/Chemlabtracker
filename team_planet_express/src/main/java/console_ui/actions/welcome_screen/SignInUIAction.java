@@ -4,8 +4,8 @@ import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
 import domain.user.UserRole;
 import services.actions.welcome_screen.SignInService;
-import services.exception.WrongLoginName;
-import services.exception.WrongLoginPassword;
+import services.exception.InvalidLoginNameException;
+import services.exception.InvalidLoginPasswordException;
 
 public class SignInUIAction extends UIAction {
 
@@ -34,7 +34,7 @@ public class SignInUIAction extends UIAction {
         try {
             signInService.execute(name, password);
             userCommunication.informUser(MESSAGE_LOGIN + name);
-        } catch (WrongLoginName | WrongLoginPassword exception) {
+        } catch (InvalidLoginNameException | InvalidLoginPasswordException exception) {
             userCommunication.informUser(exception.getMessage());
         }
     }

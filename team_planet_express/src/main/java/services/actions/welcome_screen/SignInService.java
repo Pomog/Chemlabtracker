@@ -2,8 +2,8 @@ package services.actions.welcome_screen;
 
 import database.Database;
 import domain.user.User;
-import services.exception.WrongLoginName;
-import services.exception.WrongLoginPassword;
+import services.exception.InvalidLoginNameException;
+import services.exception.InvalidLoginPasswordException;
 
 import java.util.Optional;
 
@@ -23,10 +23,10 @@ public class SignInService {
     public void execute(String name, String password) {
         Optional<User> currentUser = database.accessUserDatabase().findByLogin(name);
         if (currentUser.isEmpty()) {
-            throw new WrongLoginName(ERROR_WRONG_NAME);
+            throw new InvalidLoginNameException(ERROR_WRONG_NAME);
         }
         if (!currentUser.get().getPassword().equals(password)) {
-            throw new WrongLoginPassword(ERROR_WRONG_PASSWORD);
+            throw new InvalidLoginPasswordException(ERROR_WRONG_PASSWORD);
         }
         user.setId(currentUser.get().getId());
     }

@@ -8,6 +8,8 @@ import services.exception.ItemAlreadyExistsException;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+/* this action not changing quantity for an existing item is on purpose */
+/* we have another action for that */
 public class AddItemToShopService {
 
     /* this error is trash, but validators will invalidate this anyway */
