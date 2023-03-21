@@ -1,6 +1,6 @@
-package users.console_ui;
+package java2.fitness_app.users.users.console_ui;
 
-import users.services.GetUsersService;
+import java2.fitness_app.users.users.core.services.GetUsersService;
 
 public class GetUsersUIAction implements UIAction {
 

@@ -1,7 +1,7 @@
-package users.services;
+package java2.fitness_app.users.users.core.services;
 
-import users.User;
-import users.database.Database;
+import java2.fitness_app.users.users.User;
+import java2.fitness_app.users.users.core.requests.database.Database;
 
 public class AddUserService {
 

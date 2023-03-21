@@ -1,6 +1,6 @@
-package users.database;
+package java2.fitness_app.users.users.core.requests.database;
 
-import users.User;
+import java2.fitness_app.users.users.User;
 
 import java.util.List;
 

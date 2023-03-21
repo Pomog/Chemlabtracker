@@ -1,4 +1,4 @@
-package users;
+package java2.fitness_app.users.users;
 
 import java.util.Objects;
 

@@ -1,6 +1,6 @@
-package users.console_ui;
+package java2.fitness_app.users.users.console_ui;
 
-import users.services.RemoveUserService;
+import java2.fitness_app.users.users.core.services.RemoveUserService;
 
 import java.util.Scanner;
 

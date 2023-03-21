@@ -1,12 +1,14 @@
-package users;
+package java2.fitness_app.users.users;
 
+import java2.fitness_app.exercise.users.console_ui.*;
+import java2.fitness_app.users.users.core.requests.database.Database;
+import java2.fitness_app.users.users.core.requests.database.InMemoryDatabaseImpl;
+import java2.fitness_app.users.users.core.services.AddUserService;
+import java2.fitness_app.users.users.core.services.GetUsersService;
+import java2.fitness_app.users.users.core.services.RemoveUserService;
+import java2.fitness_app.users.users.core.services.ValidateUserService;
+import java2.fitness_app.users.users.console_ui.*;
 import users.console_ui.*;
-import users.database.Database;
-import users.database.InMemoryDatabaseImpl;
-import users.services.AddUserService;
-import users.services.GetUsersService;
-import users.services.RemoveUserService;
-import users.services.ValidateUserService;
 
 import java.util.Scanner;
 

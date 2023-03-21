@@ -1,6 +1,6 @@
-import users.database.Database;
-import users.database.InMemoryDatabaseImpl;
-import users.User;
+import java2.fitness_app.users.users.core.requests.database.Database;
+import java2.fitness_app.users.users.core.requests.database.InMemoryDatabaseImpl;
+import java2.fitness_app.users.users.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
