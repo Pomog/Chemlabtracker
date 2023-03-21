@@ -4,6 +4,7 @@ import database.Database;
 import domain.cart.Cart;
 import domain.cart_item.CartItem;
 import domain.item.Item;
+import domain.user.User;
 import services.exception.InvalidInputException;
 import services.exception.InvalidQuantityException;
 import services.exception.ItemNotFoundException;
@@ -18,15 +19,15 @@ public class AddItemToCartService {
     private static final String ERROR_NOT_ENOUGH_QUANTITY = "Error: Available quantity lower than ordered amount.";
 
     private final Database database;
-    private final Long userId;
+    private final User user;
 
-    public AddItemToCartService(Database database, Long userId) {
+    public AddItemToCartService(Database database, User user) {
         this.database = database;
-        this.userId = userId;
+        this.user = user;
     }
 
     public void execute(String itemName, String stringOrderedQuantity) {
-        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), userId);
+        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), user.getId());
         try {
             Integer orderedQuantity = Integer.parseInt(stringOrderedQuantity);
             Optional<Item> item = database.accessItemDatabase().findByName(itemName);

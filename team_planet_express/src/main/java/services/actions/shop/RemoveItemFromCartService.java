@@ -4,6 +4,7 @@ import database.Database;
 import domain.cart.Cart;
 import domain.cart_item.CartItem;
 import domain.item.Item;
+import domain.user.User;
 import services.exception.ItemNotFoundException;
 import validator.CartValidator;
 
@@ -15,11 +16,11 @@ public class RemoveItemFromCartService {
     private static final String ERROR_NO_SUCH_ITEM_IN_SHOP = "Error: No such item in the shop.";
 
     private final Database database;
-    private final Long userId;
+    private final User user;
 
-    public RemoveItemFromCartService(Database database, Long userId) {
+    public RemoveItemFromCartService(Database database, User user) {
         this.database = database;
-        this.userId = userId;
+        this.user = user;
     }
 
     public void execute(String itemName) {
@@ -27,7 +28,7 @@ public class RemoveItemFromCartService {
         if (item.isEmpty()) {
             throw new ItemNotFoundException(ERROR_NO_SUCH_ITEM_IN_SHOP);
         }
-        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), userId);
+        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), user.getId());
         Optional<CartItem> cartItem = database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.get().getId());
         if (cartItem.isEmpty()) {
             throw new ItemNotFoundException(ERROR_NO_SUCH_ITEM_IN_CART);

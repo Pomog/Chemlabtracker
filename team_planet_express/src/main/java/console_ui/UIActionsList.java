@@ -56,10 +56,10 @@ public class UIActionsList {
         uiActions.add(new SignUpUIAction(new SignUpService(user), userCommunication));
         uiActions.add(new ShopExitUIAction(new ShopExitService(), userCommunication));
         uiActions.add(new ListShopItemsUIAction(new ListShopItemsService(database), userCommunication));
-        uiActions.add(new AddItemToCartUIAction(new AddItemToCartService(database, user.getId()), userCommunication));
-        uiActions.add(new RemoveItemFromCartUIAction(new RemoveItemFromCartService(database, user.getId()), userCommunication));
-        uiActions.add(new ListCartItemsUIAction(new ListCartItemsService(database, user.getId()), userCommunication));
-        uiActions.add(new BuyUIAction(new BuyService(database, user.getId()), userCommunication));
+        uiActions.add(new AddItemToCartUIAction(new AddItemToCartService(database, user), userCommunication));
+        uiActions.add(new RemoveItemFromCartUIAction(new RemoveItemFromCartService(database, user), userCommunication));
+        uiActions.add(new ListCartItemsUIAction(new ListCartItemsService(database, user), userCommunication));
+        uiActions.add(new BuyUIAction(new BuyService(database, user), userCommunication));
         uiActions.add(new AddItemToShopUIAction(new AddItemToShopService(database), userCommunication));
         uiActions.add(new ChangeItemDataUIAction(new ChangeItemDataService(database), userCommunication));
         uiActions.add(new ChangeUserDataUIAction(new ChangeUserDataService(database), userCommunication));

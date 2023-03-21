@@ -3,6 +3,7 @@ package services.actions.shop;
 import database.Database;
 import domain.cart.Cart;
 import domain.cart.CartStatus;
+import domain.user.User;
 import services.exception.CartIsEmptyException;
 import validator.CartValidator;
 
@@ -13,15 +14,15 @@ public class BuyService {
     private static final String ERROR_CART_EMPTY = "Error: Your cart is empty.";
 
     private final Database database;
-    private final Long userId;
+    private final User user;
 
-    public BuyService(Database database, Long userId) {
+    public BuyService(Database database, User user) {
         this.database = database;
-        this.userId = userId;
+        this.user = user;
     }
 
     public void execute() {
-        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), userId);
+        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), user.getId());
         if (database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId()).size() == 0) {
             throw new CartIsEmptyException(ERROR_CART_EMPTY);
         }
