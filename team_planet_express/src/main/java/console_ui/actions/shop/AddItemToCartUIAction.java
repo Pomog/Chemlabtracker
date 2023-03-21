@@ -30,11 +30,11 @@ public class AddItemToCartUIAction extends UIAction {
     @Override
     public void execute() {
         userCommunication.requestInput(PROMPT_TOPIC_ITEM);
-        String userInputItem = userCommunication.getInput();
+        String itemName = userCommunication.getInput();
         userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
         String orderedQuantity = userCommunication.getInput();
         try {
-            addItemToCartService.execute(userInputItem, orderedQuantity);
+            addItemToCartService.execute(itemName, orderedQuantity);
             userCommunication.informUser(MESSAGE_ITEM_ADDED);
         } catch (InvalidInputException | ItemNotFoundException |
                  InvalidQuantityException | NoOpenCartException exception) {
