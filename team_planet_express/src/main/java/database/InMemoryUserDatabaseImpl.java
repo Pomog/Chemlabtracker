@@ -1,7 +1,6 @@
 package database;
 
 import domain.user.User;
-import domain.user.UserRole;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -22,13 +21,6 @@ public class InMemoryUserDatabaseImpl implements UserDatabase {
     }
 
     @Override
-    public Optional<User> findByRole(UserRole userRole) {
-        return users.stream()
-                .filter(user -> user.getUserRole().equals(userRole))
-                .findFirst();
-    }
-
-    @Override
     public Optional<User> findById(Long itemId) {
         return users.stream()
                 .filter(user -> user.getId().equals(itemId))
@@ -36,14 +28,15 @@ public class InMemoryUserDatabaseImpl implements UserDatabase {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return users;
+    public Optional<User> findByLogin(String login) {
+        return users.stream()
+                .filter(user -> user.getLogin().equals(login))
+                .findFirst();
     }
 
-    public Optional<User> findByName(String name) {
-        return users.stream()
-                .filter(user -> user.getName().equals(name))
-                .findFirst();
+    @Override
+    public List<User> getAllUsers() {
+        return users;
     }
 
 }

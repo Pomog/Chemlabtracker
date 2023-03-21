@@ -21,14 +21,14 @@ public class SignInService {
     }
 
     public void execute(String name, String password) {
-        Optional<User> user = database.accessUserDatabase().findByName(name);
-        if (user.isEmpty()) {
+        Optional<User> currentUser = database.accessUserDatabase().findByLogin(name);
+        if (currentUser.isEmpty()) {
             throw new WrongLoginName(ERROR_WRONG_NAME);
         }
-        if (!user.get().getPassword().equals(password)) {
+        if (!currentUser.get().getPassword().equals(password)) {
             throw new WrongLoginPassword(ERROR_WRONG_PASSWORD);
         }
-        //currentUser.setUserId(user.get().getId());
+        user.setId(currentUser.get().getId());
     }
 
 }

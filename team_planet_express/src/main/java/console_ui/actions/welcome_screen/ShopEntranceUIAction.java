@@ -5,6 +5,7 @@ import console_ui.actions.UIAction;
 import domain.user.UserRole;
 import services.actions.welcome_screen.ShopEntranceService;
 
+//TODO also probably yeeteable
 public class ShopEntranceUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Shop";

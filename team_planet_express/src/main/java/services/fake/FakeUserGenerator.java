@@ -10,10 +10,10 @@ public class FakeUserGenerator {
 
     public List<User> createUsers() {
         List<User> fakeUsers = new ArrayList<>();
-        fakeUsers.add(new User("guest", "", "", UserRole.GUEST));
-        fakeUsers.add(new User("customer", "customer", "customer", UserRole.CUSTOMER));
-        fakeUsers.add(new User("manager", "manager", "manager", UserRole.MANAGER));
-        fakeUsers.add(new User("admin", "admin", "admin", UserRole.ADMIN));
+        fakeUsers.add(new User("Guest", "", "", UserRole.GUEST));
+        fakeUsers.add(new User("Customer", "customer", "customer", UserRole.CUSTOMER));
+        fakeUsers.add(new User("Manager", "manager", "manager", UserRole.MANAGER));
+        fakeUsers.add(new User("Admin", "admin", "admin", UserRole.ADMIN));
         return fakeUsers;
     }
 

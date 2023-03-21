@@ -13,7 +13,7 @@ import java.util.List;
 public class ListCartItemsUIAction extends UIAction {
 
     private static final String ACTION_NAME = "List cart items";
-    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.CUSTOMER);
+    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.GUEST, UserRole.CUSTOMER);
 
     private static final String HEADER_TEXT = "Cart items:";
     private static final String MESSAGE_CART_IS_EMPTY = "Your cart is empty.";

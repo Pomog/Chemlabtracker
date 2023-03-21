@@ -10,9 +10,9 @@ import services.exception.WrongLoginPassword;
 public class SignInUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Sign in";
-    private static final int ACCESS_NUM = UserRole.getAccessNumber(UserRole.GUEST);
+    private static final int ACCESS_NUM = UserRole.getAccessNumber(UserRole.ALLUSERS);
 
-    private static final String PROMPT_TOPIC_NAME = "your login name ";
+    private static final String PROMPT_TOPIC_NAME = "your login name: ";
     private static final String PROMPT_TOPIC_PASSWORD = "your password: ";
     private static final String MESSAGE_LOGIN = "Hello, ";
 
@@ -38,8 +38,5 @@ public class SignInUIAction extends UIAction {
             userCommunication.informUser(exception.getMessage());
         }
     }
-
-    //TODO get user with customer role
-    //TODO go to shop
 
 }

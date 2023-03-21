@@ -12,7 +12,7 @@ import services.exception.NoOpenCartException;
 public class AddItemToCartUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Add item to the cart";
-    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.CUSTOMER);
+    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.GUEST, UserRole.CUSTOMER);
 
     private static final String PROMPT_TOPIC_ITEM = "an item you wish to order: ";
     private static final String PROMPT_TOPIC_QUANTITY = "quantity to be ordered: ";

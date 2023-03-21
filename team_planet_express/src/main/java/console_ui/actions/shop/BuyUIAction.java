@@ -10,7 +10,7 @@ import services.exception.NoOpenCartException;
 public class BuyUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Buy items in the cart";
-    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.CUSTOMER);
+    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.GUEST, UserRole.CUSTOMER);
 
     private static final String MESSAGE_CART_IS_CLOSED = "Your cart is closed now.";
 

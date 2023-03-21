@@ -10,7 +10,7 @@ import services.exception.NoOpenCartException;
 public class RemoveItemFromCartUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Remove item from the cart";
-    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.CUSTOMER);
+    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.GUEST, UserRole.CUSTOMER);
 
     private static final String PROMPT_TOPIC_ITEM = "an item you wish to remove: ";
     private static final String MESSAGE_ITEM_REMOVED = "Item removed from your cart.";
