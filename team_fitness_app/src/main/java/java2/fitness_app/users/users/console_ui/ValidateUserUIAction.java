@@ -1,6 +1,6 @@
-package users.console_ui;
+package java2.fitness_app.users.users.console_ui;
 
-import users.core.services.ValidateUserService;
+import java2.fitness_app.users.users.core.services.ValidateUserService;
 
 import java.util.Scanner;
 

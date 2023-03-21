@@ -1,6 +1,6 @@
-package users.core.services;
+package java2.fitness_app.users.users.core.services;
 
-import users.core.requests.database.Database;
+import java2.fitness_app.users.users.core.requests.database.Database;
 
 public class RemoveUserService {
 
