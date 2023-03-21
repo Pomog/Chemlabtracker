@@ -29,7 +29,7 @@ public class AddReactionUIAction implements UIAction{
 
         if (addReactionResponse.hasErrors()) {
             addReactionResponse.getErrors().forEach(coreError ->
-                    System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage())
+                    System.out.println("InputError: " + coreError.getField() + " " + coreError.getMessage())
             );
         } else {
             System.out.printf("Reaction %s has been successfully added.", addReactionResponse.getReactionData().getCode());

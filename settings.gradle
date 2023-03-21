@@ -20,3 +20,5 @@ include 'team_eln'
 include 'team_bank_app'
 include 'team_planet_express'
 include 'team_marketplace'
+include 'team_shopmi'
+
