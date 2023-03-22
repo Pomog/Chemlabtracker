@@ -2,22 +2,22 @@ package console_ui;
 
 import console_ui.actions.UIAction;
 import console_ui.actions.admin.ChangeUserDataUIAction;
-import console_ui.actions.common.ShopExitUIAction;
+import console_ui.actions.customer.*;
+import console_ui.actions.shared.ExitUIAction;
 import console_ui.actions.manager.AddItemToShopUIAction;
 import console_ui.actions.manager.ChangeItemDataUIAction;
-import console_ui.actions.shop.*;
-import console_ui.actions.welcome_screen.SignInUIAction;
-import console_ui.actions.welcome_screen.SignUpUIAction;
-import database.Database;
-import domain.user.User;
-import domain.user.UserRole;
-import services.actions.admin.ChangeUserDataService;
-import services.actions.common.ShopExitService;
-import services.actions.manager.AddItemToShopService;
-import services.actions.manager.ChangeItemDataService;
-import services.actions.shop.*;
-import services.actions.welcome_screen.SignInService;
-import services.actions.welcome_screen.SignUpService;
+import console_ui.actions.shared.SignInUIAction;
+import console_ui.actions.guest.SignUpUIAction;
+import core.database.Database;
+import core.domain.user.User;
+import core.domain.user.UserRole;
+import core.services.actions.admin.ChangeUserDataService;
+import core.services.actions.customer.*;
+import core.services.actions.shared.ExitService;
+import core.services.actions.manager.AddItemToShopService;
+import core.services.actions.manager.ChangeItemDataService;
+import core.services.actions.shared.SignInService;
+import core.services.actions.guest.SignUpService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ public class UIActionsList {
         uiActions.add(new ChangeUserDataUIAction(new ChangeUserDataService(database), userCommunication));
         uiActions.add(new SignInUIAction(new SignInService(database, user), userCommunication));
         uiActions.add(new SignUpUIAction(new SignUpService(user), userCommunication));
-        uiActions.add(new ShopExitUIAction(new ShopExitService(), userCommunication));
+        uiActions.add(new ExitUIAction(new ExitService(), userCommunication));
         //uiActions.add(new SubMenuExitUIAction()); //TODO yeetable?
         return uiActions;
     }

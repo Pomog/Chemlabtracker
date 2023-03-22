@@ -1,10 +1,10 @@
 import console_ui.UIActionsList;
 import console_ui.UIMenu;
 import console_ui.UserCommunication;
-import database.Database;
-import domain.user.User;
-import domain.user.UserRole;
-import services.fake.FakeDatabaseInitializer;
+import core.database.Database;
+import core.domain.user.User;
+import core.domain.user.UserRole;
+import core.services.fake.FakeDatabaseInitializer;
 
 public class Shop {
 

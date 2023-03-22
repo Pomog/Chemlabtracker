@@ -2,8 +2,8 @@ package console_ui.actions.manager;
 
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
-import domain.user.UserRole;
-import services.actions.manager.ChangeItemDataService;
+import core.domain.user.UserRole;
+import core.services.actions.manager.ChangeItemDataService;
 
 public class ChangeItemDataUIAction extends UIAction {
 

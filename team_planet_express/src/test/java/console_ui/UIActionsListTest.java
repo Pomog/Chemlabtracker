@@ -1,9 +1,9 @@
 package console_ui;
 
-import database.Database;
-import database.UserDatabase;
-import domain.user.User;
-import domain.user.UserRole;
+import core.database.Database;
+import core.database.UserDatabase;
+import core.domain.user.User;
+import core.domain.user.UserRole;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

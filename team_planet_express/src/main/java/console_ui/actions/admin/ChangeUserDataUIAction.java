@@ -2,8 +2,8 @@ package console_ui.actions.admin;
 
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
-import domain.user.UserRole;
-import services.actions.admin.ChangeUserDataService;
+import core.domain.user.UserRole;
+import core.services.actions.admin.ChangeUserDataService;
 
 public class ChangeUserDataUIAction extends UIAction {
 

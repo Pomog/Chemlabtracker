@@ -2,9 +2,9 @@ package console_ui.actions.manager;
 
 import console_ui.UserCommunication;
 import org.junit.jupiter.api.Test;
-import services.actions.manager.AddItemToShopService;
-import services.exception.InvalidInputException;
-import services.exception.ItemAlreadyExistsException;
+import core.services.actions.manager.AddItemToShopService;
+import core.services.exception.InvalidInputException;
+import core.services.exception.ItemAlreadyExistsException;
 
 import java.util.Objects;
 

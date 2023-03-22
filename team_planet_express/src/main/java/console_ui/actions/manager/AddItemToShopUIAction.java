@@ -2,10 +2,10 @@ package console_ui.actions.manager;
 
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
-import domain.user.UserRole;
-import services.actions.manager.AddItemToShopService;
-import services.exception.InvalidInputException;
-import services.exception.ItemAlreadyExistsException;
+import core.domain.user.UserRole;
+import core.services.actions.manager.AddItemToShopService;
+import core.services.exception.InvalidInputException;
+import core.services.exception.ItemAlreadyExistsException;
 
 public class AddItemToShopUIAction extends UIAction {
 
