@@ -2,7 +2,7 @@ package java2.fitness_app.users.users.core.response;
 
 import java.util.List;
 
-public class CoreResponse {
+abstract class CoreResponse {
     private List<CoreError> errors;
 
     public CoreResponse() {
