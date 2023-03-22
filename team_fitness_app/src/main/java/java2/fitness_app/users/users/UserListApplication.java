@@ -13,8 +13,9 @@ public class UserListApplication {
 
     private static Database database = new InMemoryDatabaseImpl();
     private static AddUserValidator addUserValidator = new AddUserValidator();
+    private static ValidateUserValidator validateUserValidator = new ValidateUserValidator();
     private static AddUserService addUserService = new AddUserService(database, addUserValidator);
-    private static ValidateUserService validateUserService = new ValidateUserService(database);
+    private static ValidateUserService validateUserService = new ValidateUserService(database, validateUserValidator);
     private static RemoveUserService removeUserService = new RemoveUserService(database);
     private static GetAllUsersService getUsersService = new GetAllUsersService(database);
 
