@@ -13,8 +13,9 @@ public class AddUserService {
     private Database database;
     private AddUserValidator validator;
 
-    public AddUserService(Database database) {
+    public AddUserService(Database database, AddUserValidator validator) {
         this.database = database;
+        this.validator = validator;
     }
 
     public AddUserResponse execute(AddUserRequest request) {
