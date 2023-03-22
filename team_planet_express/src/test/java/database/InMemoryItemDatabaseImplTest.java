@@ -20,7 +20,7 @@ class InMemoryItemDatabaseImplTest {
     }
 
     @Test
-    void shouldReturnFoundShopItemById() {
+    void shouldReturnFoundItemById() {
         when(mockItem.getId()).thenReturn(1L);
         database.getShopItems().add(mockItem);
         assertTrue(database.findById(1L).isPresent());
@@ -34,7 +34,7 @@ class InMemoryItemDatabaseImplTest {
     }
 
     @Test
-    void shouldReturnFoundShopItemByName() {
+    void shouldReturnFoundItemByName() {
         when(mockItem.getName()).thenReturn("item");
         database.getShopItems().add(mockItem);
         assertTrue(database.findByName("item").isPresent());

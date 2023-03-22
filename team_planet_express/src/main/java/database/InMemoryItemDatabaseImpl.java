@@ -21,16 +21,16 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
     }
 
     @Override
-    public Optional<Item> findByName(String name) {
+    public Optional<Item> findById(Long itemId) {
         return shopItems.stream()
-                .filter(item -> item.getName().equals(name))
+                .filter(item -> item.getId().equals(itemId))
                 .findFirst();
     }
 
     @Override
-    public Optional<Item> findById(Long itemId) {
+    public Optional<Item> findByName(String name) {
         return shopItems.stream()
-                .filter(item -> item.getId().equals(itemId))
+                .filter(item -> item.getName().equals(name))
                 .findFirst();
     }
 
