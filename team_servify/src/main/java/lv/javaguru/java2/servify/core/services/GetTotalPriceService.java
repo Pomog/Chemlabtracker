@@ -1,6 +1,6 @@
-package lv.javaguru.java2.servify.service;
+package lv.javaguru.java2.servify.core.services;
 
-import lv.javaguru.java2.servify.database.Database;
+import lv.javaguru.java2.servify.core.database.Database;
 import lv.javaguru.java2.servify.domain.Detail;
 import lv.javaguru.java2.servify.domain.PriceList;
 

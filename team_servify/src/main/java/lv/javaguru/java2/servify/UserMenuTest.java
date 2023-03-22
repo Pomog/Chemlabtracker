@@ -4,16 +4,18 @@ import lv.javaguru.java2.servify.console_ui.AddUserUIAction;
 import lv.javaguru.java2.servify.console_ui.ExitUIAction;
 import lv.javaguru.java2.servify.console_ui.GetAllUsersUIAction;
 import lv.javaguru.java2.servify.console_ui.SetUserNotActiveUIAction;
-import lv.javaguru.java2.servify.database.UsersDatabase;
-import lv.javaguru.java2.servify.service.AddUserService;
-import lv.javaguru.java2.servify.service.GetAllUsersService;
-import lv.javaguru.java2.servify.service.SetUserNotActiveService;
+import lv.javaguru.java2.servify.core.database.UsersDatabase;
+import lv.javaguru.java2.servify.core.services.AddUserService;
+import lv.javaguru.java2.servify.core.services.AddUserValidator;
+import lv.javaguru.java2.servify.core.services.GetAllUsersService;
+import lv.javaguru.java2.servify.core.services.SetUserNotActiveService;
 
 import java.util.Scanner;
 
 public class UserMenuTest {
     public void start(UsersDatabase userDB) {
-        AddUserService addUserService = new AddUserService(userDB);
+        AddUserValidator addUserValidator = new AddUserValidator();
+        AddUserService addUserService = new AddUserService(userDB, addUserValidator);
         AddUserUIAction addUserUIAction = new AddUserUIAction(addUserService);
         GetAllUsersService getAllUsersService = new GetAllUsersService(userDB);
         GetAllUsersUIAction getAllUsersUIAction = new GetAllUsersUIAction(getAllUsersService);

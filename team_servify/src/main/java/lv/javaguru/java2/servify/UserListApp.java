@@ -1,17 +1,20 @@
 package lv.javaguru.java2.servify;
 
 import lv.javaguru.java2.servify.console_ui.*;
-import lv.javaguru.java2.servify.database.UsersDatabase;
-import lv.javaguru.java2.servify.database.UsersInMemoryDatabaseImpl;
-import lv.javaguru.java2.servify.service.AddUserService;
-import lv.javaguru.java2.servify.service.GetAllUsersService;
-import lv.javaguru.java2.servify.service.SetUserNotActiveService;
+import lv.javaguru.java2.servify.core.database.UsersDatabase;
+import lv.javaguru.java2.servify.core.database.UsersInMemoryDatabaseImpl;
+import lv.javaguru.java2.servify.core.services.AddUserService;
+import lv.javaguru.java2.servify.core.services.AddUserValidator;
+import lv.javaguru.java2.servify.core.services.GetAllUsersService;
+import lv.javaguru.java2.servify.core.services.SetUserNotActiveService;
 
 import java.util.Scanner;
 
 public class UserListApp {
     private static UsersDatabase userDB = new UsersInMemoryDatabaseImpl();
-    private static AddUserService addUserService = new AddUserService(userDB);
+
+    private static AddUserValidator addUserValidator = new AddUserValidator();
+    private static AddUserService addUserService = new AddUserService(userDB, addUserValidator);
     private static UIAction addUserUIAction = new AddUserUIAction(addUserService);
     private static GetAllUsersService getAllUsersService = new GetAllUsersService(userDB);
     private static UIAction getAllUsersUIAction = new GetAllUsersUIAction(getAllUsersService);

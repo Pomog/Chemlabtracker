@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.console_ui;
 
-import lv.javaguru.java2.servify.service.SetUserNotActiveService;
+import lv.javaguru.java2.servify.core.services.SetUserNotActiveService;
 
 import java.util.Scanner;
 

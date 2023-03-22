@@ -1,7 +1,6 @@
-package lv.javaguru.java2.servify.service;
+package lv.javaguru.java2.servify.core.services;
 
-import lv.javaguru.java2.servify.database.UsersDatabase;
-import lv.javaguru.java2.servify.domain.UserEntity;
+import lv.javaguru.java2.servify.core.database.UsersDatabase;
 
 public class SetUserNotActiveService {
     private UsersDatabase usersDatabase;
@@ -11,6 +10,6 @@ public class SetUserNotActiveService {
     }
 
     public void act(Long userId) {
-        usersDatabase.deleteById(userId);
+        usersDatabase.setNotActiveByID(userId);
     }
 }

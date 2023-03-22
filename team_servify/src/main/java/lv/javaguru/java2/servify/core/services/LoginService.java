@@ -1,6 +1,6 @@
-package lv.javaguru.java2.servify.service;
+package lv.javaguru.java2.servify.core.services;
 
-import lv.javaguru.java2.servify.database.UsersDatabase;
+import lv.javaguru.java2.servify.core.database.UsersDatabase;
 
 public class LoginService {
     private UsersDatabase userDB;

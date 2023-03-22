@@ -1,6 +1,8 @@
 package lv.javaguru.java2.servify.console_ui;
 
-import lv.javaguru.java2.servify.service.AddUserService;
+import lv.javaguru.java2.servify.core.requests.AddUserRequest;
+import lv.javaguru.java2.servify.core.responses.AddUserResponse;
+import lv.javaguru.java2.servify.core.services.AddUserService;
 
 import java.util.Scanner;
 
@@ -22,6 +24,17 @@ public class AddUserUIAction implements UIAction {
         String email = input.nextLine();
         System.out.println("Enter your phone number");
         String phoneNumber = input.nextLine();
-        addUserService.execute(firstName, secondName,  email, phoneNumber);
+
+        AddUserRequest request = new AddUserRequest(firstName, secondName, email, phoneNumber);
+        AddUserResponse response = addUserService.execute(request);
+
+        if (response.hasErrors()) {
+            response.getErrors().forEach(coreError ->
+                    System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage())
+            );
+        } else {
+            System.out.println("New user id was: " + response.getNewUser().getId());
+            System.out.println("Congratulations! New user is registered.");
+        }
     }
 }
