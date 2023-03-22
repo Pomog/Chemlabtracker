@@ -1,14 +1,14 @@
 package java2.fitness_app.users.users;
 
-import java2.fitness_app.exercise.users.console_ui.*;
-import java2.fitness_app.users.users.core.requests.database.Database;
-import java2.fitness_app.users.users.core.requests.database.InMemoryDatabaseImpl;
+
+import java2.fitness_app.users.users.core.database.Database;
+import java2.fitness_app.users.users.core.database.InMemoryDatabaseImpl;
 import java2.fitness_app.users.users.core.services.AddUserService;
-import java2.fitness_app.users.users.core.services.GetUsersService;
+import java2.fitness_app.users.users.core.services.GetAllUsersService;
 import java2.fitness_app.users.users.core.services.RemoveUserService;
 import java2.fitness_app.users.users.core.services.ValidateUserService;
 import java2.fitness_app.users.users.console_ui.*;
-import users.console_ui.*;
+
 
 import java.util.Scanner;
 
@@ -21,7 +21,7 @@ public class UserListApplication {
     private static UIAction removeUserUIAction = new RemoveUserUIAction(removeUserService);
     private static ValidateUserService validateUserService = new ValidateUserService(database);
     private static UIAction validateUserUIAction = new ValidateUserUIAction(validateUserService);
-    private static GetUsersService getUsersService = new GetUsersService(database);
+    private static GetAllUsersService getUsersService = new GetAllUsersService(database);
     private static UIAction getUsersUIAction = new GetUsersUIAction(getUsersService);
     private static UIAction exitUIAction = new ExitUIAction();
 

@@ -1,19 +1,24 @@
 package java2.fitness_app.users.users.console_ui;
 
-import java2.fitness_app.users.users.core.services.GetUsersService;
+import java2.fitness_app.users.users.core.requests.GetAllUsersRequest;
+import java2.fitness_app.users.users.core.response.GetAllUsersResponse;
+import java2.fitness_app.users.users.core.services.GetAllUsersService;
 
 public class GetUsersUIAction implements UIAction {
 
-    private GetUsersService getUsersService;
+    private GetAllUsersService getUsersService;
 
-    public GetUsersUIAction(GetUsersService getUsersService) {
+    public GetUsersUIAction(GetAllUsersService getUsersService) {
         this.getUsersService = getUsersService;
     }
 
     @Override
     public void execute() {
         System.out.println("User list: ");
-        getUsersService.execute().forEach(System.out::println);
+        GetAllUsersRequest request = new GetAllUsersRequest();
+        GetAllUsersResponse response = getUsersService.execute(request);
+        response.getUsers().forEach(System.out::println);
         System.out.println("User list end.");
     }
+
 }

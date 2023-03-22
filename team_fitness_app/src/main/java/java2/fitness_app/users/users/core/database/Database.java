@@ -1,4 +1,4 @@
-package java2.fitness_app.users.users.core.requests.database;
+package java2.fitness_app.users.users.core.database;
 
 import java2.fitness_app.users.users.User;
 
@@ -12,5 +12,5 @@ public interface Database {
 
     boolean login(Long id, String password);
 
-    List<User> getUsers();
+    List<User> getAllUsers();
 }

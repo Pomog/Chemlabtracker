@@ -1,5 +1,5 @@
-import java2.fitness_app.users.users.core.requests.database.Database;
-import java2.fitness_app.users.users.core.requests.database.InMemoryDatabaseImpl;
+import java2.fitness_app.users.users.core.database.Database;
+import java2.fitness_app.users.users.core.database.InMemoryDatabaseImpl;
 import java2.fitness_app.users.users.User;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ public class UserListApplicationTest {
     public void registerUser() {
         User user = new User("A", "a");
         database.registerNewUser(user);
-        assertEquals(1, database.getUsers().size());
+        assertEquals(1, database.getAllUsers().size());
     }
 
     @Test
@@ -23,7 +23,7 @@ public class UserListApplicationTest {
         database.registerNewUser(user1);
         database.registerNewUser(user2);
         database.deleteUser(1L, "a");
-        assertEquals(1, database.getUsers().size());
+        assertEquals(1, database.getAllUsers().size());
     }
 
     @Test
@@ -38,6 +38,6 @@ public class UserListApplicationTest {
         User user2 = new User("B", "b");
         database.registerNewUser(user1);
         database.registerNewUser(user2);
-        assertEquals(2, database.getUsers().size());
+        assertEquals(2, database.getAllUsers().size());
     }
 }

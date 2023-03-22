@@ -1,6 +1,6 @@
 package java2.fitness_app.users.users.core.services;
 
-import java2.fitness_app.users.users.core.requests.database.Database;
+import java2.fitness_app.users.users.core.database.Database;
 
 public class ValidateUserService {
 
