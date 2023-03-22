@@ -4,12 +4,14 @@ import java.util.Scanner;
 
 public class DetailLocationChoice {
 
+
     public static String newDetailLocation() {
+        DetailBuilderUI print = new DetailBuilderUI();
 
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            printLocationMenu();
+            print.printLocationMenu();
 
             int userInput = scanner.nextInt();
 
@@ -20,16 +22,11 @@ public class DetailLocationChoice {
                 case 2 -> {
                     return "Rear";
                 }
-                default -> System.out.println("Choose the variant from the menu, please.");
+                default -> print.printChoseVariantFromList();
             }
         }
     }
 
-    private static void printLocationMenu() {
-        System.out.println("""
-                Enter detail location:\s
-                1.Front
-                2.Rear""");
-    }
+
 
 }

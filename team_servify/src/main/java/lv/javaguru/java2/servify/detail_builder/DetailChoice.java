@@ -5,13 +5,14 @@ import java.util.Scanner;
 public class DetailChoice {
 
     public static Detail newDetail() {
+        DetailBuilderUI print = new DetailBuilderUI();
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter detail type:");
+        print.printEnterDetailType();
 
         while (true) {
-            printDetailMenu();
+            print.printDetailMenu();
             int detailChoice = scanner.nextInt();
 
             switch (detailChoice) {
@@ -56,20 +57,11 @@ public class DetailChoice {
                             .setSide(DetailSideChoice.newDetailSide())
                             .build();
                 }
-                default -> System.out.println("Choose the variant from the menu, please.");
+                default -> print.printChoseVariantFromList();
             }
         }
     }
 
-    private static void printDetailMenu() {
-        System.out.println("""
-                1. Bonnet
-                2. Boot
-                3. Bumper
-                4. Roof
-                5. Door\s
-                6. Wing\s
-                7. Wing mirror""");
-    }
+
 
 }
