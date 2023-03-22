@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.database;
 
-import lv.javaguru.java2.servify.detail_builder.Detail;
+import lv.javaguru.java2.servify.domain.Detail;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

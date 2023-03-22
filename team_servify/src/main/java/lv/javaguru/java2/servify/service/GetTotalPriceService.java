@@ -1,8 +1,8 @@
 package lv.javaguru.java2.servify.service;
 
 import lv.javaguru.java2.servify.database.Database;
-import lv.javaguru.java2.servify.detail_builder.Detail;
-import lv.javaguru.java2.servify.detail_builder.PriceList;
+import lv.javaguru.java2.servify.domain.Detail;
+import lv.javaguru.java2.servify.domain.PriceList;
 
 import java.math.BigDecimal;
 import java.util.List;

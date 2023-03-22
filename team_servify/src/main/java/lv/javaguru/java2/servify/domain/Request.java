@@ -1,5 +1,6 @@
-package lv.javaguru.java2.servify;
+package lv.javaguru.java2.servify.domain;
 
+import lv.javaguru.java2.servify.domain.RequestStatus;
 import lv.javaguru.java2.servify.rezerv.Detail;
 
 import java.math.BigDecimal;
