@@ -1,4 +1,6 @@
-package lv.javaguru.java2.servify.detail_builder;
+package lv.javaguru.java2.servify.domain;
+
+import lv.javaguru.java2.servify.detail_builder.DetailBuilder;
 
 import java.math.BigDecimal;
 import java.util.Objects;

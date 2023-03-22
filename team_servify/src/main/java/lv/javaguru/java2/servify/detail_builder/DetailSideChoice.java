@@ -4,12 +4,15 @@ import java.util.Scanner;
 
 public class DetailSideChoice {
 
+
+
     public static String newDetailSide() {
+        DetailBuilderUI print = new DetailBuilderUI();
 
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            printSideMenu();
+            print.printSideMenu();
 
             int userInput = scanner.nextInt();
 
@@ -20,17 +23,12 @@ public class DetailSideChoice {
                 case 2 -> {
                     return "Right";
                 }
-                default -> System.out.println("Choose the variant from the menu, please.");
+                default -> print.printChoseVariantFromList();
             }
         }
     }
 
-    private static void printSideMenu() {
-        System.out.println("""
-                Enter detail side:\s
-                1.Left
-                2.Right""");
-    }
+
 
 }
 

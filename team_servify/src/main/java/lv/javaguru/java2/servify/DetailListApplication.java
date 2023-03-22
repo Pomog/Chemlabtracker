@@ -3,10 +3,9 @@ package lv.javaguru.java2.servify;
 import lv.javaguru.java2.servify.console_ui.*;
 import lv.javaguru.java2.servify.database.Database;
 import lv.javaguru.java2.servify.database.InMemoryDatabaseImpl;
-import lv.javaguru.java2.servify.service.AddDetailService;
-import lv.javaguru.java2.servify.service.GetAllDetailsService;
-import lv.javaguru.java2.servify.service.GetTotalPriceService;
-import lv.javaguru.java2.servify.service.RemoveDetailService;
+import lv.javaguru.java2.servify.database.UsersDatabase;
+import lv.javaguru.java2.servify.database.UsersInMemoryDatabaseImpl;
+import lv.javaguru.java2.servify.service.*;
 
 import java.util.Scanner;
 
@@ -25,29 +24,24 @@ class DetailListApplication {
     private static UIAction getAllDetailsUIAction = new GetAllDetailsUIAction(getAllDetailsService);
     private static UIAction getTotalPriceUIAction = new GetTotalPriceUIAction(getTotalPriceService);
     private static UIAction exitUIAction = new ExitUIAction();
+    private static UsersDatabase userDB = new UsersInMemoryDatabaseImpl();
+    private static AddUserService addUserService = new AddUserService(userDB);
+    private static AddUserUIAction addUserUIAction = new AddUserUIAction(addUserService);
+
+    private static UserMenuTest userMenuTEST = new UserMenuTest();
 
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
-        System.out.println("|-----------------------------------------------------------------|");
-        System.out.println("| Welcome to the SERVIFY APP - calculate price for your paint job |");
-        System.out.println("|-----------------------------------------------------------------|");
-
+        showWelcomeMessage();
         while (true) {
             printProgramMenu();
-
-            System.out.println("Enter menu item number to execute:");
-
             int userChoice = userChoiceFromMenu();
-
-            if (userChoice < 1 || userChoice > 5) {
-                System.out.println("Wrong input, try again, please use only 1 .. 5 for main menu selection.");
-                continue;
+            if (userChoice < 1 || userChoice > 8) {
+                showErrorMessage();
             } else {
                 executeSelectedMenuItem(userChoice);
             }
-            System.out.println();
         }
-
     }
 
     private static void printProgramMenu() {
@@ -56,8 +50,40 @@ class DetailListApplication {
         System.out.println("2. Delete detail from list");
         System.out.println("3. Show all detail in the list");
         System.out.println("4. See total price");
-        System.out.println("5. Exit");
+        System.out.println("5. Registration");
+        System.out.println("6. Login");
+        System.out.println("7. Exit");
+        System.out.println("8. TEST User menu");
         System.out.println();
+        System.out.println("Enter menu item number to execute:");
+        System.out.println();
+    }
+
+    private static void showErrorMessage() {
+        System.out.println("Wrong input, try again, please use only 1 .. 8 for main menu selection.");
+        System.out.println();
+    }
+
+    private static void showWelcomeMessage() {
+        System.out.println("|-----------------------------------------------------------------|");
+        System.out.println("| Welcome to the SERVIFY APP - calculate price for your paint job |");
+        System.out.println("|-----------------------------------------------------------------|");
+        System.out.println();
+    }
+
+
+    private static void executeSelectedMenuItem(int userChoice) {
+        switch (userChoice) {
+            case 1 -> addDetailUIAction.execute();
+            case 2 -> removeDetailUIAction.execute();
+            case 3 -> getAllDetailsUIAction.execute();
+            case 4 -> getTotalPriceUIAction.execute();
+            case 5 -> addUserUIAction.execute();
+            case 6 -> System.out.println("Login TODO");
+            case 7 -> exitUIAction.execute();
+            case 8 -> userMenuTEST.start(userDB);
+        }
+
     }
 
     private static int userChoiceFromMenu() {
@@ -230,16 +256,7 @@ class DetailListApplication {
 //        return false;
 //    }
 
-    private static void executeSelectedMenuItem(int userChoice) {
-        switch (userChoice) {
-            case 1 -> addDetailUIAction.execute();
-            case 2 -> removeDetailUIAction.execute();
-            case 3 -> getAllDetailsUIAction.execute();
-            case 4 -> getTotalPriceUIAction.execute();
-            case 5 -> exitUIAction.execute();
-        }
 
-    }
 
 }
 

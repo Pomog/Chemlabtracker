@@ -1,4 +1,4 @@
-package java2.fitness_app.users.users.core.requests.database;
+package java2.fitness_app.users.users.core.database;
 
 import java2.fitness_app.users.users.User;
 
@@ -7,12 +7,12 @@ import java.util.List;
 
 public class InMemoryDatabaseImpl implements Database {
 
-    private  Long nextId = 1L;
+    private Long nextId = 1L;
 
     public List<User> users = new ArrayList<>();
 
     @Override
-    public List<User> getUsers() {
+    public List<User> getAllUsers() {
         return users;
     }
 
@@ -27,14 +27,14 @@ public class InMemoryDatabaseImpl implements Database {
     public boolean deleteUser(Long id, String password) {
         boolean userExists = users.stream()
                 .anyMatch(user -> user.getId().equals(id) && user.getPassword().equals(password));
-        if(userExists){
+        if (userExists) {
             users.stream()
                     .filter(user -> user.getId().equals(id))
                     .findFirst()
                     .filter(user -> user.getPassword().equals(password))
                     .ifPresent(user -> users.remove(user));
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -44,4 +44,5 @@ public class InMemoryDatabaseImpl implements Database {
         return users.stream()
                 .anyMatch(user -> user.getId().equals(id) && user.getPassword().equals(password));
     }
+
 }

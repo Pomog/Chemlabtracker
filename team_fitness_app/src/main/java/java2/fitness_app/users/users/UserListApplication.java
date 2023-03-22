@@ -1,27 +1,33 @@
 package java2.fitness_app.users.users;
 
+
+import java2.fitness_app.users.users.core.database.Database;
+import java2.fitness_app.users.users.core.database.InMemoryDatabaseImpl;
+import java2.fitness_app.users.users.core.services.*;
 import java2.fitness_app.users.users.console_ui.*;
-import java2.fitness_app.users.users.core.requests.database.Database;
-import java2.fitness_app.users.users.core.requests.database.InMemoryDatabaseImpl;
-import java2.fitness_app.users.users.core.services.AddUserService;
-import java2.fitness_app.users.users.core.services.GetUsersService;
-import java2.fitness_app.users.users.core.services.RemoveUserService;
-import java2.fitness_app.users.users.core.services.ValidateUserService;
+
 
 import java.util.Scanner;
 
 public class UserListApplication {
 
     private static Database database = new InMemoryDatabaseImpl();
-    private static AddUserService addUserService = new AddUserService(database);
-    private static UIAction addUserUIAction = new AddUserUIAction(addUserService);
+    private static AddUserValidator addUserValidator = new AddUserValidator();
+    private static ValidateUserValidator validateUserValidator = new ValidateUserValidator();
+    private static AddUserService addUserService = new AddUserService(database, addUserValidator);
+    private static ValidateUserService validateUserService = new ValidateUserService(database, validateUserValidator);
     private static RemoveUserService removeUserService = new RemoveUserService(database);
-    private static UIAction removeUserUIAction = new RemoveUserUIAction(removeUserService);
-    private static ValidateUserService validateUserService = new ValidateUserService(database);
+    private static GetAllUsersService getUsersService = new GetAllUsersService(database);
+
+
+    private static UIAction addUserUIAction = new AddUserUIAction(addUserService);
     private static UIAction validateUserUIAction = new ValidateUserUIAction(validateUserService);
-    private static GetUsersService getUsersService = new GetUsersService(database);
-    private static UIAction getUsersUIAction = new GetUsersUIAction(getUsersService);
+    private static UIAction removeUserUIAction = new RemoveUserUIAction(removeUserService);
+    private static UIAction getAllUsersUIAction = new GetAllUsersUIAction(getUsersService);
+
+
     private static UIAction exitUIAction = new ExitUIAction();
+
 
     public static void main(String[] args) {
 
@@ -55,7 +61,7 @@ public class UserListApplication {
             case 1 -> addUserUIAction.execute();
             case 2 -> validateUserUIAction.execute();
             case 3 -> removeUserUIAction.execute();
-            case 4 -> getUsersUIAction.execute();
+            case 4 -> getAllUsersUIAction.execute();
             case 5 -> exitUIAction.execute();
         }
     }

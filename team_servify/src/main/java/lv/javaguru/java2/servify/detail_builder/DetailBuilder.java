@@ -1,5 +1,7 @@
 package lv.javaguru.java2.servify.detail_builder;
 
+import lv.javaguru.java2.servify.domain.Detail;
+
 import java.math.BigDecimal;
 
 public class DetailBuilder {

@@ -1,6 +1,6 @@
-package lv.javaguru.java2.servify;
+package lv.javaguru.java2.servify.domain;
 
-public enum RequestStatus {
+public enum OrderStatus {
     NEW,
     IN_PROGRESS,
     SUBMITTED_BY_CLIENT,
