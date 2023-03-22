@@ -48,7 +48,7 @@ public class UserEntity {
                 '}';
     }
 
-    public UserEntity(String firstName, String secondName, String nickName, String email, String phoneNumber) {
+    public UserEntity(String firstName, String secondName, String email, String phoneNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;

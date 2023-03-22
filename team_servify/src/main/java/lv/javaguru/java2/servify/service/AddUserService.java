@@ -10,8 +10,8 @@ public class AddUserService {
         this.usersDatabase = usersDatabase;
     }
 
-    public void act(String firstName, String secondName, String nickName, String email, String phoneNumber) {
-        UserEntity user = new UserEntity(firstName, secondName, nickName, email, phoneNumber);
+    public void execute(String firstName, String secondName,  String email, String phoneNumber) {
+        UserEntity user = new UserEntity(firstName, secondName, email, phoneNumber);
         usersDatabase.add(user);
     }
 }

@@ -23,7 +23,7 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
     }
 
     private boolean eMailValidation(UserEntity user) {
-        return !user.getEmail().isEmpty() && !user.getEmail().isBlank() && user.getEmail() != null;
+        return !user.getEmail().isBlank() && user.getEmail() != null;
     }
 
     private boolean credentialsValidation(String email, String password) {
