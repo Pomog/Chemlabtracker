@@ -4,11 +4,11 @@ import java2.fitness_app.users.users.core.requests.GetAllUsersRequest;
 import java2.fitness_app.users.users.core.response.GetAllUsersResponse;
 import java2.fitness_app.users.users.core.services.GetAllUsersService;
 
-public class GetUsersUIAction implements UIAction {
+public class GetAllUsersUIAction implements UIAction {
 
     private GetAllUsersService getUsersService;
 
-    public GetUsersUIAction(GetAllUsersService getUsersService) {
+    public GetAllUsersUIAction(GetAllUsersService getUsersService) {
         this.getUsersService = getUsersService;
     }
 
