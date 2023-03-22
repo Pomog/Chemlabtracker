@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servify;
+package lv.javaguru.java2.servify.domain;
 
 public enum RequestStatus {
     NEW,
