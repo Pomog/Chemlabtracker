@@ -27,9 +27,10 @@ public class AddItemToCartValidator {
         List<CoreError> errors = new ArrayList<>();
         validateItemNameExistsInShop(request).ifPresent(errors::add);
         validateOrderedQuantityIsNumber(request).ifPresent(errors::add);
-        if (errors.isEmpty())
+        if (errors.isEmpty()){
             validateOrderedQuantityGreaterThanZero(request).ifPresent(errors::add);
-        validateOrderedQuantityNotGreaterThanAvailable(request).ifPresent(errors::add);
+            validateOrderedQuantityNotGreaterThanAvailable(request).ifPresent(errors::add);
+        }
         return errors;
     }
 
@@ -48,13 +49,13 @@ public class AddItemToCartValidator {
     }
 
     private Optional<CoreError> validateOrderedQuantityGreaterThanZero(AddItemToCartRequest request) {
-        return (Integer.parseInt(request.getOrderedQuantity()) > 0)
+        return (Integer.parseInt(request.getOrderedQuantity()) <= 0)
                 ? Optional.of(new CoreError(FIELD_QUANTITY, ERROR_QUANTITY_NOT_POSITIVE))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validateOrderedQuantityNotGreaterThanAvailable(AddItemToCartRequest request) {
-        return (Integer.parseInt(request.getOrderedQuantity()) <=
+        return (Integer.parseInt(request.getOrderedQuantity()) >
                 database.accessItemDatabase().findByName(request.getItemName()).get().getAvailableQuantity())
                 ? Optional.of(new CoreError(FIELD_QUANTITY, ERROR_NOT_ENOUGH_QUANTITY))
                 : Optional.empty();

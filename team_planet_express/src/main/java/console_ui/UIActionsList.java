@@ -21,6 +21,7 @@ import core.services.actions.shared.SignInService;
 import core.services.validators.customer.AddItemToCartValidator;
 import core.services.validators.customer.BuyValidator;
 import core.services.validators.customer.ListCartItemValidator;
+import core.services.validators.customer.RemoveItemFromCartValidator;
 import core.support.MutableLong;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class UIActionsList {
         //--------------------init service----------------------
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
         AddItemToCartService addItemToCartService = new AddItemToCartService(database, new AddItemToCartValidator(database), currentUserId);
-        RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, currentUserId);
+        RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, new RemoveItemFromCartValidator(database), currentUserId);
         ListCartItemsService listCartItemsService = new ListCartItemsService(database, new ListCartItemValidator(database), currentUserId);
         BuyService buyService = new BuyService(database, new BuyValidator(database), currentUserId);
         AddItemToShopService addItemToShopService = new AddItemToShopService(database);

@@ -1,6 +1,7 @@
 package console_ui.actions.customer;
 
 import console_ui.UserCommunication;
+import core.requests.customer.RemoveItemFromCartRequest;
 import org.junit.jupiter.api.Test;
 import core.services.actions.customer.RemoveItemFromCartService;
 import core.services.exception.ItemNotFoundException;
@@ -30,7 +31,7 @@ class RemoveItemFromCartUIActionTest {
         String inputItem = "item";
         when(mockUserCommunication.getInput()).thenReturn(inputItem);
         action.execute();
-        verify(mockRemoveItemFromCartService).execute(inputItem);
+        verify(mockRemoveItemFromCartService).execute(new RemoveItemFromCartRequest(inputItem));
     }
 
     @Test

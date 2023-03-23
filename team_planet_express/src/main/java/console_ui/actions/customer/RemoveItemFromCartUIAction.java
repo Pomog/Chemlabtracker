@@ -3,9 +3,9 @@ package console_ui.actions.customer;
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
 import core.domain.user.UserRole;
+import core.requests.customer.RemoveItemFromCartRequest;
+import core.responses.customer.RemoveItemFromCartResponse;
 import core.services.actions.customer.RemoveItemFromCartService;
-import core.services.exception.ItemNotFoundException;
-import core.services.exception.NoOpenCartException;
 
 public class RemoveItemFromCartUIAction extends UIAction {
 
@@ -28,12 +28,14 @@ public class RemoveItemFromCartUIAction extends UIAction {
     public void execute() {
         userCommunication.requestInput(PROMPT_TOPIC_ITEM);
         String userInputItem = userCommunication.getInput();
-        try {
-            removeItemFromCartService.execute(userInputItem);
+        RemoveItemFromCartRequest request = new RemoveItemFromCartRequest(userInputItem);
+        RemoveItemFromCartResponse response = removeItemFromCartService.execute(request);
+        if (response.hasErrors()) {
+            response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
+        } else {
             userCommunication.informUser(MESSAGE_ITEM_REMOVED);
-        } catch (ItemNotFoundException | NoOpenCartException exception) {
-            userCommunication.informUser(exception.getMessage());
         }
+
     }
 
 }
