@@ -31,10 +31,9 @@ public class AddUserValidator {
     }
     
     private Optional<CoreError> validateEmail(AddUserRequest request) {
-        if (request.getEmail() == null || request.getEmail().isBlank()) {
-            return Optional.of(new CoreError("email", "Must not be empty"));
-        } else if (!request.getEmail().contains("@")) {
-            return Optional.of(new CoreError("email", "Must be correct e-mail"));
+        if (!request.getEmail().matches("[\\w]+[@]{1}[\\w]+[.]{1}[\\D]+")) {
+            return Optional.of(new CoreError("email", "Wrong email! " +
+                    "\rHas to contain @ and domain with .extension!"));
         } else {
             return Optional.empty();
         }
