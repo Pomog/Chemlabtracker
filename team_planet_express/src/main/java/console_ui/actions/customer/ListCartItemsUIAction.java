@@ -2,13 +2,11 @@ package console_ui.actions.customer;
 
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
-import core.domain.cart_item.CartItem;
 import core.domain.user.UserRole;
+import core.responses.customer.ListCartItemsResponse;
 import core.services.actions.customer.ListCartItemsService;
-import core.services.exception.NoOpenCartException;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class ListCartItemsUIAction extends UIAction {
 
@@ -31,18 +29,19 @@ public class ListCartItemsUIAction extends UIAction {
     @Override
     public void execute() {
         userCommunication.informUser(HEADER_TEXT);
-        try {
-            List<CartItem> cartItems = listCartItemsService.execute();
-            if (cartItems.isEmpty()) {
-                userCommunication.informUser(MESSAGE_CART_IS_EMPTY);
-            } else {
-                cartItems.forEach(item -> userCommunication.informUser(item.toString()));
-                BigDecimal cartTotal = listCartItemsService.getCartTotal();
-                userCommunication.informUser(MESSAGE_CART_TOTAL + cartTotal);
-            }
-        } catch (NoOpenCartException exception) {
-            userCommunication.informUser(exception.getMessage());
+        ListCartItemsResponse response = listCartItemsService.execute();
+        if (response.hasErrors()) {
+            response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
+            return;
         }
+        if (response.getCartItems().isEmpty()) {
+            userCommunication.informUser(MESSAGE_CART_IS_EMPTY);
+            return;
+        }
+
+        response.getCartItems().forEach(item -> userCommunication.informUser(item.toString()));
+        BigDecimal cartTotal = response.getCartTotal();
+        userCommunication.informUser(MESSAGE_CART_TOTAL + cartTotal);
     }
 
 }

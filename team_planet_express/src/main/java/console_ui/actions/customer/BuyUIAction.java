@@ -3,9 +3,8 @@ package console_ui.actions.customer;
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
 import core.domain.user.UserRole;
+import core.responses.customer.BuyResponse;
 import core.services.actions.customer.BuyService;
-import core.services.exception.CartIsEmptyException;
-import core.services.exception.NoOpenCartException;
 
 public class BuyUIAction extends UIAction {
 
@@ -25,11 +24,11 @@ public class BuyUIAction extends UIAction {
 
     @Override
     public void execute() {
-        try {
-            buyService.execute();
+        BuyResponse response = buyService.execute();
+        if (response.hasErrors()) {
+            response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
+        } else {
             userCommunication.informUser(MESSAGE_CART_IS_CLOSED);
-        } catch (NoOpenCartException | CartIsEmptyException exception) {
-            userCommunication.informUser(exception.getMessage());
         }
     }
 
