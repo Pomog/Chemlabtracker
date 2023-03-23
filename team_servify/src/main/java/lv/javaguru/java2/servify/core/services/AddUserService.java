@@ -24,7 +24,7 @@ public class AddUserService {
             return new AddUserResponse(errors);
         }
 
-        UserEntity user = new UserEntity(request.getFirstName(), request.getSecondName(),
+        UserEntity user = new UserEntity(request.getFirstName(), request.getLastName(),
                 request.getEmail(), request.getPhoneNumber());
         usersDatabase.add(user);
 
