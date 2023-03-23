@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UsersInMemoryDatabaseImpl implements UsersDatabase {
 
-    private long nextId = 10L;
+    private long nextId = 0L;
     private List<UserEntity> usersDB = new ArrayList<>();
 
     @Override
