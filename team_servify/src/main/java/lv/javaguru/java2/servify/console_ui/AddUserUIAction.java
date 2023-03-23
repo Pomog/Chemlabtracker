@@ -18,14 +18,14 @@ public class AddUserUIAction implements UIAction {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter your First Name");
         String firstName = input.nextLine();
-        System.out.println("Enter your Second Name");
-        String secondName = input.nextLine();
+        System.out.println("Enter your Last Name");
+        String lastName = input.nextLine();
         System.out.println("Enter your e-mail");
         String email = input.nextLine();
         System.out.println("Enter your phone number");
         String phoneNumber = input.nextLine();
 
-        AddUserRequest request = new AddUserRequest(firstName, secondName, email, phoneNumber);
+        AddUserRequest request = new AddUserRequest(firstName, lastName, email, phoneNumber);
         AddUserResponse response = addUserService.execute(request);
 
         if (response.hasErrors()) {

@@ -15,8 +15,10 @@ public class ELN_application {
     private static UIAction addReactionUIAction = new AddReactionUIAction(addReactionService);
     private static GetAllReactionsService getAllReactionsService = new GetAllReactionsService(inMemoryDataBase);
     private static UIAction getAllReactionUIAction = new GetAllReactionUIAction(getAllReactionsService);
-    private static DelReactionService delReactionService = new DelReactionService(inMemoryDataBase);
-    private static UIAction delReactionUIACtion = new DelReactionUIAction(delReactionService);
+    private static DelReactionValidator delReactionValidator =
+            new DelReactionValidator(inMemoryDataBase);
+    private static DelReactionService delReactionService = new DelReactionService(inMemoryDataBase, delReactionValidator);
+    private static UIAction delReactionUIAction = new DelReactionUIAction(delReactionService);
     private static FindReactionsByMainProductService findReactionByMainProductService =
             new FindReactionsByMainProductService(inMemoryDataBase);
     private static FindReactionByMainProductUIAction findReactionByMainProductUIAction =
@@ -58,7 +60,7 @@ public class ELN_application {
                 break;
             }
             case 2 -> {
-                delReactionUIACtion.execute();
+                delReactionUIAction.execute();
                 break;
             }
             case 3 -> {
@@ -73,6 +75,7 @@ public class ELN_application {
                 exitFormApplication.execute();
                 break;
             }
+            default -> {break;}
         }
     }
 

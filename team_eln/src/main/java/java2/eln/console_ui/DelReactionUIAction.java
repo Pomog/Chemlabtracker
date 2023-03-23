@@ -22,6 +22,13 @@ public class DelReactionUIAction implements UIAction{
         DelReactionRequest delReactionRequest = new DelReactionRequest(reactionCode);
         DelReactionResponse delReactionResponse = delReactionService.execute(delReactionRequest);
 
-        System.out.printf("Reaction has been successfully deleted: %s", delReactionResponse.getDelResult());
+        if (delReactionResponse.hasErrors()) {
+            delReactionResponse.getErrors().forEach(coreError ->
+                    System.out.println("InputError: " + coreError.getField() + " " + coreError.getMessage())
+            );
+        } else {
+            System.out.printf("Reaction %s has been deleted -> %s", reactionCode, delReactionResponse.getDelResult());
+        }
+
     }
 }

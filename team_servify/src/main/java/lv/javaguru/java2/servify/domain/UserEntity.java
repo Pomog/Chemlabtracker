@@ -6,7 +6,7 @@ public class UserEntity {
 
     private Long id;
     private String firstName;
-    private String secondName;
+    private String lastName;
     private String email;
     private String phoneNumber;
     private UserType userType;
@@ -26,12 +26,12 @@ public class UserEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof UserEntity that)) return false;
-        return isActive == that.isActive && id.equals(that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(secondName, that.secondName)  && email.equals(that.email) && Objects.equals(phoneNumber, that.phoneNumber) && userType == that.userType && Objects.equals(address, that.address);
+        return isActive == that.isActive && id.equals(that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName)  && email.equals(that.email) && Objects.equals(phoneNumber, that.phoneNumber) && userType == that.userType && Objects.equals(address, that.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, secondName, email, phoneNumber, userType, address, isActive);
+        return Objects.hash(id, firstName, lastName, email, phoneNumber, userType, address, isActive);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class UserEntity {
         return "UserEntity{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", userType=" + userType +
@@ -48,9 +48,9 @@ public class UserEntity {
                 '}';
     }
 
-    public UserEntity(String firstName, String secondName, String email, String phoneNumber) {
+    public UserEntity(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         isActive = true;
@@ -83,12 +83,12 @@ public class UserEntity {
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhoneNumber() {

@@ -12,7 +12,7 @@ public class AddUserValidator {
     public List<CoreError> validate(AddUserRequest request) {
         List<CoreError> errors = new ArrayList<>();
         validateFirstName(request).ifPresent(errors::add);
-        validateSecondName(request).ifPresent(errors::add);
+        validateLastName(request).ifPresent(errors::add);
         validateEmail(request).ifPresent(errors::add);
         validatePhoneNumber(request).ifPresent(errors::add);
         return errors;
@@ -24,44 +24,27 @@ public class AddUserValidator {
                 : Optional.empty();
     }
     
-    private Optional<CoreError> validateSecondName(AddUserRequest request) {
-        return (request.getSecondName() == null || request.getSecondName().isBlank())
-                ? Optional.of(new CoreError("secondName", "Must not be empty"))
+    private Optional<CoreError> validateLastName(AddUserRequest request) {
+        return (request.getLastName() == null || request.getLastName().isBlank())
+                ? Optional.of(new CoreError("lastName", "Must not be empty"))
                 : Optional.empty();
     }
     
     private Optional<CoreError> validateEmail(AddUserRequest request) {
-        if (request.getEmail() == null || request.getEmail().isBlank()) {
-            return Optional.of(new CoreError("email", "Must not be empty"));
-        } else if (!request.getEmail().contains("@")) {
-            return Optional.of(new CoreError("email", "Must be correct e-mail"));
-        } else {
-            return Optional.empty();
-        }
+        return (request.getEmail() == null || !request.getEmail().matches("\\w+@\\w+.\\D+"))
+                ? Optional.of(new CoreError("email", "Empty or wrong email! " +
+                    "\rHas to contain @ and domain with .extension!"))
+                : Optional.empty();
     }
     
     private Optional<CoreError> validatePhoneNumber(AddUserRequest request) {
-        if (request.getPhoneNumber() == null || request.getPhoneNumber().isBlank()) {
-            return Optional.of(new CoreError("phoneNumber", "Must not be empty"));
-        } else if (request.getPhoneNumber().length() < 10) {
-            return Optional.of(new CoreError("phoneNumber", "The number is too short"));
-        } else if (!request.getPhoneNumber().startsWith("+")
-                || !isCorrectNumber(request.getPhoneNumber())) {
-            return Optional.of(new CoreError("phoneNumber", "Must be correct phone number"));
-        } else {
-            return Optional.empty();
-        }
-    }
-
-    private boolean isCorrectNumber(String phoneNumber) {
-        char[] array = phoneNumber.toCharArray();
-        for (int i = 1; i < array.length; i++) {
-            String mustBeDigit = String.valueOf(array[i]);
-            if (mustBeDigit.matches("\\D")) {
-                return false;
-            }
-        }
-        return true;
+        return (request.getEmail() == null || !request.getPhoneNumber().matches("^[+]?\\d{8,13}"))
+            ? Optional.of(new CoreError("phoneNumber", "Empty or wrong phone number! " +
+                    "\rMust be not empty, and be from 8 to 13 digits - within international or local format. " +
+                    "\rFor example: " +
+                    "\r - international formats: +XXXXXXXXXXX; 00XXXXXXXXXXX" +
+                    "\r - local format: XXXXXXXX"))
+            : Optional.empty();
     }
 
 }

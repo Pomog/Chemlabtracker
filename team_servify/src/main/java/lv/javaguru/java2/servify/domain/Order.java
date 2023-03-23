@@ -1,7 +1,5 @@
 package lv.javaguru.java2.servify.domain;
 
-import lv.javaguru.java2.servify.rezerv.Detail;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
