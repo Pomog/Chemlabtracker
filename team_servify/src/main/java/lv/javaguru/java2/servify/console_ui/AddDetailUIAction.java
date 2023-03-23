@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servify.console_ui;
 
 import lv.javaguru.java2.servify.detail_builder.DetailChoice;
-import lv.javaguru.java2.servify.service.AddDetailService;
+import lv.javaguru.java2.servify.core.services.AddDetailService;
 
 public class AddDetailUIAction implements UIAction {
 

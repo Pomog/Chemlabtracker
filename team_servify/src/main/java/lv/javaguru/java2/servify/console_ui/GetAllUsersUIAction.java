@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servify.console_ui;
 
-import lv.javaguru.java2.servify.service.GetAllUsersService;
+import lv.javaguru.java2.servify.core.services.GetAllUsersService;
 
 public class GetAllUsersUIAction implements UIAction {
     private GetAllUsersService getAllUsersService;

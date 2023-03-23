@@ -1,11 +1,11 @@
 package lv.javaguru.java2.servify;
 
 import lv.javaguru.java2.servify.console_ui.*;
-import lv.javaguru.java2.servify.database.Database;
-import lv.javaguru.java2.servify.database.InMemoryDatabaseImpl;
-import lv.javaguru.java2.servify.database.UsersDatabase;
-import lv.javaguru.java2.servify.database.UsersInMemoryDatabaseImpl;
-import lv.javaguru.java2.servify.service.*;
+import lv.javaguru.java2.servify.core.database.Database;
+import lv.javaguru.java2.servify.core.database.InMemoryDatabaseImpl;
+import lv.javaguru.java2.servify.core.database.UsersDatabase;
+import lv.javaguru.java2.servify.core.database.UsersInMemoryDatabaseImpl;
+import lv.javaguru.java2.servify.core.services.*;
 
 import java.util.Scanner;
 
@@ -25,7 +25,8 @@ class DetailListApplication {
     private static UIAction getTotalPriceUIAction = new GetTotalPriceUIAction(getTotalPriceService);
     private static UIAction exitUIAction = new ExitUIAction();
     private static UsersDatabase userDB = new UsersInMemoryDatabaseImpl();
-    private static AddUserService addUserService = new AddUserService(userDB);
+    private static AddUserValidator addUserValidator = new AddUserValidator();
+    private static AddUserService addUserService = new AddUserService(userDB, addUserValidator);
     private static AddUserUIAction addUserUIAction = new AddUserUIAction(addUserService);
 
     private static UserMenuTest userMenuTEST = new UserMenuTest();

@@ -1,10 +1,9 @@
-package lv.javaguru.java2.servify.database;
+package lv.javaguru.java2.servify.core.database;
 
 import lv.javaguru.java2.servify.domain.UserEntity;
 import lv.javaguru.java2.servify.domain.UserType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class UsersInMemoryDatabaseImpl implements UsersDatabase {
@@ -38,7 +37,7 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
         return passDB.equals(password);
     }
     @Override
-    public void deleteById(Long userId) {
+    public void setNotActiveByID(Long userId) {
         usersDB.stream()
                 .filter(user -> user.getId().equals(userId))
                 .findFirst()
