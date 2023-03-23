@@ -1,10 +1,11 @@
 package console_ui.actions.manager;
 
 import console_ui.UserCommunication;
-import org.junit.jupiter.api.Test;
 import core.services.actions.manager.AddItemToShopService;
 import core.services.exception.InvalidInputException;
+import core.services.exception.InvalidQuantityException;
 import core.services.exception.ItemAlreadyExistsException;
+import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
 
@@ -55,6 +56,15 @@ class AddItemToShopUIActionTest {
     void shouldPrintItemAlreadyExistsErrorMessage() {
         String exceptionMessage = "exception message";
         doThrow(new ItemAlreadyExistsException(exceptionMessage))
+                .when(mockAddItemToShopService).execute(null, null, null);
+        action.execute();
+        verify(mockUserCommunication).informUser(exceptionMessage);
+    }
+
+    @Test
+    void shouldPrintInvalidQuantityExceptionErrorMessage() {
+        String exceptionMessage = "exception message";
+        doThrow(new InvalidQuantityException(exceptionMessage))
                 .when(mockAddItemToShopService).execute(null, null, null);
         action.execute();
         verify(mockUserCommunication).informUser(exceptionMessage);

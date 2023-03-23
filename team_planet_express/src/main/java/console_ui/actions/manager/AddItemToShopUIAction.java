@@ -5,6 +5,7 @@ import console_ui.actions.UIAction;
 import core.domain.user.UserRole;
 import core.services.actions.manager.AddItemToShopService;
 import core.services.exception.InvalidInputException;
+import core.services.exception.InvalidQuantityException;
 import core.services.exception.ItemAlreadyExistsException;
 
 public class AddItemToShopUIAction extends UIAction {
@@ -37,7 +38,7 @@ public class AddItemToShopUIAction extends UIAction {
         try {
             addItemToShopService.execute(itemName, price, availableQuantity);
             userCommunication.informUser(MESSAGE_ITEM_ADDED);
-        } catch (InvalidInputException | ItemAlreadyExistsException exception) {
+        } catch (InvalidInputException | ItemAlreadyExistsException | InvalidQuantityException exception) {
             userCommunication.informUser(exception.getMessage());
         }
     }
