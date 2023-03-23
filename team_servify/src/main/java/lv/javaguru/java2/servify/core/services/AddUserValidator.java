@@ -31,7 +31,7 @@ public class AddUserValidator {
     }
     
     private Optional<CoreError> validateEmail(AddUserRequest request) {
-        if (!request.getEmail().matches("[\\w]+[@]{1}[\\w]+[.]{1}[\\D]+")) {
+        if (!request.getEmail().matches("\\w+@\\w+.\\D+")) {
             return Optional.of(new CoreError("email", "Wrong email! " +
                     "\rHas to contain @ and domain with .extension!"));
         } else {
