@@ -41,27 +41,15 @@ public class AddUserValidator {
     }
     
     private Optional<CoreError> validatePhoneNumber(AddUserRequest request) {
-        if (request.getPhoneNumber() == null || request.getPhoneNumber().isBlank()) {
-            return Optional.of(new CoreError("phoneNumber", "Must not be empty"));
-        } else if (request.getPhoneNumber().length() < 10) {
-            return Optional.of(new CoreError("phoneNumber", "The number is too short"));
-        } else if (!request.getPhoneNumber().startsWith("+")
-                || !isCorrectNumber(request.getPhoneNumber())) {
-            return Optional.of(new CoreError("phoneNumber", "Must be correct phone number"));
+        if (!request.getPhoneNumber().matches("^[+]?\\d{8,13}")) {
+            return Optional.of(new CoreError("phoneNumber", "Wrong phone number! " +
+                    "\rMust be not empty, and be from 8 to 13 digits - within international or local format. " +
+                    "\rFor example: " +
+                    "\r - international formats: +XXXXXXXXXXX; 00XXXXXXXXXXX" +
+                    "\r - local format: XXXXXXXX"));
         } else {
             return Optional.empty();
         }
-    }
-
-    private boolean isCorrectNumber(String phoneNumber) {
-        char[] array = phoneNumber.toCharArray();
-        for (int i = 1; i < array.length; i++) {
-            String mustBeDigit = String.valueOf(array[i]);
-            if (mustBeDigit.matches("\\D")) {
-                return false;
-            }
-        }
-        return true;
     }
 
 }
