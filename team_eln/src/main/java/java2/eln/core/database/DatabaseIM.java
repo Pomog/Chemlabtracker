@@ -12,4 +12,6 @@ public interface DatabaseIM {
     boolean delReactionByCode(String code);
 
     List<ReactionData> getAllReactions();
+
+    public boolean hasReactionWithCode(String reactionCode);
 }

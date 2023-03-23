@@ -7,7 +7,7 @@ import org.junit.Test;
 public class AddReactionValidatorTest {
 
     @Test
-    public void testValidateCodeAndName() {
+    public void testNotEmptyCodeAndName() {
         AddReactionRequest addReactionRequest =
                 new AddReactionRequest("TP1", "The Friedel-Crafts acylation", "team_eln/data/demoReaction1.txt");
         AddReactionValidator addReactionValidator =
@@ -15,7 +15,7 @@ public class AddReactionValidatorTest {
         Assert.assertTrue(addReactionValidator.validate(addReactionRequest).isEmpty());
     }
     @Test
-    public void testValidateCode() {
+    public void testNotEmptyCode() {
         AddReactionRequest addReactionRequest =
                 new AddReactionRequest("TP1", "", "team_eln/data/demoReaction1.txt");
         AddReactionValidator addReactionValidator =
@@ -29,7 +29,7 @@ public class AddReactionValidatorTest {
         );
     }
     @Test
-    public void testValidateName() {
+    public void testNotEmptyName() {
         AddReactionRequest addReactionRequest =
                 new AddReactionRequest("", "The Friedel-Crafts acylation", "team_eln/data/demoReaction1.txt");
         AddReactionValidator addReactionValidator =
