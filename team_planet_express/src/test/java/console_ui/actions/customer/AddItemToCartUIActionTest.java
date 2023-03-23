@@ -1,13 +1,14 @@
 package console_ui.actions.customer;
 
 import console_ui.UserCommunication;
-import org.junit.jupiter.api.Test;
+import core.requests.customer.AddItemToCartRequest;
+import core.responses.customer.AddItemToCartResponse;
+import core.responses.customer.CoreError;
 import core.services.actions.customer.AddItemToCartService;
-import core.services.exception.InvalidInputException;
-import core.services.exception.InvalidQuantityException;
-import core.services.exception.ItemNotFoundException;
-import core.services.exception.NoOpenCartException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -18,65 +19,47 @@ class AddItemToCartUIActionTest {
 
     private final AddItemToCartService mockAddItemToCartService = mock(AddItemToCartService.class);
     private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
+    private final AddItemToCartResponse mockAddItemToCartResponse = mock(AddItemToCartResponse.class);
+    private final CoreError mockCoreError = mock(CoreError.class);
+
 
     private final AddItemToCartUIAction action =
             new AddItemToCartUIAction(mockAddItemToCartService, mockUserCommunication);
 
+    @BeforeEach
+    void setupMockResponse() {
+        when(mockAddItemToCartService.execute(any(AddItemToCartRequest.class)))
+                .thenReturn(mockAddItemToCartResponse);
+    }
+
     @Test
     void shouldPrintTwoInputPrompts() {
+        when(mockAddItemToCartResponse.hasErrors()).thenReturn(false);
         action.execute();
         verify(mockUserCommunication, times(2)).requestInput(anyString());
     }
 
     @Test
     void shouldCallService() {
-        String inputItem = "item";
-        String inputQuantity = "1";
-        when(mockUserCommunication.getInput()).thenReturn(inputItem, inputQuantity);
+        when(mockAddItemToCartResponse.hasErrors()).thenReturn(false);
         action.execute();
-        verify(mockAddItemToCartService).execute(inputItem, inputQuantity);
+        verify(mockAddItemToCartService).execute(any(AddItemToCartRequest.class));
     }
 
     @Test
     void shouldPrintSuccessMessage() {
+        when(mockAddItemToCartResponse.hasErrors()).thenReturn(false);
         action.execute();
         verify(mockUserCommunication).informUser(anyString());
     }
 
     @Test
-    void shouldPrintInvalidInputErrorMessage() {
-        String exceptionMessage = "exception message";
-        doThrow(new InvalidInputException(exceptionMessage, null))
-                .when(mockAddItemToCartService).execute(null, null);
+    void shouldPrintErrorMessages() {
+        when(mockAddItemToCartResponse.hasErrors()).thenReturn(true);
+        when(mockAddItemToCartResponse.getErrors()).thenReturn(List.of(mockCoreError, mockCoreError));
+        when(mockCoreError.getMessage()).thenReturn("message");
         action.execute();
-        verify(mockUserCommunication).informUser(exceptionMessage);
-    }
-
-    @Test
-    void shouldPrintItemNotFoundErrorMessage() {
-        String exceptionMessage = "exception message";
-        doThrow(new ItemNotFoundException(exceptionMessage))
-                .when(mockAddItemToCartService).execute(null, null);
-        action.execute();
-        verify(mockUserCommunication).informUser(exceptionMessage);
-    }
-
-    @Test
-    void shouldPrintInvalidQuantityErrorMessage() {
-        String exceptionMessage = "exception message";
-        doThrow(new InvalidQuantityException(exceptionMessage))
-                .when(mockAddItemToCartService).execute(null, null);
-        action.execute();
-        verify(mockUserCommunication).informUser(exceptionMessage);
-    }
-
-    @Test
-    void shouldPrintNoOpenCartErrorMessage() {
-        String exceptionMessage = "exception message";
-        doThrow(new NoOpenCartException(exceptionMessage))
-                .when(mockAddItemToCartService).execute(null, null);
-        action.execute();
-        verify(mockUserCommunication).informUser(exceptionMessage);
+        verify(mockUserCommunication, times(2)).informUser("message");
     }
 
     @Test

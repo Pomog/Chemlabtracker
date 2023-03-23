@@ -5,43 +5,39 @@ import core.domain.cart.Cart;
 import core.domain.cart_item.CartItem;
 import core.domain.item.Item;
 import core.domain.user.User;
-import core.services.exception.InvalidInputException;
-import core.services.exception.InvalidQuantityException;
-import core.services.exception.ItemNotFoundException;
+import core.requests.customer.AddItemToCartRequest;
+import core.responses.customer.AddItemToCartResponse;
+import core.responses.customer.CoreError;
 import core.services.cart.CartValidator;
+import core.services.validators.customer.AddItemToCartValidator;
 
+import java.util.List;
 import java.util.Optional;
 
 public class AddItemToCartService {
 
-    private static final String ERROR_NOT_A_NUMBER = "Error: Quantity should be a number.";
-    private static final String ERROR_NO_SUCH_ITEM = "Error: No such item.";
-    private static final String ERROR_NOT_ENOUGH_QUANTITY = "Error: Available quantity lower than ordered amount.";
-
     private final Database database;
+    private final AddItemToCartValidator validator;
     private final User user;
 
-    public AddItemToCartService(Database database, User user) {
+    public AddItemToCartService(Database database, AddItemToCartValidator validator, User user) {
         this.database = database;
+        this.validator = validator;
         this.user = user;
     }
 
-    public void execute(String itemName, String stringOrderedQuantity) {
-        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), user.getId());
-        try {
-            Integer orderedQuantity = Integer.parseInt(stringOrderedQuantity);
-            Optional<Item> item = database.accessItemDatabase().findByName(itemName);
-            if (item.isEmpty()) {
-                throw new ItemNotFoundException(ERROR_NO_SUCH_ITEM);
-            }
-            if (!orderedQuantityValid(orderedQuantity, item.get())) {
-                throw new InvalidQuantityException(ERROR_NOT_ENOUGH_QUANTITY);
-            }
-            addItemToCart(cart, item.get(), orderedQuantity);
-            changeItemAvailability(item.get(), orderedQuantity);
-        } catch (NumberFormatException exception) {
-            throw new InvalidInputException(ERROR_NOT_A_NUMBER, exception);
+    public AddItemToCartResponse execute(AddItemToCartRequest request) {
+        List<CoreError> errors = validator.validate(request);
+        if (!errors.isEmpty()) {
+            return new AddItemToCartResponse(errors);
         }
+        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), user.getId());
+        String itemName = request.getItemName();
+        Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
+        Optional<Item> item = database.accessItemDatabase().findByName(itemName);
+        addItemToCart(cart, item.get(), orderedQuantity);
+        changeItemAvailability(item.get(), orderedQuantity);
+        return new AddItemToCartResponse();
     }
 
     private void addItemToCart(Cart cart, Item item, Integer orderedQuantity) {
@@ -57,11 +53,6 @@ public class AddItemToCartService {
     private void changeItemAvailability(Item item, Integer orderedQuantity) {
         Integer newAvailableQuantity = item.getAvailableQuantity() - orderedQuantity;
         database.accessItemDatabase().changeAvailableQuantity(item.getId(), newAvailableQuantity);
-    }
-
-    private boolean orderedQuantityValid(Integer quantityOrdered, Item item) {
-        return quantityOrdered > 0 &&
-                quantityOrdered <= item.getAvailableQuantity();
     }
 
 }

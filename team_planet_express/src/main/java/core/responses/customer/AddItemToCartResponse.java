@@ -1,4 +1,14 @@
 package core.responses.customer;
 
-public class AddItemToCartResponse {
+import java.util.List;
+
+public class AddItemToCartResponse extends CoreResponse {
+
+    public AddItemToCartResponse() {
+    }
+
+    public AddItemToCartResponse(List<CoreError> errors) {
+        super(errors);
+    }
+
 }

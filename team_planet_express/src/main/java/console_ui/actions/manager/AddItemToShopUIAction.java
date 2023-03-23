@@ -37,7 +37,7 @@ public class AddItemToShopUIAction extends UIAction {
         try {
             addItemToShopService.execute(itemName, price, availableQuantity);
             userCommunication.informUser(MESSAGE_ITEM_ADDED);
-        } catch (InvalidInputException /* TODO TEST BigDec !!! */ | ItemAlreadyExistsException exception) {
+        } catch (InvalidInputException | ItemAlreadyExistsException exception) {
             userCommunication.informUser(exception.getMessage());
         }
     }

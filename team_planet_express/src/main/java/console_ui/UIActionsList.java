@@ -3,21 +3,22 @@ package console_ui;
 import console_ui.actions.UIAction;
 import console_ui.actions.admin.ChangeUserDataUIAction;
 import console_ui.actions.customer.*;
-import console_ui.actions.shared.ExitUIAction;
+import console_ui.actions.guest.SignUpUIAction;
 import console_ui.actions.manager.AddItemToShopUIAction;
 import console_ui.actions.manager.ChangeItemDataUIAction;
+import console_ui.actions.shared.ExitUIAction;
 import console_ui.actions.shared.SignInUIAction;
-import console_ui.actions.guest.SignUpUIAction;
 import core.database.Database;
 import core.domain.user.User;
 import core.domain.user.UserRole;
 import core.services.actions.admin.ChangeUserDataService;
 import core.services.actions.customer.*;
-import core.services.actions.shared.ExitService;
+import core.services.actions.guest.SignUpService;
 import core.services.actions.manager.AddItemToShopService;
 import core.services.actions.manager.ChangeItemDataService;
+import core.services.actions.shared.ExitService;
 import core.services.actions.shared.SignInService;
-import core.services.actions.guest.SignUpService;
+import core.services.validators.customer.AddItemToCartValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +50,8 @@ public class UIActionsList {
 
     private List<UIAction> createUIActionsList() {
         List<UIAction> uiActions = new ArrayList<>();
-        //uiActions.add(new ShopEntranceUIAction(new ShopEntranceService(user), userCommunication)); //TODO yeetable?
         uiActions.add(new ListShopItemsUIAction(new ListShopItemsService(database), userCommunication));
-        uiActions.add(new AddItemToCartUIAction(new AddItemToCartService(database, user), userCommunication));
+        uiActions.add(new AddItemToCartUIAction(new AddItemToCartService(database, new AddItemToCartValidator(database), user), userCommunication));
         uiActions.add(new RemoveItemFromCartUIAction(new RemoveItemFromCartService(database, user), userCommunication));
         uiActions.add(new ListCartItemsUIAction(new ListCartItemsService(database, user), userCommunication));
         uiActions.add(new BuyUIAction(new BuyService(database, user), userCommunication));
@@ -61,7 +61,6 @@ public class UIActionsList {
         uiActions.add(new SignInUIAction(new SignInService(database, user), userCommunication));
         uiActions.add(new SignUpUIAction(new SignUpService(user), userCommunication));
         uiActions.add(new ExitUIAction(new ExitService(), userCommunication));
-        //uiActions.add(new SubMenuExitUIAction()); //TODO yeetable?
         return uiActions;
     }
 

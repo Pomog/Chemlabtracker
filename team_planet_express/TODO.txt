@@ -1,3 +1,5 @@
 yeet date change to db
 time machine for date testing
 welcome, name at the top
+get free guest from database
+rework open cart check for req/resp and validators

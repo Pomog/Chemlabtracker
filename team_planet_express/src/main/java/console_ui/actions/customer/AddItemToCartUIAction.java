@@ -3,11 +3,9 @@ package console_ui.actions.customer;
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
 import core.domain.user.UserRole;
+import core.requests.customer.AddItemToCartRequest;
+import core.responses.customer.AddItemToCartResponse;
 import core.services.actions.customer.AddItemToCartService;
-import core.services.exception.InvalidInputException;
-import core.services.exception.InvalidQuantityException;
-import core.services.exception.ItemNotFoundException;
-import core.services.exception.NoOpenCartException;
 
 public class AddItemToCartUIAction extends UIAction {
 
@@ -33,13 +31,14 @@ public class AddItemToCartUIAction extends UIAction {
         String itemName = userCommunication.getInput();
         userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
         String orderedQuantity = userCommunication.getInput();
-        try {
-            addItemToCartService.execute(itemName, orderedQuantity);
+        AddItemToCartRequest request = new AddItemToCartRequest(itemName, orderedQuantity);
+        AddItemToCartResponse response = addItemToCartService.execute(request);
+        if (response.hasErrors()) {
+            response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
+        } else {
             userCommunication.informUser(MESSAGE_ITEM_ADDED);
-        } catch (InvalidInputException | ItemNotFoundException |
-                 InvalidQuantityException | NoOpenCartException exception) {
-            userCommunication.informUser(exception.getMessage());
         }
+        //TODO NoOpenCartException was lost
     }
 
 }
