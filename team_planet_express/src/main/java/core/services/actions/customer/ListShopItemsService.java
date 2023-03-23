@@ -1,9 +1,8 @@
 package core.services.actions.customer;
 
 import core.database.Database;
-import core.domain.item.Item;
-
-import java.util.List;
+import core.requests.customer.ListShopItemsRequest;
+import core.responses.customer.ListShopItemsResponse;
 
 public class ListShopItemsService {
 
@@ -13,8 +12,8 @@ public class ListShopItemsService {
         this.database = database;
     }
 
-    public List<Item> execute() {
-        return database.accessItemDatabase().getAllItems();
+    public ListShopItemsResponse execute(ListShopItemsRequest request) {
+        return new ListShopItemsResponse(database.accessItemDatabase().getAllItems());
     }
 
 }

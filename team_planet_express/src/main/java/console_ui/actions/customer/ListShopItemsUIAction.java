@@ -2,11 +2,10 @@ package console_ui.actions.customer;
 
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
-import core.domain.item.Item;
 import core.domain.user.UserRole;
+import core.requests.customer.ListShopItemsRequest;
+import core.responses.customer.ListShopItemsResponse;
 import core.services.actions.customer.ListShopItemsService;
-
-import java.util.List;
 
 public class ListShopItemsUIAction extends UIAction {
 
@@ -27,8 +26,9 @@ public class ListShopItemsUIAction extends UIAction {
     @Override
     public void execute() {
         userCommunication.informUser(HEADER_TEXT);
-        List<Item> items = listShopItemsService.execute();
-        items.forEach(item -> userCommunication.informUser(item.toString()));
+        ListShopItemsRequest request = new ListShopItemsRequest();
+        ListShopItemsResponse response = listShopItemsService.execute(request);
+        response.getShopItems().forEach(item -> userCommunication.informUser(item.toString()));
     }
 
 }

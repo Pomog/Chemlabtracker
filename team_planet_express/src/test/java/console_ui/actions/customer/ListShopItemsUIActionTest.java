@@ -2,8 +2,11 @@ package console_ui.actions.customer;
 
 import console_ui.UserCommunication;
 import core.domain.item.Item;
-import org.junit.jupiter.api.Test;
+import core.requests.customer.ListShopItemsRequest;
+import core.responses.customer.ListShopItemsResponse;
 import core.services.actions.customer.ListShopItemsService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,10 +18,17 @@ class ListShopItemsUIActionTest {
 
     private final ListShopItemsService mockListShopItemsService = mock(ListShopItemsService.class);
     private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
+    private final ListShopItemsResponse mockListShopItemsResponse = mock(ListShopItemsResponse.class);
     private final Item mockItem = mock(Item.class);
 
     private final ListShopItemsUIAction action =
             new ListShopItemsUIAction(mockListShopItemsService, mockUserCommunication);
+
+    @BeforeEach
+    void setupMockResponse() {
+        when(mockListShopItemsService.execute(any(ListShopItemsRequest.class)))
+                .thenReturn(mockListShopItemsResponse);
+    }
 
     @Test
     void shouldPrintHeader() {
@@ -29,12 +39,12 @@ class ListShopItemsUIActionTest {
     @Test
     void shouldCallService() {
         action.execute();
-        verify(mockListShopItemsService).execute();
+        verify(mockListShopItemsService).execute(any(ListShopItemsRequest.class));
     }
 
     @Test
     void shouldListHeaderAndTwoItems() {
-        when(mockListShopItemsService.execute()).thenReturn(List.of(mockItem, mockItem));
+        when(mockListShopItemsResponse.getShopItems()).thenReturn(List.of(mockItem, mockItem));
         action.execute();
         verify(mockUserCommunication, times(3)).informUser(anyString());
     }
