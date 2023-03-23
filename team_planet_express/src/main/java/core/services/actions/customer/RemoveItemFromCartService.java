@@ -4,9 +4,9 @@ import core.database.Database;
 import core.domain.cart.Cart;
 import core.domain.cart_item.CartItem;
 import core.domain.item.Item;
-import core.domain.user.User;
-import core.services.exception.ItemNotFoundException;
 import core.services.cart.CartValidator;
+import core.services.exception.ItemNotFoundException;
+import core.support.MutableLong;
 
 import java.util.Optional;
 
@@ -16,11 +16,11 @@ public class RemoveItemFromCartService {
     private static final String ERROR_NO_SUCH_ITEM_IN_SHOP = "Error: No such item in the shop.";
 
     private final Database database;
-    private final User user;
+    private final MutableLong currentUserId;
 
-    public RemoveItemFromCartService(Database database, User user) {
+    public RemoveItemFromCartService(Database database, MutableLong currentUserId) {
         this.database = database;
-        this.user = user;
+        this.currentUserId = currentUserId;
     }
 
     public void execute(String itemName) {
@@ -28,7 +28,7 @@ public class RemoveItemFromCartService {
         if (item.isEmpty()) {
             throw new ItemNotFoundException(ERROR_NO_SUCH_ITEM_IN_SHOP);
         }
-        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), user.getId());
+        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), currentUserId.getValue());
         Optional<CartItem> cartItem = database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.get().getId());
         if (cartItem.isEmpty()) {
             throw new ItemNotFoundException(ERROR_NO_SUCH_ITEM_IN_CART);

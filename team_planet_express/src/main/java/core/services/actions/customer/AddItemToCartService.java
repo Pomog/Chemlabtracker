@@ -4,12 +4,12 @@ import core.database.Database;
 import core.domain.cart.Cart;
 import core.domain.cart_item.CartItem;
 import core.domain.item.Item;
-import core.domain.user.User;
 import core.requests.customer.AddItemToCartRequest;
 import core.responses.customer.AddItemToCartResponse;
 import core.responses.customer.CoreError;
 import core.services.cart.CartValidator;
 import core.services.validators.customer.AddItemToCartValidator;
+import core.support.MutableLong;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,12 +18,12 @@ public class AddItemToCartService {
 
     private final Database database;
     private final AddItemToCartValidator validator;
-    private final User user;
+    private final MutableLong currentUserId;
 
-    public AddItemToCartService(Database database, AddItemToCartValidator validator, User user) {
+    public AddItemToCartService(Database database, AddItemToCartValidator validator, MutableLong currentUserId) {
         this.database = database;
         this.validator = validator;
-        this.user = user;
+        this.currentUserId = currentUserId;
     }
 
     public AddItemToCartResponse execute(AddItemToCartRequest request) {
@@ -31,7 +31,7 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), user.getId());
+        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), currentUserId.getValue());
         String itemName = request.getItemName();
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         Optional<Item> item = database.accessItemDatabase().findByName(itemName);

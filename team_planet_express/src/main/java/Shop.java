@@ -2,9 +2,9 @@ import console_ui.UIActionsList;
 import console_ui.UIMenu;
 import console_ui.UserCommunication;
 import core.database.Database;
-import core.domain.user.User;
 import core.domain.user.UserRole;
 import core.services.fake.FakeDatabaseInitializer;
+import core.support.MutableLong;
 
 public class Shop {
 
@@ -13,11 +13,12 @@ public class Shop {
         Database database = new Database();
         new FakeDatabaseInitializer(database).initialize();
 
-        User user = new User(UserRole.GUEST);
+        //TODO check optional, create if empty
+        MutableLong currentUserId = new MutableLong(database.accessUserDatabase().findByRole(UserRole.GUEST).get().getId());
 
         UserCommunication userCommunication = new UserCommunication();
 
-        UIMenu uiMenu = new UIMenu(new UIActionsList(database, user, userCommunication), userCommunication);
+        UIMenu uiMenu = new UIMenu(new UIActionsList(database, currentUserId, userCommunication), userCommunication);
 
         uiMenu.startUI();
 

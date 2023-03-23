@@ -19,6 +19,7 @@ import core.services.actions.manager.ChangeItemDataService;
 import core.services.actions.shared.ExitService;
 import core.services.actions.shared.SignInService;
 import core.services.validators.customer.AddItemToCartValidator;
+import core.support.MutableLong;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,20 +29,20 @@ import java.util.stream.Collectors;
 public class UIActionsList {
 
     private final Database database;
-    private final User user;
+    private final MutableLong currentUserId;
     private final UserCommunication userCommunication;
     private final List<UIAction> uiActionsList;
 
-    public UIActionsList(Database database, User user, UserCommunication userCommunication) {
+    public UIActionsList(Database database, MutableLong currentUserId, UserCommunication userCommunication) {
         this.database = database;
-        this.user = user;
+        this.currentUserId = currentUserId;
         this.userCommunication = userCommunication;
         this.uiActionsList = createUIActionsList();
     }
 
     public List<UIAction> getUIActionsListForUserRole() {
-        //TODO pass id maybe ?
-        Optional<User> currentUser = database.accessUserDatabase().findById(user.getId());
+        //TODO this should not be necessary
+        Optional<User> currentUser = database.accessUserDatabase().findById(currentUserId.getValue());
         UserRole filterRole = currentUser.isEmpty() ? UserRole.GUEST : currentUser.get().getUserRole();
         return uiActionsList.stream()
                 .filter(uiAction -> filterRole.checkPermission(uiAction.getAccessNumber()))
@@ -51,15 +52,15 @@ public class UIActionsList {
     private List<UIAction> createUIActionsList() {
         List<UIAction> uiActions = new ArrayList<>();
         uiActions.add(new ListShopItemsUIAction(new ListShopItemsService(database), userCommunication));
-        uiActions.add(new AddItemToCartUIAction(new AddItemToCartService(database, new AddItemToCartValidator(database), user), userCommunication));
-        uiActions.add(new RemoveItemFromCartUIAction(new RemoveItemFromCartService(database, user), userCommunication));
-        uiActions.add(new ListCartItemsUIAction(new ListCartItemsService(database, user), userCommunication));
-        uiActions.add(new BuyUIAction(new BuyService(database, user), userCommunication));
+        uiActions.add(new AddItemToCartUIAction(new AddItemToCartService(database, new AddItemToCartValidator(database), currentUserId), userCommunication));
+        uiActions.add(new RemoveItemFromCartUIAction(new RemoveItemFromCartService(database, currentUserId), userCommunication));
+        uiActions.add(new ListCartItemsUIAction(new ListCartItemsService(database, currentUserId), userCommunication));
+        uiActions.add(new BuyUIAction(new BuyService(database, currentUserId), userCommunication));
         uiActions.add(new AddItemToShopUIAction(new AddItemToShopService(database), userCommunication));
         uiActions.add(new ChangeItemDataUIAction(new ChangeItemDataService(database), userCommunication));
         uiActions.add(new ChangeUserDataUIAction(new ChangeUserDataService(database), userCommunication));
-        uiActions.add(new SignInUIAction(new SignInService(database, user), userCommunication));
-        uiActions.add(new SignUpUIAction(new SignUpService(user), userCommunication));
+        uiActions.add(new SignInUIAction(new SignInService(database, currentUserId), userCommunication));
+        uiActions.add(new SignUpUIAction(new SignUpService(currentUserId), userCommunication));
         uiActions.add(new ExitUIAction(new ExitService(), userCommunication));
         return uiActions;
     }

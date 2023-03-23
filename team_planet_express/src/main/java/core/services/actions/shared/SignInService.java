@@ -4,6 +4,7 @@ import core.database.Database;
 import core.domain.user.User;
 import core.services.exception.InvalidLoginNameException;
 import core.services.exception.InvalidLoginPasswordException;
+import core.support.MutableLong;
 
 import java.util.Optional;
 
@@ -13,11 +14,11 @@ public class SignInService {
     private static final String ERROR_WRONG_NAME = "Error: wrong name.";
 
     private final Database database;
-    private final User user;
+    private final MutableLong currentUserId;
 
-    public SignInService(Database database, User user) {
+    public SignInService(Database database, MutableLong currentUserId) {
         this.database = database;
-        this.user = user;
+        this.currentUserId = currentUserId;
     }
 
     public void execute(String name, String password) {
@@ -28,7 +29,7 @@ public class SignInService {
         if (!currentUser.get().getPassword().equals(password)) {
             throw new InvalidLoginPasswordException(ERROR_WRONG_PASSWORD);
         }
-        user.setId(currentUser.get().getId());
+        currentUserId.setValue(currentUser.get().getId());
     }
 
 }

@@ -1,13 +1,13 @@
 package core.services.actions.guest;
 
-import core.domain.user.User;
+import core.support.MutableLong;
 
 public class SignUpService {
 
-    private final User user;
+    private final MutableLong currentUserId;
 
-    public SignUpService(User user) {
-        this.user = user;
+    public SignUpService(MutableLong currentUserId) {
+        this.currentUserId = currentUserId;
     }
 
     public void execute() {
