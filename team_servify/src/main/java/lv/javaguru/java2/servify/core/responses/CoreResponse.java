@@ -2,7 +2,7 @@ package lv.javaguru.java2.servify.core.responses;
 
 import java.util.List;
 
-abstract class CoreResponse {
+public abstract class CoreResponse {
     private List<CoreError> errors;
 
     public CoreResponse() { }

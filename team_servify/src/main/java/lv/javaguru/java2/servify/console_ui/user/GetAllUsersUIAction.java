@@ -1,6 +1,8 @@
-package lv.javaguru.java2.servify.console_ui;
+package lv.javaguru.java2.servify.console_ui.user;
 
-import lv.javaguru.java2.servify.core.services.GetAllUsersService;
+import lv.javaguru.java2.servify.console_ui.UIAction;
+import lv.javaguru.java2.servify.core.responses.user.GetAllUsersResponse;
+import lv.javaguru.java2.servify.core.services.user.GetAllUsersService;
 
 public class GetAllUsersUIAction implements UIAction {
     private GetAllUsersService getAllUsersService;
@@ -12,8 +14,8 @@ public class GetAllUsersUIAction implements UIAction {
     @Override
     public void execute() {
         System.out.println("User list: ");
-        getAllUsersService.act().forEach(System.out::println);
+        GetAllUsersResponse response = getAllUsersService.execute();
+        response.getUsers().forEach(System.out::println);
         System.out.println("User list end.");
-        System.out.println();
     }
 }

@@ -5,6 +5,7 @@ import lv.javaguru.java2.servify.domain.UserType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UsersInMemoryDatabaseImpl implements UsersDatabase {
 
@@ -13,16 +14,10 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
 
     @Override
     public void add(UserEntity user) {
-        if(eMailValidation(user)) {
-            user.setId(nextId);
-            nextId++;
-            user.setUserType(UserType.CUSTOMER);
-            usersDB.add(user);
-        }
-    }
-
-    private boolean eMailValidation(UserEntity user) {
-        return !user.getEmail().isBlank() && user.getEmail() != null;
+        user.setId(nextId);
+        nextId++;
+        user.setUserType(UserType.CUSTOMER);
+        usersDB.add(user);
     }
 
     private boolean credentialsValidation(String email, String password) {
@@ -33,19 +28,33 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
         }
         return false;
     }
+
     private boolean checkPassword(String passDB, String password) {
         return passDB.equals(password);
     }
+
     @Override
-    public void setNotActiveByID(Long userId) {
+    public boolean setNotActiveByID(Long userId) {
+        boolean isUserInactivated = false;
         usersDB.stream()
                 .filter(user -> user.getId().equals(userId))
                 .findFirst()
-                .ifPresent(user -> user.setActive(false));
+                .ifPresent(user -> user.setInactive(true));
+
+        Optional<UserEntity> userToInactivateOpt = usersDB.stream()
+                .filter(userEntity -> userEntity.getId().equals(userId))
+                .findFirst();
+
+        if (userToInactivateOpt.isPresent()) {
+            UserEntity userToInactivate = userToInactivateOpt.get();
+            isUserInactivated = userToInactivate.isInactive();
+        }
+
+        return isUserInactivated;
     }
 
     @Override
-    public List<UserEntity> getAll() {
+    public List<UserEntity> getAllUsers() {
         return usersDB;
     }
 }

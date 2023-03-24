@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servify.core.services;
+package lv.javaguru.java2.servify.core.services.detail;
 
 import lv.javaguru.java2.servify.core.database.Database;
 

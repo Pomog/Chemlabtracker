@@ -1,7 +1,8 @@
-package lv.javaguru.java2.servify.core.services;
+package lv.javaguru.java2.servify.core.services.user;
 
-import lv.javaguru.java2.servify.core.requests.AddUserRequest;
+import lv.javaguru.java2.servify.core.requests.user.AddUserRequest;
 import lv.javaguru.java2.servify.core.responses.CoreError;
+import lv.javaguru.java2.servify.domain.FieldTitle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,26 +21,26 @@ public class AddUserValidator {
     
     private Optional<CoreError> validateFirstName(AddUserRequest request) {
         return (request.getFirstName() == null || request.getFirstName().isBlank())
-                ? Optional.of(new CoreError("firstName", "Must not be empty"))
+                ? Optional.of(new CoreError(FieldTitle.FIRSTNAME, "Must not be empty"))
                 : Optional.empty();
     }
     
     private Optional<CoreError> validateLastName(AddUserRequest request) {
         return (request.getLastName() == null || request.getLastName().isBlank())
-                ? Optional.of(new CoreError("lastName", "Must not be empty"))
+                ? Optional.of(new CoreError(FieldTitle.LASTNAME, "Must not be empty"))
                 : Optional.empty();
     }
     
     private Optional<CoreError> validateEmail(AddUserRequest request) {
         return (request.getEmail() == null || !request.getEmail().matches("\\w+@\\w+.\\D+"))
-                ? Optional.of(new CoreError("email", "Empty or wrong email! " +
+                ? Optional.of(new CoreError(FieldTitle.EMAIL, "Empty or wrong email! " +
                     "\rHas to contain @ and domain with .extension!"))
                 : Optional.empty();
     }
     
     private Optional<CoreError> validatePhoneNumber(AddUserRequest request) {
         return (request.getEmail() == null || !request.getPhoneNumber().matches("^[+]?\\d{8,13}"))
-            ? Optional.of(new CoreError("phoneNumber", "Empty or wrong phone number! " +
+            ? Optional.of(new CoreError(FieldTitle.PHONE_NUMBER, "Empty or wrong phone number! " +
                     "\rMust be not empty, and be from 8 to 13 digits - within international or local format. " +
                     "\rFor example: " +
                     "\r - international formats: +XXXXXXXXXXX; 00XXXXXXXXXXX" +

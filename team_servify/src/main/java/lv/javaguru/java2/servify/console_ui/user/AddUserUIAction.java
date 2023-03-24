@@ -1,8 +1,9 @@
-package lv.javaguru.java2.servify.console_ui;
+package lv.javaguru.java2.servify.console_ui.user;
 
-import lv.javaguru.java2.servify.core.requests.AddUserRequest;
-import lv.javaguru.java2.servify.core.responses.AddUserResponse;
-import lv.javaguru.java2.servify.core.services.AddUserService;
+import lv.javaguru.java2.servify.console_ui.UIAction;
+import lv.javaguru.java2.servify.core.requests.user.AddUserRequest;
+import lv.javaguru.java2.servify.core.responses.user.AddUserResponse;
+import lv.javaguru.java2.servify.core.services.user.AddUserService;
 
 import java.util.Scanner;
 

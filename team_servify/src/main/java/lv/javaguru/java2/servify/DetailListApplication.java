@@ -1,11 +1,21 @@
 package lv.javaguru.java2.servify;
 
 import lv.javaguru.java2.servify.console_ui.*;
+import lv.javaguru.java2.servify.console_ui.detail.AddDetailUIAction;
+import lv.javaguru.java2.servify.console_ui.detail.GetAllDetailsUIAction;
+import lv.javaguru.java2.servify.console_ui.detail.GetTotalPriceUIAction;
+import lv.javaguru.java2.servify.console_ui.detail.RemoveDetailUIAction;
+import lv.javaguru.java2.servify.console_ui.user.AddUserUIAction;
 import lv.javaguru.java2.servify.core.database.Database;
 import lv.javaguru.java2.servify.core.database.InMemoryDatabaseImpl;
 import lv.javaguru.java2.servify.core.database.UsersDatabase;
 import lv.javaguru.java2.servify.core.database.UsersInMemoryDatabaseImpl;
-import lv.javaguru.java2.servify.core.services.*;
+import lv.javaguru.java2.servify.core.services.detail.AddDetailService;
+import lv.javaguru.java2.servify.core.services.detail.GetAllDetailsService;
+import lv.javaguru.java2.servify.core.services.detail.GetTotalPriceService;
+import lv.javaguru.java2.servify.core.services.detail.RemoveDetailService;
+import lv.javaguru.java2.servify.core.services.user.AddUserService;
+import lv.javaguru.java2.servify.core.services.user.AddUserValidator;
 
 import java.util.Scanner;
 
