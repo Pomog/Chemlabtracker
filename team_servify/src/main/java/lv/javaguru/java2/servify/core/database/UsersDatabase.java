@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface UsersDatabase {
     void add(UserEntity user);
-    boolean setNotActiveByID(Long userId);
+    boolean deactivateUser(Long userId);
     List<UserEntity> getAllUsers();
 }
