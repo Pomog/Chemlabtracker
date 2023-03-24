@@ -1,4 +1,4 @@
-package core.responses.customer;
+package core.responses;
 
 public class CoreError {
 

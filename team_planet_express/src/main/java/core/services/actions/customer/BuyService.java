@@ -3,8 +3,8 @@ package core.services.actions.customer;
 import core.database.Database;
 import core.domain.cart.Cart;
 import core.domain.cart.CartStatus;
+import core.responses.CoreError;
 import core.responses.customer.BuyResponse;
-import core.responses.customer.CoreError;
 import core.services.cart.CartValidator;
 import core.services.validators.customer.BuyValidator;
 import core.support.MutableLong;
@@ -30,6 +30,7 @@ public class BuyService {
         if (!errors.isEmpty()) {
             return new BuyResponse(errors);
         }
+        //TODO throws
         Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), currentUserId.getValue());
         database.accessCartDatabase().changeCartStatus(cart.getId(), CartStatus.CLOSED);
         database.accessCartDatabase().changeLastActionDate(cart.getId(), LocalDate.now());

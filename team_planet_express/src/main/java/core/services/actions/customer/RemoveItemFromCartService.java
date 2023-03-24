@@ -5,7 +5,7 @@ import core.domain.cart.Cart;
 import core.domain.cart_item.CartItem;
 import core.domain.item.Item;
 import core.requests.customer.RemoveItemFromCartRequest;
-import core.responses.customer.CoreError;
+import core.responses.CoreError;
 import core.responses.customer.RemoveItemFromCartResponse;
 import core.services.cart.CartValidator;
 import core.services.validators.customer.RemoveItemFromCartValidator;
@@ -34,6 +34,7 @@ public class RemoveItemFromCartService {
             return new RemoveItemFromCartResponse(errors);
         }
         Optional<Item> item = database.accessItemDatabase().findByName(request.getItemName());
+        //TODO throw
         Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), currentUserId.getValue());
         Optional<CartItem> cartItem = database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.get().getId());
 

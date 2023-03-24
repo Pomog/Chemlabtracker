@@ -2,8 +2,8 @@ package console_ui.actions.customer;
 
 import console_ui.UserCommunication;
 import core.requests.customer.AddItemToCartRequest;
+import core.responses.CoreError;
 import core.responses.customer.AddItemToCartResponse;
-import core.responses.customer.CoreError;
 import core.services.actions.customer.AddItemToCartService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,6 @@ class AddItemToCartUIActionTest {
     private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
     private final AddItemToCartResponse mockAddItemToCartResponse = mock(AddItemToCartResponse.class);
     private final CoreError mockCoreError = mock(CoreError.class);
-
 
     private final AddItemToCartUIAction action =
             new AddItemToCartUIAction(mockAddItemToCartService, mockUserCommunication);

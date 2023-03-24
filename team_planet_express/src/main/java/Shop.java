@@ -14,7 +14,11 @@ public class Shop {
         new FakeDatabaseInitializer(database).initialize();
 
         //TODO check optional, create if empty
+        /* shortcuts for tests */
         MutableLong currentUserId = new MutableLong(database.accessUserDatabase().findByRole(UserRole.GUEST).get().getId());
+//        MutableLong currentUserId = new MutableLong(database.accessUserDatabase().findByRole(UserRole.CUSTOMER).get().getId());
+//        MutableLong currentUserId = new MutableLong(database.accessUserDatabase().findByRole(UserRole.MANAGER).get().getId());
+//        MutableLong currentUserId = new MutableLong(database.accessUserDatabase().findByRole(UserRole.ADMIN).get().getId());
 
         UserCommunication userCommunication = new UserCommunication();
 

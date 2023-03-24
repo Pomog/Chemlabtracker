@@ -2,7 +2,7 @@ package core.services.validators.customer;
 
 import core.database.Database;
 import core.requests.customer.AddItemToCartRequest;
-import core.responses.customer.CoreError;
+import core.responses.CoreError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class AddItemToCartValidator {
         List<CoreError> errors = new ArrayList<>();
         validateItemNameExistsInShop(request).ifPresent(errors::add);
         validateOrderedQuantityIsNumber(request).ifPresent(errors::add);
-        if (errors.isEmpty()){
+        if (errors.isEmpty()) {
             validateOrderedQuantityGreaterThanZero(request).ifPresent(errors::add);
             validateOrderedQuantityNotGreaterThanAvailable(request).ifPresent(errors::add);
         }

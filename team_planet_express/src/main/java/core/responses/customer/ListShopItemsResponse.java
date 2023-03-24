@@ -1,6 +1,7 @@
 package core.responses.customer;
 
 import core.domain.item.Item;
+import core.responses.CoreResponse;
 
 import java.util.List;
 

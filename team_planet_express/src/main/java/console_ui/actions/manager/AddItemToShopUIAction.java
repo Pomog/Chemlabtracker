@@ -3,10 +3,9 @@ package console_ui.actions.manager;
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
 import core.domain.user.UserRole;
+import core.requests.manager.AddItemToShopRequest;
+import core.responses.manager.AddItemToShopResponse;
 import core.services.actions.manager.AddItemToShopService;
-import core.services.exception.InvalidInputException;
-import core.services.exception.InvalidQuantityException;
-import core.services.exception.ItemAlreadyExistsException;
 
 public class AddItemToShopUIAction extends UIAction {
 
@@ -35,11 +34,13 @@ public class AddItemToShopUIAction extends UIAction {
         String price = userCommunication.getInput();
         userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
         String availableQuantity = userCommunication.getInput();
-        try {
-            addItemToShopService.execute(itemName, price, availableQuantity);
+        AddItemToShopRequest request = new AddItemToShopRequest(itemName, price, availableQuantity);
+        AddItemToShopResponse response = addItemToShopService.execute(request);
+        if (response.hasErrors()) {
+            response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));
+        } else {
             userCommunication.informUser(MESSAGE_ITEM_ADDED);
-        } catch (InvalidInputException | ItemAlreadyExistsException | InvalidQuantityException exception) {
-            userCommunication.informUser(exception.getMessage());
+
         }
     }
 

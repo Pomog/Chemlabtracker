@@ -30,6 +30,7 @@ public class BuyUIAction extends UIAction {
         } else {
             userCommunication.informUser(MESSAGE_CART_IS_CLOSED);
         }
+        //TODO NoOpenCartException was lost
     }
 
 }

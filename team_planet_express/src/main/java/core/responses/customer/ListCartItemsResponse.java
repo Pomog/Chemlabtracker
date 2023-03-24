@@ -1,6 +1,8 @@
 package core.responses.customer;
 
 import core.domain.cart_item.CartItem;
+import core.responses.CoreError;
+import core.responses.CoreResponse;
 
 import java.math.BigDecimal;
 import java.util.List;

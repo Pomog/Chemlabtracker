@@ -1,12 +1,14 @@
 package console_ui.actions.manager;
 
 import console_ui.UserCommunication;
+import core.requests.manager.AddItemToShopRequest;
+import core.responses.CoreError;
+import core.responses.manager.AddItemToShopResponse;
 import core.services.actions.manager.AddItemToShopService;
-import core.services.exception.InvalidInputException;
-import core.services.exception.InvalidQuantityException;
-import core.services.exception.ItemAlreadyExistsException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -17,9 +19,17 @@ class AddItemToShopUIActionTest {
 
     private final AddItemToShopService mockAddItemToShopService = mock(AddItemToShopService.class);
     private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
+    private final AddItemToShopResponse mockAddItemToShopResponse = mock(AddItemToShopResponse.class);
+    private final CoreError mockCoreError = mock(CoreError.class);
 
     private final AddItemToShopUIAction action =
             new AddItemToShopUIAction(mockAddItemToShopService, mockUserCommunication);
+
+    @BeforeEach
+    void setupMockResponse() {
+        when(mockAddItemToShopService.execute(any(AddItemToShopRequest.class)))
+                .thenReturn(mockAddItemToShopResponse);
+    }
 
     @Test
     void shouldPrintThreeInputPrompts() {
@@ -29,12 +39,10 @@ class AddItemToShopUIActionTest {
 
     @Test
     void shouldCallService() {
-        String inputItem = "item";
-        String inputPrice = "1.00";
-        String inputQuantity = "1";
-        when(mockUserCommunication.getInput()).thenReturn(inputItem, inputPrice, inputQuantity);
+        when(mockUserCommunication.getInput()).thenReturn("name", "100.10", "10");
+        when(mockAddItemToShopResponse.hasErrors()).thenReturn(false);
         action.execute();
-        verify(mockAddItemToShopService).execute(inputItem, inputPrice, inputQuantity);
+        verify(mockAddItemToShopService).execute(new AddItemToShopRequest("name", "100.10", "10"));
     }
 
     @Test
@@ -44,30 +52,12 @@ class AddItemToShopUIActionTest {
     }
 
     @Test
-    void shouldPrintInvalidInputErrorMessage() {
-        String exceptionMessage = "exception message";
-        doThrow(new InvalidInputException(exceptionMessage, null))
-                .when(mockAddItemToShopService).execute(null, null, null);
+    void shouldPrintErrorMessages() {
+        when(mockAddItemToShopResponse.hasErrors()).thenReturn(true);
+        when(mockAddItemToShopResponse.getErrors()).thenReturn(List.of(mockCoreError, mockCoreError));
+        when(mockCoreError.getMessage()).thenReturn("message");
         action.execute();
-        verify(mockUserCommunication).informUser(exceptionMessage);
-    }
-
-    @Test
-    void shouldPrintItemAlreadyExistsErrorMessage() {
-        String exceptionMessage = "exception message";
-        doThrow(new ItemAlreadyExistsException(exceptionMessage))
-                .when(mockAddItemToShopService).execute(null, null, null);
-        action.execute();
-        verify(mockUserCommunication).informUser(exceptionMessage);
-    }
-
-    @Test
-    void shouldPrintInvalidQuantityExceptionErrorMessage() {
-        String exceptionMessage = "exception message";
-        doThrow(new InvalidQuantityException(exceptionMessage))
-                .when(mockAddItemToShopService).execute(null, null, null);
-        action.execute();
-        verify(mockUserCommunication).informUser(exceptionMessage);
+        verify(mockUserCommunication, times(2)).informUser("message");
     }
 
     @Test

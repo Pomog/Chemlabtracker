@@ -4,7 +4,7 @@ import core.database.Database;
 import core.domain.cart.Cart;
 import core.domain.item.Item;
 import core.requests.customer.RemoveItemFromCartRequest;
-import core.responses.customer.CoreError;
+import core.responses.CoreError;
 import core.services.cart.CartValidator;
 
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ public class RemoveItemFromCartValidator {
     private Optional<CoreError> validateItemNameInCart(RemoveItemFromCartRequest request, Long userId) {
         Optional<Item> item = database.accessItemDatabase().findByName(request.getItemName());
         Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), userId);
+        //TODO test for NPE on item.get()
         return (database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.get().getId()).isEmpty())
                 ? Optional.of(new CoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_CART))
                 : Optional.empty();

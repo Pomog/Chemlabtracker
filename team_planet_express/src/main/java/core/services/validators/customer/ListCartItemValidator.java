@@ -1,7 +1,8 @@
 package core.services.validators.customer;
 
 import core.database.Database;
-import core.responses.customer.CoreError;
+import core.responses.CoreError;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

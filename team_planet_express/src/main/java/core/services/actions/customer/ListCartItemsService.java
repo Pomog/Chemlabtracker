@@ -2,7 +2,7 @@ package core.services.actions.customer;
 
 import core.database.Database;
 import core.domain.cart.Cart;
-import core.responses.customer.CoreError;
+import core.responses.CoreError;
 import core.responses.customer.ListCartItemsResponse;
 import core.services.cart.CartService;
 import core.services.cart.CartValidator;
@@ -29,6 +29,7 @@ public class ListCartItemsService {
         if (!errors.isEmpty()) {
             return new ListCartItemsResponse(errors);
         }
+        //TODO throws
         Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), currentUserId.getValue());
         return new ListCartItemsResponse(database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId()), getCartTotal());
     }

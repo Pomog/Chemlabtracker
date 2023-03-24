@@ -1,8 +1,8 @@
-package core.responses.customer;
+package core.responses;
 
 import java.util.List;
 
-abstract class CoreResponse {
+public abstract class CoreResponse {
 
     private List<CoreError> errors;
 

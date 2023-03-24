@@ -3,3 +3,8 @@ time machine for date testing
 welcome, name at the top
 get free guest from database
 rework open cart check for req/resp and validators
+calculateSum as service outside
+get openCart as service aka validator should not deal with userId (make another validator for cart)
+userRole madness from Q&A (many roles for an action)
+for change: ask all, change non blanks
+yeet lombok @Data from domain, make @Getter

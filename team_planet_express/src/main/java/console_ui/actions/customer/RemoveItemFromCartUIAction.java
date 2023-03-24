@@ -35,7 +35,7 @@ public class RemoveItemFromCartUIAction extends UIAction {
         } else {
             userCommunication.informUser(MESSAGE_ITEM_REMOVED);
         }
-
+        //TODO NoOpenCartException was lost
     }
 
 }

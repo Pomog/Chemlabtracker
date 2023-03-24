@@ -42,6 +42,7 @@ public class ListCartItemsUIAction extends UIAction {
         response.getCartItems().forEach(item -> userCommunication.informUser(item.toString()));
         BigDecimal cartTotal = response.getCartTotal();
         userCommunication.informUser(MESSAGE_CART_TOTAL + cartTotal);
+        //TODO NoOpenCartException was lost
     }
 
 }

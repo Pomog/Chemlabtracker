@@ -22,6 +22,7 @@ import core.services.validators.customer.AddItemToCartValidator;
 import core.services.validators.customer.BuyValidator;
 import core.services.validators.customer.ListCartItemValidator;
 import core.services.validators.customer.RemoveItemFromCartValidator;
+import core.services.validators.manager.AddItemToShopValidator;
 import core.support.MutableLong;
 
 import java.util.ArrayList;
@@ -53,19 +54,24 @@ public class UIActionsList {
     }
 
     private List<UIAction> createUIActionsList() {
-        //--------------------init service----------------------
+        AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database);
+        RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database);
+        ListCartItemValidator listCartItemValidator = new ListCartItemValidator(database);
+        BuyValidator buyValidator = new BuyValidator(database);
+        AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database);
+
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
-        AddItemToCartService addItemToCartService = new AddItemToCartService(database, new AddItemToCartValidator(database), currentUserId);
-        RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, new RemoveItemFromCartValidator(database), currentUserId);
-        ListCartItemsService listCartItemsService = new ListCartItemsService(database, new ListCartItemValidator(database), currentUserId);
-        BuyService buyService = new BuyService(database, new BuyValidator(database), currentUserId);
-        AddItemToShopService addItemToShopService = new AddItemToShopService(database);
+        AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator, currentUserId);
+        RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator, currentUserId);
+        ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator, currentUserId);
+        BuyService buyService = new BuyService(database, buyValidator, currentUserId);
+        AddItemToShopService addItemToShopService = new AddItemToShopService(database, addItemToShopValidator);
         ChangeItemDataService changeItemDataService = new ChangeItemDataService(database);
         ChangeUserDataService changeUserDataService = new ChangeUserDataService(database);
         SignInService signInService = new SignInService(database, currentUserId);
         SignUpService signUpService = new SignUpService(currentUserId);
         ExitService exitService = new ExitService();
-        // -----------------------------------------------------
+
         List<UIAction> uiActions = new ArrayList<>();
         uiActions.add(new ListShopItemsUIAction(listShopItemsService, userCommunication));
         uiActions.add(new AddItemToCartUIAction(addItemToCartService, userCommunication));
@@ -78,6 +84,7 @@ public class UIActionsList {
         uiActions.add(new SignInUIAction(signInService, userCommunication));
         uiActions.add(new SignUpUIAction(signUpService, userCommunication));
         uiActions.add(new ExitUIAction(exitService, userCommunication));
+
         return uiActions;
     }
 
