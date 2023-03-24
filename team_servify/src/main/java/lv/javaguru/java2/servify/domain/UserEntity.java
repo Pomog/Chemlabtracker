@@ -11,7 +11,7 @@ public class UserEntity {
     private String phoneNumber;
     private UserType userType;
     private Address address;
-    private boolean isActive;
+    private boolean isInactive;
     private String password;
 
     public String getPassword() {
@@ -26,12 +26,12 @@ public class UserEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof UserEntity that)) return false;
-        return isActive == that.isActive && id.equals(that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName)  && email.equals(that.email) && Objects.equals(phoneNumber, that.phoneNumber) && userType == that.userType && Objects.equals(address, that.address);
+        return isInactive == that.isInactive && id.equals(that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName)  && email.equals(that.email) && Objects.equals(phoneNumber, that.phoneNumber) && userType == that.userType && Objects.equals(address, that.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, phoneNumber, userType, address, isActive);
+        return Objects.hash(id, firstName, lastName, email, phoneNumber, userType, address, isInactive);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class UserEntity {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", userType=" + userType +
                 ", address=" + address +
-                ", isActive=" + isActive +
+                ", isActive=" + isInactive +
                 '}';
     }
 
@@ -53,18 +53,18 @@ public class UserEntity {
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        isActive = true;
+        isInactive = true;
         this.userType = UserType.ANONYMOUS;
     }
 
 
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isInactive() {
+        return isInactive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setInactive(boolean inactive) {
+        isInactive = inactive;
     }
 
     public Long getId() {
@@ -122,4 +122,6 @@ public class UserEntity {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+
 }

@@ -1,16 +1,18 @@
 package lv.javaguru.java2.servify.core.responses;
 
+import lv.javaguru.java2.servify.domain.FieldTitle;
+
 public class CoreError {
 
-    private String field;
+    private FieldTitle field;
     private String message;
 
-    public CoreError(String field, String message) {
+    public CoreError(FieldTitle field, String message) {
         this.field = field;
         this.message = message;
     }
 
-    public String getField() {
+    public FieldTitle getField() {
         return field;
     }
 

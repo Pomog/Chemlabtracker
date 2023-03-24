@@ -1,7 +1,8 @@
-package lv.javaguru.java2.servify.console_ui;
+package lv.javaguru.java2.servify.console_ui.detail;
 
-import lv.javaguru.java2.servify.core.services.GetAllDetailsService;
-import lv.javaguru.java2.servify.core.services.RemoveDetailService;
+import lv.javaguru.java2.servify.console_ui.UIAction;
+import lv.javaguru.java2.servify.core.services.detail.GetAllDetailsService;
+import lv.javaguru.java2.servify.core.services.detail.RemoveDetailService;
 
 import java.util.Scanner;
 

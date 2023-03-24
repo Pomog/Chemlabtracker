@@ -1,6 +1,7 @@
-package lv.javaguru.java2.servify.console_ui;
+package lv.javaguru.java2.servify.console_ui.detail;
 
-import lv.javaguru.java2.servify.core.services.GetTotalPriceService;
+import lv.javaguru.java2.servify.console_ui.UIAction;
+import lv.javaguru.java2.servify.core.services.detail.GetTotalPriceService;
 
 public class GetTotalPriceUIAction implements UIAction {
 
