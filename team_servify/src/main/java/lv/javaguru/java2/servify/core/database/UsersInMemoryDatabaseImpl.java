@@ -20,7 +20,7 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
         usersDB.add(user);
     }
 
-    private boolean credentialsValidation(String email, String password) {
+    private boolean validateCredentials(String email, String password) {
         for (UserEntity user : usersDB) {
             if (user.getEmail().equals(email) && checkPassword(user.getPassword(), password)) {
                 return true;
@@ -34,23 +34,23 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
     }
 
     @Override
-    public boolean setNotActiveByID(Long userId) {
-        boolean isUserInactivated = false;
+    public boolean deactivateUser(Long userId) {
+        boolean userDeactivated = false;
         usersDB.stream()
                 .filter(user -> user.getId().equals(userId))
                 .findFirst()
                 .ifPresent(user -> user.setInactive(true));
 
-        Optional<UserEntity> userToInactivateOpt = usersDB.stream()
+        Optional<UserEntity> userToDeactivateOpt = usersDB.stream()
                 .filter(userEntity -> userEntity.getId().equals(userId))
                 .findFirst();
 
-        if (userToInactivateOpt.isPresent()) {
-            UserEntity userToInactivate = userToInactivateOpt.get();
-            isUserInactivated = userToInactivate.isInactive();
+        if (userToDeactivateOpt.isPresent()) {
+            UserEntity userToInactivate = userToDeactivateOpt.get();
+            userDeactivated = userToInactivate.isInactive();
         }
 
-        return isUserInactivated;
+        return userDeactivated;
     }
 
     @Override

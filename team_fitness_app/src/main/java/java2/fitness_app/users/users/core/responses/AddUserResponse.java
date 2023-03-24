@@ -1,4 +1,4 @@
-package java2.fitness_app.users.users.core.response;
+package java2.fitness_app.users.users.core.responses;
 
 import java2.fitness_app.users.users.User;
 
