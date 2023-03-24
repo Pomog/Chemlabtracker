@@ -1,12 +1,12 @@
-package java2.fitness_app.users.users.core.response;
+package java2.fitness_app.users.users.core.responses;
 
 import java.util.List;
 
 abstract class CoreResponse {
+
     private List<CoreError> errors;
 
-    public CoreResponse() {
-    }
+    public CoreResponse() { }
 
     public CoreResponse(List<CoreError> errors) {
         this.errors = errors;

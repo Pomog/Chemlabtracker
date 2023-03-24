@@ -3,7 +3,7 @@ package java2.fitness_app.users.users.core.services;
 import java2.fitness_app.users.users.core.database.Database;
 import java2.fitness_app.users.users.User;
 import java2.fitness_app.users.users.core.requests.GetAllUsersRequest;
-import java2.fitness_app.users.users.core.response.GetAllUsersResponse;
+import java2.fitness_app.users.users.core.responses.GetAllUsersResponse;
 
 import java.util.List;
 
