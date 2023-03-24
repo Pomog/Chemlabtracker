@@ -15,10 +15,11 @@ public class InMemoryUserDatabaseImpl implements UserDatabase {
     private final List<User> users = new ArrayList<>();
 
     @Override
-    public void save(User user) {
+    public User save(User user) {
         user.setId(nextId);
         nextId++;
         users.add(user);
+        return user;
     }
 
     @Override

@@ -3,10 +3,8 @@ package core.database;
 import core.domain.user.User;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class InMemoryUserDatabaseImplTest {
 
@@ -18,6 +16,27 @@ class InMemoryUserDatabaseImplTest {
     void shouldIncreaseInSizeAfterSave() {
         database.save(mockUser);
         assertEquals(1, database.getUsers().size());
+    }
+
+    @Test
+    void shouldReturnCreatedUser() {
+        User createdUser = database.save(mockUser);
+        assertNotNull(createdUser);
+    }
+
+    @Test
+    void shouldSetNextIdForUser() {
+        Long idBefore = database.getNextId();
+        database.save(mockUser);
+        verify(mockUser).setId(idBefore);
+    }
+
+    @Test
+    void shouldIncreaseNextIdAfterSave() {
+        Long idBefore = database.getNextId();
+        database.save(mockUser);
+        Long idAfter = database.getNextId();
+        assertEquals(1, idAfter - idBefore);
     }
 
     @Test
@@ -54,14 +73,6 @@ class InMemoryUserDatabaseImplTest {
         database.getUsers().add(mockUser);
         database.getUsers().add(mockUser);
         assertEquals(3, database.getAllUsers().size());
-    }
-
-    @Test
-    void shouldIncreaseNextIdAfterSave() {
-        Long idBefore = database.getNextId();
-        database.save(mockUser);
-        Long idAfter = database.getNextId();
-        assertEquals(1, idAfter - idBefore);
     }
 
 }

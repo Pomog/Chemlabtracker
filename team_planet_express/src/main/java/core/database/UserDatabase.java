@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface UserDatabase {
 
-    void save(User user);
+    User save(User user);
 
     Optional<User> findById(Long itemId);
 
