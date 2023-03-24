@@ -35,7 +35,7 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
 
     @Override
     public boolean setNotActiveByID(Long userId) {
-        boolean isUserInactivated = false;
+        boolean isUserDeactivated = false;
         usersDB.stream()
                 .filter(user -> user.getId().equals(userId))
                 .findFirst()
@@ -47,10 +47,10 @@ public class UsersInMemoryDatabaseImpl implements UsersDatabase {
 
         if (userToInactivateOpt.isPresent()) {
             UserEntity userToInactivate = userToInactivateOpt.get();
-            isUserInactivated = userToInactivate.isInactive();
+            isUserDeactivated = userToInactivate.isInactive();
         }
 
-        return isUserInactivated;
+        return isUserDeactivated;
     }
 
     @Override
