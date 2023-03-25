@@ -57,7 +57,7 @@ public class AddItemToShopValidator {
         validateIsPresent(availableQuantity, FIELD_QUANTITY, ERROR_QUANTITY_MISSING).ifPresent(errors::add);
         validateIsNumber(availableQuantity, FIELD_QUANTITY, ERROR_QUANTITY_NOT_NUMBER).ifPresent(errors::add);
         validateIsPositive(availableQuantity, FIELD_QUANTITY, ERROR_QUANTITY_NEGATIVE).ifPresent(errors::add);
-        validateIsNotDecimal(availableQuantity, FIELD_QUANTITY, ERROR_QUANTITY_DECIMAL).ifPresent(errors::add);
+        validateQuantityIsNotDecimal(availableQuantity).ifPresent(errors::add);
     }
 
     private Optional<CoreError> validateIsPresent(String value, String field, String errorMessage) {
@@ -87,10 +87,10 @@ public class AddItemToShopValidator {
                 : Optional.empty();
     }
 
-    private Optional<CoreError> validateIsNotDecimal(String value, String field, String errorMessage) {
-        return (value != null &&
-                !value.matches(REGEX_NOT_DECIMAL_NUMBER))
-                ? Optional.of(new CoreError(field, errorMessage))
+    private Optional<CoreError> validateQuantityIsNotDecimal(String quantity) {
+        return (quantity != null && !quantity.isBlank() &&
+                !quantity.matches(REGEX_NOT_DECIMAL_NUMBER))
+                ? Optional.of(new CoreError(FIELD_QUANTITY, ERROR_QUANTITY_DECIMAL))
                 : Optional.empty();
     }
 

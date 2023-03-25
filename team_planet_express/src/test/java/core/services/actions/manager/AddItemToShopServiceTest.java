@@ -37,7 +37,6 @@ class AddItemToShopServiceTest {
     @Test
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockRequest.getItemName()).thenReturn("name");
         when(mockRequest.getPrice()).thenReturn("100.10");
         when(mockRequest.getAvailableQuantity()).thenReturn("10");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
