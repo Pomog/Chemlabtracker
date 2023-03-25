@@ -2,21 +2,27 @@ package core.domain.user;
 
 public enum UserRole {
 
-    BANNED(0),
-    GUEST(1),
-    CUSTOMER(2),
-    MANAGER(4),
-    ADMIN(8),
-    ALLUSERS(Integer.MAX_VALUE);
+    BANNED(0, "Banned"),
+    GUEST(1, "Guest"),
+    CUSTOMER(2, "Customer"),
+    MANAGER(4, "Manager"),
+    ADMIN(8, "Admin"),
+    ALLUSERS(Integer.MAX_VALUE, "GOD");
 
     private final int role;
+    private final String defaultName;
 
-    UserRole(int role) {
+    UserRole(int role, String defaultName) {
         this.role = role;
+        this.defaultName = defaultName;
     }
 
     public int getRoleNumber() {
         return role;
+    }
+
+    public String getDefaultName() {
+        return defaultName;
     }
 
     public static int getAccessNumber(UserRole... roles) {

@@ -54,6 +54,11 @@ public class UIActionsList {
                 .collect(Collectors.toList());
     }
 
+    //TODO WTB Autowired
+    public String getCurrentUserName() {
+        return database.accessUserDatabase().findById(currentUserId.getValue()).get().getName();
+    }
+
     private List<UIAction> createUIActionsList() {
         AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database);
         RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database);

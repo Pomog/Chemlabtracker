@@ -6,7 +6,9 @@ import java.util.List;
 
 public class UIMenu {
 
-    private static final String MENU_HEADER = "\r\nProgram menu:";
+    private static final String LOGIN_INFO = "\r\nHello, ";
+    private static final String EXCLAMATION = "!";
+    private static final String MENU_HEADER = "Program menu:";
     private static final String PROMPT_TOPIC_ACTION = "an action number: ";
     private static final String ERROR_INVALID_ACTION_NUMBER = "Error: Please enter one of the menu numbers.";
 
@@ -21,6 +23,7 @@ public class UIMenu {
 
     public void startUI() {
         while (true) {
+            userCommunication.informUser(LOGIN_INFO + uiActionsList.getCurrentUserName() + EXCLAMATION);
             userCommunication.informUser(MENU_HEADER);
             //TODO get role here maybe ?
             List<UIAction> uiActionsListForUserRole = uiActionsList.getUIActionsListForUserRole();
