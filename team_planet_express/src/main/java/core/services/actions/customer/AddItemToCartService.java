@@ -19,20 +19,26 @@ public class AddItemToCartService {
     private final Database database;
     private final AddItemToCartValidator validator;
     private final MutableLong currentUserId;
+    private final CartValidator cartValidator;
 
     public AddItemToCartService(Database database, AddItemToCartValidator validator, MutableLong currentUserId) {
         this.database = database;
         this.validator = validator;
         this.currentUserId = currentUserId;
+        this.cartValidator = new CartValidator(database);
     }
 
     public AddItemToCartResponse execute(AddItemToCartRequest request) {
+        //TODO make beegboi smol
+        Optional<CoreError> error = cartValidator.validateOpenCartExistsForUserId(currentUserId.getValue());
+        if (error.isPresent()) {
+            return new AddItemToCartResponse(List.of(error.get()));
+        }
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        //TODO account for throw
-        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), currentUserId.getValue());
+        Cart cart = database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue()).get();
         String itemName = request.getItemName();
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         Optional<Item> item = database.accessItemDatabase().findByName(itemName);

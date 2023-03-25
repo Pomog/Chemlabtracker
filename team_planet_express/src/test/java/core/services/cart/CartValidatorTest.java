@@ -1,34 +1,39 @@
 package core.services.cart;
 
 import core.database.CartDatabase;
+import core.database.Database;
 import core.domain.cart.Cart;
-import core.services.exception.NoOpenCartException;
+import core.responses.CoreError;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class CartValidatorTest {
 
+    private final Database mockDatabase = mock(Database.class);
     private final CartDatabase mockCartDatabase = mock(CartDatabase.class);
     private final Cart mockCart = mock(Cart.class);
 
-    private final CartValidator cartValidator = new CartValidator();
+    private final CartValidator validator = new CartValidator(mockDatabase);
 
     @Test
-    void shouldReturnOpenCart() {
+    void shouldReturnNoError() {
+        when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
         when(mockCartDatabase.findOpenCartForUserId(1L)).thenReturn(Optional.of(mockCart));
-        assertEquals(mockCart, cartValidator.getOpenCartForUserId(mockCartDatabase, 1L));
+        Optional<CoreError> error = validator.validateOpenCartExistsForUserId(1L);
+        assertTrue(error.isEmpty());
     }
 
     @Test
-    void shouldThrowNoOpenCartException() {
+    void shouldReturnError() {
+        when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
         when(mockCartDatabase.findOpenCartForUserId(1L)).thenReturn(Optional.empty());
-        assertThrows(NoOpenCartException.class, () -> cartValidator.getOpenCartForUserId(mockCartDatabase, 1L));
+        Optional<CoreError> error = validator.validateOpenCartExistsForUserId(1L);
+        assertTrue(error.isPresent());
     }
 
 }

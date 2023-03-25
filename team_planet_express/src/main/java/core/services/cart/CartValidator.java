@@ -1,22 +1,25 @@
 package core.services.cart;
 
-import core.database.CartDatabase;
-import core.domain.cart.Cart;
-import core.services.exception.NoOpenCartException;
+import core.database.Database;
+import core.responses.CoreError;
 
 import java.util.Optional;
 
 public class CartValidator {
 
+    private static final String FIELD_BUTTON = "button";
     private static final String ERROR_NO_OPEN_CART = "You do not have an open cart.";
 
-    public Cart getOpenCartForUserId(CartDatabase cartDatabase, Long userId) {
-        Optional<Cart> cart = cartDatabase.findOpenCartForUserId(userId);
-        if (cart.isEmpty()) {
-            throw new NoOpenCartException(ERROR_NO_OPEN_CART);
-        } else {
-            return cart.get();
-        }
+    private final Database database;
+
+    public CartValidator(Database database) {
+        this.database = database;
+    }
+
+    public Optional<CoreError> validateOpenCartExistsForUserId(Long userId) {
+        return (database.accessCartDatabase().findOpenCartForUserId(userId).isEmpty())
+                ? Optional.of(new CoreError(FIELD_BUTTON, ERROR_NO_OPEN_CART))
+                : Optional.empty();
     }
 
 }

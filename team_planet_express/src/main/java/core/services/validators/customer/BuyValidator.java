@@ -3,7 +3,6 @@ package core.services.validators.customer;
 import core.database.Database;
 import core.domain.cart.Cart;
 import core.responses.CoreError;
-import core.services.cart.CartValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +26,7 @@ public class BuyValidator {
     }
 
     private Optional<CoreError> validateCartIsNotEmpty(Long userId) {
-        //TODO throws
-        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), userId);
-
+        Cart cart = database.accessCartDatabase().findOpenCartForUserId(userId).get();
         return (database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId()).size() == 0)
                 ? Optional.of(new CoreError(FIELD_NAME, ERROR_CART_EMPTY))
                 : Optional.empty();

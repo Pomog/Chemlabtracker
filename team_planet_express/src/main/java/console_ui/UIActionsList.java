@@ -20,7 +20,6 @@ import core.services.actions.shared.ExitService;
 import core.services.actions.shared.SignInService;
 import core.services.validators.customer.AddItemToCartValidator;
 import core.services.validators.customer.BuyValidator;
-import core.services.validators.customer.ListCartItemValidator;
 import core.services.validators.customer.RemoveItemFromCartValidator;
 import core.services.validators.guest.SignUpValidator;
 import core.services.validators.manager.AddItemToShopValidator;
@@ -58,7 +57,7 @@ public class UIActionsList {
     private List<UIAction> createUIActionsList() {
         AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database);
         RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database);
-        ListCartItemValidator listCartItemValidator = new ListCartItemValidator(database);
+        //ListCartItemValidator listCartItemValidator = new ListCartItemValidator(database);
         BuyValidator buyValidator = new BuyValidator(database);
         AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database);
         SignInValidator signInValidator = new SignInValidator(database);
@@ -67,7 +66,8 @@ public class UIActionsList {
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
         AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator, currentUserId);
         RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator, currentUserId);
-        ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator, currentUserId);
+        ListCartItemsService listCartItemsService = new ListCartItemsService(database, currentUserId);
+        //ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator, currentUserId);
         BuyService buyService = new BuyService(database, buyValidator, currentUserId);
         AddItemToShopService addItemToShopService = new AddItemToShopService(database, addItemToShopValidator);
         ChangeItemDataService changeItemDataService = new ChangeItemDataService(database);

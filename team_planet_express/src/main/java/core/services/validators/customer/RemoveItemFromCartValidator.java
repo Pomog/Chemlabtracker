@@ -5,7 +5,6 @@ import core.domain.cart.Cart;
 import core.domain.item.Item;
 import core.requests.customer.RemoveItemFromCartRequest;
 import core.responses.CoreError;
-import core.services.cart.CartValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class RemoveItemFromCartValidator {
 
     private Optional<CoreError> validateItemNameInCart(RemoveItemFromCartRequest request, Long userId) {
         Optional<Item> item = database.accessItemDatabase().findByName(request.getItemName());
-        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), userId);
+        Cart cart = database.accessCartDatabase().findOpenCartForUserId(userId).get();
         //TODO test for NPE on item.get()
         return (database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.get().getId()).isEmpty())
                 ? Optional.of(new CoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_CART))
@@ -49,9 +48,9 @@ public class RemoveItemFromCartValidator {
                 : Optional.empty();
     }
 
+    //TODO unnecessary ?
     private Optional<CoreError> validateCartIsNotEmpty(Long userId) {
-        Cart cart = new CartValidator().getOpenCartForUserId(database.accessCartDatabase(), userId);
-
+        Cart cart = database.accessCartDatabase().findOpenCartForUserId(userId).get();
         return (database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId()).size() == 0)
                 ? Optional.of(new CoreError(FIELD_NAME, ERROR_CART_EMPTY))
                 : Optional.empty();
