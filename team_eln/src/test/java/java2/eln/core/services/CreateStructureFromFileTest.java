@@ -1,14 +1,8 @@
 package java2.eln.core.services;
 
 import java2.eln.domain.StructureData;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.smiles.SmilesGenerator;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CreateStructureFromFileTest {
@@ -28,9 +22,7 @@ class CreateStructureFromFileTest {
     void negativeSmilesTest() {
         StructureData testStructure = createStructureFromFile.readFromFile("Test2");
         IAtomContainer mol = testStructure.getMol();
-        String expectedSmiles = "C";
         double expectedMW = 12.011;
-        System.out.println(mol);
         assertEquals(expectedMW, testStructure.getMW(), 0.001);
     }
 }
