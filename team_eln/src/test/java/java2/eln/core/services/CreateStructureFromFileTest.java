@@ -9,6 +9,7 @@ class CreateStructureFromFileTest {
 
     String smilesIsobutylbenzene = "CC(C)CC1=CC=CC=C1";
     String carbon = "C";
+    double massTest = 4.03;
     String testFile = "data/test.txt";
     CreateStructureFromFile createStructureFromFile = new CreateStructureFromFile(testFile);
 
@@ -24,5 +25,11 @@ class CreateStructureFromFileTest {
         IAtomContainer mol = testStructure.getMol();
         double expectedMW = 12.011;
         assertEquals(expectedMW, testStructure.getMW(), 0.001);
+    }
+
+    @Test
+    void massOfStructureTest() {
+        StructureData testStructure = createStructureFromFile.readFromFile("Test1");
+        assertEquals(massTest, testStructure.getMass());
     }
 }
