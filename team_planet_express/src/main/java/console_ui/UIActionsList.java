@@ -24,6 +24,7 @@ import core.services.validators.customer.ListCartItemValidator;
 import core.services.validators.customer.RemoveItemFromCartValidator;
 import core.services.validators.guest.SignUpValidator;
 import core.services.validators.manager.AddItemToShopValidator;
+import core.services.validators.shared.SignInValidator;
 import core.support.MutableLong;
 
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class UIActionsList {
         ListCartItemValidator listCartItemValidator = new ListCartItemValidator(database);
         BuyValidator buyValidator = new BuyValidator(database);
         AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database);
+        SignInValidator signInValidator = new SignInValidator(database);
         SignUpValidator signUpValidator = new SignUpValidator(database);
 
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
@@ -70,7 +72,7 @@ public class UIActionsList {
         AddItemToShopService addItemToShopService = new AddItemToShopService(database, addItemToShopValidator);
         ChangeItemDataService changeItemDataService = new ChangeItemDataService(database);
         ChangeUserDataService changeUserDataService = new ChangeUserDataService(database);
-        SignInService signInService = new SignInService(database, currentUserId);
+        SignInService signInService = new SignInService(database, signInValidator, currentUserId);
         SignUpService signUpService = new SignUpService(database, signUpValidator, currentUserId);
         ExitService exitService = new ExitService();
 

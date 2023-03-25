@@ -2,34 +2,34 @@ package core.services.actions.shared;
 
 import core.database.Database;
 import core.domain.user.User;
-import core.services.exception.InvalidLoginNameException;
-import core.services.exception.InvalidLoginPasswordException;
+import core.requests.shared.SignInRequest;
+import core.responses.CoreError;
+import core.responses.shared.SignInResponse;
+import core.services.validators.shared.SignInValidator;
 import core.support.MutableLong;
 
-import java.util.Optional;
+import java.util.List;
 
 public class SignInService {
 
-    private static final String ERROR_WRONG_PASSWORD = "Error: wrong password.";
-    private static final String ERROR_WRONG_NAME = "Error: wrong name.";
-
     private final Database database;
+    private final SignInValidator validator;
     private final MutableLong currentUserId;
 
-    public SignInService(Database database, MutableLong currentUserId) {
+    public SignInService(Database database, SignInValidator validator, MutableLong currentUserId) {
         this.database = database;
+        this.validator = validator;
         this.currentUserId = currentUserId;
     }
 
-    public void execute(String name, String password) {
-        Optional<User> currentUser = database.accessUserDatabase().findByLogin(name);
-        if (currentUser.isEmpty()) {
-            throw new InvalidLoginNameException(ERROR_WRONG_NAME);
+    public SignInResponse execute(SignInRequest request) {
+        List<CoreError> errors = validator.validate(request);
+        if (!errors.isEmpty()) {
+            return new SignInResponse(errors);
         }
-        if (!currentUser.get().getPassword().equals(password)) {
-            throw new InvalidLoginPasswordException(ERROR_WRONG_PASSWORD);
-        }
-        currentUserId.setValue(currentUser.get().getId());
+        User newUser = database.accessUserDatabase().findByLogin(request.getLoginName()).get();
+        currentUserId.setValue(newUser.getId());
+        return new SignInResponse(newUser);
     }
 
 }
