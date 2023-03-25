@@ -67,21 +67,21 @@ public class AddItemToShopValidator {
     }
 
     private Optional<CoreError> validateItemNameDoesNotAlreadyExist(String itemName) {
-        return (itemName != null &&
+        return (itemName != null && !itemName.isBlank() &&
                 database.accessItemDatabase().findByName(itemName).isPresent())
                 ? Optional.of(new CoreError(FIELD_NAME, ERROR_ITEM_EXISTS))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validateIsNumber(String value, String field, String errorMessage) {
-        return (value != null &&
+        return (value != null && !value.isBlank() &&
                 !value.matches(REGEX_NUMBER))
                 ? Optional.of(new CoreError(field, errorMessage))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validateIsPositive(String value, String field, String errorMessage) {
-        return (value != null &&
+        return (value != null && !value.isBlank() &&
                 !value.matches(REGEX_NOT_NEGATIVE_NUMBER))
                 ? Optional.of(new CoreError(field, errorMessage))
                 : Optional.empty();
