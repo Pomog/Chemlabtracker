@@ -3,6 +3,8 @@ package console_ui.actions.guest;
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
 import core.domain.user.UserRole;
+import core.requests.guest.SignUpRequest;
+import core.responses.guest.SignUpResponse;
 import core.services.actions.guest.SignUpService;
 
 public class SignUpUIAction extends UIAction {
@@ -10,7 +12,11 @@ public class SignUpUIAction extends UIAction {
     private static final String ACTION_NAME = "Sign up";
     private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.GUEST);
 
-    private static final String MESSAGE_SUCCESS = "Welcome to the Planet Express crew!";
+    private static final String PROMPT_TOPIC_NAME = "your name: ";
+    private static final String PROMPT_TOPIC_LOGIN = "your login name: ";
+    private static final String PROMPT_TOPIC_PASSWORD = "your password: ";
+    private static final String MESSAGE_USER_CREATED = "Welcome to the Planet Express crew, ";
+    private static final String MESSAGE_EXCLAMATION = "!";
 
     private final SignUpService signUpService;
     private final UserCommunication userCommunication;
@@ -23,10 +29,21 @@ public class SignUpUIAction extends UIAction {
 
     @Override
     public void execute() {
-        userCommunication.informUser("Sign up process go brrrrr."); //TODO sign up a dude
-        userCommunication.informUser(MESSAGE_SUCCESS);
-        //TODO change guest to customer
-        //TODO go to shop
+        userCommunication.requestInput(PROMPT_TOPIC_NAME);
+        String name = userCommunication.getInput();
+        userCommunication.requestInput(PROMPT_TOPIC_LOGIN);
+        String login = userCommunication.getInput();
+        userCommunication.requestInput(PROMPT_TOPIC_PASSWORD);
+        String password = userCommunication.getInput();
+        SignUpRequest request = new SignUpRequest(name, login, password);
+        SignUpResponse response = signUpService.execute(request);
+        if (response.hasErrors()) {
+            response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));
+        } else {
+            //TODO there must be a better way..
+            userCommunication.informUser(MESSAGE_USER_CREATED + response.getUser().getName() + MESSAGE_EXCLAMATION);
+
+        }
     }
 
 }
