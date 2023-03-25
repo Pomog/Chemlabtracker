@@ -1,8 +1,9 @@
-package lv.javaguru.java2.servify.core.responses;
+package java2.fitness_app.users.users.core.responses;
 
 import java.util.List;
 
-public abstract class CoreResponse {
+abstract class CoreResponse {
+
     private List<CoreError> errors;
 
     public CoreResponse() { }
@@ -18,4 +19,5 @@ public abstract class CoreResponse {
     public boolean hasErrors() {
         return errors != null && !errors.isEmpty();
     }
+
 }

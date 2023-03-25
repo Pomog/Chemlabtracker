@@ -1,7 +1,7 @@
 package java2.fitness_app.users.users.console_ui;
 
 import java2.fitness_app.users.users.core.requests.ValidateUserRequest;
-import java2.fitness_app.users.users.core.response.ValidateUserResponse;
+import java2.fitness_app.users.users.core.responses.ValidateUserResponse;
 import java2.fitness_app.users.users.core.services.ValidateUserService;
 
 import java.util.Scanner;

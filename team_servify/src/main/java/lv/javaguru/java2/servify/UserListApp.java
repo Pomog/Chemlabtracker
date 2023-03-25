@@ -1,12 +1,15 @@
 package lv.javaguru.java2.servify;
 
 import lv.javaguru.java2.servify.console_ui.*;
+import lv.javaguru.java2.servify.console_ui.user.AddUserUIAction;
+import lv.javaguru.java2.servify.console_ui.user.GetAllUsersUIAction;
+import lv.javaguru.java2.servify.console_ui.user.SetUserNotActiveUIAction;
 import lv.javaguru.java2.servify.core.database.UsersDatabase;
 import lv.javaguru.java2.servify.core.database.UsersInMemoryDatabaseImpl;
-import lv.javaguru.java2.servify.core.services.AddUserService;
-import lv.javaguru.java2.servify.core.services.AddUserValidator;
-import lv.javaguru.java2.servify.core.services.GetAllUsersService;
-import lv.javaguru.java2.servify.core.services.SetUserNotActiveService;
+import lv.javaguru.java2.servify.core.services.user.AddUserService;
+import lv.javaguru.java2.servify.core.services.user.AddUserValidator;
+import lv.javaguru.java2.servify.core.services.user.GetAllUsersService;
+import lv.javaguru.java2.servify.core.services.user.SetUserNotActiveService;
 
 import java.util.Scanner;
 
@@ -27,7 +30,7 @@ public class UserListApp {
 
         while (true) {
             printAdminMenu();
-            userDB.getAll();
+            userDB.getAllUsers();
             int userChoice = getUserChoice();
 
             switch (userChoice) {

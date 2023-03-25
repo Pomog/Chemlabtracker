@@ -1,14 +1,14 @@
 package lv.javaguru.java2.servify;
 
-import lv.javaguru.java2.servify.console_ui.AddUserUIAction;
+import lv.javaguru.java2.servify.console_ui.user.AddUserUIAction;
 import lv.javaguru.java2.servify.console_ui.ExitUIAction;
-import lv.javaguru.java2.servify.console_ui.GetAllUsersUIAction;
-import lv.javaguru.java2.servify.console_ui.SetUserNotActiveUIAction;
+import lv.javaguru.java2.servify.console_ui.user.GetAllUsersUIAction;
+import lv.javaguru.java2.servify.console_ui.user.SetUserNotActiveUIAction;
 import lv.javaguru.java2.servify.core.database.UsersDatabase;
-import lv.javaguru.java2.servify.core.services.AddUserService;
-import lv.javaguru.java2.servify.core.services.AddUserValidator;
-import lv.javaguru.java2.servify.core.services.GetAllUsersService;
-import lv.javaguru.java2.servify.core.services.SetUserNotActiveService;
+import lv.javaguru.java2.servify.core.services.user.AddUserService;
+import lv.javaguru.java2.servify.core.services.user.AddUserValidator;
+import lv.javaguru.java2.servify.core.services.user.GetAllUsersService;
+import lv.javaguru.java2.servify.core.services.user.SetUserNotActiveService;
 
 import java.util.Scanner;
 
