@@ -3,6 +3,8 @@ package core.database;
 import core.domain.item.Item;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -45,6 +47,22 @@ class InMemoryItemDatabaseImplTest {
         when(mockItem.getName()).thenReturn("different item");
         database.getShopItems().add(mockItem);
         assertTrue(database.findByName("item").isEmpty());
+    }
+
+    @Test
+    void shouldChangeName() {
+        when(mockItem.getId()).thenReturn(1L);
+        database.getShopItems().add(mockItem);
+        database.changeName(1L, "new name");
+        verify(mockItem).setName("new name");
+    }
+
+    @Test
+    void shouldChangePrice() {
+        when(mockItem.getId()).thenReturn(1L);
+        database.getShopItems().add(mockItem);
+        database.changePrice(1L, new BigDecimal("10.10"));
+        verify(mockItem).setPrice(new BigDecimal("10.10"));
     }
 
     @Test

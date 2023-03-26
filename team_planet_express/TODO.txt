@@ -1,10 +1,7 @@
 yeet date change to db
 time machine for date testing
-welcome, name at the top
-get free guest from database
 calculateSum as a pretty service outside
 removeValidator looks sus
 userRole madness from Q&A (many roles for an action)
-for change: ask all, change non blanks
 yeet lombok @Data from domain, make @Getter
 yeet exceptions

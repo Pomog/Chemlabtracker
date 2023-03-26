@@ -3,6 +3,7 @@ package core.database;
 import core.domain.item.Item;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,22 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
         return shopItems.stream()
                 .filter(item -> item.getName().equals(name))
                 .findFirst();
+    }
+
+    @Override
+    public void changeName(Long id, String newName) {
+        shopItems.stream()
+                .filter(shopItem -> shopItem.getId().equals(id))
+                .findFirst()
+                .ifPresent(shopItem -> shopItem.setName(newName));
+    }
+
+    @Override
+    public void changePrice(Long id, BigDecimal newPrice) {
+        shopItems.stream()
+                .filter(shopItem -> shopItem.getId().equals(id))
+                .findFirst()
+                .ifPresent(shopItem -> shopItem.setPrice(newPrice));
     }
 
     @Override

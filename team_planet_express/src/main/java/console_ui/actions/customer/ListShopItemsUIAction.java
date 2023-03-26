@@ -11,6 +11,7 @@ public class ListShopItemsUIAction extends UIAction {
 
     private static final String ACTION_NAME = "List items";
     private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.GUEST, UserRole.CUSTOMER);
+//    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.GUEST, UserRole.CUSTOMER, UserRole.MANAGER); //TODO for tests
 
     private static final String HEADER_TEXT = "Shop items:";
 

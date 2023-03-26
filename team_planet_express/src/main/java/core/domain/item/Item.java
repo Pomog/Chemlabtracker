@@ -9,8 +9,8 @@ import java.util.Objects;
 public class Item {
 
     private Long id;
-    private final String name;
-    private final BigDecimal price;
+    private String name;
+    private BigDecimal price;
     private Integer availableQuantity;
 
     public Item(String name, BigDecimal price, Integer availableQuantity) {
