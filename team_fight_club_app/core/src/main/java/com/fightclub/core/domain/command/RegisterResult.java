@@ -4,32 +4,18 @@ import java.util.Objects;
 
 public class RegisterResult {
 
+    private Long userId;
 
-    private String error;
-    private boolean success;
-
-    public RegisterResult(String error, boolean success) {
-        this.error = error;
-        this.success = success;
+    public RegisterResult(Long userId) {
+        this.userId = userId;
     }
 
-    public RegisterResult() {
+    public Long getUserId() {
+        return userId;
     }
 
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -37,19 +23,18 @@ public class RegisterResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RegisterResult that = (RegisterResult) o;
-        return success == that.success && error.equals(that.error);
+        return Objects.equals(userId, that.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(error, success);
+        return Objects.hash(userId);
     }
 
     @Override
     public String toString() {
         return "RegisterResult{" +
-                "error='" + error + '\'' +
-                ", success=" + success +
+                "userId=" + userId +
                 '}';
     }
 }

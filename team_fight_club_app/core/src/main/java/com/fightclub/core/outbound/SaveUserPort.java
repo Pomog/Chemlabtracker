@@ -4,5 +4,5 @@ import com.fightclub.core.domain.User;
 
 public interface SaveUserPort {
 
-    User save(User user);
+    Long save(User user);
 }
