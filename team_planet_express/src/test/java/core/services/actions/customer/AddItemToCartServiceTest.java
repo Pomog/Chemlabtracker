@@ -56,11 +56,12 @@ class AddItemToCartServiceTest {
         when(mockCartItemDatabase.findByCartIdAndItemId(1L, 1L)).thenReturn(mockOptionalCartItem);
         when(mockOptionalCartItem.get()).thenReturn(mockCartItem);
         when(mockDatabase.accessCartItemDatabase()).thenReturn(mockCartItemDatabase);
-        AddItemToCartResponse response = service.execute(mockRequest);
         when(mockItemDatabase.findByName("Slurm")).thenReturn(mockOptionalItem);
         when(mockOptionalItem.get()).thenReturn(mockItem);
         when(mockItem.getId()).thenReturn(1L);
         when(mockOptionalCart.get()).thenReturn(mockCart);
+        when(mockOptionalCartItem.isEmpty()).thenReturn(true);
+        AddItemToCartResponse response = service.execute(mockRequest);
         verify(mockCartItemDatabase).save(new CartItem(1L, 1L, 10));
         verify(mockItemDatabase).changeAvailableQuantity(1L, 10);
     }
