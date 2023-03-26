@@ -2,6 +2,7 @@ package core.services.actions.customer;
 
 import core.database.Database;
 import core.domain.cart.Cart;
+import core.domain.cart_item.CartItem;
 import core.responses.CoreError;
 import core.responses.customer.ListCartItemsResponse;
 import core.services.cart.CartService;
@@ -18,12 +19,16 @@ public class ListCartItemsService {
     private final Database database;
     private final MutableLong currentUserId;
     //private final ListCartItemValidator validator;
+    //TODO those both should be in the constructor
+    //TODO WTB Autowired
     private final CartValidator cartValidator;
+    private final CartService cartService;
 
     public ListCartItemsService(Database database, MutableLong currentUserId) {
         this.database = database;
         this.currentUserId = currentUserId;
         this.cartValidator = new CartValidator(database);
+        this.cartService = new CartService(database);
     }
 
     //    public ListCartItemsService(Database database, ListCartItemValidator validator, MutableLong currentUserId) {
@@ -43,12 +48,9 @@ public class ListCartItemsService {
 //            return new ListCartItemsResponse(errors);
 //        }
         Cart cart = database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue()).get();
-        return new ListCartItemsResponse(database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId()), getCartTotal());
-    }
-
-    //TODO this should not be here
-    private BigDecimal getCartTotal() {
-        return new CartService(database).getSum(database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue()).get().getUserId());
+        List<CartItem> cartItems = database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId());
+        BigDecimal cartTotal = cartService.getSum(cart.getUserId());
+        return new ListCartItemsResponse(cartItems, cartTotal);
     }
 
 }

@@ -15,7 +15,8 @@ public class CartService {
     public BigDecimal getSum(Long cartId) {
         return database.accessCartItemDatabase().getAllCartItemsForCartId(cartId)
                 .stream()
-                .map(cartItem -> database.accessItemDatabase().findById(cartItem.getItemId()).get().getPrice().multiply(new BigDecimal(cartItem.getOrderedQuantity())))
+                .map(cartItem -> database.accessItemDatabase().findById(cartItem.getItemId()).get().getPrice()
+                        .multiply(new BigDecimal(cartItem.getOrderedQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
