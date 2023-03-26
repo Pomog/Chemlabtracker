@@ -8,6 +8,7 @@ import console_ui.actions.manager.AddItemToShopUIAction;
 import console_ui.actions.manager.ChangeItemDataUIAction;
 import console_ui.actions.shared.ExitUIAction;
 import console_ui.actions.shared.SignInUIAction;
+import console_ui.actions.shared.SignOutUIAction;
 import core.database.Database;
 import core.domain.user.User;
 import core.domain.user.UserRole;
@@ -18,6 +19,7 @@ import core.services.actions.manager.AddItemToShopService;
 import core.services.actions.manager.ChangeItemDataService;
 import core.services.actions.shared.ExitService;
 import core.services.actions.shared.SignInService;
+import core.services.actions.shared.SignOutService;
 import core.services.validators.customer.AddItemToCartValidator;
 import core.services.validators.customer.BuyValidator;
 import core.services.validators.customer.RemoveItemFromCartValidator;
@@ -81,6 +83,7 @@ public class UIActionsList {
         ChangeUserDataService changeUserDataService = new ChangeUserDataService(database);
         SignInService signInService = new SignInService(database, signInValidator, currentUserId);
         SignUpService signUpService = new SignUpService(database, signUpValidator, currentUserId);
+        SignOutService signOutService = new SignOutService(database, currentUserId);
         ExitService exitService = new ExitService();
 
         List<UIAction> uiActions = new ArrayList<>();
@@ -94,6 +97,7 @@ public class UIActionsList {
         uiActions.add(new ChangeUserDataUIAction(changeUserDataService, userCommunication));
         uiActions.add(new SignInUIAction(signInService, userCommunication));
         uiActions.add(new SignUpUIAction(signUpService, userCommunication));
+        uiActions.add(new SignOutUIAction(signOutService, userCommunication));
         uiActions.add(new ExitUIAction(exitService, userCommunication));
 
         return uiActions;

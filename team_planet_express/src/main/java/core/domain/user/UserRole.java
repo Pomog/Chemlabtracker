@@ -33,6 +33,14 @@ public enum UserRole {
         return result;
     }
 
+    public static int getAccessNumberExclude(UserRole... roles) {
+        int result = UserRole.ALLUSERS.getRoleNumber();
+        for (UserRole role : roles) {
+            result -= role.getRoleNumber();
+        }
+        return result;
+    }
+
     public boolean checkPermission(int permission) {
         return (permission & this.role) > 0;
     }

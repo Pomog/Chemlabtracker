@@ -10,7 +10,7 @@ import core.services.actions.shared.SignInService;
 public class SignInUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Sign in";
-    private static final int ACCESS_NUM = UserRole.getAccessNumber(UserRole.ALLUSERS);
+    private static final int ACCESS_NUM = UserRole.getAccessNumber(UserRole.GUEST);
 
     private static final String PROMPT_TOPIC_LOGIN = "your login name: ";
     private static final String PROMPT_TOPIC_PASSWORD = "your password: ";
