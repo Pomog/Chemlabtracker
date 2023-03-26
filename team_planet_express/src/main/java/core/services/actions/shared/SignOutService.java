@@ -17,6 +17,7 @@ public class SignOutService {
     }
 
     public SignOutResponse execute(SignOutRequest request) {
+        // TODO this dude has no cart
         User newUser = database.accessUserDatabase().save(new User("Guest", "", "", UserRole.GUEST));
         currentUserId.setValue(newUser.getId());
         return new SignOutResponse();

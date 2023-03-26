@@ -5,3 +5,6 @@ removeValidator looks sus
 userRole madness from Q&A (many roles for an action)
 yeet lombok @Data from domain, make @Getter
 yeet exceptions
+do not create User in signOut, look for existing one first?
+create cart for signOut user
+add requests to everything

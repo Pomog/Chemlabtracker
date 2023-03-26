@@ -21,6 +21,7 @@ public class AddItemToCartService {
     private final MutableLong currentUserId;
     private final CartValidator cartValidator;
 
+    //TODO cartValidator should be mockable
     public AddItemToCartService(Database database, AddItemToCartValidator validator, MutableLong currentUserId) {
         this.database = database;
         this.validator = validator;
