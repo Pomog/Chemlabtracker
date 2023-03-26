@@ -1,0 +1,31 @@
+package java2.eln.core.services;
+
+import java2.eln.core.database.DatabaseIM;
+import java2.eln.domain.ReactionData;
+import java2.eln.domain.StructureData;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.manipulator.AtomContainerComparator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class FindReactionByMainProductService {
+    private DatabaseIM databaseIM;
+
+    public FindReactionByMainProductService(DatabaseIM databaseIM) {
+        this.databaseIM = databaseIM;
+    }
+    public List<ReactionData> execute (StructureData searchedSubstance){
+        List<ReactionData> searchingResults = new ArrayList<>();
+        AtomContainerComparator comparator = new AtomContainerComparator();
+
+        for (ReactionData reactionData : databaseIM.getAllReactions()) {
+            int comparatorResult =
+                    comparator.compare(searchedSubstance.getMol(), reactionData.getMainProduct().getMol());
+            if (comparatorResult == 0){
+                searchingResults.add(reactionData);
+            }
+        }
+        return searchingResults;
+    }
+}

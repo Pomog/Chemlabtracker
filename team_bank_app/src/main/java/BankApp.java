@@ -7,7 +7,8 @@ class BankApp {
     public static void main(String[] args) {
 
         List<User> users = new ArrayList<>();
-        List<Bank> bank = new LinkedList<>();
+        Bank bank=new Bank();
+
         while (true) {
             System.out.println("Program menu:");
             System.out.println("1. Create new username");
@@ -57,22 +58,19 @@ class BankApp {
                     System.out.println("Welcome to our bank app ,you choose deposit option");
                     System.out.println("Please enter  desired amount :");
                     int depositAmount = scanner.nextInt();
-                    Bank banks = new Bank();
-                    banks.deposit(depositAmount);
+                    bank.deposit(depositAmount);
                     break;
                 }
                 case 4: {
                     System.out.println("Welcome to our bank app ,you choose withdraw option");
                     System.out.println("Please enter  desired amount,with you wanna withdraw :");
                     int withdrawAmount = scanner.nextInt();
-                    Bank banks = new Bank();
-                    banks.withdraw(withdrawAmount);
+                    bank.withdraw(withdrawAmount);
                     break;
                 }
                 case 5: {
                     System.out.println("Current balance statement");
-                    Bank banks = new Bank();
-                    banks.printBalanceStatement();
+                    bank.printBalanceStatement();
                     break;
                 }
                 case 6: {
