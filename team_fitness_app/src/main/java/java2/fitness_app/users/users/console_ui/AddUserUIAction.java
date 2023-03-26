@@ -23,12 +23,13 @@ public class AddUserUIAction implements UIAction {
         String password = scanner.nextLine();
         AddUserRequest request = new AddUserRequest(username, password);
         AddUserResponse response = addUserService.execute(request);
+
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError ->
                     System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage())
             );
         } else {
-            System.out.println("New user id was: " + response.getNewUser().getId());
+            System.out.println("New user id is: " + response.getNewUser().getId());
             System.out.println("You are successfully added!");
         }
     }

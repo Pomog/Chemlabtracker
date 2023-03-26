@@ -18,7 +18,8 @@ public class RemoveUserUIAction implements UIAction {
     public void execute() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter user ID");
-        Long id = Long.parseLong(scanner.nextLine());
+
+        String id = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
         RemoveUserRequest request = new RemoveUserRequest(id, password);
