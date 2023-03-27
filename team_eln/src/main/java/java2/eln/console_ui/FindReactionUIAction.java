@@ -1,11 +1,8 @@
 package java2.eln.console_ui;
 
 import java2.eln.core.requests.FindReactionRequest;
-import java2.eln.core.requests.FindReactionsByMainProductRequest;
 import java2.eln.core.responses.FindReactionResponse;
-import java2.eln.core.responses.FindReactionsByMainProductResponse;
 import java2.eln.core.services.FindReactionService;
-import java2.eln.core.services.FindReactionsByMainProductService;
 import java2.eln.core.services.GetStructureFromSMILE;
 import java2.eln.domain.StructureData;
 
@@ -31,9 +28,16 @@ public class FindReactionUIAction implements UIAction{
         System.out.println("Enter Starting Material SMILE to search: ");
         String  smile = scanner.nextLine();
 
+
         System.out.println("Enter reaction Yield to search: ");
         String  yieldStr = scanner.nextLine();
-        double yield = Double.parseDouble(yieldStr);
+        Double yield = null;
+        try {
+            yield = Double.parseDouble(yieldStr);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Yield set to null.");
+        }
+
 
         GetStructureFromSMILE getStructureFromSMILE = new GetStructureFromSMILE(smile);
         StructureData searchedStructure = getStructureFromSMILE.execute();

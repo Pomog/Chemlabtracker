@@ -26,7 +26,7 @@ public class FindReactionService {
     private boolean compareObjects(FindReactionRequest findReactionRequest, ReactionData reaction) {
         boolean codeMatch = matchSearchCriteria(findReactionRequest.getCode(), reaction.getCode());
         boolean nameMatch = matchSearchCriteria(findReactionRequest.getName(), reaction.getName());
-      //  boolean yieldMatch = matchSearchCriteria(reaction.getReactionYield(), findReactionRequest.getYield());
+       // boolean yieldMatch = matchSearchCriteria(reaction.getReactionYield(), findReactionRequest.getYield());
         boolean startingMaterialMatch = matchSearchCriteria(findReactionRequest.getStartingMaterial(), reaction.getStartingMaterials());
         // return true only if all search criteria match
         return codeMatch && nameMatch && startingMaterialMatch;

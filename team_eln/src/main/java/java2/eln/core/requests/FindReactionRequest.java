@@ -10,7 +10,7 @@ public class FindReactionRequest {
     String code;
     String name;
     StructureData startingMaterial;
-    double yield;
+    Double yield;
 
     public FindReactionRequest(String code, String name, StructureData startingMaterial, double yield) {
         this.code = code;
