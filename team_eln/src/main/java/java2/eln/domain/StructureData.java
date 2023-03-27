@@ -11,7 +11,12 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 public class StructureData {
-    private final String smiles; // "CC(=O)O";
+    private String smiles; // "CC(=O)O";
+
+    private void setSmiles(String smiles) {
+        this.smiles = smiles;
+    }
+
     private IAtomContainer mol;
     private IMolecularFormula formula;
     private double mw;
@@ -62,6 +67,9 @@ public class StructureData {
     private void smilesConverter() {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
+        if (smiles.isBlank()) {
+            setSmiles("C");
+        }
         try {
             mol = parser.parseSmiles(smiles);
         } catch (InvalidSmilesException e) {

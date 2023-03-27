@@ -38,4 +38,11 @@ class FindReactionRequestTest {
         double testYield = 90.23;
         assertEquals(testYield, findReactionRequestTest.getYield() );
     }
+
+    @Test
+    void emptySmilesTest() {
+        FindReactionRequest findReactionRequestTest =
+                new FindReactionRequest("","empty", new StructureData(""), 90.2251);
+        assertEquals(new StructureData("C"), findReactionRequestTest.getStartingMaterial());
+    }
 }

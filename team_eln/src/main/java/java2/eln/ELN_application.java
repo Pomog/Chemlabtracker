@@ -25,6 +25,10 @@ public class ELN_application {
             new FindReactionsByMainProductService(inMemoryDataBase);
     private static FindReactionByMainProductUIAction findReactionByMainProductUIAction =
             new FindReactionByMainProductUIAction(findReactionByMainProductService);
+    private static FindReactionService findReactionService =
+            new FindReactionService(inMemoryDataBase);
+    private static FindReactionUIAction findReactionUIAction =
+            new FindReactionUIAction(findReactionService);
     private static ExitUIService exitUIService =
             new ExitUIService();
     private static UIAction exitFormApplication = new ExitUIAction(exitUIService);
@@ -45,7 +49,8 @@ public class ELN_application {
         System.out.println("2. Delete Reaction from list");
         System.out.println("3. Show all Reactions in the list");
         System.out.println("4. Find reactions by main product");
-        System.out.println("5. Exit");
+        System.out.println("5. Find reactions");
+        System.out.println("6. Exit");
         System.out.println();
     }
 
@@ -74,6 +79,10 @@ public class ELN_application {
                 break;
             }
             case 5 -> {
+                findReactionUIAction.execute();
+                break;
+            }
+            case 6 -> {
                 exitFormApplication.execute();
                 break;
             }

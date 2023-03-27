@@ -20,7 +20,6 @@ public class ReactionData {
         this.code = code;
         this.name = name;
         this.startingMaterials = new ArrayList<>();
-
     }
     public String getCode() {
         return code;
@@ -61,7 +60,7 @@ public class ReactionData {
         return mainProduct;
     }
 
-    public void getReactionYield (){
+    public void calculateReactionYield(){
         double sm1Mole = (startingMaterials.get(0).getMass()/startingMaterials.get(0).getMW());
         double mpMole = (mainProduct.getMass()/mainProduct.getMW());
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
@@ -70,9 +69,13 @@ public class ReactionData {
         this.reactionYield = Double.parseDouble(df.format(mpMole/sm1Mole));
     }
 
+    public double getReactionYield() {
+        return reactionYield;
+    }
+
     @Override
     public String toString() {
-        getReactionYield();
+        calculateReactionYield();
         return "*** baseClasses.ReactionData{" +
                 "\n code='" + code + '\'' +
                 "\n name='" + name + '\'' +
