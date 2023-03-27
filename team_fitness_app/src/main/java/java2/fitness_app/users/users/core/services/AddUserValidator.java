@@ -26,5 +26,4 @@ public class AddUserValidator {
                 ? Optional.of(new CoreError("password", "Must not be empty!"))
                 : Optional.empty();
     }
-
 }

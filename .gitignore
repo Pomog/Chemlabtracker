@@ -37,24 +37,6 @@
 /teacher/lesson_6_dependency_injection_inversion_of_control/out/
 /teacher/lesson_7_spring_basics/build/
 /teacher/lesson_7_spring_basics/out/
-/teacher/lesson_8_introduction_to_sql/build/
-/teacher/lesson_8_introduction_to_sql/out/
-/teacher/lesson_9_advanced_sql/build/
-/teacher/lesson_9_advanced_sql/out/
-/teacher/lesson_10_jdbc_api/build/
-/teacher/lesson_10_jdbc_api/out/
-/teacher/lesson_11_orm_introduction/build/
-/teacher/lesson_11_orm_introduction/out/
-/teacher/lesson_12_orm_relations/build/
-/teacher/lesson_12_orm_relations/out/
-/teacher/lesson_13_spring_web/build/
-/teacher/lesson_13_spring_web/out/
-/teacher/lesson_14_restfull_api/build/
-/teacher/lesson_14_restfull_api/out/
-/teacher/lesson_15_jpa_repositories/build/
-/teacher/lesson_15_jpa_repositories/out/
-/teacher/lesson_16_liquibase/build/
-/teacher/lesson_16_liquibase/out/
 
 
 /team_team_name/build/
@@ -74,3 +56,7 @@
 
 /team_marketplace/build/
 /team_marketplace/out/
+
+
+
+
