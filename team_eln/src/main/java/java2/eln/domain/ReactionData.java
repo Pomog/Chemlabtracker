@@ -1,6 +1,8 @@
 package java2.eln.domain;
 
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,10 @@ public class ReactionData {
     public void getReactionYield (){
         double sm1Mole = (startingMaterials.get(0).getMass()/startingMaterials.get(0).getMW());
         double mpMole = (mainProduct.getMass()/mainProduct.getMW());
-        this.reactionYield = mpMole/sm1Mole;
+        DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+        symbols.setDecimalSeparator('.');
+        DecimalFormat df = new DecimalFormat("#.##", symbols);
+        this.reactionYield = Double.parseDouble(df.format(mpMole/sm1Mole));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package java2.eln.core.responses;
+package java2.eln.core.responses.errorPattern;
 
 public class CoreError {
     private String field;

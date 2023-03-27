@@ -116,6 +116,19 @@ public class StructureData {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof StructureData that)) return false;
+
+        return getSmiles().equals(that.getSmiles());
+    }
+
+    @Override
+    public int hashCode() {
+        return getSmiles().hashCode();
+    }
+
+    @Override
     public String toString() {
         return "baseClasses.StructureData{" +
                 "smiles='" + smiles + '\'' +

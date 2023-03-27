@@ -1,9 +1,8 @@
-package java2.eln.core.services;
+package java2.eln.core.services.validators;
 
 import java2.eln.core.database.DatabaseIM;
-import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.requests.DelReactionRequest;
-import java2.eln.core.responses.CoreError;
+import java2.eln.core.responses.errorPattern.CoreError;
 
 import java.util.ArrayList;
 import java.util.List;

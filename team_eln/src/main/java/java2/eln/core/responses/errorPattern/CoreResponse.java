@@ -1,8 +1,8 @@
-package java2.eln.core.responses;
+package java2.eln.core.responses.errorPattern;
 
 import java.util.List;
 
-abstract class CoreResponse {
+ public abstract class CoreResponse {
     private List<CoreError> errors;
 
     public CoreResponse(List<CoreError> errors) {

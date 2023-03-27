@@ -4,6 +4,8 @@ import java2.eln.console_ui.*;
 import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.database.InMemoryDatabaseImplIM;
 import java2.eln.core.services.*;
+import java2.eln.core.services.validators.AddReactionValidator;
+import java2.eln.core.services.validators.DelReactionValidator;
 
 import java.util.Scanner;
 
