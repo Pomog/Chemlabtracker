@@ -1,7 +1,7 @@
 package java2.fitness_app.users.users.console_ui;
 
 import java2.fitness_app.users.users.core.requests.AddUserRequest;
-import java2.fitness_app.users.users.core.response.AddUserResponse;
+import java2.fitness_app.users.users.core.responses.AddUserResponse;
 import java2.fitness_app.users.users.core.services.AddUserService;
 
 import java.util.Scanner;
@@ -23,12 +23,13 @@ public class AddUserUIAction implements UIAction {
         String password = scanner.nextLine();
         AddUserRequest request = new AddUserRequest(username, password);
         AddUserResponse response = addUserService.execute(request);
+
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError ->
                     System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage())
             );
         } else {
-            System.out.println("New user id was: " + response.getNewUser().getId());
+            System.out.println("New user id is: " + response.getNewUser().getId());
             System.out.println("You are successfully added!");
         }
     }

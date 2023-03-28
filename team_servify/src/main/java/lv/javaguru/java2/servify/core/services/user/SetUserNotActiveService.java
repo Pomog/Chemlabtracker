@@ -23,7 +23,7 @@ public class SetUserNotActiveService {
             errors.add(error);
             return new SetUserNotActiveResponse(errors);
         }
-        boolean isUserInactivated = userDB.setNotActiveByID(request.getUserIdToSetInactive());
+        boolean isUserInactivated = userDB.deactivateUser(request.getUserIdToSetInactive());
         return new SetUserNotActiveResponse(isUserInactivated);
     }
 }

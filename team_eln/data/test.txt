@@ -1,0 +1,2 @@
+Test1: Isobutylbenzene, CC(C)CC1=CC=CC=C1, 4.03
+Test2: Isobutylbenzene, qCC(C)CC1=CC=CC=C1, 4.03

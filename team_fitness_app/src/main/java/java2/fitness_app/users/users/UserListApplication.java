@@ -16,7 +16,8 @@ public class UserListApplication {
     private static ValidateUserValidator validateUserValidator = new ValidateUserValidator();
     private static AddUserService addUserService = new AddUserService(database, addUserValidator);
     private static ValidateUserService validateUserService = new ValidateUserService(database, validateUserValidator);
-    private static RemoveUserService removeUserService = new RemoveUserService(database);
+    private static RemoveUserValidator removeUserValidator = new RemoveUserValidator();
+    private static RemoveUserService removeUserService = new RemoveUserService(database, removeUserValidator);
     private static GetAllUsersService getUsersService = new GetAllUsersService(database);
 
 

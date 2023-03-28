@@ -3,7 +3,8 @@ package java2.eln.core.services;
 import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.responses.AddReactionResponse;
-import java2.eln.core.responses.CoreError;
+import java2.eln.core.responses.errorPattern.CoreError;
+import java2.eln.core.services.validators.AddReactionValidator;
 import java2.eln.domain.ReactionData;
 
 import java.util.List;

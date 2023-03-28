@@ -14,7 +14,7 @@ public class CreateStructureFromFile {
     }
 
     public StructureData readFromFile (String identifier) {
-
+        StructureData structureData = new StructureData("C", "No name", 0.0);
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             String line = reader.readLine();
@@ -31,8 +31,8 @@ public class CreateStructureFromFile {
             reader.close();
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
-        }
-        return new StructureData("C", "No name", 0.0);
+          }
+        return structureData;
     }
 }
 

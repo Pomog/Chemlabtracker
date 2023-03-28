@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface Database {
 
-    void registerNewUser(User user);
+    void add (User user);
 
     boolean deleteUser(Long id, String password);
 

@@ -1,7 +1,7 @@
 package java2.fitness_app.users.users.console_ui;
 
 import java2.fitness_app.users.users.core.requests.GetAllUsersRequest;
-import java2.fitness_app.users.users.core.response.GetAllUsersResponse;
+import java2.fitness_app.users.users.core.responses.GetAllUsersResponse;
 import java2.fitness_app.users.users.core.services.GetAllUsersService;
 
 public class GetAllUsersUIAction implements UIAction {

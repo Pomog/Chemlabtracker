@@ -1,8 +1,11 @@
 package java2.eln.core.responses;
 
+import java2.eln.core.responses.errorPattern.CoreError;
+import java2.eln.core.responses.errorPattern.CoreResponse;
+
 import java.util.List;
 
-public class DelReactionResponse extends CoreResponse{
+public class DelReactionResponse extends CoreResponse {
     private boolean delResult;
 
     public boolean getDelResult() {

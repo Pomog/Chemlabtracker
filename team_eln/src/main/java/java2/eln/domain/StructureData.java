@@ -1,5 +1,7 @@
 package java2.eln.domain;
 
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -9,10 +11,20 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 public class StructureData {
-    private final String smiles; // "CC(=O)O";
+    private String smiles; // "CC(=O)O";
+
+    private void setSmiles(String smiles) {
+        this.smiles = smiles;
+    }
+
     private IAtomContainer mol;
     private IMolecularFormula formula;
     private double mw;
+
+    public String getSmiles() {
+        return smiles;
+    }
+
     private String casNumber;
     private String name;
     private String internalCode;
@@ -51,14 +63,30 @@ public class StructureData {
     public void setCasNumber(String casNumber) {
         this.casNumber = casNumber;
     }
-    private void smilesConverter () {
-        try {
-            IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
-            SmilesParser smilesParser = new SmilesParser(bldr);
-            mol = smilesParser.parseSmiles(smiles);
+
+    private void smilesConverter() {
+        IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+        SmilesParser parser = new SmilesParser(builder);
+        if (smiles.isBlank()) {
+            setSmiles("C");
         }
-        catch (InvalidSmilesException exception){
-            System.err.println("Invalid SMILES : " + exception.getMessage());
+        try {
+            mol = parser.parseSmiles(smiles);
+        } catch (InvalidSmilesException e) {
+            System.err.println("Invalid SMILES: " + e.getMessage());
+            mol = new AtomContainer();
+            mol.addAtom(new Atom("C"));
+        }
+    }
+    private IAtomContainer parseSmiles(String smiles) {
+        try {
+            SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+            return parser.parseSmiles(smiles);
+        } catch (InvalidSmilesException e) {
+            System.err.println("Invalid SMILES: " + e.getMessage());
+            IAtomContainer container = new AtomContainer();
+            container.addAtom(new Atom("C"));
+            return container;
         }
     }
     private void calculateBruttoFormula(){
@@ -93,6 +121,19 @@ public class StructureData {
 
     public void setMass(double mass) {
         this.mass = mass;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof StructureData that)) return false;
+
+        return getSmiles().equals(that.getSmiles());
+    }
+
+    @Override
+    public int hashCode() {
+        return getSmiles().hashCode();
     }
 
     @Override
