@@ -29,7 +29,7 @@ class UIActionsListTest {
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockCurrentUserId.getValue()).thenReturn(1L);
         when(mockUserDatabase.findById(1L)).thenReturn(Optional.empty());
-        assertEquals(8, uiActionsList.getUIActionsListForUserRole().size());
+        assertEquals(9, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
@@ -38,7 +38,7 @@ class UIActionsListTest {
         when(mockCurrentUserId.getValue()).thenReturn(1L);
         when(mockUserDatabase.findById(1L)).thenReturn(Optional.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
-        assertEquals(8, uiActionsList.getUIActionsListForUserRole().size());
+        assertEquals(9, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
@@ -47,7 +47,7 @@ class UIActionsListTest {
         when(mockCurrentUserId.getValue()).thenReturn(1L);
         when(mockUserDatabase.findById(1L)).thenReturn(Optional.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.CUSTOMER);
-        assertEquals(7, uiActionsList.getUIActionsListForUserRole().size());
+        assertEquals(8, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
@@ -56,7 +56,7 @@ class UIActionsListTest {
         when(mockCurrentUserId.getValue()).thenReturn(1L);
         when(mockUserDatabase.findById(1L)).thenReturn(Optional.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.MANAGER);
-        assertEquals(4, uiActionsList.getUIActionsListForUserRole().size());
+        assertEquals(5, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
@@ -65,7 +65,7 @@ class UIActionsListTest {
         when(mockCurrentUserId.getValue()).thenReturn(1L);
         when(mockUserDatabase.findById(1L)).thenReturn(Optional.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.ADMIN);
-        assertEquals(3, uiActionsList.getUIActionsListForUserRole().size());
+        assertEquals(4, uiActionsList.getUIActionsListForUserRole().size());
     }
 
 }
