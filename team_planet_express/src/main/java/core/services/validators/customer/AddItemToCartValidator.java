@@ -3,6 +3,7 @@ package core.services.validators.customer;
 import core.database.Database;
 import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
+import core.services.cart.CartValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +19,23 @@ public class AddItemToCartValidator {
     private static final String ERROR_NOT_ENOUGH_QUANTITY = "Error: Available quantity lower than ordered amount.";
 
     private final Database database;
+    private final CartValidator cartValidator;
 
-    public AddItemToCartValidator(Database database) {
+    public AddItemToCartValidator(Database database, CartValidator cartValidator) {
         this.database = database;
+        this.cartValidator = cartValidator;
     }
 
     public List<CoreError> validate(AddItemToCartRequest request) {
         List<CoreError> errors = new ArrayList<>();
-        validateItemNameExistsInShop(request).ifPresent(errors::add);
-        validateOrderedQuantityIsNumber(request).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getUserId()).ifPresent(errors::add);
         if (errors.isEmpty()) {
-            validateOrderedQuantityGreaterThanZero(request).ifPresent(errors::add);
-            validateOrderedQuantityNotGreaterThanAvailable(request).ifPresent(errors::add);
+            validateItemNameExistsInShop(request).ifPresent(errors::add);
+            validateOrderedQuantityIsNumber(request).ifPresent(errors::add);
+            if (errors.isEmpty()) {
+                validateOrderedQuantityGreaterThanZero(request).ifPresent(errors::add);
+                validateOrderedQuantityNotGreaterThanAvailable(request).ifPresent(errors::add);
+            }
         }
         return errors;
     }

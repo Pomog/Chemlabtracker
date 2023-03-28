@@ -2,7 +2,9 @@ package core.services.validators.customer;
 
 import core.database.Database;
 import core.domain.cart.Cart;
+import core.requests.customer.BuyRequest;
 import core.responses.CoreError;
+import core.services.cart.CartValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +16,19 @@ public class BuyValidator {
     private static final String ERROR_CART_EMPTY = "Error: Your cart is empty.";
 
     private final Database database;
+    private final CartValidator cartValidator;
 
-    public BuyValidator(Database database) {
+    public BuyValidator(Database database, CartValidator cartValidator) {
         this.database = database;
+        this.cartValidator = cartValidator;
     }
 
-    public List<CoreError> validate(Long userId) {
+    public List<CoreError> validate(BuyRequest request) {
         List<CoreError> errors = new ArrayList<>();
-        validateCartIsNotEmpty(userId).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getUserId()).ifPresent(errors::add);
+        if (errors.isEmpty()) {
+            validateCartIsNotEmpty(request.getUserId()).ifPresent(errors::add);
+        }
         return errors;
     }
 

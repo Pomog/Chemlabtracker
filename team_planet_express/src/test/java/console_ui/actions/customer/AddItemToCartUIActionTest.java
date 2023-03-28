@@ -5,6 +5,7 @@ import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.AddItemToCartResponse;
 import core.services.actions.customer.AddItemToCartService;
+import core.support.MutableLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,7 @@ class AddItemToCartUIActionTest {
 
     private final AddItemToCartService mockAddItemToCartService = mock(AddItemToCartService.class);
     private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
+    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
     private final AddItemToCartResponse mockAddItemToCartResponse = mock(AddItemToCartResponse.class);
     private final CoreError mockCoreError = mock(CoreError.class);
 
@@ -26,7 +28,8 @@ class AddItemToCartUIActionTest {
             new AddItemToCartUIAction(mockAddItemToCartService, mockUserCommunication);
 
     @BeforeEach
-    void setupMockResponse() {
+    void setupSharedMockBehaviour() {
+        when(mockAddItemToCartService.getCurrentUserId()).thenReturn(mockCurrentUserId);
         when(mockAddItemToCartService.execute(any(AddItemToCartRequest.class)))
                 .thenReturn(mockAddItemToCartResponse);
     }
