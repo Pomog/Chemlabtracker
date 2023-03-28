@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Data
 public class InMemoryItemDatabaseImpl implements ItemDatabase {
@@ -63,5 +64,22 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
     public List<Item> getAllItems() {
         return shopItems;
     }
+
+    @Override
+    public List<Item> SearchByName(String itemName) {
+        return shopItems.stream().filter(
+                item -> item.getName().contains(itemName.subSequence(0, itemName.length()))
+        ).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Item> SearchByNameAndPrice(String itemName, BigDecimal price) {
+        return shopItems.stream().filter(
+                item -> item.getName().contains(itemName.subSequence(0, itemName.length())) &&
+                        item.getPrice().equals(price)
+        ).collect(Collectors.toList());
+
+    }
+
 
 }

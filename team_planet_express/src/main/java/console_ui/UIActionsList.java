@@ -7,6 +7,7 @@ import console_ui.actions.guest.SignUpUIAction;
 import console_ui.actions.manager.AddItemToShopUIAction;
 import console_ui.actions.manager.ChangeItemDataUIAction;
 import console_ui.actions.shared.ExitUIAction;
+import console_ui.actions.shared.SearchItemUIAction;
 import console_ui.actions.shared.SignInUIAction;
 import console_ui.actions.shared.SignOutUIAction;
 import core.database.Database;
@@ -18,6 +19,7 @@ import core.services.actions.guest.SignUpService;
 import core.services.actions.manager.AddItemToShopService;
 import core.services.actions.manager.ChangeItemDataService;
 import core.services.actions.shared.ExitService;
+import core.services.actions.shared.SearchItemService;
 import core.services.actions.shared.SignInService;
 import core.services.actions.shared.SignOutService;
 import core.services.validators.customer.AddItemToCartValidator;
@@ -26,6 +28,7 @@ import core.services.validators.customer.RemoveItemFromCartValidator;
 import core.services.validators.guest.SignUpValidator;
 import core.services.validators.manager.AddItemToShopValidator;
 import core.services.validators.manager.ChangeItemDataValidator;
+import core.services.validators.shared.SearchItemValidator;
 import core.services.validators.shared.SignInValidator;
 import core.support.MutableLong;
 
@@ -73,6 +76,7 @@ public class UIActionsList {
         SignUpValidator signUpValidator = new SignUpValidator(database);
 
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
+        SearchItemService searchItemService = new SearchItemService(database, new SearchItemValidator());
         AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator, currentUserId);
         RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator, currentUserId);
         ListCartItemsService listCartItemsService = new ListCartItemsService(database, currentUserId);
@@ -88,6 +92,7 @@ public class UIActionsList {
 
         List<UIAction> uiActions = new ArrayList<>();
         uiActions.add(new ListShopItemsUIAction(listShopItemsService, userCommunication));
+        uiActions.add(new SearchItemUIAction(searchItemService, userCommunication));
         uiActions.add(new AddItemToCartUIAction(addItemToCartService, userCommunication));
         uiActions.add(new RemoveItemFromCartUIAction(removeItemFromCartService, userCommunication));
         uiActions.add(new ListCartItemsUIAction(listCartItemsService, userCommunication));
