@@ -8,7 +8,6 @@ import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.AddItemToCartResponse;
 import core.services.validators.customer.AddItemToCartValidator;
-import core.support.MutableLong;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,16 +16,10 @@ public class AddItemToCartService {
 
     private final Database database;
     private final AddItemToCartValidator validator;
-    private final MutableLong currentUserId;
 
-    public AddItemToCartService(Database database, AddItemToCartValidator validator, MutableLong currentUserId) {
+    public AddItemToCartService(Database database, AddItemToCartValidator validator) {
         this.database = database;
         this.validator = validator;
-        this.currentUserId = currentUserId;
-    }
-
-    public MutableLong getCurrentUserId() {
-        return currentUserId;
     }
 
     public AddItemToCartResponse execute(AddItemToCartRequest request) {
@@ -34,7 +27,7 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue()).get();
+        Cart cart = database.accessCartDatabase().findOpenCartForUserId(request.getUserId()).get();
         String itemName = request.getItemName();
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         Optional<Item> item = database.accessItemDatabase().findByName(itemName);

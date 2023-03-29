@@ -6,6 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.shared.SignOutRequest;
 import core.responses.shared.SignOutResponse;
 import core.services.actions.shared.SignOutService;
+import core.support.MutableLong;
 
 public class SignOutUIAction extends UIAction {
     private static final String ACTION_NAME = "Sign out";
@@ -14,17 +15,19 @@ public class SignOutUIAction extends UIAction {
 
     private final SignOutService signOutService;
     private final UserCommunication userCommunication;
+    private final MutableLong currentUserId;
 
-    public SignOutUIAction(SignOutService signOutService, UserCommunication userCommunication) {
+    public SignOutUIAction(SignOutService signOutService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUM);
         this.signOutService = signOutService;
         this.userCommunication = userCommunication;
+        this.currentUserId = currentUserId;
     }
 
 
     @Override
     public void execute() {
-        SignOutRequest request = new SignOutRequest();
+        SignOutRequest request = new SignOutRequest(currentUserId);
         SignOutResponse response = signOutService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));

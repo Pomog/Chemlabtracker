@@ -25,11 +25,11 @@ class AddItemToCartUIActionTest {
     private final CoreError mockCoreError = mock(CoreError.class);
 
     private final AddItemToCartUIAction action =
-            new AddItemToCartUIAction(mockAddItemToCartService, mockUserCommunication);
+            new AddItemToCartUIAction(mockAddItemToCartService, mockCurrentUserId, mockUserCommunication);
 
     @BeforeEach
     void setupSharedMockBehaviour() {
-        when(mockAddItemToCartService.getCurrentUserId()).thenReturn(mockCurrentUserId);
+       //hen(mockAddItemToCartService.getCurrentUserId()).thenReturn(mockCurrentUserId);
         when(mockAddItemToCartService.execute(any(AddItemToCartRequest.class)))
                 .thenReturn(mockAddItemToCartResponse);
     }

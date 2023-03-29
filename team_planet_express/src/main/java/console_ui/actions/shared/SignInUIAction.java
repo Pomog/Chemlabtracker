@@ -6,6 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.shared.SignInRequest;
 import core.responses.shared.SignInResponse;
 import core.services.actions.shared.SignInService;
+import core.support.MutableLong;
 
 public class SignInUIAction extends UIAction {
 
@@ -19,11 +20,13 @@ public class SignInUIAction extends UIAction {
 
     private final SignInService signInService;
     private final UserCommunication userCommunication;
+    private final MutableLong currentUserId;
 
-    public SignInUIAction(SignInService SignInService, UserCommunication userCommunication) {
+    public SignInUIAction(SignInService SignInService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUM);
         this.signInService = SignInService;
         this.userCommunication = userCommunication;
+        this.currentUserId = currentUserId;
     }
 
     @Override
@@ -32,7 +35,7 @@ public class SignInUIAction extends UIAction {
         String login = userCommunication.getInput();
         userCommunication.requestInput(PROMPT_TOPIC_PASSWORD);
         String password = userCommunication.getInput();
-        SignInRequest request = new SignInRequest(login, password);
+        SignInRequest request = new SignInRequest(login, password, currentUserId);
         SignInResponse response = signInService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));

@@ -6,6 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.customer.AddItemToCartRequest;
 import core.responses.customer.AddItemToCartResponse;
 import core.services.actions.customer.AddItemToCartService;
+import core.support.MutableLong;
 
 public class AddItemToCartUIAction extends UIAction {
 
@@ -19,10 +20,13 @@ public class AddItemToCartUIAction extends UIAction {
     private final AddItemToCartService addItemToCartService;
     private final UserCommunication userCommunication;
 
-    public AddItemToCartUIAction(AddItemToCartService addItemToCartService, UserCommunication userCommunication) {
+    private final MutableLong currentUserId;
+
+    public AddItemToCartUIAction(AddItemToCartService addItemToCartService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.addItemToCartService = addItemToCartService;
         this.userCommunication = userCommunication;
+        this.currentUserId = currentUserId;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class AddItemToCartUIAction extends UIAction {
         userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
         String orderedQuantity = userCommunication.getInput();
         AddItemToCartRequest request =
-                new AddItemToCartRequest(addItemToCartService.getCurrentUserId().getValue(), itemName, orderedQuantity);
+                new AddItemToCartRequest(currentUserId.getValue(), itemName, orderedQuantity);
         AddItemToCartResponse response = addItemToCartService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));

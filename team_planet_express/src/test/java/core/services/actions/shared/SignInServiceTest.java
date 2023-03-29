@@ -23,13 +23,13 @@ class SignInServiceTest {
 
     private final Database mockDatabase = mock(Database.class);
     private final SignInValidator mockValidator = mock(SignInValidator.class);
-    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
     private final SignInRequest mockRequest = mock(SignInRequest.class);
     private final CoreError mockCoreError = mock(CoreError.class);
     private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
     private final User mockUser = mock(User.class);
+    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
 
-    private final SignInService service = new SignInService(mockDatabase, mockValidator, mockCurrentUserId);
+    private final SignInService service = new SignInService(mockDatabase, mockValidator);
 
     @Test
     void shouldReturnErrorsIfPresent() {
@@ -44,6 +44,7 @@ class SignInServiceTest {
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.findByLogin("login")).thenReturn(Optional.of(mockUser));
+        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         SignInResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
@@ -52,6 +53,7 @@ class SignInServiceTest {
     void shouldGetUserFromDatabase() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getLoginName()).thenReturn("login");
+        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.findByLogin("login")).thenReturn(Optional.of(mockUser));
         service.execute(mockRequest);
@@ -63,9 +65,11 @@ class SignInServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+
+        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         when(mockUserDatabase.findByLogin("login")).thenReturn(Optional.of(mockUser));
         service.execute(mockRequest);
-        verify(mockCurrentUserId).setValue(any(Long.class));
+        verify(mockRequest.getUserId()).setValue(any(Long.class));
     }
 
 }

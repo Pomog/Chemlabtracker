@@ -6,6 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.customer.RemoveItemFromCartRequest;
 import core.responses.customer.RemoveItemFromCartResponse;
 import core.services.actions.customer.RemoveItemFromCartService;
+import core.support.MutableLong;
 
 public class RemoveItemFromCartUIAction extends UIAction {
 
@@ -17,11 +18,14 @@ public class RemoveItemFromCartUIAction extends UIAction {
 
     private final RemoveItemFromCartService removeItemFromCartService;
     private final UserCommunication userCommunication;
+    private final MutableLong currentUserId;
 
-    public RemoveItemFromCartUIAction(RemoveItemFromCartService removeItemFromCartService, UserCommunication userCommunication) {
+
+    public RemoveItemFromCartUIAction(RemoveItemFromCartService removeItemFromCartService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.removeItemFromCartService = removeItemFromCartService;
         this.userCommunication = userCommunication;
+        this.currentUserId = currentUserId;
     }
 
     @Override
@@ -29,7 +33,7 @@ public class RemoveItemFromCartUIAction extends UIAction {
         userCommunication.requestInput(PROMPT_TOPIC_ITEM);
         String itemName = userCommunication.getInput();
         RemoveItemFromCartRequest request =
-                new RemoveItemFromCartRequest(removeItemFromCartService.getCurrentUserId().getValue(), itemName);
+                new RemoveItemFromCartRequest(currentUserId.getValue(), itemName);
         RemoveItemFromCartResponse response = removeItemFromCartService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));

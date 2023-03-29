@@ -6,6 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.customer.BuyRequest;
 import core.responses.customer.BuyResponse;
 import core.services.actions.customer.BuyService;
+import core.support.MutableLong;
 
 public class BuyUIAction extends UIAction {
 
@@ -16,16 +17,18 @@ public class BuyUIAction extends UIAction {
 
     private final BuyService buyService;
     private final UserCommunication userCommunication;
+    private final MutableLong currentUserId;
 
-    public BuyUIAction(BuyService buyService, UserCommunication userCommunication) {
+    public BuyUIAction(BuyService buyService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.buyService = buyService;
         this.userCommunication = userCommunication;
+        this.currentUserId = currentUserId;
     }
 
     @Override
     public void execute() {
-        BuyRequest request = new BuyRequest(buyService.getCurrentUserId().getValue());
+        BuyRequest request = new BuyRequest(currentUserId.getValue());
         BuyResponse response = buyService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));

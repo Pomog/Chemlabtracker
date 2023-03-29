@@ -8,7 +8,6 @@ import core.requests.customer.RemoveItemFromCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.RemoveItemFromCartResponse;
 import core.services.validators.customer.RemoveItemFromCartValidator;
-import core.support.MutableLong;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,17 +16,12 @@ public class RemoveItemFromCartService {
 
     private final Database database;
     private final RemoveItemFromCartValidator validator;
-    private final MutableLong currentUserId;
 
-    public RemoveItemFromCartService(Database database, RemoveItemFromCartValidator validator, MutableLong currentUserId) {
+    public RemoveItemFromCartService(Database database, RemoveItemFromCartValidator validator) {
         this.database = database;
-        this.currentUserId = currentUserId;
         this.validator = validator;
     }
 
-    public MutableLong getCurrentUserId() {
-        return currentUserId;
-    }
 
     public RemoveItemFromCartResponse execute(RemoveItemFromCartRequest request) {
         List<CoreError> errors = validator.validate(request);
@@ -35,7 +29,7 @@ public class RemoveItemFromCartService {
             return new RemoveItemFromCartResponse(errors);
         }
         Optional<Item> item = database.accessItemDatabase().findByName(request.getItemName());
-        Cart cart = database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue()).get();
+        Cart cart = database.accessCartDatabase().findOpenCartForUserId(request.getUserId()).get();
         Optional<CartItem> cartItem = database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.get().getId());
         Integer newAvailableQuantity = item.get().getAvailableQuantity() + cartItem.get().getOrderedQuantity();
         database.accessCartItemDatabase().deleteByID(cartItem.get().getId());

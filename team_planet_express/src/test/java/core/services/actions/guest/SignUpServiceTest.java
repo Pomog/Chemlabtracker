@@ -22,13 +22,13 @@ class SignUpServiceTest {
 
     private final Database mockDatabase = mock(Database.class);
     private final SignUpValidator mockValidator = mock(SignUpValidator.class);
-    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
     private final SignUpRequest mockRequest = mock(SignUpRequest.class);
     private final CoreError mockCoreError = mock(CoreError.class);
     private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
     private final User mockUser = mock(User.class);
+    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
 
-    private final SignUpService service = new SignUpService(mockDatabase, mockValidator, mockCurrentUserId);
+    private final SignUpService service = new SignUpService(mockDatabase, mockValidator);
 
     @Test
     void shouldReturnErrorsIfPresent() {
@@ -41,6 +41,7 @@ class SignUpServiceTest {
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         when(mockUserDatabase.save(any(User.class))).thenReturn(mockUser);
         SignUpResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
@@ -52,6 +53,7 @@ class SignUpServiceTest {
         when(mockRequest.getName()).thenReturn("name");
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("password");
+        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.save(new User("name", "login", "password", UserRole.CUSTOMER)))
                 .thenReturn(mockUser);
@@ -63,10 +65,12 @@ class SignUpServiceTest {
     @Test
     void shouldUpdateCurrentUserId() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
+
+        when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.save(any(User.class))).thenReturn(mockUser);
         service.execute(mockRequest);
-        verify(mockCurrentUserId).setValue(any(Long.class));
+        verify(mockRequest.getUserId()).setValue(any(Long.class));
     }
 
 }

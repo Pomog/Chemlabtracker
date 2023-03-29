@@ -6,6 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.customer.ListCartItemsRequest;
 import core.responses.customer.ListCartItemsResponse;
 import core.services.actions.customer.ListCartItemsService;
+import core.support.MutableLong;
 
 import java.math.BigDecimal;
 
@@ -20,17 +21,19 @@ public class ListCartItemsUIAction extends UIAction {
 
     private final ListCartItemsService listCartItemsService;
     private final UserCommunication userCommunication;
+    private final MutableLong currentUserId;
 
-    public ListCartItemsUIAction(ListCartItemsService listCartItemsService, UserCommunication userCommunication) {
+    public ListCartItemsUIAction(ListCartItemsService listCartItemsService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.listCartItemsService = listCartItemsService;
         this.userCommunication = userCommunication;
+        this.currentUserId = currentUserId;
     }
 
     @Override
     public void execute() {
         userCommunication.informUser(HEADER_TEXT);
-        ListCartItemsRequest request = new ListCartItemsRequest(listCartItemsService.getCurrentUserId().getValue());
+        ListCartItemsRequest request = new ListCartItemsRequest(currentUserId.getValue());
         ListCartItemsResponse response = listCartItemsService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
