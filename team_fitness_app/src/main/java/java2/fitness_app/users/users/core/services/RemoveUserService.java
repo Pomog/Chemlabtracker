@@ -22,10 +22,10 @@ public class RemoveUserService {
         List<CoreError> errors = validator.validate(request);
         if(!errors.isEmpty()){
             return new RemoveUserResponse(errors);
+        }else {
+            boolean isUserRemoved = database.deleteUser(Long.parseLong(request.getUserIdToRemove()), request.getPassword());
+            return new RemoveUserResponse(isUserRemoved);
         }
-
-        boolean isUserRemoved = database.deleteUser(Long.parseLong(request.getUserIdToRemove()), request.getPassword());
-        return new RemoveUserResponse(isUserRemoved);
     }
 
 

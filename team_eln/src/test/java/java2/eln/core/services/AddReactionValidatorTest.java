@@ -1,6 +1,7 @@
 package java2.eln.core.services;
 
 import java2.eln.core.requests.AddReactionRequest;
+import java2.eln.core.services.validators.AddReactionValidator;
 import org.junit.Assert;
 import org.junit.Test;
 

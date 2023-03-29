@@ -1,6 +1,8 @@
 package java2.eln.domain;
 
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,6 @@ public class ReactionData {
         this.code = code;
         this.name = name;
         this.startingMaterials = new ArrayList<>();
-
     }
     public String getCode() {
         return code;
@@ -59,15 +60,22 @@ public class ReactionData {
         return mainProduct;
     }
 
-    public void getReactionYield (){
+    public void calculateReactionYield(){
         double sm1Mole = (startingMaterials.get(0).getMass()/startingMaterials.get(0).getMW());
         double mpMole = (mainProduct.getMass()/mainProduct.getMW());
-        this.reactionYield = mpMole/sm1Mole;
+        DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+        symbols.setDecimalSeparator('.');
+        DecimalFormat df = new DecimalFormat("#.##", symbols);
+        this.reactionYield = Double.parseDouble(df.format(mpMole/sm1Mole));
+    }
+
+    public double getReactionYield() {
+        return reactionYield;
     }
 
     @Override
     public String toString() {
-        getReactionYield();
+        calculateReactionYield();
         return "*** baseClasses.ReactionData{" +
                 "\n code='" + code + '\'' +
                 "\n name='" + name + '\'' +
