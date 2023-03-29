@@ -38,6 +38,8 @@ public class SearchItemValidator {
     }
 
 
+    //I would have made those price specific
+    //But I guess it is some sort of future-proofing of whatever..
     private Optional<CoreError> validateIsNumber(String value, String field, String errorMessage) {
         return (value != null && !value.isBlank() &&
                 !value.matches(REGEX_NUMBER))

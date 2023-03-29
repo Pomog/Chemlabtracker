@@ -22,7 +22,7 @@ public interface ItemDatabase {
 
     List<Item> getAllItems();
 
-    List<Item> SearchByName(String itemName);
+    List<Item> searchByName(String itemName);
 
-    List<Item> SearchByNameAndPrice(String itemName, BigDecimal price);
+    List<Item> searchByNameAndPrice(String itemName, BigDecimal price);
 }

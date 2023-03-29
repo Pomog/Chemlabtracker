@@ -67,6 +67,7 @@ public class UIActionsList {
 
     private List<UIAction> createUIActionsList() {
         CartValidator cartValidator = new CartValidator(database);
+        SearchItemValidator searchItemValidator = new SearchItemValidator();
         AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, cartValidator);
         RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, cartValidator);
         ListCartItemValidator listCartItemValidator = new ListCartItemValidator(cartValidator);
@@ -77,11 +78,10 @@ public class UIActionsList {
         SignUpValidator signUpValidator = new SignUpValidator(database);
 
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
-        SearchItemService searchItemService = new SearchItemService(database, new SearchItemValidator());
+        SearchItemService searchItemService = new SearchItemService(database, searchItemValidator);
         AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator, currentUserId);
         RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator, currentUserId);
         ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator, currentUserId);
-        //ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator, currentUserId);
         BuyService buyService = new BuyService(database, buyValidator, currentUserId);
         AddItemToShopService addItemToShopService = new AddItemToShopService(database, addItemToShopValidator);
         ChangeItemDataService changeItemDataService = new ChangeItemDataService(database, changeItemDataValidator);
