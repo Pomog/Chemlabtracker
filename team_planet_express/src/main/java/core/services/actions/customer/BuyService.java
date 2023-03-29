@@ -3,38 +3,33 @@ package core.services.actions.customer;
 import core.database.Database;
 import core.domain.cart.Cart;
 import core.domain.cart.CartStatus;
+import core.requests.customer.BuyRequest;
 import core.responses.CoreError;
 import core.responses.customer.BuyResponse;
-import core.services.cart.CartValidator;
 import core.services.validators.customer.BuyValidator;
 import core.support.MutableLong;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public class BuyService {
 
     private final Database database;
-    private final MutableLong currentUserId;
-
     private final BuyValidator validator;
-    private final CartValidator cartValidator;
+    private final MutableLong currentUserId;
 
     public BuyService(Database database, BuyValidator validator, MutableLong currentUserId) {
         this.database = database;
-        this.currentUserId = currentUserId;
         this.validator = validator;
-        this.cartValidator = new CartValidator(database);
+        this.currentUserId = currentUserId;
     }
 
-    public BuyResponse execute() {
-        //TODO now it is huge an ugly
-        Optional<CoreError> error = cartValidator.validateOpenCartExistsForUserId(currentUserId.getValue());
-        if (error.isPresent()) {
-            return new BuyResponse(List.of(error.get()));
-        }
-        List<CoreError> errors = validator.validate(currentUserId.getValue());
+    public MutableLong getCurrentUserId() {
+        return currentUserId;
+    }
+
+    public BuyResponse execute(BuyRequest request) {
+        List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new BuyResponse(errors);
         }

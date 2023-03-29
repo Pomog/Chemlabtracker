@@ -3,6 +3,7 @@ package console_ui.actions.customer;
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
 import core.domain.user.UserRole;
+import core.requests.customer.ListCartItemsRequest;
 import core.responses.customer.ListCartItemsResponse;
 import core.services.actions.customer.ListCartItemsService;
 
@@ -29,20 +30,23 @@ public class ListCartItemsUIAction extends UIAction {
     @Override
     public void execute() {
         userCommunication.informUser(HEADER_TEXT);
-        ListCartItemsResponse response = listCartItemsService.execute();
+        ListCartItemsRequest request = new ListCartItemsRequest(listCartItemsService.getCurrentUserId().getValue());
+        ListCartItemsResponse response = listCartItemsService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
-            return;
+        } else {
+            printCartItems(response);
         }
+    }
+
+    private void printCartItems(ListCartItemsResponse response) {
         if (response.getCartItems().isEmpty()) {
             userCommunication.informUser(MESSAGE_CART_IS_EMPTY);
-            return;
+        } else {
+            response.getCartItems().forEach(item -> userCommunication.informUser(item.toString()));
+            BigDecimal cartTotal = response.getCartTotal();
+            userCommunication.informUser(MESSAGE_CART_TOTAL + cartTotal);
         }
-
-        response.getCartItems().forEach(item -> userCommunication.informUser(item.toString()));
-        BigDecimal cartTotal = response.getCartTotal();
-        userCommunication.informUser(MESSAGE_CART_TOTAL + cartTotal);
-        //TODO NoOpenCartException was lost
     }
 
 }

@@ -24,7 +24,6 @@ class UIActionsListTest {
     private final UIActionsList uiActionsList = new UIActionsList(mockDatabase, mockCurrentUserId, mockUserCommunication);
 
     @Test
-        //TODO this should not be necessary
     void shouldReturn8ActionsForNoId() {
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockCurrentUserId.getValue()).thenReturn(1L);

@@ -22,8 +22,10 @@ import core.services.actions.shared.ExitService;
 import core.services.actions.shared.SearchItemService;
 import core.services.actions.shared.SignInService;
 import core.services.actions.shared.SignOutService;
+import core.services.cart.CartValidator;
 import core.services.validators.customer.AddItemToCartValidator;
 import core.services.validators.customer.BuyValidator;
+import core.services.validators.customer.ListCartItemValidator;
 import core.services.validators.customer.RemoveItemFromCartValidator;
 import core.services.validators.guest.SignUpValidator;
 import core.services.validators.manager.AddItemToShopValidator;
@@ -52,7 +54,6 @@ public class UIActionsList {
     }
 
     public List<UIAction> getUIActionsListForUserRole() {
-        //TODO this should not be necessary
         Optional<User> currentUser = database.accessUserDatabase().findById(currentUserId.getValue());
         UserRole filterRole = currentUser.isEmpty() ? UserRole.GUEST : currentUser.get().getUserRole();
         return uiActionsList.stream()
@@ -60,16 +61,16 @@ public class UIActionsList {
                 .collect(Collectors.toList());
     }
 
-    //TODO WTB Autowired
     public String getCurrentUserName() {
         return database.accessUserDatabase().findById(currentUserId.getValue()).get().getName();
     }
 
     private List<UIAction> createUIActionsList() {
-        AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database);
-        RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database);
-        //ListCartItemValidator listCartItemValidator = new ListCartItemValidator(database);
-        BuyValidator buyValidator = new BuyValidator(database);
+        CartValidator cartValidator = new CartValidator(database);
+        AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, cartValidator);
+        RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, cartValidator);
+        ListCartItemValidator listCartItemValidator = new ListCartItemValidator(cartValidator);
+        BuyValidator buyValidator = new BuyValidator(database, cartValidator);
         AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database);
         ChangeItemDataValidator changeItemDataValidator = new ChangeItemDataValidator(database);
         SignInValidator signInValidator = new SignInValidator(database);
@@ -79,7 +80,7 @@ public class UIActionsList {
         SearchItemService searchItemService = new SearchItemService(database, new SearchItemValidator());
         AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator, currentUserId);
         RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator, currentUserId);
-        ListCartItemsService listCartItemsService = new ListCartItemsService(database, currentUserId);
+        ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator, currentUserId);
         //ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator, currentUserId);
         BuyService buyService = new BuyService(database, buyValidator, currentUserId);
         AddItemToShopService addItemToShopService = new AddItemToShopService(database, addItemToShopValidator);

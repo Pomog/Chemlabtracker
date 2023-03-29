@@ -27,15 +27,15 @@ public class RemoveItemFromCartUIAction extends UIAction {
     @Override
     public void execute() {
         userCommunication.requestInput(PROMPT_TOPIC_ITEM);
-        String userInputItem = userCommunication.getInput();
-        RemoveItemFromCartRequest request = new RemoveItemFromCartRequest(userInputItem);
+        String itemName = userCommunication.getInput();
+        RemoveItemFromCartRequest request =
+                new RemoveItemFromCartRequest(removeItemFromCartService.getCurrentUserId().getValue(), itemName);
         RemoveItemFromCartResponse response = removeItemFromCartService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
         } else {
             userCommunication.informUser(MESSAGE_ITEM_REMOVED);
         }
-        //TODO NoOpenCartException was lost
     }
 
 }

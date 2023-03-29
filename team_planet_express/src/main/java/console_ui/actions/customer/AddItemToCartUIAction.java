@@ -31,14 +31,14 @@ public class AddItemToCartUIAction extends UIAction {
         String itemName = userCommunication.getInput();
         userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
         String orderedQuantity = userCommunication.getInput();
-        AddItemToCartRequest request = new AddItemToCartRequest(itemName, orderedQuantity);
+        AddItemToCartRequest request =
+                new AddItemToCartRequest(addItemToCartService.getCurrentUserId().getValue(), itemName, orderedQuantity);
         AddItemToCartResponse response = addItemToCartService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
         } else {
             userCommunication.informUser(MESSAGE_ITEM_ADDED);
         }
-        //TODO NoOpenCartException was lost
     }
 
 }

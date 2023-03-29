@@ -7,7 +7,6 @@ import core.domain.item.Item;
 import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.AddItemToCartResponse;
-import core.services.cart.CartValidator;
 import core.services.validators.customer.AddItemToCartValidator;
 import core.support.MutableLong;
 
@@ -19,22 +18,18 @@ public class AddItemToCartService {
     private final Database database;
     private final AddItemToCartValidator validator;
     private final MutableLong currentUserId;
-    private final CartValidator cartValidator;
 
-    //TODO cartValidator should be mockable
     public AddItemToCartService(Database database, AddItemToCartValidator validator, MutableLong currentUserId) {
         this.database = database;
         this.validator = validator;
         this.currentUserId = currentUserId;
-        this.cartValidator = new CartValidator(database);
+    }
+
+    public MutableLong getCurrentUserId() {
+        return currentUserId;
     }
 
     public AddItemToCartResponse execute(AddItemToCartRequest request) {
-        //TODO make beegboi smol
-        Optional<CoreError> error = cartValidator.validateOpenCartExistsForUserId(currentUserId.getValue());
-        if (error.isPresent()) {
-            return new AddItemToCartResponse(List.of(error.get()));
-        }
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);

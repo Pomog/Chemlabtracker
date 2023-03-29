@@ -21,6 +21,8 @@ import static org.mockito.Mockito.*;
 
 class AddItemToCartServiceTest {
 
+    //TODO I moved CartValidator into AddItemToCartValidator, so this thing can be simplified a lot
+
     private final Database mockDatabase = mock(Database.class);
     private final AddItemToCartValidator mockValidator = mock(AddItemToCartValidator.class);
     private final MutableLong mockCurrentUserId = mock(MutableLong.class);
