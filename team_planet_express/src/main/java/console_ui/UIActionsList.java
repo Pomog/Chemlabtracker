@@ -23,6 +23,7 @@ import core.services.actions.shared.SearchItemService;
 import core.services.actions.shared.SignInService;
 import core.services.actions.shared.SignOutService;
 import core.services.cart.CartValidator;
+import core.services.exception.ServiceMissingDataException;
 import core.services.validators.customer.AddItemToCartValidator;
 import core.services.validators.customer.BuyValidator;
 import core.services.validators.customer.ListCartItemValidator;
@@ -62,7 +63,7 @@ public class UIActionsList {
     }
 
     public String getCurrentUserName() {
-        return database.accessUserDatabase().findById(currentUserId.getValue()).get().getName();
+        return getUserById(currentUserId.getValue()).getName();
     }
 
     private List<UIAction> createUIActionsList() {
@@ -107,6 +108,11 @@ public class UIActionsList {
         uiActions.add(new ExitUIAction(exitService, userCommunication));
 
         return uiActions;
+    }
+
+    private User getUserById(Long userId) {
+        return database.accessUserDatabase().findById(userId)
+                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }

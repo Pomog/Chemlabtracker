@@ -4,14 +4,15 @@ import core.database.Database;
 import core.database.UserDatabase;
 import core.domain.user.User;
 import core.domain.user.UserRole;
+import core.services.exception.ServiceMissingDataException;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class UIActionsListTest {
 
@@ -65,6 +66,23 @@ class UIActionsListTest {
         when(mockUserDatabase.findById(1L)).thenReturn(Optional.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.ADMIN);
         assertEquals(4, uiActionsList.getUIActionsListForUserRole().size());
+    }
+
+    @Test
+    void shouldReturnCurrentUserName() {
+        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+        when(mockCurrentUserId.getValue()).thenReturn(1L);
+        when(mockUserDatabase.findById(1L)).thenReturn(Optional.of(mockUser));
+        uiActionsList.getCurrentUserName();
+        verify(mockUser).getName();
+    }
+
+    @Test
+    void shouldThrowExceptionForMissingOptional() {
+        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+        when(mockCurrentUserId.getValue()).thenReturn(1L);
+        when(mockUserDatabase.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(ServiceMissingDataException.class, uiActionsList::getCurrentUserName);
     }
 
 }

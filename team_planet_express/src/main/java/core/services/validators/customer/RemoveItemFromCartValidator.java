@@ -32,6 +32,7 @@ public class RemoveItemFromCartValidator {
         cartValidator.validateOpenCartExistsForUserId(request.getUserId()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             //TODO order of validations seems borked
+            //TODO test for NPE on item.get()
             validateCartIsNotEmpty(request.getUserId()).ifPresent(errors::add);
             validateItemNameInCart(request).ifPresent(errors::add);
             if (errors.isEmpty()) {
@@ -44,7 +45,6 @@ public class RemoveItemFromCartValidator {
     private Optional<CoreError> validateItemNameInCart(RemoveItemFromCartRequest request) {
         Cart cart = getOpenCartForUserId(request.getUserId());
         Item item = getItemByName(request.getItemName());
-        //TODO test for NPE on item.get()
         return (database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.getId()).isEmpty())
                 ? Optional.of(new CoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_CART))
                 : Optional.empty();
