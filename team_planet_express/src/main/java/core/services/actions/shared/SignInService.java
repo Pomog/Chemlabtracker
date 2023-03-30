@@ -7,7 +7,6 @@ import core.responses.CoreError;
 import core.responses.shared.SignInResponse;
 import core.services.exception.ServiceMissingDataException;
 import core.services.validators.shared.SignInValidator;
-import core.support.MutableLong;
 
 import java.util.List;
 
@@ -15,12 +14,10 @@ public class SignInService {
 
     private final Database database;
     private final SignInValidator validator;
-    private final MutableLong currentUserId;
 
-    public SignInService(Database database, SignInValidator validator, MutableLong currentUserId) {
+    public SignInService(Database database, SignInValidator validator) {
         this.database = database;
         this.validator = validator;
-        this.currentUserId = currentUserId;
     }
 
     public SignInResponse execute(SignInRequest request) {
@@ -29,7 +26,7 @@ public class SignInService {
             return new SignInResponse(errors);
         }
         User newUser = getUserByLoginName(request.getLoginName());
-        currentUserId.setValue(newUser.getId());
+        request.getUserId().setValue(newUser.getId());
         return new SignInResponse(newUser);
     }
 

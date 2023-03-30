@@ -6,6 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.customer.BuyRequest;
 import core.responses.customer.BuyResponse;
 import core.services.actions.customer.BuyService;
+import core.support.MutableLong;
 
 public class BuyUIAction extends UIAction {
 
@@ -15,17 +16,19 @@ public class BuyUIAction extends UIAction {
     private static final String MESSAGE_CART_IS_CLOSED = "Your cart is closed now.";
 
     private final BuyService buyService;
+    private final MutableLong currentUserId;
     private final UserCommunication userCommunication;
 
-    public BuyUIAction(BuyService buyService, UserCommunication userCommunication) {
+    public BuyUIAction(BuyService buyService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.buyService = buyService;
         this.userCommunication = userCommunication;
+        this.currentUserId = currentUserId;
     }
 
     @Override
     public void execute() {
-        BuyRequest request = new BuyRequest(buyService.getCurrentUserId().getValue());
+        BuyRequest request = new BuyRequest(currentUserId.getValue());
         BuyResponse response = buyService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));

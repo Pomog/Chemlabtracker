@@ -6,6 +6,7 @@ import core.requests.guest.SignUpRequest;
 import core.responses.CoreError;
 import core.responses.guest.SignUpResponse;
 import core.services.actions.guest.SignUpService;
+import core.support.MutableLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,9 +25,10 @@ class SignUpUIActionTest {
     private final SignUpResponse mockSignUpResponse = mock(SignUpResponse.class);
     private final CoreError mockCoreError = mock(CoreError.class);
     private final User mockUser = mock(User.class);
+    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
 
     private final SignUpUIAction action =
-            new SignUpUIAction(mockSignUpService, mockUserCommunication);
+            new SignUpUIAction(mockSignUpService, mockCurrentUserId, mockUserCommunication);
 
     @BeforeEach
     void setupMockResponse() {
@@ -46,7 +48,7 @@ class SignUpUIActionTest {
         when(mockUserCommunication.getInput()).thenReturn("name", "login", "password");
         when(mockSignUpResponse.getUser()).thenReturn(mockUser);
         action.execute();
-        verify(mockSignUpService).execute(new SignUpRequest("name", "login", "password"));
+        verify(mockSignUpService).execute(new SignUpRequest(mockCurrentUserId, "name", "login", "password"));
     }
 
     @Test

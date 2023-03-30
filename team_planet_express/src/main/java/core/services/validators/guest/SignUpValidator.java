@@ -3,6 +3,7 @@ package core.services.validators.guest;
 import core.database.Database;
 import core.requests.guest.SignUpRequest;
 import core.responses.CoreError;
+import core.support.MutableLong;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +11,11 @@ import java.util.Optional;
 
 public class SignUpValidator {
 
+    private static final String FIELD_USER_ID = "user_id";
     private static final String FIELD_NAME = "name";
     private static final String FIELD_LOGIN_NAME = "login";
     private static final String FIELD_PASSWORD = "password";
+    private static final String ERROR_USER_ID_MISSING = "Error: User id is required.";
     private static final String ERROR_NAME_MISSING = "Error: Name is required.";
     private static final String ERROR_LOGIN_MISSING = "Error: Login name is required.";
     private static final String ERROR_LOGIN_EXISTS = "Error: User with this login name already exists.";
@@ -28,10 +31,17 @@ public class SignUpValidator {
 
     public List<CoreError> validate(SignUpRequest request) {
         errors = new ArrayList<>();
+        validateUserId(request.getUserId()).ifPresent(errors::add);
         validateName(request.getName());
         validateLoginName(request.getLoginName());
         validatePassword(request.getPassword());
         return errors;
+    }
+
+    private Optional<CoreError> validateUserId(MutableLong userId) {
+        return userId == null
+                ? Optional.of(new CoreError(FIELD_USER_ID, ERROR_USER_ID_MISSING))
+                : Optional.empty();
     }
 
     private void validateName(String name) {

@@ -4,6 +4,7 @@ import core.database.Database;
 import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
+import core.support.MutableLong;
 import core.services.exception.ServiceMissingDataException;
 
 import java.util.ArrayList;
@@ -12,8 +13,10 @@ import java.util.Optional;
 
 public class SignInValidator {
 
+    private static final String FIELD_USER_ID = "user_id";
     private static final String FIELD_LOGIN_NAME = "login";
     private static final String FIELD_PASSWORD = "password";
+    private static final String ERROR_USER_ID_MISSING = "Error: User id is required.";
     private static final String ERROR_LOGIN_MISSING = "Error: Login name is required.";
     private static final String ERROR_LOGIN_NOT_EXISTS = "Error: User with this login does not exist.";
     private static final String ERROR_PASSWORD_MISSING = "Error: Password is required.";
@@ -28,12 +31,19 @@ public class SignInValidator {
 
     public List<CoreError> validate(SignInRequest request) {
         errors = new ArrayList<>();
+        validateUserId(request.getUserId()).ifPresent(errors::add);
         validateLoginName(request.getLoginName());
         validatePassword(request.getPassword());
         if (errors.isEmpty()) {
             validatePasswordMatches(request).ifPresent(errors::add);
         }
         return errors;
+    }
+
+    private Optional<CoreError> validateUserId(MutableLong userId) {
+        return userId == null
+                ? Optional.of(new CoreError(FIELD_USER_ID, ERROR_USER_ID_MISSING))
+                : Optional.empty();
     }
 
     private void validateLoginName(String loginName) {

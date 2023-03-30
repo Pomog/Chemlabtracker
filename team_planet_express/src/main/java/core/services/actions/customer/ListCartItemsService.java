@@ -9,7 +9,6 @@ import core.responses.customer.ListCartItemsResponse;
 import core.services.cart.CartService;
 import core.services.exception.ServiceMissingDataException;
 import core.services.validators.customer.ListCartItemValidator;
-import core.support.MutableLong;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,21 +17,15 @@ public class ListCartItemsService {
 
     private final Database database;
     private final ListCartItemValidator validator;
-    private final MutableLong currentUserId;
 
     //TODO constructorize aka mockableize
     //TODO this should not be here to begin with..
     private final CartService cartService;
 
-    public ListCartItemsService(Database database, ListCartItemValidator validator, MutableLong currentUserId) {
+    public ListCartItemsService(Database database, ListCartItemValidator validator) {
         this.database = database;
         this.validator = validator;
-        this.currentUserId = currentUserId;
         this.cartService = new CartService(database);
-    }
-
-    public MutableLong getCurrentUserId() {
-        return currentUserId;
     }
 
     public ListCartItemsResponse execute(ListCartItemsRequest request) {
@@ -40,7 +33,7 @@ public class ListCartItemsService {
         if (!errors.isEmpty()) {
             return new ListCartItemsResponse(errors);
         }
-        Cart cart = getOpenCartForUserId();
+        Cart cart = getOpenCartForUserId(request.getUserId());
         List<CartItem> cartItems = database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId());
         BigDecimal cartTotal = cartService.getSum(cart.getUserId());
         return new ListCartItemsResponse(cartItems, cartTotal);
@@ -48,8 +41,8 @@ public class ListCartItemsService {
 
     //TODO duplicate everywhere
     //TODO WTB Autowired
-    private Cart getOpenCartForUserId() {
-        return database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue())
+    private Cart getOpenCartForUserId(Long userId) {
+        return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 

@@ -6,6 +6,7 @@ import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
 import core.services.exception.ServiceMissingDataException;
+import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -21,6 +22,7 @@ class SignInValidatorTest {
     private final SignInRequest mockRequest = mock(SignInRequest.class);
     private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
     private final User mockUser = mock(User.class);
+    private final MutableLong mockUserId = mock(MutableLong.class);
 
     private final SignInValidator validator = new SignInValidator(mockDatabase);
 
@@ -109,6 +111,7 @@ class SignInValidatorTest {
 
     @Test
     void shouldReturnErrorForWrongPassword() {
+        when(mockRequest.getUserId()).thenReturn(mockUserId);
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("wrong password");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
@@ -132,6 +135,7 @@ class SignInValidatorTest {
 
     @Test
     void shouldReturnNoErrorsForValidInput() {
+        when(mockRequest.getUserId()).thenReturn(mockUserId);
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("password");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
@@ -143,6 +147,7 @@ class SignInValidatorTest {
 
     @Test
     void shouldThrowExceptionForMissingOptional() {
+        when(mockRequest.getUserId()).thenReturn(mockUserId);
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("password");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);

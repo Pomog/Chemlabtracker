@@ -9,7 +9,6 @@ import core.responses.CoreError;
 import core.responses.customer.RemoveItemFromCartResponse;
 import core.services.exception.ServiceMissingDataException;
 import core.services.validators.customer.RemoveItemFromCartValidator;
-import core.support.MutableLong;
 
 import java.util.List;
 
@@ -17,24 +16,19 @@ public class RemoveItemFromCartService {
 
     private final Database database;
     private final RemoveItemFromCartValidator validator;
-    private final MutableLong currentUserId;
 
-    public RemoveItemFromCartService(Database database, RemoveItemFromCartValidator validator, MutableLong currentUserId) {
+    public RemoveItemFromCartService(Database database, RemoveItemFromCartValidator validator) {
         this.database = database;
-        this.currentUserId = currentUserId;
         this.validator = validator;
     }
 
-    public MutableLong getCurrentUserId() {
-        return currentUserId;
-    }
 
     public RemoveItemFromCartResponse execute(RemoveItemFromCartRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new RemoveItemFromCartResponse(errors);
         }
-        Cart cart = getOpenCartForUserId();
+        Cart cart = getOpenCartForUserId(request.getUserId());
         Item item = getItemByName(request.getItemName());
         CartItem cartItem = getCartItemByCartIdAndItemId(cart.getId(), item.getId());
         Integer newAvailableQuantity = item.getAvailableQuantity() + cartItem.getOrderedQuantity();
@@ -45,8 +39,8 @@ public class RemoveItemFromCartService {
 
     //TODO duplicate everywhere
     //TODO WTB Autowired
-    private Cart getOpenCartForUserId() {
-        return database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue())
+    private Cart getOpenCartForUserId(Long userId) {
+        return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
