@@ -21,7 +21,8 @@ public class InMemoryDatabaseImpl implements Database {
         for(Car car:cars){
             if(car.getId().equals(id)){
                 cars.remove(car);
-            }break;
+                return true;
+            }
         }
         return false;
     }

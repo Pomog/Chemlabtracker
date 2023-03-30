@@ -20,8 +20,16 @@ public class RemoveCarUIAction implements UIAction {
         Long carId = Long.parseLong(scanner.nextLine());
         RemoveCarRequest request = new RemoveCarRequest(carId);
         RemoveCarResponse response = removeCarService.execute(request);
-        System.out.println("Your car was removed from list.");
 
+        if (response.hasErrors()) {
+            response.getErrors().forEach(coreError -> System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage()));
+        } else {
+            if (response.isCarRemoved()) {
+                System.out.println("Your car was removed from list.");
+            } else {
+                System.out.println("Your car not removed from list.");
+            }
+        }
 
     }
 }

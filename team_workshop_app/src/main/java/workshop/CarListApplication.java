@@ -1,9 +1,6 @@
 package workshop;
 
-import workshop.console_ui.AddCarUIAction;
-import workshop.console_ui.ExitUIAction;
-import workshop.console_ui.GetAllCarUIAction;
-import workshop.console_ui.RemoveCarUIAction;
+import workshop.console_ui.*;
 import workshop.core.database.Database;
 import workshop.core.database.InMemoryDatabaseImpl;
 import workshop.core.services.AddCarService;
@@ -15,11 +12,13 @@ import java.util.Scanner;
 public class CarListApplication {
     public static void main(String[] args) {
         Database database = new InMemoryDatabaseImpl();
+        PrintMenuUIAction printMenuUIAction = new PrintMenuUIAction();
+        GetUserChoiceUIAction getUserChoiceUIAction = new GetUserChoiceUIAction();
 
 
         while (true) {
-            printMenu();
-            int userChoice = getUserChoice();
+            printMenuUIAction.printMenu();
+            int userChoice = getUserChoiceUIAction.getUserChoice();
             executeSelectedMenuItem(database, userChoice);
         }
     }
@@ -51,30 +50,4 @@ public class CarListApplication {
             }
         }
     }
-
-
-
-
-
-
-
-
-    private static int getUserChoice() {
-        System.out.println("Enter menu item number to execute:");
-        Scanner scanner = new Scanner(System.in);
-        int userChoice = Integer.parseInt(scanner.nextLine());
-        return userChoice;
-    }
-
-    private static void printMenu() {
-        System.out.println("Program menu:");
-        System.out.println("1. Add car to list");
-        System.out.println("2. Delete car from list");
-        System.out.println("3. Show all cars in the list");
-        System.out.println("4. Exit");
-        System.out.println("");
-
-    }
-
-
 }
