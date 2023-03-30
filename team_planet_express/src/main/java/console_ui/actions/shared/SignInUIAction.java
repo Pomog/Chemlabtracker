@@ -19,8 +19,8 @@ public class SignInUIAction extends UIAction {
     private static final String MESSAGE_EXCLAMATION = "!";
 
     private final SignInService signInService;
-    private final UserCommunication userCommunication;
     private final MutableLong currentUserId;
+    private final UserCommunication userCommunication;
 
     public SignInUIAction(SignInService SignInService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUM);
@@ -35,7 +35,7 @@ public class SignInUIAction extends UIAction {
         String login = userCommunication.getInput();
         userCommunication.requestInput(PROMPT_TOPIC_PASSWORD);
         String password = userCommunication.getInput();
-        SignInRequest request = new SignInRequest(login, password, currentUserId);
+        SignInRequest request = new SignInRequest(currentUserId, login, password);
         SignInResponse response = signInService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));

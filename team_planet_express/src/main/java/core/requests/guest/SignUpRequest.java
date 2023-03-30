@@ -6,9 +6,9 @@ import lombok.Value;
 @Value
 public class SignUpRequest {
 
+    MutableLong userId;
     String name;
     String loginName;
     String password;
-    MutableLong userId;
 
 }

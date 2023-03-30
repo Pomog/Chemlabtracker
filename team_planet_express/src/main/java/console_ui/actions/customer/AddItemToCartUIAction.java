@@ -18,9 +18,8 @@ public class AddItemToCartUIAction extends UIAction {
     private static final String MESSAGE_ITEM_ADDED = "Item added to your cart.";
 
     private final AddItemToCartService addItemToCartService;
-    private final UserCommunication userCommunication;
-
     private final MutableLong currentUserId;
+    private final UserCommunication userCommunication;
 
     public AddItemToCartUIAction(AddItemToCartService addItemToCartService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);

@@ -17,8 +17,8 @@ public class RemoveItemFromCartUIAction extends UIAction {
     private static final String MESSAGE_ITEM_REMOVED = "Item removed from your cart.";
 
     private final RemoveItemFromCartService removeItemFromCartService;
-    private final UserCommunication userCommunication;
     private final MutableLong currentUserId;
+    private final UserCommunication userCommunication;
 
 
     public RemoveItemFromCartUIAction(RemoveItemFromCartService removeItemFromCartService, MutableLong currentUserId, UserCommunication userCommunication) {

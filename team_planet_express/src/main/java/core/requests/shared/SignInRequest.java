@@ -6,8 +6,8 @@ import lombok.Value;
 @Value
 public class SignInRequest {
 
+    MutableLong userId;
     String loginName;
     String password;
-    MutableLong userId;
 
 }

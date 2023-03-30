@@ -14,8 +14,8 @@ public class SignOutUIAction extends UIAction {
     private static final int ACCESS_NUM = UserRole.getAccessNumberExclude(UserRole.GUEST);
 
     private final SignOutService signOutService;
-    private final UserCommunication userCommunication;
     private final MutableLong currentUserId;
+    private final UserCommunication userCommunication;
 
     public SignOutUIAction(SignOutService signOutService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUM);

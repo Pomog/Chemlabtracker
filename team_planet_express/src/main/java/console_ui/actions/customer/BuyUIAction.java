@@ -16,8 +16,8 @@ public class BuyUIAction extends UIAction {
     private static final String MESSAGE_CART_IS_CLOSED = "Your cart is closed now.";
 
     private final BuyService buyService;
-    private final UserCommunication userCommunication;
     private final MutableLong currentUserId;
+    private final UserCommunication userCommunication;
 
     public BuyUIAction(BuyService buyService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);

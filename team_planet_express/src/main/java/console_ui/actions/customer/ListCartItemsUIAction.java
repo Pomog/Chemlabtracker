@@ -20,8 +20,8 @@ public class ListCartItemsUIAction extends UIAction {
     private static final String MESSAGE_CART_TOTAL = "Your cart total is: ";
 
     private final ListCartItemsService listCartItemsService;
-    private final UserCommunication userCommunication;
     private final MutableLong currentUserId;
+    private final UserCommunication userCommunication;
 
     public ListCartItemsUIAction(ListCartItemsService listCartItemsService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
