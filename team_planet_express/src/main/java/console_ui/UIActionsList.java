@@ -23,6 +23,7 @@ import core.services.actions.shared.SearchItemService;
 import core.services.actions.shared.SignInService;
 import core.services.actions.shared.SignOutService;
 import core.services.cart.CartValidator;
+import core.services.exception.ServiceMissingDataException;
 import core.services.validators.customer.AddItemToCartValidator;
 import core.services.validators.customer.BuyValidator;
 import core.services.validators.customer.ListCartItemValidator;
@@ -62,11 +63,12 @@ public class UIActionsList {
     }
 
     public String getCurrentUserName() {
-        return database.accessUserDatabase().findById(currentUserId.getValue()).get().getName();
+        return getUserById(currentUserId.getValue()).getName();
     }
 
     private List<UIAction> createUIActionsList() {
         CartValidator cartValidator = new CartValidator(database);
+        SearchItemValidator searchItemValidator = new SearchItemValidator();
         AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, cartValidator);
         RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, cartValidator);
         ListCartItemValidator listCartItemValidator = new ListCartItemValidator(cartValidator);
@@ -77,11 +79,10 @@ public class UIActionsList {
         SignUpValidator signUpValidator = new SignUpValidator(database);
 
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
-        SearchItemService searchItemService = new SearchItemService(database, new SearchItemValidator());
+        SearchItemService searchItemService = new SearchItemService(database, searchItemValidator);
         AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator);
         RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator);
         ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator);
-        //ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator, currentUserId);
         BuyService buyService = new BuyService(database, buyValidator);
         AddItemToShopService addItemToShopService = new AddItemToShopService(database, addItemToShopValidator);
         ChangeItemDataService changeItemDataService = new ChangeItemDataService(database, changeItemDataValidator);
@@ -107,6 +108,11 @@ public class UIActionsList {
         uiActions.add(new ExitUIAction(exitService, userCommunication));
 
         return uiActions;
+    }
+
+    private User getUserById(Long userId) {
+        return database.accessUserDatabase().findById(userId)
+                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }

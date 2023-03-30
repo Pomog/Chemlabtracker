@@ -8,8 +8,6 @@ import core.domain.cart.Cart;
 import core.domain.cart_item.CartItem;
 import core.domain.item.Item;
 import core.requests.customer.AddItemToCartRequest;
-import core.responses.CoreError;
-import core.responses.customer.AddItemToCartResponse;
 import core.services.validators.customer.AddItemToCartValidator;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
@@ -28,16 +26,11 @@ class AddItemToCartServiceTest {
     //TODO Insert CartValidator mock here
 
     private final AddItemToCartRequest mockRequest = mock(AddItemToCartRequest.class);
-    // never used
     private final ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
     private final CartItemDatabase mockCartItemDatabase = mock(CartItemDatabase.class);
     private final CartDatabase mockCartDatabase = mock(CartDatabase.class);
-    private final CartItem mockCartItem = mock(CartItem.class);
     private final Item mockItem = mock(Item.class);
     private final Cart mockCart = mock(Cart.class);
-    private final Optional<Cart> mockOptionalCart = mock(Optional.class);
-    private final Optional<CartItem> mockOptionalCartItem = mock(Optional.class);
-    private final Optional<Item> mockOptionalItem = mock(Optional.class);
 
     private final AddItemToCartService service =
             new AddItemToCartService(mockDatabase, mockValidator);
@@ -60,19 +53,14 @@ class AddItemToCartServiceTest {
         // I guess mock doesn't understand this way of passing an id in this case
         // Probably it does not call anything from here and just expects a call with mockCart.getId() as a parameter
         //when(mockCartDatabase.findOpenCartForUserId(mockCart.getId())).thenReturn(mockOptionalCart);
-        when(mockCartDatabase.findOpenCartForUserId(1L)).thenReturn(mockOptionalCart);
-        when(mockOptionalCart.get()).thenReturn(mockCart);
+        when(mockCartDatabase.findOpenCartForUserId(1L)).thenReturn(Optional.of(mockCart));
 
         when(mockCart.getId()).thenReturn(1L);
-        when(mockCartItemDatabase.findByCartIdAndItemId(1L, 1L)).thenReturn(mockOptionalCartItem);
-        when(mockOptionalCartItem.get()).thenReturn(mockCartItem);
         when(mockDatabase.accessCartItemDatabase()).thenReturn(mockCartItemDatabase);
-        when(mockItemDatabase.findByName("Slurm")).thenReturn(mockOptionalItem);
-        when(mockOptionalItem.get()).thenReturn(mockItem);
+        when(mockItemDatabase.findByName("Slurm")).thenReturn(Optional.of(mockItem));
         when(mockItem.getId()).thenReturn(1L);
-        when(mockOptionalCart.get()).thenReturn(mockCart);
-        when(mockOptionalCartItem.isEmpty()).thenReturn(true);
-        AddItemToCartResponse response = service.execute(mockRequest);
+        when(mockCartItemDatabase.findByCartIdAndItemId(1L, 1L)).thenReturn(Optional.empty());
+        service.execute(mockRequest);
         verify(mockCartItemDatabase).save(new CartItem(1L, 1L, 10));
         // new quantity is -10 without when() for getAvailableQuantity
         verify(mockItemDatabase).changeAvailableQuantity(1L, -10);

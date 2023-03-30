@@ -22,10 +22,10 @@ public class AddUserService {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new AddUserResponse(errors);
+        }else{
+            User user = new User(request.getUsername(), request.getPassword());
+            database.add(user);
+            return new AddUserResponse(user);
         }
-
-        User user = new User(request.getUsername(), request.getPassword());
-        database.registerNewUser(user);
-        return new AddUserResponse(user);
     }
 }

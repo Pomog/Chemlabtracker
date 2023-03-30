@@ -13,16 +13,16 @@ public class UserListApplication {
 
     private static Database database = new InMemoryDatabaseImpl();
     private static AddUserValidator addUserValidator = new AddUserValidator();
-    private static ValidateUserValidator validateUserValidator = new ValidateUserValidator();
+    private static LoginUserValidator loginUserValidator = new LoginUserValidator();
     private static AddUserService addUserService = new AddUserService(database, addUserValidator);
-    private static ValidateUserService validateUserService = new ValidateUserService(database, validateUserValidator);
+    private static LoginUserService loginUserService = new LoginUserService(database, loginUserValidator);
     private static RemoveUserValidator removeUserValidator = new RemoveUserValidator();
     private static RemoveUserService removeUserService = new RemoveUserService(database, removeUserValidator);
     private static GetAllUsersService getUsersService = new GetAllUsersService(database);
 
 
     private static UIAction addUserUIAction = new AddUserUIAction(addUserService);
-    private static UIAction validateUserUIAction = new ValidateUserUIAction(validateUserService);
+    private static UIAction loginUserUIAction = new LoginUserUIAction(loginUserService);
     private static UIAction removeUserUIAction = new RemoveUserUIAction(removeUserService);
     private static UIAction getAllUsersUIAction = new GetAllUsersUIAction(getUsersService);
 
@@ -60,7 +60,7 @@ public class UserListApplication {
 
         switch (selectedMenu) {
             case 1 -> addUserUIAction.execute();
-            case 2 -> validateUserUIAction.execute();
+            case 2 -> loginUserUIAction.execute();
             case 3 -> removeUserUIAction.execute();
             case 4 -> getAllUsersUIAction.execute();
             case 5 -> exitUIAction.execute();

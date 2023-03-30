@@ -1,0 +1,15 @@
+Удалите из класса BookListApplication код создания объектов:
+
+	private static Database vehicleDatabase = new InMemoryDatabaseImpl();
+	private static AddBookValidator addBookValidator = new AddBookValidator();
+	private static AddBookService addBookService = new AddBookService(vehicleDatabase, addBookValidator);
+	private static RemoveBookService removeBookService = new RemoveBookService(vehicleDatabase);
+	private static GetAllBooksService getAllBooksService = new GetAllBooksService(vehicleDatabase);
+	private static UIAction addBookUIAction = new AddBookUIAction(addBookService);
+	private static UIAction removeBookUIAction = new RemoveBookUIAction(removeBookService);
+	private static UIAction getAllBooksUIAction = new GetAllBooksUIAction(getAllBooksService);
+	private static UIAction exitUIAction = new ExitUIAction();
+
+В самом начале main() метода создавайте инстанцию класса
+ApplicationContext и в дальнейшем для получения инстанций
+ui action классов пользуйтесь методом applicationContext.getBean().

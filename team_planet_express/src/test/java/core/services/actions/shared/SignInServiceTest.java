@@ -6,6 +6,7 @@ import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
 import core.responses.shared.SignInResponse;
+import core.services.exception.ServiceMissingDataException;
 import core.services.validators.shared.SignInValidator;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -70,6 +70,15 @@ class SignInServiceTest {
         when(mockUserDatabase.findByLogin("login")).thenReturn(Optional.of(mockUser));
         service.execute(mockRequest);
         verify(mockCurrentUserId).setValue(any(Long.class));
+    }
+
+    @Test
+    void shouldThrowExceptionForMissingOptional() {
+        when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
+        when(mockRequest.getLoginName()).thenReturn("login");
+        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+        when(mockUserDatabase.findByLogin("login")).thenReturn(Optional.empty());
+        assertThrows(ServiceMissingDataException.class, () -> service.execute(mockRequest));
     }
 
 }

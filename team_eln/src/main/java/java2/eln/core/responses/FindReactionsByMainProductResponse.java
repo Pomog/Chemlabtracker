@@ -1,8 +1,9 @@
 package java2.eln.core.responses;
+import java2.eln.core.responses.errorPattern.CoreResponse;
 import java2.eln.domain.ReactionData;
 import java.util.List;
 
-public class FindReactionsByMainProductResponse extends CoreResponse{
+public class FindReactionsByMainProductResponse extends CoreResponse {
     List<ReactionData> searchingResults;
 
     public FindReactionsByMainProductResponse(List<ReactionData> searchingResults) {

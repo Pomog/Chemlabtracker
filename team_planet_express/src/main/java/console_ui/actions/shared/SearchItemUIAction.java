@@ -16,8 +16,8 @@ public class SearchItemUIAction extends UIAction {
     private static final String PROMPT_TOPIC_PRICE = "item price for search: ";
 
 
-    private static final String MESSAGE_SEARCH_SUCCESS = "Founded items: ";
-    private static final String MESSAGE_NOT_FOUND = "Not founded item with such parameters";
+    private static final String MESSAGE_SEARCH_SUCCESS = "Search results:";
+    private static final String MESSAGE_NOT_FOUND = "No items matched search parameters.";
 
 
     private final SearchItemService searchItemService;

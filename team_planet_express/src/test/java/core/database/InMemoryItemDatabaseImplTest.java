@@ -91,4 +91,6 @@ class InMemoryItemDatabaseImplTest {
         assertEquals(1, idAfter - idBefore);
     }
 
+    //TODO tests for searches
+
 }
