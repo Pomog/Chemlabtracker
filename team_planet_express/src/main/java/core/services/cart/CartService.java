@@ -22,6 +22,7 @@ public class CartService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    //TODO yeet, duplicate
     private Item getItemById(Long itemId) {
         return database.accessItemDatabase().findById(itemId)
                 .orElseThrow(ServiceMissingDataException::new);

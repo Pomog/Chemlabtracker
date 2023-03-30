@@ -15,12 +15,10 @@ public class SignUpService {
 
     private final Database database;
     private final SignUpValidator validator;
-    private final MutableLong currentUserId;
 
-    public SignUpService(Database database, SignUpValidator validator, MutableLong currentUserId) {
+    public SignUpService(Database database, SignUpValidator validator) {
         this.database = database;
         this.validator = validator;
-        this.currentUserId = currentUserId;
     }
 
     public SignUpResponse execute(SignUpRequest request) {
@@ -32,7 +30,7 @@ public class SignUpService {
         String loginName = request.getLoginName();
         String password = request.getPassword();
         User createdUser = database.accessUserDatabase().save(new User(name, loginName, password, UserRole.CUSTOMER));
-        currentUserId.setValue(createdUser.getId());
+        request.getUserId().setValue(createdUser.getId());
         return new SignUpResponse(createdUser);
     }
 

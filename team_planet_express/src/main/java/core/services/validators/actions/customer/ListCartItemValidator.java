@@ -17,6 +17,7 @@ public class ListCartItemValidator {
 
     public List<CoreError> validate(ListCartItemsRequest request) {
         List<CoreError> errors = new ArrayList<>();
+        //TODO validate id
         cartValidator.validateOpenCartExistsForUserId(request.getUserId()).ifPresent(errors::add);
         return errors;
     }

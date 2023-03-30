@@ -10,7 +10,6 @@ public class SearchItemResponse extends CoreResponse {
 
     private final List<Item> items;
 
-    //why does this have items in constructor?
     public SearchItemResponse(List<Item> items, List<CoreError> errors) {
         super(errors);
         this.items = items;

@@ -6,6 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.guest.SignUpRequest;
 import core.responses.guest.SignUpResponse;
 import core.services.actions.guest.SignUpService;
+import core.support.MutableLong;
 
 public class SignUpUIAction extends UIAction {
 
@@ -19,11 +20,13 @@ public class SignUpUIAction extends UIAction {
     private static final String MESSAGE_EXCLAMATION = "!";
 
     private final SignUpService signUpService;
+    private final MutableLong currentUserId;
     private final UserCommunication userCommunication;
 
-    public SignUpUIAction(SignUpService signUpService, UserCommunication userCommunication) {
+    public SignUpUIAction(SignUpService signUpService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.signUpService = signUpService;
+        this.currentUserId = currentUserId;
         this.userCommunication = userCommunication;
     }
 
@@ -35,12 +38,12 @@ public class SignUpUIAction extends UIAction {
         String login = userCommunication.getInput();
         userCommunication.requestInput(PROMPT_TOPIC_PASSWORD);
         String password = userCommunication.getInput();
-        SignUpRequest request = new SignUpRequest(name, login, password);
+        SignUpRequest request = new SignUpRequest(currentUserId, name, login, password);
         SignUpResponse response = signUpService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));
         } else {
-            //TODO there must be a better way..
+            //TODO there must be a better way of composing strings
             userCommunication.informUser(MESSAGE_USER_CREATED + response.getUser().getName() + MESSAGE_EXCLAMATION);
 
         }

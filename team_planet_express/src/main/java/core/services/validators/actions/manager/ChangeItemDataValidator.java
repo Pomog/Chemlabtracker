@@ -118,6 +118,7 @@ public class ChangeItemDataValidator {
                 : Optional.empty();
     }
 
+    //TODO yeet, duplicate
     private Item getItemById(Long itemId) {
         return database.accessItemDatabase().findById(itemId)
                 .orElseThrow(ServiceMissingDataException::new);

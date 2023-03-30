@@ -4,4 +4,5 @@ userRole madness from Q&A (many roles for an action)
 yeet lombok @Data from domain, make @Getter
 method newUser: user + cart
 explode all the validators
-listCartItem name
+listCartItem name of item
+input requests into its own method

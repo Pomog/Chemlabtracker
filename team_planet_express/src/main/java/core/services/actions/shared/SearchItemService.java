@@ -23,12 +23,10 @@ public class SearchItemService {
     public SearchItemResponse execute(SearchItemRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
-            //null? o.0
             return new SearchItemResponse(null, errors);
         }
         List<Item> items;
         //Those are all wrong
-        //That's what tests are for..
         //It just dies with a NumberFormatException when there is no price
         //Why no request.getItemName() != null ? current one looks weird and unnecessary convoluted
         //it also allows for blank name
@@ -40,12 +38,11 @@ public class SearchItemService {
         } else {
             items = database.accessItemDatabase().getAllItems();
         }
-        //why null?
-        //we do not pass null in any other service..
         return new SearchItemResponse(items, null);
     }
 
     private boolean isPresent(String value) {
         return value != null && !value.isBlank();
     }
+
 }

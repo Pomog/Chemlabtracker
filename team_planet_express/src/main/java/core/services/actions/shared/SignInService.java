@@ -15,12 +15,10 @@ public class SignInService {
 
     private final Database database;
     private final SignInValidator validator;
-    private final MutableLong currentUserId;
 
-    public SignInService(Database database, SignInValidator validator, MutableLong currentUserId) {
+    public SignInService(Database database, SignInValidator validator) {
         this.database = database;
         this.validator = validator;
-        this.currentUserId = currentUserId;
     }
 
     public SignInResponse execute(SignInRequest request) {
@@ -29,10 +27,11 @@ public class SignInService {
             return new SignInResponse(errors);
         }
         User newUser = getUserByLoginName(request.getLoginName());
-        currentUserId.setValue(newUser.getId());
+        request.getUserId().setValue(newUser.getId());
         return new SignInResponse(newUser);
     }
 
+    //TODO yeet, duplicate
     private User getUserByLoginName(String login) {
         return database.accessUserDatabase().findByLogin(login)
                 .orElseThrow(ServiceMissingDataException::new);

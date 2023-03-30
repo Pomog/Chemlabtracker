@@ -18,16 +18,10 @@ public class AddItemToCartService {
 
     private final Database database;
     private final AddItemToCartValidator validator;
-    private final MutableLong currentUserId;
 
-    public AddItemToCartService(Database database, AddItemToCartValidator validator, MutableLong currentUserId) {
+    public AddItemToCartService(Database database, AddItemToCartValidator validator) {
         this.database = database;
         this.validator = validator;
-        this.currentUserId = currentUserId;
-    }
-
-    public MutableLong getCurrentUserId() {
-        return currentUserId;
     }
 
     public AddItemToCartResponse execute(AddItemToCartRequest request) {
@@ -35,7 +29,7 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = getOpenCartForUserId();
+        Cart cart = getOpenCartForUserId(request.getUserId());
         Item item = getItemByName(request.getItemName());
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         addItemToCart(cart, item, orderedQuantity);
@@ -58,13 +52,13 @@ public class AddItemToCartService {
         database.accessItemDatabase().changeAvailableQuantity(item.getId(), newAvailableQuantity);
     }
 
-    //TODO duplicate everywhere
-    //TODO WTB Autowired
-    private Cart getOpenCartForUserId() {
-        return database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue())
+    //TODO yeet, duplicate
+    private Cart getOpenCartForUserId(Long userId) {
+        return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
+    //TODO yeet, duplicate
     private Item getItemByName(String itemName) {
         return database.accessItemDatabase().findByName(itemName)
                 .orElseThrow(ServiceMissingDataException::new);

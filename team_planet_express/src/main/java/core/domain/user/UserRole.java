@@ -2,12 +2,11 @@ package core.domain.user;
 
 public enum UserRole {
 
-    BANNED(0, "Banned"),
     GUEST(1, "Guest"),
     CUSTOMER(2, "Customer"),
     MANAGER(4, "Manager"),
     ADMIN(8, "Admin"),
-    ALLUSERS(Integer.MAX_VALUE, "GOD");
+    ALL_USERS(Integer.MAX_VALUE, "GOD");
 
     private final int role;
     private final String defaultName;
@@ -34,7 +33,7 @@ public enum UserRole {
     }
 
     public static int getAccessNumberExclude(UserRole... roles) {
-        int result = UserRole.ALLUSERS.getRoleNumber();
+        int result = UserRole.ALL_USERS.getRoleNumber();
         for (UserRole role : roles) {
             result -= role.getRoleNumber();
         }

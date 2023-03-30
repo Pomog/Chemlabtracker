@@ -15,7 +15,6 @@ public class UIMenu {
     private final UIActionsList uiActionsList;
     private final UserCommunication userCommunication;
 
-
     public UIMenu(UIActionsList uiActionsList, UserCommunication userCommunication) {
         this.uiActionsList = uiActionsList;
         this.userCommunication = userCommunication;
@@ -25,7 +24,6 @@ public class UIMenu {
         while (true) {
             userCommunication.informUser(LOGIN_INFO + uiActionsList.getCurrentUserName() + EXCLAMATION);
             userCommunication.informUser(MENU_HEADER);
-            //TODO get role here maybe ?
             List<UIAction> uiActionsListForUserRole = uiActionsList.getUIActionsListForUserRole();
             for (int i = 0; i < uiActionsListForUserRole.size(); i++) {
                 userCommunication.informUser(i + 1 + ". " + uiActionsListForUserRole.get(i).getActionName());

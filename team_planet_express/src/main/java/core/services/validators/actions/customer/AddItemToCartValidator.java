@@ -30,6 +30,7 @@ public class AddItemToCartValidator {
 
     public List<CoreError> validate(AddItemToCartRequest request) {
         List<CoreError> errors = new ArrayList<>();
+        //TODO validate id
         cartValidator.validateOpenCartExistsForUserId(request.getUserId()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateItemNameExistsInShop(request).ifPresent(errors::add);
@@ -69,6 +70,7 @@ public class AddItemToCartValidator {
                 : Optional.empty();
     }
 
+    //TODO yeet, duplicate
     private Item getItemByName(String itemName) {
         return database.accessItemDatabase().findByName(itemName)
                 .orElseThrow(ServiceMissingDataException::new);

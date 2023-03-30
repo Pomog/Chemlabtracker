@@ -65,27 +65,23 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
         return shopItems;
     }
 
-    //Method names should not start with capital letters
-    //I would call params as nameToSearch etc.
-    //Tests missing
     @Override
-    public List<Item> searchByName(String itemName) {
-        //why do you format this in such a weird way?
-        return shopItems.stream().filter(
-                //What's the subSequence for?
-                item -> item.getName().contains(itemName.subSequence(0, itemName.length()))
-        ).collect(Collectors.toList());
+    public List<Item> searchByName(String itemNameToSearch) {
+        return shopItems.stream()
+                .filter(item -> item.getName().contains(itemNameToSearch))
+                //TODO is it really necessary?
+                //.filter(item -> item.getName().contains(itemNameToSearch.subSequence(0, itemNameToSearch.length())))
+                .collect(Collectors.toList());
     }
 
-    //Tests missing
     @Override
-    public List<Item> searchByNameAndPrice(String itemName, BigDecimal price) {
-        return shopItems.stream().filter(
-                item -> item.getName().contains(itemName.subSequence(0, itemName.length())) &&
-                        item.getPrice().equals(price)
-        ).collect(Collectors.toList());
-
+    public List<Item> searchByNameAndPrice(String itemNameToSearch, BigDecimal priceToSearch) {
+        return shopItems.stream()
+                .filter(item -> item.getName().contains(itemNameToSearch) &&
+                        //TODO sus subsequence
+                        //.filter(item -> item.getName().contains(itemNameToSearch.subSequence(0, itemNameToSearch.length())) &&
+                        item.getPrice().equals(priceToSearch))
+                .collect(Collectors.toList());
     }
-
 
 }

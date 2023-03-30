@@ -5,6 +5,7 @@ import core.database.UserDatabase;
 import core.domain.user.User;
 import core.requests.guest.SignUpRequest;
 import core.responses.CoreError;
+import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -20,6 +21,7 @@ class SignUpValidatorTest {
     private final Database mockDatabase = mock(Database.class);
     private final SignUpRequest mockRequest = mock(SignUpRequest.class);
     private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
+    private final MutableLong mockUserId = mock(MutableLong.class);
     private final User mockUser = mock(User.class);
 
     private final SignUpValidator validator = new SignUpValidator(mockDatabase);
@@ -164,6 +166,7 @@ class SignUpValidatorTest {
 
     @Test
     void shouldReturnNoErrorsForValidInput() {
+        when(mockRequest.getUserId()).thenReturn(mockUserId);
         when(mockRequest.getName()).thenReturn("name");
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("pas");
