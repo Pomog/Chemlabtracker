@@ -1,13 +1,12 @@
 package workshop;
 
 import workshop.console_ui.*;
+import workshop.core.services.AddCarValidator;
 import workshop.core.database.Database;
 import workshop.core.database.InMemoryDatabaseImpl;
 import workshop.core.services.AddCarService;
 import workshop.core.services.GetAllCarService;
 import workshop.core.services.RemoveCarService;
-
-import java.util.Scanner;
 
 public class CarListApplication {
     public static void main(String[] args) {
@@ -17,7 +16,7 @@ public class CarListApplication {
 
 
         while (true) {
-            printMenuUIAction.printMenu();
+            printMenuUIAction.execute();
             int userChoice = getUserChoiceUIAction.getUserChoice();
             executeSelectedMenuItem(database, userChoice);
         }

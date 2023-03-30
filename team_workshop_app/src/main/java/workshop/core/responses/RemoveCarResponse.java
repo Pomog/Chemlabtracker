@@ -1,8 +1,5 @@
 package workshop.core.responses;
 
-import workshop.CoreError;
-import workshop.CoreResponse;
-
 import java.util.List;
 
 public class RemoveCarResponse extends CoreResponse {

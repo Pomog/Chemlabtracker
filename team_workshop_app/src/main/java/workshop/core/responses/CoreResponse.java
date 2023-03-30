@@ -1,4 +1,4 @@
-package workshop;
+package workshop.core.responses;
 
 import java.util.List;
 

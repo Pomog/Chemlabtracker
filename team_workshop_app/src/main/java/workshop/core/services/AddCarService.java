@@ -1,7 +1,6 @@
 package workshop.core.services;
 
-import workshop.AddCarValidator;
-import workshop.CoreError;
+import workshop.core.responses.CoreError;
 import workshop.core.requests.AddCarRequest;
 import workshop.core.responses.AddCarResponse;
 import workshop.Car;

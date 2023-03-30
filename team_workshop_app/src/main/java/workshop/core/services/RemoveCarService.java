@@ -1,6 +1,6 @@
 package workshop.core.services;
 
-import workshop.CoreError;
+import workshop.core.responses.CoreError;
 import workshop.core.requests.RemoveCarRequest;
 import workshop.core.responses.RemoveCarResponse;
 import workshop.core.database.Database;

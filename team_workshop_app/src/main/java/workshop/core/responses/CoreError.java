@@ -1,4 +1,4 @@
-package workshop;
+package workshop.core.responses;
 
 public class CoreError {
     private String field;

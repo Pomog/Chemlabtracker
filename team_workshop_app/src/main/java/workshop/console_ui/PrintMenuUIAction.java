@@ -1,7 +1,8 @@
 package workshop.console_ui;
 
-public class PrintMenuUIAction {
-     public void printMenu() {
+public class PrintMenuUIAction  implements UIAction{
+    @Override
+     public void execute() {
         System.out.println("Program menu:");
         System.out.println("1. Add car to list");
         System.out.println("2. Delete car from list");

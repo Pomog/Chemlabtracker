@@ -1,5 +1,6 @@
-package workshop;
+package workshop.core.services;
 
+import workshop.core.responses.CoreError;
 import workshop.core.requests.AddCarRequest;
 
 import java.util.ArrayList;

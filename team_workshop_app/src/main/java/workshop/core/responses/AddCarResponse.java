@@ -1,8 +1,6 @@
 package workshop.core.responses;
 
 import workshop.Car;
-import workshop.CoreError;
-import workshop.CoreResponse;
 
 import java.util.List;
 
