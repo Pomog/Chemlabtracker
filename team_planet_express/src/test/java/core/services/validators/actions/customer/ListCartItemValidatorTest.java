@@ -1,4 +1,4 @@
-package core.services.validators.customer;
+package core.services.validators.actions.customer;
 
 class ListCartItemValidatorTest {
 

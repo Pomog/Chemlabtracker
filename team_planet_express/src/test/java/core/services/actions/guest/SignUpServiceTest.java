@@ -7,7 +7,7 @@ import core.domain.user.UserRole;
 import core.requests.guest.SignUpRequest;
 import core.responses.CoreError;
 import core.responses.guest.SignUpResponse;
-import core.services.validators.guest.SignUpValidator;
+import core.services.validators.actions.guest.SignUpValidator;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 

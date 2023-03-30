@@ -5,7 +5,7 @@ import core.database.ItemDatabase;
 import core.requests.manager.ChangeItemDataRequest;
 import core.responses.CoreError;
 import core.responses.manager.ChangeItemDataResponse;
-import core.services.validators.manager.ChangeItemDataValidator;
+import core.services.validators.actions.manager.ChangeItemDataValidator;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

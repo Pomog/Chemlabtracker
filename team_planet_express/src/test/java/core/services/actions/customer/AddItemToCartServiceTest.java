@@ -10,7 +10,7 @@ import core.domain.item.Item;
 import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.AddItemToCartResponse;
-import core.services.validators.customer.AddItemToCartValidator;
+import core.services.validators.actions.customer.AddItemToCartValidator;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package core.services.validators.manager;
+package core.services.validators.actions.manager;
 
 import core.database.Database;
 import core.requests.manager.AddItemToShopRequest;
@@ -60,6 +60,7 @@ public class AddItemToShopValidator {
         validateQuantityIsNotDecimal(availableQuantity).ifPresent(errors::add);
     }
 
+    //TODO nuke
     private Optional<CoreError> validateIsPresent(String value, String field, String errorMessage) {
         return (value == null || value.isBlank())
                 ? Optional.of(new CoreError(field, errorMessage))

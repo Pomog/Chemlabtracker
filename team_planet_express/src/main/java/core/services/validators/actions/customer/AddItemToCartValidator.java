@@ -1,9 +1,9 @@
-package core.services.validators.customer;
+package core.services.validators.actions.customer;
 
 import core.database.Database;
 import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
-import core.services.cart.CartValidator;
+import core.services.validators.cart.CartValidator;
 
 import java.util.ArrayList;
 import java.util.List;

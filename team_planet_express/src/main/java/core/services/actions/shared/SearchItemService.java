@@ -5,7 +5,7 @@ import core.domain.item.Item;
 import core.requests.shared.SearchItemRequest;
 import core.responses.CoreError;
 import core.responses.shared.SearchItemResponse;
-import core.services.validators.shared.SearchItemValidator;
+import core.services.validators.actions.shared.SearchItemValidator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

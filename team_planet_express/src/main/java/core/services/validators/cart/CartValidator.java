@@ -1,4 +1,4 @@
-package core.services.cart;
+package core.services.validators.cart;
 
 import core.database.Database;
 import core.responses.CoreError;

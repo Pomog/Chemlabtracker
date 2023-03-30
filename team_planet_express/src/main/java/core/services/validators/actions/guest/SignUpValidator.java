@@ -1,4 +1,4 @@
-package core.services.validators.guest;
+package core.services.validators.actions.guest;
 
 import core.database.Database;
 import core.requests.guest.SignUpRequest;

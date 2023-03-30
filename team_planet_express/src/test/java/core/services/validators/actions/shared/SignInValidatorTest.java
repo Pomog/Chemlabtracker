@@ -1,4 +1,4 @@
-package core.services.validators.shared;
+package core.services.validators.actions.shared;
 
 import core.database.Database;
 import core.database.UserDatabase;

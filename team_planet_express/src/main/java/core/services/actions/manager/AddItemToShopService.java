@@ -5,7 +5,7 @@ import core.domain.item.Item;
 import core.requests.manager.AddItemToShopRequest;
 import core.responses.CoreError;
 import core.responses.manager.AddItemToShopResponse;
-import core.services.validators.manager.AddItemToShopValidator;
+import core.services.validators.actions.manager.AddItemToShopValidator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

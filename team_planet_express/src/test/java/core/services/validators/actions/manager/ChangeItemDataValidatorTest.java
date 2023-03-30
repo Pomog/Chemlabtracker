@@ -1,4 +1,4 @@
-package core.services.validators.manager;
+package core.services.validators.actions.manager;
 
 import core.database.Database;
 import core.database.ItemDatabase;

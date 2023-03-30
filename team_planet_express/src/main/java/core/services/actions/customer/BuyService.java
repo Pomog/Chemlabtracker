@@ -6,7 +6,7 @@ import core.domain.cart.CartStatus;
 import core.requests.customer.BuyRequest;
 import core.responses.CoreError;
 import core.responses.customer.BuyResponse;
-import core.services.validators.customer.BuyValidator;
+import core.services.validators.actions.customer.BuyValidator;
 import core.support.MutableLong;
 
 import java.time.LocalDate;
