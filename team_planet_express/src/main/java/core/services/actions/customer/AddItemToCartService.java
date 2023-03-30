@@ -28,7 +28,7 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = getOpenCartForUserId();
+        Cart cart = getOpenCartForUserId(request.getUserId());
         Item item = getItemByName(request.getItemName());
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         addItemToCart(cart, item, orderedQuantity);
@@ -53,8 +53,8 @@ public class AddItemToCartService {
 
     //TODO duplicate everywhere
     //TODO WTB Autowired
-    private Cart getOpenCartForUserId() {
-        return database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue())
+    private Cart getOpenCartForUserId(Long userId) {
+        return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 

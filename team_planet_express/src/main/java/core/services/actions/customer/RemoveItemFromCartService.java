@@ -28,7 +28,7 @@ public class RemoveItemFromCartService {
         if (!errors.isEmpty()) {
             return new RemoveItemFromCartResponse(errors);
         }
-        Cart cart = getOpenCartForUserId();
+        Cart cart = getOpenCartForUserId(request.getUserId());
         Item item = getItemByName(request.getItemName());
         CartItem cartItem = getCartItemByCartIdAndItemId(cart.getId(), item.getId());
         Integer newAvailableQuantity = item.getAvailableQuantity() + cartItem.getOrderedQuantity();
@@ -39,8 +39,8 @@ public class RemoveItemFromCartService {
 
     //TODO duplicate everywhere
     //TODO WTB Autowired
-    private Cart getOpenCartForUserId() {
-        return database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue())
+    private Cart getOpenCartForUserId(Long userId) {
+        return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 

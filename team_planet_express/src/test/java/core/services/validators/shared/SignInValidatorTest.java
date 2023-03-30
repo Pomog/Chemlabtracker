@@ -5,8 +5,8 @@ import core.database.UserDatabase;
 import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
-import core.support.MutableLong;
 import core.services.exception.ServiceMissingDataException;
+import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -147,6 +147,7 @@ class SignInValidatorTest {
 
     @Test
     void shouldThrowExceptionForMissingOptional() {
+        when(mockRequest.getUserId()).thenReturn(mockUserId);
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("password");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);

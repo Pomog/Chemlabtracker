@@ -28,7 +28,7 @@ public class BuyService {
         if (!errors.isEmpty()) {
             return new BuyResponse(errors);
         }
-        Cart cart = getOpenCartForUserId();
+        Cart cart = getOpenCartForUserId(request.getUserId());
         database.accessCartDatabase().changeCartStatus(cart.getId(), CartStatus.CLOSED);
         database.accessCartDatabase().changeLastActionDate(cart.getId(), LocalDate.now());
         return new BuyResponse();
@@ -36,8 +36,8 @@ public class BuyService {
 
     //TODO duplicate everywhere
     //TODO WTB Autowired
-    private Cart getOpenCartForUserId() {
-        return database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue())
+    private Cart getOpenCartForUserId(Long userId) {
+        return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
