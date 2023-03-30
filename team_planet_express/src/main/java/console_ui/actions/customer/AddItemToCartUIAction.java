@@ -24,8 +24,8 @@ public class AddItemToCartUIAction extends UIAction {
     public AddItemToCartUIAction(AddItemToCartService addItemToCartService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.addItemToCartService = addItemToCartService;
-        this.userCommunication = userCommunication;
         this.currentUserId = currentUserId;
+        this.userCommunication = userCommunication;
     }
 
     @Override

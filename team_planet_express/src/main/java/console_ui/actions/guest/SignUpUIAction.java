@@ -26,8 +26,8 @@ public class SignUpUIAction extends UIAction {
     public SignUpUIAction(SignUpService signUpService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.signUpService = signUpService;
-        this.userCommunication = userCommunication;
         this.currentUserId = currentUserId;
+        this.userCommunication = userCommunication;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class SignUpUIAction extends UIAction {
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));
         } else {
-            //TODO there must be a better way..
+            //TODO there must be a better way of composing strings
             userCommunication.informUser(MESSAGE_USER_CREATED + response.getUser().getName() + MESSAGE_EXCLAMATION);
 
         }

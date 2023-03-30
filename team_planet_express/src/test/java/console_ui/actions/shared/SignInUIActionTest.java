@@ -20,12 +20,11 @@ import static org.mockito.Mockito.*;
 class SignInUIActionTest {
 
     private final SignInService mockSignInService = mock(SignInService.class);
+    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
     private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
     private final SignInResponse mockSignInResponse = mock(SignInResponse.class);
-    private final CoreError mockCoreError = mock(CoreError.class);
     private final User mockUser = mock(User.class);
-    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
-
+    private final CoreError mockCoreError = mock(CoreError.class);
 
     private final SignInUIAction action =
             new SignInUIAction(mockSignInService, mockCurrentUserId, mockUserCommunication);

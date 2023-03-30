@@ -17,12 +17,8 @@ public class Shop {
         new FakeDatabaseInitializer(database).initialize();
 
         User currentUser;
-        //TODO yeet aka for quicker tests
+        //TODO for tests, should be GUEST by default
         UserRole currentRole = UserRole.GUEST;
-//        UserRole currentRole = UserRole.CUSTOMER;
-//        UserRole currentRole = UserRole.MANAGER;
-//        UserRole currentRole = UserRole.ADMIN;
-//        UserRole currentRole = UserRole.ALLUSERS;
         Optional<User> user = database.accessUserDatabase().findByRole(currentRole);
         currentUser = user.orElseGet(() ->
                 database.accessUserDatabase().save(new User(currentRole.getDefaultName(), "", "", currentRole)));

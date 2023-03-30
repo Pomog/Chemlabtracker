@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public class SignUpValidator {
 
+    //TODO userId ?
     private static final String FIELD_USER_ID = "user_id";
     private static final String FIELD_NAME = "name";
     private static final String FIELD_LOGIN_NAME = "login";

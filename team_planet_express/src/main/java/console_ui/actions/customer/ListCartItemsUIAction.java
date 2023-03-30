@@ -26,8 +26,8 @@ public class ListCartItemsUIAction extends UIAction {
     public ListCartItemsUIAction(ListCartItemsService listCartItemsService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.listCartItemsService = listCartItemsService;
-        this.userCommunication = userCommunication;
         this.currentUserId = currentUserId;
+        this.userCommunication = userCommunication;
     }
 
     @Override

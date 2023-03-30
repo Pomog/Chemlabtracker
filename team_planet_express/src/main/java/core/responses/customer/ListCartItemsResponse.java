@@ -8,16 +8,18 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class ListCartItemsResponse extends CoreResponse {
+
     private List<CartItem> cartItems;
     private BigDecimal cartTotal;
 
-    public ListCartItemsResponse(List<CoreError> errors) {
-        super(errors);
-    }
-
     public ListCartItemsResponse(List<CartItem> cartItems, BigDecimal cartTotal) {
         this.cartItems = cartItems;
+        //TODO cartTotal needs another place to call home
         this.cartTotal = cartTotal;
+    }
+
+    public ListCartItemsResponse(List<CoreError> errors) {
+        super(errors);
     }
 
     public List<CartItem> getCartItems() {
@@ -27,4 +29,5 @@ public class ListCartItemsResponse extends CoreResponse {
     public BigDecimal getCartTotal() {
         return cartTotal;
     }
+
 }

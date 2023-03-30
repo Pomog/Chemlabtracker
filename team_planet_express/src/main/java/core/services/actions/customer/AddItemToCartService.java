@@ -51,13 +51,13 @@ public class AddItemToCartService {
         database.accessItemDatabase().changeAvailableQuantity(item.getId(), newAvailableQuantity);
     }
 
-    //TODO duplicate everywhere
-    //TODO WTB Autowired
+    //TODO yeet, duplicate
     private Cart getOpenCartForUserId(Long userId) {
         return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
+    //TODO yeet, duplicate
     private Item getItemByName(String itemName) {
         return database.accessItemDatabase().findByName(itemName)
                 .orElseThrow(ServiceMissingDataException::new);

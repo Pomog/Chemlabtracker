@@ -10,12 +10,12 @@ public class SignInResponse extends CoreResponse {
 
     private User user;
 
-    public SignInResponse(List<CoreError> errors) {
-        super(errors);
-    }
-
     public SignInResponse(User user) {
         this.user = user;
+    }
+
+    public SignInResponse(List<CoreError> errors) {
+        super(errors);
     }
 
     public User getUser() {

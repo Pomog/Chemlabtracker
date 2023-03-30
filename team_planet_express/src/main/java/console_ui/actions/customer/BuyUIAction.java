@@ -22,8 +22,8 @@ public class BuyUIAction extends UIAction {
     public BuyUIAction(BuyService buyService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.buyService = buyService;
-        this.userCommunication = userCommunication;
         this.currentUserId = currentUserId;
+        this.userCommunication = userCommunication;
     }
 
     @Override

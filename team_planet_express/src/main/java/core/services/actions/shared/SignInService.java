@@ -30,6 +30,7 @@ public class SignInService {
         return new SignInResponse(newUser);
     }
 
+    //TODO yeet, duplicate
     private User getUserByLoginName(String login) {
         return database.accessUserDatabase().findByLogin(login)
                 .orElseThrow(ServiceMissingDataException::new);

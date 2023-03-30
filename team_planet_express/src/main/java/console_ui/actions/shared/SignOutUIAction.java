@@ -9,9 +9,11 @@ import core.services.actions.shared.SignOutService;
 import core.support.MutableLong;
 
 public class SignOutUIAction extends UIAction {
+
     private static final String ACTION_NAME = "Sign out";
-    private static final String MESSAGE_SIGNOUT = "Sign out is successful";
     private static final int ACCESS_NUM = UserRole.getAccessNumberExclude(UserRole.GUEST);
+
+    private static final String MESSAGE_SIGNED_OUT = "Signed out.";
 
     private final SignOutService signOutService;
     private final MutableLong currentUserId;
@@ -20,10 +22,9 @@ public class SignOutUIAction extends UIAction {
     public SignOutUIAction(SignOutService signOutService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUM);
         this.signOutService = signOutService;
-        this.userCommunication = userCommunication;
         this.currentUserId = currentUserId;
+        this.userCommunication = userCommunication;
     }
-
 
     @Override
     public void execute() {
@@ -33,9 +34,7 @@ public class SignOutUIAction extends UIAction {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));
             return;
         }
-
-        userCommunication.informUser(MESSAGE_SIGNOUT);
-
+        userCommunication.informUser(MESSAGE_SIGNED_OUT);
     }
 
 }

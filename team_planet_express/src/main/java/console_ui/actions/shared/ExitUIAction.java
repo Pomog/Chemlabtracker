@@ -8,7 +8,7 @@ import core.services.actions.shared.ExitService;
 public class ExitUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Exit";
-    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.ALLUSERS);
+    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.ALL_USERS);
 
     private static final String MESSAGE_EXIT = "Thank you for shopping at Planet Express.";
 

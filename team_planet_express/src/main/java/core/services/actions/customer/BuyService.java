@@ -22,7 +22,6 @@ public class BuyService {
         this.validator = validator;
     }
 
-
     public BuyResponse execute(BuyRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
@@ -34,8 +33,7 @@ public class BuyService {
         return new BuyResponse();
     }
 
-    //TODO duplicate everywhere
-    //TODO WTB Autowired
+    //TODO yeet, duplicate
     private Cart getOpenCartForUserId(Long userId) {
         return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);

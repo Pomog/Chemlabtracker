@@ -39,8 +39,7 @@ public class ListCartItemsService {
         return new ListCartItemsResponse(cartItems, cartTotal);
     }
 
-    //TODO duplicate everywhere
-    //TODO WTB Autowired
+    //TODO yeet, duplicate
     private Cart getOpenCartForUserId(Long userId) {
         return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);

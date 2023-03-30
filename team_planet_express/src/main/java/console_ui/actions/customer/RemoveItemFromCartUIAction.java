@@ -24,8 +24,8 @@ public class RemoveItemFromCartUIAction extends UIAction {
     public RemoveItemFromCartUIAction(RemoveItemFromCartService removeItemFromCartService, MutableLong currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.removeItemFromCartService = removeItemFromCartService;
-        this.userCommunication = userCommunication;
         this.currentUserId = currentUserId;
+        this.userCommunication = userCommunication;
     }
 
     @Override

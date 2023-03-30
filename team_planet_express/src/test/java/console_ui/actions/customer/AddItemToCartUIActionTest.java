@@ -19,8 +19,8 @@ import static org.mockito.Mockito.*;
 class AddItemToCartUIActionTest {
 
     private final AddItemToCartService mockAddItemToCartService = mock(AddItemToCartService.class);
-    private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
     private final MutableLong mockCurrentUserId = mock(MutableLong.class);
+    private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
     private final AddItemToCartResponse mockAddItemToCartResponse = mock(AddItemToCartResponse.class);
     private final CoreError mockCoreError = mock(CoreError.class);
 
@@ -29,7 +29,6 @@ class AddItemToCartUIActionTest {
 
     @BeforeEach
     void setupSharedMockBehaviour() {
-       //hen(mockAddItemToCartService.getCurrentUserId()).thenReturn(mockCurrentUserId);
         when(mockAddItemToCartService.execute(any(AddItemToCartRequest.class)))
                 .thenReturn(mockAddItemToCartResponse);
     }

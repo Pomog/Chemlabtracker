@@ -4,8 +4,8 @@ import core.database.Database;
 import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
-import core.support.MutableLong;
 import core.services.exception.ServiceMissingDataException;
+import core.support.MutableLong;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +75,7 @@ public class SignInValidator {
                 : Optional.empty();
     }
 
+    //TODO yeet, duplicate
     private User getUserByLoginName(String login) {
         return database.accessUserDatabase().findByLogin(login)
                 .orElseThrow(ServiceMissingDataException::new);

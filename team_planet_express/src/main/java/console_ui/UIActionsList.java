@@ -110,6 +110,7 @@ public class UIActionsList {
         return uiActions;
     }
 
+    //TODO yeet, duplicate
     private User getUserById(Long userId) {
         return database.accessUserDatabase().findById(userId)
                 .orElseThrow(ServiceMissingDataException::new);

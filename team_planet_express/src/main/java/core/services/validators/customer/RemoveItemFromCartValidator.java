@@ -29,9 +29,11 @@ public class RemoveItemFromCartValidator {
 
     public List<CoreError> validate(RemoveItemFromCartRequest request) {
         List<CoreError> errors = new ArrayList<>();
+        //TODO validate id
         cartValidator.validateOpenCartExistsForUserId(request.getUserId()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             //TODO order of validations seems borked
+            //TODO it is definitely borked (check shop first, cart after)
             //TODO test for NPE on item.get()
             validateCartIsNotEmpty(request.getUserId()).ifPresent(errors::add);
             validateItemNameInCart(request).ifPresent(errors::add);
@@ -64,11 +66,13 @@ public class RemoveItemFromCartValidator {
                 : Optional.empty();
     }
 
+    //TODO yeet, duplicate
     private Cart getOpenCartForUserId(Long userId) {
         return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
+    //TODO yeet, duplicate
     private Item getItemByName(String itemName) {
         return database.accessItemDatabase().findByName(itemName)
                 .orElseThrow(ServiceMissingDataException::new);

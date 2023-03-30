@@ -5,6 +5,7 @@ import lombok.Value;
 
 @Value
 public class SignOutRequest {
+
     MutableLong userId;
 
 }

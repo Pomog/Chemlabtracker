@@ -1,21 +1,11 @@
 package core.requests.customer;
 
+import lombok.Value;
+
+@Value
 public class RemoveItemFromCartRequest {
 
-    private final Long userId;
-    private final String itemName;
-
-    public RemoveItemFromCartRequest(Long userId, String itemName) {
-        this.userId = userId;
-        this.itemName = itemName;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
+    Long userId;
+    String itemName;
 
 }

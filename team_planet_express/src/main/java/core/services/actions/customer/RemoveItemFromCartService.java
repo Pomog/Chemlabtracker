@@ -22,7 +22,6 @@ public class RemoveItemFromCartService {
         this.validator = validator;
     }
 
-
     public RemoveItemFromCartResponse execute(RemoveItemFromCartRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
@@ -37,18 +36,19 @@ public class RemoveItemFromCartService {
         return new RemoveItemFromCartResponse();
     }
 
-    //TODO duplicate everywhere
-    //TODO WTB Autowired
+    //TODO yeet, duplicate
     private Cart getOpenCartForUserId(Long userId) {
         return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
+    //TODO yeet, duplicate
     private Item getItemByName(String itemName) {
         return database.accessItemDatabase().findByName(itemName)
                 .orElseThrow(ServiceMissingDataException::new);
     }
 
+    //TODO yeet, duplicate
     private CartItem getCartItemByCartIdAndItemId(Long cartId, Long itemId) {
         return database.accessCartItemDatabase().findByCartIdAndItemId(cartId, itemId)
                 .orElseThrow(ServiceMissingDataException::new);
