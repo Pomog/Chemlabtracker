@@ -1,9 +1,11 @@
 package core.services.validators.customer;
 
 import core.database.Database;
+import core.domain.item.Item;
 import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
 import core.services.cart.CartValidator;
+import core.services.exception.ServiceMissingDataException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,9 +64,14 @@ public class AddItemToCartValidator {
 
     private Optional<CoreError> validateOrderedQuantityNotGreaterThanAvailable(AddItemToCartRequest request) {
         return (Integer.parseInt(request.getOrderedQuantity()) >
-                database.accessItemDatabase().findByName(request.getItemName()).get().getAvailableQuantity())
+                getItemByName(request.getItemName()).getAvailableQuantity())
                 ? Optional.of(new CoreError(FIELD_QUANTITY, ERROR_NOT_ENOUGH_QUANTITY))
                 : Optional.empty();
+    }
+
+    private Item getItemByName(String itemName) {
+        return database.accessItemDatabase().findByName(itemName)
+                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }

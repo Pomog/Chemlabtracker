@@ -4,6 +4,7 @@ import core.database.Database;
 import core.domain.item.Item;
 import core.requests.manager.ChangeItemDataRequest;
 import core.responses.CoreError;
+import core.services.exception.ServiceMissingDataException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -57,7 +58,7 @@ public class ChangeItemDataValidator {
         validateIsPositive(id, FIELD_ID, ERROR_ID_NEGATIVE).ifPresent(errors::add);
         validateIsNotDecimal(id, FIELD_ID, ERROR_ID_DECIMAL).ifPresent(errors::add);
         if (errors.isEmpty()) {
-            validateIdExists(id).ifPresent(errors::add);
+            validateIdExistsInShop(id).ifPresent(errors::add);
         }
     }
 
@@ -73,17 +74,10 @@ public class ChangeItemDataValidator {
     }
 
     private Optional<CoreError> validateDuplicate(ChangeItemDataRequest request) {
-        //TODO smallify
-        Item originalItem = database.accessItemDatabase().findById(Long.parseLong(request.getItemId())).get();
-        String newItemName = (newValueExists(request.getNewItemName()))
-                ? request.getNewItemName()
-                : originalItem.getName();
-        BigDecimal newPrice = (newValueExists(request.getNewPrice()))
-                ? new BigDecimal(request.getNewPrice()).setScale(2, RoundingMode.HALF_UP)
-                : originalItem.getPrice();
-        Integer newAvailableQuantity = (newValueExists(request.getNewAvailableQuantity()))
-                ? Integer.parseInt(request.getNewAvailableQuantity())
-                : originalItem.getAvailableQuantity();
+        Item originalItem = getItemById(Long.parseLong(request.getItemId()));
+        String newItemName = setNewItemName(request, originalItem);
+        BigDecimal newPrice = setNewPrice(request, originalItem);
+        Integer newAvailableQuantity = setNewQuantity(request, originalItem);
         Item newItem = new Item(newItemName, newPrice, newAvailableQuantity);
         return (database.accessItemDatabase().getAllItems().contains(newItem))
                 ? Optional.of(new CoreError(FIELD_BUTTON, ERROR_ITEM_EXISTS))
@@ -117,11 +111,34 @@ public class ChangeItemDataValidator {
                 : Optional.empty();
     }
 
-    private Optional<CoreError> validateIdExists(String id) {
+    private Optional<CoreError> validateIdExistsInShop(String id) {
         return (id != null && !id.isBlank() &&
                 database.accessItemDatabase().findById(Long.parseLong(id)).isEmpty())
                 ? Optional.of(new CoreError(FIELD_ID, ERROR_ID_NOT_EXISTS))
                 : Optional.empty();
+    }
+
+    private Item getItemById(Long itemId) {
+        return database.accessItemDatabase().findById(itemId)
+                .orElseThrow(ServiceMissingDataException::new);
+    }
+
+    private String setNewItemName(ChangeItemDataRequest request, Item originalItem) {
+        return (newValueExists(request.getNewItemName()))
+                ? request.getNewItemName()
+                : originalItem.getName();
+    }
+
+    private BigDecimal setNewPrice(ChangeItemDataRequest request, Item originalItem) {
+        return (newValueExists(request.getNewPrice()))
+                ? new BigDecimal(request.getNewPrice()).setScale(2, RoundingMode.HALF_UP)
+                : originalItem.getPrice();
+    }
+
+    private Integer setNewQuantity(ChangeItemDataRequest request, Item originalItem) {
+        return (newValueExists(request.getNewAvailableQuantity()))
+                ? Integer.parseInt(request.getNewAvailableQuantity())
+                : originalItem.getAvailableQuantity();
     }
 
     private boolean newValueExists(String value) {

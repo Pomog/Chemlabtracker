@@ -5,6 +5,7 @@ import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
 import core.responses.shared.SignInResponse;
+import core.services.exception.ServiceMissingDataException;
 import core.services.validators.shared.SignInValidator;
 import core.support.MutableLong;
 
@@ -27,9 +28,14 @@ public class SignInService {
         if (!errors.isEmpty()) {
             return new SignInResponse(errors);
         }
-        User newUser = database.accessUserDatabase().findByLogin(request.getLoginName()).get();
+        User newUser = getUserByLoginName(request.getLoginName());
         currentUserId.setValue(newUser.getId());
         return new SignInResponse(newUser);
+    }
+
+    private User getUserByLoginName(String login) {
+        return database.accessUserDatabase().findByLogin(login)
+                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }

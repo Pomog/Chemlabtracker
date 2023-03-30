@@ -2,9 +2,6 @@ yeet date change to db
 time machine for date testing
 userRole madness from Q&A (many roles for an action)
 yeet lombok @Data from domain, make @Getter
-yeet exceptions
-add requests to everything
-add userId to Actions? instead of getter from service
 method newUser: user + cart
-Optional checks everywhere
 explode all the validators
+listCartItem name

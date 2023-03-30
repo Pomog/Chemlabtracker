@@ -6,6 +6,7 @@ import core.domain.cart.CartStatus;
 import core.requests.customer.BuyRequest;
 import core.responses.CoreError;
 import core.responses.customer.BuyResponse;
+import core.services.exception.ServiceMissingDataException;
 import core.services.validators.customer.BuyValidator;
 import core.support.MutableLong;
 
@@ -33,10 +34,17 @@ public class BuyService {
         if (!errors.isEmpty()) {
             return new BuyResponse(errors);
         }
-        Cart cart = database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue()).get();
+        Cart cart = getOpenCartForUserId();
         database.accessCartDatabase().changeCartStatus(cart.getId(), CartStatus.CLOSED);
         database.accessCartDatabase().changeLastActionDate(cart.getId(), LocalDate.now());
         return new BuyResponse();
+    }
+
+    //TODO duplicate everywhere
+    //TODO WTB Autowired
+    private Cart getOpenCartForUserId() {
+        return database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue())
+                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }
