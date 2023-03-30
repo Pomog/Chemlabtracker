@@ -5,6 +5,7 @@ import core.domain.cart.Cart;
 import core.requests.customer.BuyRequest;
 import core.responses.CoreError;
 import core.services.cart.CartValidator;
+import core.services.exception.ServiceMissingDataException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,15 @@ public class BuyValidator {
     }
 
     private Optional<CoreError> validateCartIsNotEmpty(Long userId) {
-        Cart cart = database.accessCartDatabase().findOpenCartForUserId(userId).get();
+        Cart cart = getOpenCartForUserId(userId);
         return (database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId()).size() == 0)
                 ? Optional.of(new CoreError(FIELD_NAME, ERROR_CART_EMPTY))
                 : Optional.empty();
     }
+
+    private Cart getOpenCartForUserId(Long userId) {
+        return database.accessCartDatabase().findOpenCartForUserId(userId)
+                .orElseThrow(ServiceMissingDataException::new);
+    }
+
 }

@@ -5,13 +5,13 @@ import core.database.UserDatabase;
 import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
+import core.services.exception.ServiceMissingDataException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -139,6 +139,15 @@ class SignInValidatorTest {
         when(mockUser.getPassword()).thenReturn("password");
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.isEmpty());
+    }
+
+    @Test
+    void shouldThrowExceptionForMissingOptional() {
+        when(mockRequest.getLoginName()).thenReturn("login");
+        when(mockRequest.getPassword()).thenReturn("password");
+        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+        when(mockUserDatabase.findByLogin("login")).thenReturn(Optional.of(mockUser), Optional.empty());
+        assertThrows(ServiceMissingDataException.class, () -> validator.validate(mockRequest));
     }
 
 }

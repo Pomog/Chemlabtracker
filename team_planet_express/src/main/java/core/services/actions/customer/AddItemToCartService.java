@@ -7,6 +7,7 @@ import core.domain.item.Item;
 import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.AddItemToCartResponse;
+import core.services.exception.ServiceMissingDataException;
 import core.services.validators.customer.AddItemToCartValidator;
 import core.support.MutableLong;
 
@@ -34,12 +35,11 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue()).get();
-        String itemName = request.getItemName();
+        Cart cart = getOpenCartForUserId();
+        Item item = getItemByName(request.getItemName());
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
-        Optional<Item> item = database.accessItemDatabase().findByName(itemName);
-        addItemToCart(cart, item.get(), orderedQuantity);
-        changeItemAvailability(item.get(), orderedQuantity);
+        addItemToCart(cart, item, orderedQuantity);
+        changeItemAvailability(item, orderedQuantity);
         return new AddItemToCartResponse();
     }
 
@@ -56,6 +56,18 @@ public class AddItemToCartService {
     private void changeItemAvailability(Item item, Integer orderedQuantity) {
         Integer newAvailableQuantity = item.getAvailableQuantity() - orderedQuantity;
         database.accessItemDatabase().changeAvailableQuantity(item.getId(), newAvailableQuantity);
+    }
+
+    //TODO duplicate everywhere
+    //TODO WTB Autowired
+    private Cart getOpenCartForUserId() {
+        return database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue())
+                .orElseThrow(ServiceMissingDataException::new);
+    }
+
+    private Item getItemByName(String itemName) {
+        return database.accessItemDatabase().findByName(itemName)
+                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }

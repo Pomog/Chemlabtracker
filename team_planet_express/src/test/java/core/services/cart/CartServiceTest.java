@@ -5,6 +5,7 @@ import core.database.Database;
 import core.database.ItemDatabase;
 import core.domain.cart_item.CartItem;
 import core.domain.item.Item;
+import core.services.exception.ServiceMissingDataException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -36,6 +38,15 @@ class CartServiceTest {
         when(mockCartItem.getOrderedQuantity()).thenReturn(1, 3, 7);
         BigDecimal actualResult = service.getSum(1L);
         assertEquals(new BigDecimal("34.45"), actualResult);
+    }
+
+    @Test
+    void shouldThrowExceptionForMissingOptional() {
+        when(mockDatabase.accessCartItemDatabase()).thenReturn(mockCartItemDatabase);
+        when(mockCartItemDatabase.getAllCartItemsForCartId(1L)).thenReturn(List.of(mockCartItem, mockCartItem, mockCartItem));
+        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockItemDatabase.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(ServiceMissingDataException.class, () -> service.getSum(1L));
     }
 
 }

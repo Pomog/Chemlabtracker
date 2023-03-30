@@ -1,8 +1,10 @@
 package core.services.validators.shared;
 
 import core.database.Database;
+import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
+import core.services.exception.ServiceMissingDataException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,7 @@ public class SignInValidator {
 
     private Optional<CoreError> validatePasswordMatches(SignInRequest request) {
         return (!request.getPassword().equals(
-                database.accessUserDatabase().findByLogin(request.getLoginName()).get().getPassword()))
+                getUserByLoginName(request.getLoginName()).getPassword()))
                 ? Optional.of(new CoreError(FIELD_PASSWORD, ERROR_PASSWORD_INCORRECT))
                 : Optional.empty();
     }
@@ -61,6 +63,11 @@ public class SignInValidator {
                 database.accessUserDatabase().findByLogin(loginName).isEmpty())
                 ? Optional.of(new CoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_NOT_EXISTS))
                 : Optional.empty();
+    }
+
+    private User getUserByLoginName(String login) {
+        return database.accessUserDatabase().findByLogin(login)
+                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }
