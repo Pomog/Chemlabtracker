@@ -34,6 +34,7 @@ import core.services.validators.actions.shared.SearchItemValidator;
 import core.services.validators.actions.shared.SignInValidator;
 import core.services.validators.cart.CartValidator;
 import core.services.validators.shared.PresenceValidator;
+import core.services.validators.shared.number.NumberValidator;
 import core.support.MutableLong;
 
 import java.util.ArrayList;
@@ -69,13 +70,14 @@ public class UIActionsList {
 
     private List<UIAction> createUIActionsList() {
         PresenceValidator presenceValidator = new PresenceValidator();
+        NumberValidator numberValidator = new NumberValidator();
         CartValidator cartValidator = new CartValidator(database);
         SearchItemValidator searchItemValidator = new SearchItemValidator();
         AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, cartValidator);
         RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, cartValidator);
         ListCartItemValidator listCartItemValidator = new ListCartItemValidator(cartValidator);
         BuyValidator buyValidator = new BuyValidator(database, cartValidator);
-        AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database, presenceValidator);
+        AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database, presenceValidator, numberValidator);
         ChangeItemDataValidator changeItemDataValidator = new ChangeItemDataValidator(database);
         SignInValidator signInValidator = new SignInValidator(database);
         SignUpValidator signUpValidator = new SignUpValidator(database);

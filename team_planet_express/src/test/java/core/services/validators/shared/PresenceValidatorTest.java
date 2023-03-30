@@ -17,6 +17,7 @@ class PresenceValidatorTest {
         Optional<CoreError> error = validator.validate(null, "field", "Field");
         assertTrue(error.isPresent());
         assertEquals("field", error.get().getField());
+        assertTrue(error.get().getMessage().contains("Field"));
         assertTrue(error.get().getMessage().toLowerCase().contains("required"));
     }
 
@@ -25,6 +26,7 @@ class PresenceValidatorTest {
         Optional<CoreError> error = validator.validate("", "field", "Field");
         assertTrue(error.isPresent());
         assertEquals("field", error.get().getField());
+        assertTrue(error.get().getMessage().contains("Field"));
         assertTrue(error.get().getMessage().toLowerCase().contains("required"));
     }
 
@@ -33,6 +35,7 @@ class PresenceValidatorTest {
         Optional<CoreError> error = validator.validate(" ", "field", "Field");
         assertTrue(error.isPresent());
         assertEquals("field", error.get().getField());
+        assertTrue(error.get().getMessage().contains("Field"));
         assertTrue(error.get().getMessage().toLowerCase().contains("required"));
     }
 
