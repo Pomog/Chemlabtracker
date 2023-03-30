@@ -5,9 +5,8 @@ import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
 import core.responses.shared.SignInResponse;
-import core.services.validators.actions.shared.SignInValidator;
 import core.services.exception.ServiceMissingDataException;
-import core.services.validators.shared.SignInValidator;
+import core.services.validators.actions.shared.SignInValidator;
 import core.support.MutableLong;
 
 import java.util.List;

@@ -5,6 +5,7 @@ import core.database.ItemDatabase;
 import core.domain.item.Item;
 import core.requests.manager.AddItemToShopRequest;
 import core.responses.CoreError;
+import core.services.validators.shared.PresenceValidator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,53 +13,25 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class AddItemToShopValidatorTest {
 
     private final Database mockDatabase = mock(Database.class);
+    private final PresenceValidator mockPresenceValidator = mock(PresenceValidator.class);
     private final AddItemToShopRequest mockRequest = mock(AddItemToShopRequest.class);
     private final ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
     private final Item mockItem = mock(Item.class);
 
-    private final AddItemToShopValidator validator = new AddItemToShopValidator(mockDatabase);
+    private final AddItemToShopValidator validator = new AddItemToShopValidator(mockDatabase, mockPresenceValidator);
 
     @Test
-    void shouldReturnErrorForNullName() {
-        when(mockRequest.getItemName()).thenReturn(null);
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("name"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForBlankName() {
-        when(mockRequest.getItemName()).thenReturn("");
+    void shouldValidateNamePresence() {
+        when(mockRequest.getItemName()).thenReturn("name");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        when(mockItemDatabase.findByName("")).thenReturn(Optional.empty());
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("name"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForEmptyName() {
-        when(mockRequest.getItemName()).thenReturn(" ");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        when(mockItemDatabase.findByName(" ")).thenReturn(Optional.empty());
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("name"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+        when(mockItemDatabase.findByName("name")).thenReturn(Optional.empty());
+        validator.validate(mockRequest);
+        verify(mockPresenceValidator).validate("name", "name", "Item name");
     }
 
     @Test
@@ -75,36 +48,12 @@ class AddItemToShopValidatorTest {
     }
 
     @Test
-    void shouldReturnErrorForNullPrice() {
-        when(mockRequest.getPrice()).thenReturn(null);
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("price"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForBlankPrice() {
-        when(mockRequest.getPrice()).thenReturn("");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("price"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForEmptyPrice() {
-        when(mockRequest.getPrice()).thenReturn(" ");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("price"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+    void shouldValidatePricePresence() {
+        when(mockRequest.getPrice()).thenReturn("100.10");
+        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockItemDatabase.findByName("name")).thenReturn(Optional.empty());
+        validator.validate(mockRequest);
+        verify(mockPresenceValidator).validate("100.10", "price", "Price");
     }
 
     @Test
@@ -130,36 +79,12 @@ class AddItemToShopValidatorTest {
     }
 
     @Test
-    void shouldReturnErrorForNullQuantity() {
-        when(mockRequest.getAvailableQuantity()).thenReturn(null);
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("quantity"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForBlankQuantity() {
-        when(mockRequest.getAvailableQuantity()).thenReturn("");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("quantity"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForEmptyQuantity() {
-        when(mockRequest.getAvailableQuantity()).thenReturn(" ");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("quantity"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+    void shouldValidateQuantityPresence() {
+        when(mockRequest.getAvailableQuantity()).thenReturn("10");
+        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockItemDatabase.findByName("name")).thenReturn(Optional.empty());
+        validator.validate(mockRequest);
+        verify(mockPresenceValidator).validate("10", "quantity", "Quantity");
     }
 
     @Test

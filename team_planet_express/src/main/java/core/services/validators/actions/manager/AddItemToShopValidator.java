@@ -3,6 +3,7 @@ package core.services.validators.actions.manager;
 import core.database.Database;
 import core.requests.manager.AddItemToShopRequest;
 import core.responses.CoreError;
+import core.services.validators.shared.PresenceValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +14,12 @@ public class AddItemToShopValidator {
     private static final String FIELD_NAME = "name";
     private static final String FIELD_PRICE = "price";
     private static final String FIELD_QUANTITY = "quantity";
-    private static final String ERROR_NAME_MISSING = "Error: Item name is required.";
+    private static final String VALUE_NAME_ITEM = "Item name";
+    private static final String VALUE_NAME_PRICE = "Price";
+    private static final String VALUE_NAME_QUANTITY = "Quantity";
     private static final String ERROR_ITEM_EXISTS = "Error: Item with this name already exists.";
-    private static final String ERROR_PRICE_MISSING = "Error: Price is required.";
     private static final String ERROR_PRICE_NOT_NUMBER = "Error: Price should be a number.";
     private static final String ERROR_PRICE_NEGATIVE = "Error: Price should not be negative.";
-    private static final String ERROR_QUANTITY_MISSING = "Error: Quantity is required.";
     private static final String ERROR_QUANTITY_NOT_NUMBER = "Error: Quantity should be a number.";
     private static final String ERROR_QUANTITY_NEGATIVE = "Error: Quantity should not be negative.";
     private static final String ERROR_QUANTITY_DECIMAL = "Error: Quantity should not be decimal.";
@@ -28,10 +29,12 @@ public class AddItemToShopValidator {
     private static final String REGEX_NOT_DECIMAL_NUMBER = "[0-9]+";
 
     private final Database database;
+    private final PresenceValidator presenceValidator;
     private List<CoreError> errors;
 
-    public AddItemToShopValidator(Database database) {
+    public AddItemToShopValidator(Database database, PresenceValidator presenceValidator) {
         this.database = database;
+        this.presenceValidator = presenceValidator;
     }
 
     public List<CoreError> validate(AddItemToShopRequest request) {
@@ -43,28 +46,21 @@ public class AddItemToShopValidator {
     }
 
     private void validateItemName(String itemName) {
-        validateIsPresent(itemName, FIELD_NAME, ERROR_NAME_MISSING).ifPresent(errors::add);
+        presenceValidator.validate(itemName, FIELD_NAME, VALUE_NAME_ITEM).ifPresent(errors::add);
         validateItemNameDoesNotAlreadyExist(itemName).ifPresent(errors::add);
     }
 
     private void validatePrice(String price) {
-        validateIsPresent(price, FIELD_PRICE, ERROR_PRICE_MISSING).ifPresent(errors::add);
+        presenceValidator.validate(price, FIELD_PRICE, VALUE_NAME_PRICE).ifPresent(errors::add);
         validateIsNumber(price, FIELD_PRICE, ERROR_PRICE_NOT_NUMBER).ifPresent(errors::add);
         validateIsPositive(price, FIELD_PRICE, ERROR_PRICE_NEGATIVE).ifPresent(errors::add);
     }
 
     private void validateQuantity(String availableQuantity) {
-        validateIsPresent(availableQuantity, FIELD_QUANTITY, ERROR_QUANTITY_MISSING).ifPresent(errors::add);
+        presenceValidator.validate(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY).ifPresent(errors::add);
         validateIsNumber(availableQuantity, FIELD_QUANTITY, ERROR_QUANTITY_NOT_NUMBER).ifPresent(errors::add);
         validateIsPositive(availableQuantity, FIELD_QUANTITY, ERROR_QUANTITY_NEGATIVE).ifPresent(errors::add);
         validateQuantityIsNotDecimal(availableQuantity).ifPresent(errors::add);
-    }
-
-    //TODO nuke
-    private Optional<CoreError> validateIsPresent(String value, String field, String errorMessage) {
-        return (value == null || value.isBlank())
-                ? Optional.of(new CoreError(field, errorMessage))
-                : Optional.empty();
     }
 
     private Optional<CoreError> validateItemNameDoesNotAlreadyExist(String itemName) {

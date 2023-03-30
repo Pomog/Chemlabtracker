@@ -7,9 +7,8 @@ import core.requests.customer.ListCartItemsRequest;
 import core.responses.CoreError;
 import core.responses.customer.ListCartItemsResponse;
 import core.services.cart.CartService;
-import core.services.validators.actions.customer.ListCartItemValidator;
 import core.services.exception.ServiceMissingDataException;
-import core.services.validators.customer.ListCartItemValidator;
+import core.services.validators.actions.customer.ListCartItemValidator;
 import core.support.MutableLong;
 
 import java.math.BigDecimal;

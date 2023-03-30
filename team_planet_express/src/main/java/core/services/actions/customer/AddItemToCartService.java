@@ -8,7 +8,6 @@ import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.AddItemToCartResponse;
 import core.services.exception.ServiceMissingDataException;
-import core.services.validators.customer.AddItemToCartValidator;
 import core.services.validators.actions.customer.AddItemToCartValidator;
 import core.support.MutableLong;
 

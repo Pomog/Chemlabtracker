@@ -4,9 +4,8 @@ import core.database.Database;
 import core.domain.cart.Cart;
 import core.requests.customer.BuyRequest;
 import core.responses.CoreError;
-import core.services.validators.cart.CartValidator;
-import core.services.cart.CartValidator;
 import core.services.exception.ServiceMissingDataException;
+import core.services.validators.cart.CartValidator;
 
 import java.util.ArrayList;
 import java.util.List;

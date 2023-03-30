@@ -20,7 +20,26 @@ class PresenceValidatorTest {
         assertTrue(error.get().getMessage().toLowerCase().contains("required"));
     }
 
-    //TODO test "" "  "
-    //TODO test ok
+    @Test
+    void shouldReturnErrorForBlankValue() {
+        Optional<CoreError> error = validator.validate("", "field", "Field");
+        assertTrue(error.isPresent());
+        assertEquals("field", error.get().getField());
+        assertTrue(error.get().getMessage().toLowerCase().contains("required"));
+    }
+
+    @Test
+    void shouldReturnErrorForEmptyValue() {
+        Optional<CoreError> error = validator.validate(" ", "field", "Field");
+        assertTrue(error.isPresent());
+        assertEquals("field", error.get().getField());
+        assertTrue(error.get().getMessage().toLowerCase().contains("required"));
+    }
+
+    @Test
+    void shouldReturnNoErrorForValidValue() {
+        Optional<CoreError> error = validator.validate("field", "field", "Field");
+        assertTrue(error.isEmpty());
+    }
 
 }

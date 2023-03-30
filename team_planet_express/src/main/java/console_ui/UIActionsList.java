@@ -22,6 +22,7 @@ import core.services.actions.shared.ExitService;
 import core.services.actions.shared.SearchItemService;
 import core.services.actions.shared.SignInService;
 import core.services.actions.shared.SignOutService;
+import core.services.exception.ServiceMissingDataException;
 import core.services.validators.actions.customer.AddItemToCartValidator;
 import core.services.validators.actions.customer.BuyValidator;
 import core.services.validators.actions.customer.ListCartItemValidator;
@@ -32,17 +33,7 @@ import core.services.validators.actions.manager.ChangeItemDataValidator;
 import core.services.validators.actions.shared.SearchItemValidator;
 import core.services.validators.actions.shared.SignInValidator;
 import core.services.validators.cart.CartValidator;
-import core.services.cart.CartValidator;
-import core.services.exception.ServiceMissingDataException;
-import core.services.validators.customer.AddItemToCartValidator;
-import core.services.validators.customer.BuyValidator;
-import core.services.validators.customer.ListCartItemValidator;
-import core.services.validators.customer.RemoveItemFromCartValidator;
-import core.services.validators.guest.SignUpValidator;
-import core.services.validators.manager.AddItemToShopValidator;
-import core.services.validators.manager.ChangeItemDataValidator;
-import core.services.validators.shared.SearchItemValidator;
-import core.services.validators.shared.SignInValidator;
+import core.services.validators.shared.PresenceValidator;
 import core.support.MutableLong;
 
 import java.util.ArrayList;
@@ -77,13 +68,14 @@ public class UIActionsList {
     }
 
     private List<UIAction> createUIActionsList() {
+        PresenceValidator presenceValidator = new PresenceValidator();
         CartValidator cartValidator = new CartValidator(database);
         SearchItemValidator searchItemValidator = new SearchItemValidator();
         AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, cartValidator);
         RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, cartValidator);
         ListCartItemValidator listCartItemValidator = new ListCartItemValidator(cartValidator);
         BuyValidator buyValidator = new BuyValidator(database, cartValidator);
-        AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database);
+        AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database, presenceValidator);
         ChangeItemDataValidator changeItemDataValidator = new ChangeItemDataValidator(database);
         SignInValidator signInValidator = new SignInValidator(database);
         SignUpValidator signUpValidator = new SignUpValidator(database);
