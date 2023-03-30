@@ -69,7 +69,7 @@ class SignInServiceTest {
         when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         when(mockUserDatabase.findByLogin("login")).thenReturn(Optional.of(mockUser));
         service.execute(mockRequest);
-        verify(mockRequest.getUserId()).setValue(any(Long.class));
+        verify(mockCurrentUserId).setValue(any(Long.class));
     }
 
 }

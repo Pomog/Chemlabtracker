@@ -65,12 +65,11 @@ class SignUpServiceTest {
     @Test
     void shouldUpdateCurrentUserId() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-
         when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.save(any(User.class))).thenReturn(mockUser);
         service.execute(mockRequest);
-        verify(mockRequest.getUserId()).setValue(any(Long.class));
+        verify(mockCurrentUserId).setValue(any(Long.class));
     }
 
 }

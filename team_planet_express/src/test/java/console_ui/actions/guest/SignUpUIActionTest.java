@@ -28,7 +28,7 @@ class SignUpUIActionTest {
     private final MutableLong mockCurrentUserId = mock(MutableLong.class);
 
     private final SignUpUIAction action =
-            new SignUpUIAction(mockSignUpService, mockCurrentUserId,mockUserCommunication);
+            new SignUpUIAction(mockSignUpService, mockCurrentUserId, mockUserCommunication);
 
     @BeforeEach
     void setupMockResponse() {
