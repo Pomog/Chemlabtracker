@@ -33,8 +33,10 @@ import core.services.validators.actions.manager.ChangeItemDataValidator;
 import core.services.validators.actions.shared.SearchItemValidator;
 import core.services.validators.actions.shared.SignInValidator;
 import core.services.validators.cart.CartValidator;
-import core.services.validators.shared.PresenceValidator;
-import core.services.validators.shared.number.NumberValidator;
+import core.services.validators.universal.system.LongUserIdValidator;
+import core.services.validators.universal.system.MutableLongUserIdValidator;
+import core.services.validators.universal.user_input.NumberValidator;
+import core.services.validators.universal.user_input.PresenceValidator;
 import core.support.MutableLong;
 
 import java.util.ArrayList;
@@ -69,18 +71,20 @@ public class UIActionsList {
     }
 
     private List<UIAction> createUIActionsList() {
+        LongUserIdValidator longUserIdValidator = new LongUserIdValidator();
+        MutableLongUserIdValidator mutableLongUserIdValidator = new MutableLongUserIdValidator();
         PresenceValidator presenceValidator = new PresenceValidator();
         NumberValidator numberValidator = new NumberValidator();
         CartValidator cartValidator = new CartValidator(database);
         SearchItemValidator searchItemValidator = new SearchItemValidator();
-        AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, cartValidator);
-        RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, cartValidator);
-        ListCartItemValidator listCartItemValidator = new ListCartItemValidator(cartValidator);
-        BuyValidator buyValidator = new BuyValidator(database, cartValidator);
+        AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, longUserIdValidator, cartValidator, presenceValidator, numberValidator);
+        RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, longUserIdValidator, cartValidator, presenceValidator);
+        ListCartItemValidator listCartItemValidator = new ListCartItemValidator(longUserIdValidator, cartValidator);
+        BuyValidator buyValidator = new BuyValidator(database, longUserIdValidator, cartValidator);
         AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database, presenceValidator, numberValidator);
         ChangeItemDataValidator changeItemDataValidator = new ChangeItemDataValidator(database);
         SignInValidator signInValidator = new SignInValidator(database);
-        SignUpValidator signUpValidator = new SignUpValidator(database);
+        SignUpValidator signUpValidator = new SignUpValidator(database, mutableLongUserIdValidator, presenceValidator);
 
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
         SearchItemService searchItemService = new SearchItemService(database, searchItemValidator);

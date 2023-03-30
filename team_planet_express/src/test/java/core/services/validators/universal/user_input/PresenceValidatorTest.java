@@ -1,4 +1,4 @@
-package core.services.validators.shared;
+package core.services.validators.universal.user_input;
 
 import core.responses.CoreError;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ class PresenceValidatorTest {
 
     @Test
     void shouldReturnErrorForNullValue() {
-        Optional<CoreError> error = validator.validate(null, "field", "Field");
+        Optional<CoreError> error = validator.validateStringIsPresent(null, "field", "Field");
         assertTrue(error.isPresent());
         assertEquals("field", error.get().getField());
         assertTrue(error.get().getMessage().contains("Field"));
@@ -23,7 +23,7 @@ class PresenceValidatorTest {
 
     @Test
     void shouldReturnErrorForBlankValue() {
-        Optional<CoreError> error = validator.validate("", "field", "Field");
+        Optional<CoreError> error = validator.validateStringIsPresent("", "field", "Field");
         assertTrue(error.isPresent());
         assertEquals("field", error.get().getField());
         assertTrue(error.get().getMessage().contains("Field"));
@@ -32,7 +32,7 @@ class PresenceValidatorTest {
 
     @Test
     void shouldReturnErrorForEmptyValue() {
-        Optional<CoreError> error = validator.validate(" ", "field", "Field");
+        Optional<CoreError> error = validator.validateStringIsPresent(" ", "field", "Field");
         assertTrue(error.isPresent());
         assertEquals("field", error.get().getField());
         assertTrue(error.get().getMessage().contains("Field"));
@@ -41,7 +41,7 @@ class PresenceValidatorTest {
 
     @Test
     void shouldReturnNoErrorForValidValue() {
-        Optional<CoreError> error = validator.validate("field", "field", "Field");
+        Optional<CoreError> error = validator.validateStringIsPresent("field", "field", "Field");
         assertTrue(error.isEmpty());
     }
 

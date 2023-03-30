@@ -5,6 +5,8 @@ import core.database.UserDatabase;
 import core.domain.user.User;
 import core.requests.guest.SignUpRequest;
 import core.responses.CoreError;
+import core.services.validators.universal.system.MutableLongUserIdValidator;
+import core.services.validators.universal.user_input.PresenceValidator;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 
@@ -13,87 +15,42 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class SignUpValidatorTest {
 
     private final Database mockDatabase = mock(Database.class);
+    private final MutableLongUserIdValidator mockMutableLongUserIdValidator = mock(MutableLongUserIdValidator.class);
+    private final PresenceValidator mockPresenceValidator = mock(PresenceValidator.class);
     private final SignUpRequest mockRequest = mock(SignUpRequest.class);
     private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
     private final MutableLong mockUserId = mock(MutableLong.class);
     private final User mockUser = mock(User.class);
+    private final CoreError mockCoreError = mock(CoreError.class);
 
-    private final SignUpValidator validator = new SignUpValidator(mockDatabase);
+    private final SignUpValidator validator =
+            new SignUpValidator(mockDatabase, mockMutableLongUserIdValidator, mockPresenceValidator);
 
     @Test
-    void shouldReturnErrorForNullName() {
-        when(mockRequest.getName()).thenReturn(null);
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("name"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+    void shouldValidateUserIdIsPresent() {
+        when(mockRequest.getUserId()).thenReturn(mockUserId);
+        validator.validate(mockRequest);
+        verify(mockMutableLongUserIdValidator).validateMutableLongUserIdIsPresent(mockUserId);
     }
 
     @Test
-    void shouldReturnErrorForBlankName() {
-        when(mockRequest.getName()).thenReturn("");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("name"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+    void shouldValidateNamePresence() {
+        when(mockRequest.getName()).thenReturn("name");
+        validator.validate(mockRequest);
+        verify(mockPresenceValidator).validateStringIsPresent("name", "name", "Name");
     }
 
     @Test
-    void shouldReturnErrorForEmptyName() {
-        when(mockRequest.getName()).thenReturn(" ");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("name"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForNullLoginName() {
-        when(mockRequest.getLoginName()).thenReturn(null);
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("login"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForBlankLoginName() {
-        when(mockRequest.getLoginName()).thenReturn("");
+    void shouldValidateLoginNamePresence() {
+        when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
-        when(mockUserDatabase.findByLogin("")).thenReturn(Optional.empty());
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("login"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForEmptyLoginName() {
-        when(mockRequest.getLoginName()).thenReturn(" ");
-        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
-        when(mockUserDatabase.findByLogin(" ")).thenReturn(Optional.empty());
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("login"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+        validator.validate(mockRequest);
+        verify(mockPresenceValidator).validateStringIsPresent("login name", "login", "Login name");
     }
 
     @Test
@@ -110,36 +67,10 @@ class SignUpValidatorTest {
     }
 
     @Test
-    void shouldReturnErrorForNullPassword() {
-        when(mockRequest.getPassword()).thenReturn(null);
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("password"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForBlankPassword() {
-        when(mockRequest.getPassword()).thenReturn("");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("password"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForEmptyPassword() {
-        when(mockRequest.getPassword()).thenReturn(" ");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("password"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+    void shouldValidatePasswordPresence() {
+        when(mockRequest.getPassword()).thenReturn("password");
+        validator.validate(mockRequest);
+        verify(mockPresenceValidator).validateStringIsPresent("password", "password", "Password");
     }
 
     @Test
@@ -155,9 +86,11 @@ class SignUpValidatorTest {
 
     @Test
     void shouldReturnMultipleErrors() {
-        when(mockRequest.getName()).thenReturn("name");
+        when(mockRequest.getName()).thenReturn("");
         when(mockRequest.getLoginName()).thenReturn("");
         when(mockRequest.getPassword()).thenReturn("p");
+        when(mockPresenceValidator.validateStringIsPresent("", "name", "Name")).thenReturn(Optional.of(mockCoreError));
+        when(mockPresenceValidator.validateStringIsPresent("", "login name", "Login Name")).thenReturn(Optional.of(mockCoreError));
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.findByLogin("")).thenReturn(Optional.empty());
         List<CoreError> errors = validator.validate(mockRequest);
@@ -166,10 +99,10 @@ class SignUpValidatorTest {
 
     @Test
     void shouldReturnNoErrorsForValidInput() {
-        when(mockRequest.getUserId()).thenReturn(mockUserId);
         when(mockRequest.getName()).thenReturn("name");
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("pas");
+        when(mockPresenceValidator.validateStringIsPresent(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.findByLogin("login")).thenReturn(Optional.empty());
         List<CoreError> errors = validator.validate(mockRequest);

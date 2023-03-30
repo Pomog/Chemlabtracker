@@ -1,4 +1,4 @@
-package core.services.validators.shared;
+package core.services.validators.universal.user_input;
 
 import core.responses.CoreError;
 
@@ -10,7 +10,7 @@ public class PresenceValidator {
     private static final String ERROR = "Error: ";
     private static final String ERROR_MISSING = " is required.";
 
-    public Optional<CoreError> validate(String value, String field, String valueName) {
+    public Optional<CoreError> validateStringIsPresent(String value, String field, String valueName) {
         return (value == null || value.isBlank())
                 ? Optional.of(new CoreError(field, ERROR + valueName + ERROR_MISSING))
                 : Optional.empty();

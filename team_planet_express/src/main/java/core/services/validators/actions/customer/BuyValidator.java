@@ -6,6 +6,7 @@ import core.requests.customer.BuyRequest;
 import core.responses.CoreError;
 import core.services.exception.ServiceMissingDataException;
 import core.services.validators.cart.CartValidator;
+import core.services.validators.universal.system.LongUserIdValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +18,18 @@ public class BuyValidator {
     private static final String ERROR_CART_EMPTY = "Error: Your cart is empty.";
 
     private final Database database;
+    private final LongUserIdValidator userIdValidator;
     private final CartValidator cartValidator;
 
-    public BuyValidator(Database database, CartValidator cartValidator) {
+    public BuyValidator(Database database, LongUserIdValidator userIdValidator, CartValidator cartValidator) {
         this.database = database;
+        this.userIdValidator = userIdValidator;
         this.cartValidator = cartValidator;
     }
 
     public List<CoreError> validate(BuyRequest request) {
+        userIdValidator.validateLongUserIdIsPresent(request.getUserId());
         List<CoreError> errors = new ArrayList<>();
-        //TODO validate id
         cartValidator.validateOpenCartExistsForUserId(request.getUserId()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateCartIsNotEmpty(request.getUserId()).ifPresent(errors::add);

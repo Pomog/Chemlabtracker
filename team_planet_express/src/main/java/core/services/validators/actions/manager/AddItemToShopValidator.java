@@ -3,8 +3,8 @@ package core.services.validators.actions.manager;
 import core.database.Database;
 import core.requests.manager.AddItemToShopRequest;
 import core.responses.CoreError;
-import core.services.validators.shared.PresenceValidator;
-import core.services.validators.shared.number.NumberValidator;
+import core.services.validators.universal.user_input.NumberValidator;
+import core.services.validators.universal.user_input.PresenceValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,18 +40,18 @@ public class AddItemToShopValidator {
     }
 
     private void validateItemName(String itemName) {
-        presenceValidator.validate(itemName, FIELD_NAME, VALUE_NAME_ITEM).ifPresent(errors::add);
+        presenceValidator.validateStringIsPresent(itemName, FIELD_NAME, VALUE_NAME_ITEM).ifPresent(errors::add);
         validateItemNameDoesNotAlreadyExist(itemName).ifPresent(errors::add);
     }
 
     private void validatePrice(String price) {
-        presenceValidator.validate(price, FIELD_PRICE, VALUE_NAME_PRICE).ifPresent(errors::add);
+        presenceValidator.validateStringIsPresent(price, FIELD_PRICE, VALUE_NAME_PRICE).ifPresent(errors::add);
         numberValidator.validateIsNumber(price, FIELD_PRICE, VALUE_NAME_PRICE).ifPresent(errors::add);
         numberValidator.validateIsNotNegative(price, FIELD_PRICE, VALUE_NAME_PRICE).ifPresent(errors::add);
     }
 
     private void validateQuantity(String availableQuantity) {
-        presenceValidator.validate(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY).ifPresent(errors::add);
+        presenceValidator.validateStringIsPresent(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY).ifPresent(errors::add);
         numberValidator.validateIsNumber(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY).ifPresent(errors::add);
         numberValidator.validateIsNotNegative(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY).ifPresent(errors::add);
         numberValidator.validateIsNotDecimal(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY).ifPresent(errors::add);

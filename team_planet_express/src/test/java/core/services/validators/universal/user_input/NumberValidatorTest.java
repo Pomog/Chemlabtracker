@@ -1,4 +1,4 @@
-package core.services.validators.shared.number;
+package core.services.validators.universal.user_input;
 
 import core.responses.CoreError;
 import org.junit.jupiter.api.Test;
@@ -45,6 +45,36 @@ class NumberValidatorTest {
     @Test
     void shouldReturnNoErrorForZero() {
         Optional<CoreError> error = validator.validateIsNotNegative("0.00", "field", "Field");
+        assertTrue(error.isEmpty());
+    }
+
+    @Test
+    void shouldReturnErrorForNegativeValue2() {
+        Optional<CoreError> error = validator.validateIsGreaterThanZero("-10", "field", "Field");
+        assertTrue(error.isPresent());
+        assertEquals("field", error.get().getField());
+        assertTrue(error.get().getMessage().contains("Field"));
+        assertTrue(error.get().getMessage().toLowerCase().contains("greater"));
+    }
+
+    @Test
+    void shouldReturnErrorForZero() {
+        Optional<CoreError> error = validator.validateIsGreaterThanZero("0", "field", "Field");
+        assertTrue(error.isPresent());
+        assertEquals("field", error.get().getField());
+        assertTrue(error.get().getMessage().contains("Field"));
+        assertTrue(error.get().getMessage().toLowerCase().contains("greater"));
+    }
+
+    @Test
+    void shouldReturnNoErrorForPositiveNumber2() {
+        Optional<CoreError> error = validator.validateIsGreaterThanZero("10.45", "field", "Field");
+        assertTrue(error.isEmpty());
+    }
+
+    @Test
+    void shouldReturnNoErrorForLeadingZeros() {
+        Optional<CoreError> error = validator.validateIsGreaterThanZero("00010.45", "field", "Field");
         assertTrue(error.isEmpty());
     }
 

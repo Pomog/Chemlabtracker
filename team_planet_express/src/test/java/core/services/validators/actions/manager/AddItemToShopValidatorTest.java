@@ -5,8 +5,8 @@ import core.database.ItemDatabase;
 import core.domain.item.Item;
 import core.requests.manager.AddItemToShopRequest;
 import core.responses.CoreError;
-import core.services.validators.shared.PresenceValidator;
-import core.services.validators.shared.number.NumberValidator;
+import core.services.validators.universal.user_input.NumberValidator;
+import core.services.validators.universal.user_input.PresenceValidator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -26,14 +26,15 @@ class AddItemToShopValidatorTest {
     private final Item mockItem = mock(Item.class);
     private final CoreError mockCoreError = mock(CoreError.class);
 
-    private final AddItemToShopValidator validator = new AddItemToShopValidator(mockDatabase, mockPresenceValidator, mockNumberValidator);
+    private final AddItemToShopValidator validator =
+            new AddItemToShopValidator(mockDatabase, mockPresenceValidator, mockNumberValidator);
 
     @Test
     void shouldValidateNamePresence() {
         when(mockRequest.getItemName()).thenReturn("name");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
-        verify(mockPresenceValidator).validate("name", "name", "Item name");
+        verify(mockPresenceValidator).validateStringIsPresent("name", "name", "Item name");
     }
 
     @Test
@@ -54,7 +55,7 @@ class AddItemToShopValidatorTest {
         when(mockRequest.getPrice()).thenReturn("100.10");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
-        verify(mockPresenceValidator).validate("100.10", "price", "Price");
+        verify(mockPresenceValidator).validateStringIsPresent("100.10", "price", "Price");
     }
 
     @Test
@@ -78,7 +79,7 @@ class AddItemToShopValidatorTest {
         when(mockRequest.getAvailableQuantity()).thenReturn("10");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
-        verify(mockPresenceValidator).validate("10", "quantity", "Quantity");
+        verify(mockPresenceValidator).validateStringIsPresent("10", "quantity", "Quantity");
     }
 
     @Test
@@ -110,7 +111,7 @@ class AddItemToShopValidatorTest {
         when(mockRequest.getItemName()).thenReturn("");
         when(mockRequest.getPrice()).thenReturn("-100.10");
         when(mockRequest.getAvailableQuantity()).thenReturn("10.10");
-        when(mockPresenceValidator.validate("", "name", "Item name")).thenReturn(Optional.of(mockCoreError));
+        when(mockPresenceValidator.validateStringIsPresent("", "name", "Item name")).thenReturn(Optional.of(mockCoreError));
         when(mockNumberValidator.validateIsNotNegative("-100.10", "price", "Price")).thenReturn(Optional.of(mockCoreError));
         when(mockNumberValidator.validateIsNotDecimal("10.10", "quantity", "Quantity")).thenReturn(Optional.of(mockCoreError));
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
@@ -124,7 +125,7 @@ class AddItemToShopValidatorTest {
         when(mockRequest.getItemName()).thenReturn("name");
         when(mockRequest.getPrice()).thenReturn("100.10");
         when(mockRequest.getAvailableQuantity()).thenReturn("10");
-        when(mockPresenceValidator.validate(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
+        when(mockPresenceValidator.validateStringIsPresent(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
         when(mockNumberValidator.validateIsNumber(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
         when(mockNumberValidator.validateIsNotNegative(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
         when(mockNumberValidator.validateIsNotDecimal(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
