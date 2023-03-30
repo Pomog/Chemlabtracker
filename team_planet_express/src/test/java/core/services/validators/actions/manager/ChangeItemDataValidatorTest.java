@@ -5,6 +5,7 @@ import core.database.ItemDatabase;
 import core.domain.item.Item;
 import core.requests.manager.ChangeItemDataRequest;
 import core.responses.CoreError;
+import core.services.exception.ServiceMissingDataException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -12,8 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ChangeItemDataValidatorTest {
@@ -170,7 +170,6 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         //TODO this should be in Item.equals() test
         when(mockItemDatabase.getAllItems()).thenReturn(List.of(new Item("name", new BigDecimal("10.10"), 10)));
         List<CoreError> errors = validator.validate(mockRequest);
@@ -225,6 +224,17 @@ class ChangeItemDataValidatorTest {
         when(mockItemDatabase.getAllItems()).thenReturn(Collections.emptyList());
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.isEmpty());
+    }
+
+    @Test
+    void shouldThrowExceptionForMissingOptional() {
+        when(mockRequest.getItemId()).thenReturn("1");
+        when(mockRequest.getNewItemName()).thenReturn("name");
+        when(mockRequest.getNewPrice()).thenReturn("10.10");
+        when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
+        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem), Optional.empty());
+        assertThrows(ServiceMissingDataException.class, () -> validator.validate(mockRequest));
     }
 
 }

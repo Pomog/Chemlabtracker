@@ -8,10 +8,11 @@ import core.requests.customer.RemoveItemFromCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.RemoveItemFromCartResponse;
 import core.services.validators.actions.customer.RemoveItemFromCartValidator;
+import core.services.exception.ServiceMissingDataException;
+import core.services.validators.customer.RemoveItemFromCartValidator;
 import core.support.MutableLong;
 
 import java.util.List;
-import java.util.Optional;
 
 public class RemoveItemFromCartService {
 
@@ -34,13 +35,30 @@ public class RemoveItemFromCartService {
         if (!errors.isEmpty()) {
             return new RemoveItemFromCartResponse(errors);
         }
-        Optional<Item> item = database.accessItemDatabase().findByName(request.getItemName());
-        Cart cart = database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue()).get();
-        Optional<CartItem> cartItem = database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.get().getId());
-        Integer newAvailableQuantity = item.get().getAvailableQuantity() + cartItem.get().getOrderedQuantity();
-        database.accessCartItemDatabase().deleteByID(cartItem.get().getId());
-        database.accessItemDatabase().changeAvailableQuantity(item.get().getId(), newAvailableQuantity);
+        Cart cart = getOpenCartForUserId();
+        Item item = getItemByName(request.getItemName());
+        CartItem cartItem = getCartItemByCartIdAndItemId(cart.getId(), item.getId());
+        Integer newAvailableQuantity = item.getAvailableQuantity() + cartItem.getOrderedQuantity();
+        database.accessCartItemDatabase().deleteByID(cartItem.getId());
+        database.accessItemDatabase().changeAvailableQuantity(item.getId(), newAvailableQuantity);
         return new RemoveItemFromCartResponse();
+    }
+
+    //TODO duplicate everywhere
+    //TODO WTB Autowired
+    private Cart getOpenCartForUserId() {
+        return database.accessCartDatabase().findOpenCartForUserId(currentUserId.getValue())
+                .orElseThrow(ServiceMissingDataException::new);
+    }
+
+    private Item getItemByName(String itemName) {
+        return database.accessItemDatabase().findByName(itemName)
+                .orElseThrow(ServiceMissingDataException::new);
+    }
+
+    private CartItem getCartItemByCartIdAndItemId(Long cartId, Long itemId) {
+        return database.accessCartItemDatabase().findByCartIdAndItemId(cartId, itemId)
+                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }
