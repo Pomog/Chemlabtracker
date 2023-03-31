@@ -6,7 +6,8 @@ import core.domain.user.User;
 import core.requests.guest.SignUpRequest;
 import core.responses.CoreError;
 import core.services.validators.universal.system.MutableLongUserIdValidator;
-import core.services.validators.universal.user_input.PresenceValidator;
+import core.services.validators.universal.user_input.InputStringValidator;
+import core.services.validators.universal.user_input.InputStringValidatorRecord;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 
@@ -21,15 +22,15 @@ class SignUpValidatorTest {
 
     private final Database mockDatabase = mock(Database.class);
     private final MutableLongUserIdValidator mockMutableLongUserIdValidator = mock(MutableLongUserIdValidator.class);
-    private final PresenceValidator mockPresenceValidator = mock(PresenceValidator.class);
+    private final InputStringValidator mockInputStringValidator = mock(InputStringValidator.class);
     private final SignUpRequest mockRequest = mock(SignUpRequest.class);
-    private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
     private final MutableLong mockUserId = mock(MutableLong.class);
+    private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
     private final User mockUser = mock(User.class);
     private final CoreError mockCoreError = mock(CoreError.class);
 
     private final SignUpValidator validator =
-            new SignUpValidator(mockDatabase, mockMutableLongUserIdValidator, mockPresenceValidator);
+            new SignUpValidator(mockDatabase, mockMutableLongUserIdValidator, mockInputStringValidator);
 
     @Test
     void shouldValidateUserIdIsPresent() {
@@ -39,18 +40,20 @@ class SignUpValidatorTest {
     }
 
     @Test
-    void shouldValidateNamePresence() {
+    void shouldValidateNameIsPresent() {
         when(mockRequest.getName()).thenReturn("name");
         validator.validate(mockRequest);
-        verify(mockPresenceValidator).validateStringIsPresent("name", "name", "Name");
+        InputStringValidatorRecord record = new InputStringValidatorRecord("name", "name", "Name");
+        verify(mockInputStringValidator).validateIsPresent(record);
     }
 
     @Test
-    void shouldValidateLoginNamePresence() {
+    void shouldValidateLoginNameIsPresent() {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         validator.validate(mockRequest);
-        verify(mockPresenceValidator).validateStringIsPresent("login name", "login", "Login name");
+        InputStringValidatorRecord record = new InputStringValidatorRecord("login name", "login", "Login name");
+        verify(mockInputStringValidator).validateIsPresent(record);
     }
 
     @Test
@@ -67,10 +70,11 @@ class SignUpValidatorTest {
     }
 
     @Test
-    void shouldValidatePasswordPresence() {
+    void shouldValidatePasswordIsPresent() {
         when(mockRequest.getPassword()).thenReturn("password");
         validator.validate(mockRequest);
-        verify(mockPresenceValidator).validateStringIsPresent("password", "password", "Password");
+        InputStringValidatorRecord record = new InputStringValidatorRecord("password", "password", "Password");
+        verify(mockInputStringValidator).validateIsPresent(record);
     }
 
     @Test
@@ -86,25 +90,14 @@ class SignUpValidatorTest {
 
     @Test
     void shouldReturnMultipleErrors() {
-        when(mockRequest.getName()).thenReturn("");
-        when(mockRequest.getLoginName()).thenReturn("");
-        when(mockRequest.getPassword()).thenReturn("p");
-        when(mockPresenceValidator.validateStringIsPresent("", "name", "Name")).thenReturn(Optional.of(mockCoreError));
-        when(mockPresenceValidator.validateStringIsPresent("", "login name", "Login Name")).thenReturn(Optional.of(mockCoreError));
-        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
-        when(mockUserDatabase.findByLogin("")).thenReturn(Optional.empty());
+        when(mockInputStringValidator.validateIsPresent(any(InputStringValidatorRecord.class))).thenReturn(Optional.of(mockCoreError));
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.size() > 1);
     }
 
+    //TODO integration test ?
     @Test
     void shouldReturnNoErrorsForValidInput() {
-        when(mockRequest.getName()).thenReturn("name");
-        when(mockRequest.getLoginName()).thenReturn("login");
-        when(mockRequest.getPassword()).thenReturn("pas");
-        when(mockPresenceValidator.validateStringIsPresent(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
-        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
-        when(mockUserDatabase.findByLogin("login")).thenReturn(Optional.empty());
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.isEmpty());
     }

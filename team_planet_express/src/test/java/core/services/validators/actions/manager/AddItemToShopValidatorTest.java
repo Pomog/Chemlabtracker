@@ -5,8 +5,8 @@ import core.database.ItemDatabase;
 import core.domain.item.Item;
 import core.requests.manager.AddItemToShopRequest;
 import core.responses.CoreError;
-import core.services.validators.universal.user_input.NumberValidator;
-import core.services.validators.universal.user_input.PresenceValidator;
+import core.services.validators.universal.user_input.InputStringValidator;
+import core.services.validators.universal.user_input.InputStringValidatorRecord;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -19,22 +19,22 @@ import static org.mockito.Mockito.*;
 class AddItemToShopValidatorTest {
 
     private final Database mockDatabase = mock(Database.class);
-    private final PresenceValidator mockPresenceValidator = mock(PresenceValidator.class);
-    private final NumberValidator mockNumberValidator = mock(NumberValidator.class);
+    private final InputStringValidator mockInputStringValidator = mock(InputStringValidator.class);
     private final AddItemToShopRequest mockRequest = mock(AddItemToShopRequest.class);
     private final ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
     private final Item mockItem = mock(Item.class);
     private final CoreError mockCoreError = mock(CoreError.class);
 
     private final AddItemToShopValidator validator =
-            new AddItemToShopValidator(mockDatabase, mockPresenceValidator, mockNumberValidator);
+            new AddItemToShopValidator(mockDatabase, mockInputStringValidator);
 
     @Test
-    void shouldValidateNamePresence() {
+    void shouldValidateNameIsPresent() {
         when(mockRequest.getItemName()).thenReturn("name");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
-        verify(mockPresenceValidator).validateStringIsPresent("name", "name", "Item name");
+        InputStringValidatorRecord record = new InputStringValidatorRecord("name", "name", "Item name");
+        verify(mockInputStringValidator).validateIsPresent(record);
     }
 
     @Test
@@ -51,86 +51,36 @@ class AddItemToShopValidatorTest {
     }
 
     @Test
-    void shouldValidatePricePresence() {
+    void shouldValidatePrice() {
         when(mockRequest.getPrice()).thenReturn("100.10");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
-        verify(mockPresenceValidator).validateStringIsPresent("100.10", "price", "Price");
+        InputStringValidatorRecord record = new InputStringValidatorRecord("100.10", "price", "Price");
+        verify(mockInputStringValidator).validateIsPresent(record);
+        verify(mockInputStringValidator).validateIsNumber(record);
+        verify(mockInputStringValidator).validateIsNotNegative(record);
     }
 
     @Test
-    void shouldValidatePriceIsNumber() {
-        when(mockRequest.getPrice()).thenReturn("100.10");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        validator.validate(mockRequest);
-        verify(mockNumberValidator).validateIsNumber("100.10", "price", "Price");
-    }
-
-    @Test
-    void shouldValidatePriceIsNotNegative() {
-        when(mockRequest.getPrice()).thenReturn("100.10");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        validator.validate(mockRequest);
-        verify(mockNumberValidator).validateIsNotNegative("100.10", "price", "Price");
-    }
-
-    @Test
-    void shouldValidateQuantityPresence() {
+    void shouldValidateQuantity() {
         when(mockRequest.getAvailableQuantity()).thenReturn("10");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
-        verify(mockPresenceValidator).validateStringIsPresent("10", "quantity", "Quantity");
-    }
-
-    @Test
-    void shouldValidateQuantityIsNumber() {
-        when(mockRequest.getAvailableQuantity()).thenReturn("10");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        validator.validate(mockRequest);
-        verify(mockNumberValidator).validateIsNumber("10", "quantity", "Quantity");
-    }
-
-    @Test
-    void shouldValidateQuantityNotNegative() {
-        when(mockRequest.getAvailableQuantity()).thenReturn("10");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        validator.validate(mockRequest);
-        verify(mockNumberValidator).validateIsNotNegative("10", "quantity", "Quantity");
-    }
-
-    @Test
-    void shouldValidateQuantityNotDecimal() {
-        when(mockRequest.getAvailableQuantity()).thenReturn("10");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        validator.validate(mockRequest);
-        verify(mockNumberValidator).validateIsNotDecimal("10", "quantity", "Quantity");
+        InputStringValidatorRecord record = new InputStringValidatorRecord("10", "quantity", "Quantity");
+        verify(mockInputStringValidator).validateIsPresent(record);
+        verify(mockInputStringValidator).validateIsNumber(record);
+        verify(mockInputStringValidator).validateIsNotNegative(record);
+        verify(mockInputStringValidator).validateIsNotDecimal(record);
     }
 
     @Test
     void shouldReturnMultipleErrors() {
-        when(mockRequest.getItemName()).thenReturn("");
-        when(mockRequest.getPrice()).thenReturn("-100.10");
-        when(mockRequest.getAvailableQuantity()).thenReturn("10.10");
-        when(mockPresenceValidator.validateStringIsPresent("", "name", "Item name")).thenReturn(Optional.of(mockCoreError));
-        when(mockNumberValidator.validateIsNotNegative("-100.10", "price", "Price")).thenReturn(Optional.of(mockCoreError));
-        when(mockNumberValidator.validateIsNotDecimal("10.10", "quantity", "Quantity")).thenReturn(Optional.of(mockCoreError));
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        when(mockItemDatabase.findByName("")).thenReturn(Optional.empty());
+        when(mockInputStringValidator.validateIsPresent(any(InputStringValidatorRecord.class))).thenReturn(Optional.of(mockCoreError));
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.size() > 1);
     }
 
+    //TODO integration test ?
     @Test
     void shouldReturnNoErrorsForValidInput() {
-        when(mockRequest.getItemName()).thenReturn("name");
-        when(mockRequest.getPrice()).thenReturn("100.10");
-        when(mockRequest.getAvailableQuantity()).thenReturn("10");
-        when(mockPresenceValidator.validateStringIsPresent(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
-        when(mockNumberValidator.validateIsNumber(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
-        when(mockNumberValidator.validateIsNotNegative(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
-        when(mockNumberValidator.validateIsNotDecimal(anyString(), anyString(), anyString())).thenReturn(Optional.empty());
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        when(mockItemDatabase.findByName("name")).thenReturn(Optional.empty());
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.isEmpty());
     }

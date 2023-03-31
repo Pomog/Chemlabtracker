@@ -33,7 +33,7 @@ public class RemoveItemFromCartUIAction extends UIAction {
         userCommunication.requestInput(PROMPT_TOPIC_ITEM);
         String itemName = userCommunication.getInput();
         RemoveItemFromCartRequest request =
-                new RemoveItemFromCartRequest(currentUserId.getValue(), itemName);
+                new RemoveItemFromCartRequest(currentUserId, itemName);
         RemoveItemFromCartResponse response = removeItemFromCartService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));

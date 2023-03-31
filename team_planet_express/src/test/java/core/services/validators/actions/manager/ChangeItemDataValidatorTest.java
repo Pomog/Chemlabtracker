@@ -6,10 +6,11 @@ import core.domain.item.Item;
 import core.requests.manager.ChangeItemDataRequest;
 import core.responses.CoreError;
 import core.services.exception.ServiceMissingDataException;
+import core.services.validators.universal.user_input.InputStringValidator;
+import core.services.validators.universal.user_input.InputStringValidatorRecord;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,76 +20,25 @@ import static org.mockito.Mockito.*;
 class ChangeItemDataValidatorTest {
 
     private final Database mockDatabase = mock(Database.class);
+    private final InputStringValidator mockInputStringValidator = mock(InputStringValidator.class);
     private final ChangeItemDataRequest mockRequest = mock(ChangeItemDataRequest.class);
     private final ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
     private final Item mockItem = mock(Item.class);
+    private final CoreError mockCoreError = mock(CoreError.class);
 
-    private final ChangeItemDataValidator validator = new ChangeItemDataValidator(mockDatabase);
-
-    @Test
-    void shouldReturnErrorForNullId() {
-        when(mockRequest.getItemId()).thenReturn(null);
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("id"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
+    private final ChangeItemDataValidator validator =
+            new ChangeItemDataValidator(mockDatabase, mockInputStringValidator);
 
     @Test
-    void shouldReturnErrorForBlankId() {
-        when(mockRequest.getItemId()).thenReturn("");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("id"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForEmptyId() {
-        when(mockRequest.getItemId()).thenReturn(" ");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("id"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("required"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForNonNumberId() {
-        when(mockRequest.getItemId()).thenReturn("id");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("id"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("number"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForNegativeId() {
-        when(mockRequest.getItemId()).thenReturn("-1");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("id"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("negative"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForDecimalId() {
-        when(mockRequest.getItemId()).thenReturn("1.5");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("id"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("decimal"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+    void shouldValidateId() {
+        when(mockRequest.getItemId()).thenReturn("1");
+        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        validator.validate(mockRequest);
+        InputStringValidatorRecord record = new InputStringValidatorRecord("1", "id", "Item id");
+        verify(mockInputStringValidator).validateIsPresent(record);
+        verify(mockInputStringValidator).validateIsNumber(record);
+        verify(mockInputStringValidator).validateIsNotNegative(record);
+        verify(mockInputStringValidator).validateIsNotDecimal(record);
     }
 
     @Test
@@ -102,64 +52,30 @@ class ChangeItemDataValidatorTest {
                 .filter(coreError -> coreError.getMessage().toLowerCase().contains("does not exist"))
                 .findFirst();
         assertFalse(error.isEmpty());
-
         verify(mockItemDatabase).findById(1L);
-
     }
 
     @Test
-    void shouldReturnErrorForNonNumberPrice() {
-        when(mockRequest.getNewPrice()).thenReturn("price");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("price"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("number"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+    void shouldValidatePrice() {
+        when(mockRequest.getItemId()).thenReturn("1");
+        when(mockRequest.getNewPrice()).thenReturn("10.5");
+        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        validator.validate(mockRequest);
+        InputStringValidatorRecord record = new InputStringValidatorRecord("10.5", "price", "Price");
+        verify(mockInputStringValidator).validateIsNumber(record);
+        verify(mockInputStringValidator).validateIsNotNegative(record);
     }
 
     @Test
-    void shouldReturnErrorForNegativePrice() {
-        when(mockRequest.getNewPrice()).thenReturn("-100.10");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("price"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("negative"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForNonNumberQuantity() {
-        when(mockRequest.getNewAvailableQuantity()).thenReturn("quantity");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("quantity"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("number"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForNegativeQuantity() {
-        when(mockRequest.getNewAvailableQuantity()).thenReturn("-10");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("quantity"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("negative"))
-                .findFirst();
-        assertFalse(error.isEmpty());
-    }
-
-    @Test
-    void shouldReturnErrorForDecimalQuantity() {
-        when(mockRequest.getNewAvailableQuantity()).thenReturn("10.10");
-        List<CoreError> errors = validator.validate(mockRequest);
-        Optional<CoreError> error = errors.stream()
-                .filter(coreError -> coreError.getField().equals("quantity"))
-                .filter(coreError -> coreError.getMessage().toLowerCase().contains("decimal"))
-                .findFirst();
-        assertFalse(error.isEmpty());
+    void shouldValidateQuantity() {
+        when(mockRequest.getItemId()).thenReturn("1");
+        when(mockRequest.getNewAvailableQuantity()).thenReturn("5");
+        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        validator.validate(mockRequest);
+        InputStringValidatorRecord record = new InputStringValidatorRecord("5", "quantity", "Quantity");
+        verify(mockInputStringValidator).validateIsNumber(record);
+        verify(mockInputStringValidator).validateIsNotNegative(record);
+        verify(mockInputStringValidator).validateIsNotDecimal(record);
     }
 
     @Test
@@ -170,7 +86,6 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
-        //TODO this should be in Item.equals() test
         when(mockItemDatabase.getAllItems()).thenReturn(List.of(new Item("name", new BigDecimal("10.10"), 10)));
         List<CoreError> errors = validator.validate(mockRequest);
         Optional<CoreError> error = errors.stream()
@@ -182,9 +97,7 @@ class ChangeItemDataValidatorTest {
 
     @Test
     void shouldReturnMultipleErrors() {
-        when(mockRequest.getItemId()).thenReturn("-1");
-        when(mockRequest.getNewPrice()).thenReturn("10.10");
-        when(mockRequest.getNewAvailableQuantity()).thenReturn("1.5");
+        when(mockInputStringValidator.validateIsNotNegative(any(InputStringValidatorRecord.class))).thenReturn(Optional.of(mockCoreError));
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.size() > 1);
     }
@@ -192,36 +105,9 @@ class ChangeItemDataValidatorTest {
     @Test
     void shouldReturnNoErrorsForValidInput() {
         when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewPrice()).thenReturn("10.10");
-        when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
-        when(mockItemDatabase.getAllItems()).thenReturn(Collections.emptyList());
-        List<CoreError> errors = validator.validate(mockRequest);
-        assertTrue(errors.isEmpty());
-    }
-
-    @Test
-    void shouldReturnNoErrorsForZeroPrice() {
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewPrice()).thenReturn("0.00");
-        when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
-        when(mockItemDatabase.getAllItems()).thenReturn(Collections.emptyList());
-        List<CoreError> errors = validator.validate(mockRequest);
-        assertTrue(errors.isEmpty());
-    }
-
-
-    @Test
-    void shouldReturnNoErrorsForZeroQuantity() {
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewPrice()).thenReturn("10.10");
-        when(mockRequest.getNewAvailableQuantity()).thenReturn("0");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
-        when(mockItemDatabase.getAllItems()).thenReturn(Collections.emptyList());
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.isEmpty());
     }
@@ -229,9 +115,6 @@ class ChangeItemDataValidatorTest {
     @Test
     void shouldThrowExceptionForMissingOptional() {
         when(mockRequest.getItemId()).thenReturn("1");
-        when(mockRequest.getNewItemName()).thenReturn("name");
-        when(mockRequest.getNewPrice()).thenReturn("10.10");
-        when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem), Optional.empty());
         assertThrows(ServiceMissingDataException.class, () -> validator.validate(mockRequest));

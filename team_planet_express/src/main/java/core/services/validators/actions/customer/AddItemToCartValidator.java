@@ -6,9 +6,9 @@ import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
 import core.services.exception.ServiceMissingDataException;
 import core.services.validators.cart.CartValidator;
-import core.services.validators.universal.system.LongUserIdValidator;
-import core.services.validators.universal.user_input.NumberValidator;
-import core.services.validators.universal.user_input.PresenceValidator;
+import core.services.validators.universal.system.MutableLongUserIdValidator;
+import core.services.validators.universal.user_input.InputStringValidator;
+import core.services.validators.universal.user_input.InputStringValidatorRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,28 +20,26 @@ public class AddItemToCartValidator {
     private static final String FIELD_QUANTITY = "quantity";
     private static final String VALUE_NAME_ITEM = "Item name";
     private static final String VALUE_NAME_QUANTITY = "Quantity";
-    private static final String ERROR_NO_SUCH_ITEM = "Error: No such item.";
+    private static final String ERROR_NO_SUCH_ITEM = "Error: No such item in the shop.";
     private static final String ERROR_NOT_ENOUGH_QUANTITY = "Error: Available quantity lower than ordered amount.";
 
     private final Database database;
-    private final LongUserIdValidator userIdValidator;
+    private final MutableLongUserIdValidator userIdValidator;
     private final CartValidator cartValidator;
-    private final PresenceValidator presenceValidator;
-    private final NumberValidator numberValidator;
+    private final InputStringValidator inputStringValidator;
     private List<CoreError> errors;
 
-    public AddItemToCartValidator(Database database, LongUserIdValidator userIdValidator, CartValidator cartValidator, PresenceValidator presenceValidator, NumberValidator numberValidator) {
+    public AddItemToCartValidator(Database database, MutableLongUserIdValidator userIdValidator, CartValidator cartValidator, InputStringValidator inputStringValidator) {
         this.database = database;
         this.userIdValidator = userIdValidator;
         this.cartValidator = cartValidator;
-        this.presenceValidator = presenceValidator;
-        this.numberValidator = numberValidator;
+        this.inputStringValidator = inputStringValidator;
     }
 
     public List<CoreError> validate(AddItemToCartRequest request) {
-        userIdValidator.validateLongUserIdIsPresent(request.getUserId());
+        userIdValidator.validateMutableLongUserIdIsPresent(request.getUserId());
         errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getUserId()).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getUserId().getValue()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateItemName(request.getItemName());
             validateQuantity(request.getOrderedQuantity());
@@ -53,15 +51,17 @@ public class AddItemToCartValidator {
     }
 
     private void validateItemName(String itemName) {
-        presenceValidator.validateStringIsPresent(itemName, FIELD_NAME, VALUE_NAME_ITEM).ifPresent(errors::add);
+        InputStringValidatorRecord record = new InputStringValidatorRecord(itemName, FIELD_NAME, VALUE_NAME_ITEM);
+        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         validateItemNameExistsInShop(itemName).ifPresent(errors::add);
     }
 
     private void validateQuantity(String orderedQuantity) {
-        presenceValidator.validateStringIsPresent(orderedQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY).ifPresent(errors::add);
-        numberValidator.validateIsNumber(orderedQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY).ifPresent(errors::add);
-        numberValidator.validateIsGreaterThanZero(orderedQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY).ifPresent(errors::add);
-        numberValidator.validateIsNotDecimal(orderedQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY).ifPresent(errors::add);
+        InputStringValidatorRecord record = new InputStringValidatorRecord(orderedQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
+        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
+        inputStringValidator.validateIsGreaterThanZero(record).ifPresent(errors::add);
+        inputStringValidator.validateIsNotDecimal(record).ifPresent(errors::add);
     }
 
     private Optional<CoreError> validateItemNameExistsInShop(String itemName) {

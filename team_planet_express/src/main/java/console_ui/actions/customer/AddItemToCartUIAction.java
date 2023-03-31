@@ -35,7 +35,7 @@ public class AddItemToCartUIAction extends UIAction {
         userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
         String orderedQuantity = userCommunication.getInput();
         AddItemToCartRequest request =
-                new AddItemToCartRequest(currentUserId.getValue(), itemName, orderedQuantity);
+                new AddItemToCartRequest(currentUserId, itemName, orderedQuantity);
         AddItemToCartResponse response = addItemToCartService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));

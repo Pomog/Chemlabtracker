@@ -7,8 +7,9 @@ import core.requests.customer.RemoveItemFromCartRequest;
 import core.responses.CoreError;
 import core.services.exception.ServiceMissingDataException;
 import core.services.validators.cart.CartValidator;
-import core.services.validators.universal.system.LongUserIdValidator;
-import core.services.validators.universal.user_input.PresenceValidator;
+import core.services.validators.universal.system.MutableLongUserIdValidator;
+import core.services.validators.universal.user_input.InputStringValidator;
+import core.services.validators.universal.user_input.InputStringValidatorRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,22 +23,22 @@ public class RemoveItemFromCartValidator {
     private static final String ERROR_NO_SUCH_ITEM_IN_SHOP = "Error: No such item in the shop.";
 
     private final Database database;
-    private final LongUserIdValidator userIdValidator;
+    private final MutableLongUserIdValidator userIdValidator;
     private final CartValidator cartValidator;
-    private final PresenceValidator presenceValidator;
+    private final InputStringValidator inputStringValidator;
     private List<CoreError> errors;
 
-    public RemoveItemFromCartValidator(Database database, LongUserIdValidator userIdValidator, CartValidator cartValidator, PresenceValidator presenceValidator) {
+    public RemoveItemFromCartValidator(Database database, MutableLongUserIdValidator userIdValidator, CartValidator cartValidator, InputStringValidator inputStringValidator) {
         this.database = database;
         this.userIdValidator = userIdValidator;
         this.cartValidator = cartValidator;
-        this.presenceValidator = presenceValidator;
+        this.inputStringValidator = inputStringValidator;
     }
 
     public List<CoreError> validate(RemoveItemFromCartRequest request) {
-        userIdValidator.validateLongUserIdIsPresent(request.getUserId());
+        userIdValidator.validateMutableLongUserIdIsPresent(request.getUserId());
         errors = new ArrayList<>();
-        cartValidator.validateOpenCartExistsForUserId(request.getUserId()).ifPresent(errors::add);
+        cartValidator.validateOpenCartExistsForUserId(request.getUserId().getValue()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateItemName(request.getItemName());
             if (errors.isEmpty()) {
@@ -48,7 +49,8 @@ public class RemoveItemFromCartValidator {
     }
 
     private void validateItemName(String itemName) {
-        presenceValidator.validateStringIsPresent(itemName, FIELD_NAME, VALUE_NAME_ITEM).ifPresent(errors::add);
+        InputStringValidatorRecord record = new InputStringValidatorRecord(itemName, FIELD_NAME, VALUE_NAME_ITEM);
+        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         validateItemNameInShop(itemName).ifPresent(errors::add);
     }
 
@@ -59,7 +61,7 @@ public class RemoveItemFromCartValidator {
     }
 
     private Optional<CoreError> validateItemNameInCart(RemoveItemFromCartRequest request) {
-        Cart cart = getOpenCartForUserId(request.getUserId());
+        Cart cart = getOpenCartForUserId(request.getUserId().getValue());
         Item item = getItemByName(request.getItemName());
         return (database.accessCartItemDatabase().findByCartIdAndItemId(cart.getId(), item.getId()).isEmpty())
                 ? Optional.of(new CoreError(FIELD_NAME, ERROR_NO_SUCH_ITEM_IN_CART))

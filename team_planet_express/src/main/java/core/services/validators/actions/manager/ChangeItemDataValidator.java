@@ -5,6 +5,8 @@ import core.domain.item.Item;
 import core.requests.manager.ChangeItemDataRequest;
 import core.responses.CoreError;
 import core.services.exception.ServiceMissingDataException;
+import core.services.validators.universal.user_input.InputStringValidator;
+import core.services.validators.universal.user_input.InputStringValidatorRecord;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,27 +20,19 @@ public class ChangeItemDataValidator {
     private static final String FIELD_PRICE = "price";
     private static final String FIELD_QUANTITY = "quantity";
     private static final String FIELD_BUTTON = "button";
-    private static final String ERROR_ID_MISSING = "Error: Item id is required.";
-    private static final String ERROR_ID_NOT_NUMBER = "Error: Item id should be a number.";
-    private static final String ERROR_ID_NEGATIVE = "Error: Item id should not be negative.";
-    private static final String ERROR_ID_DECIMAL = "Error: Item id should not be decimal.";
+    private static final String VALUE_NAME_ID = "Item id";
+    private static final String VALUE_NAME_PRICE = "Price";
+    private static final String VALUE_NAME_QUANTITY = "Quantity";
     private static final String ERROR_ID_NOT_EXISTS = "Error: Item with this id does not exist.";
-    private static final String ERROR_PRICE_NOT_NUMBER = "Error: Price should be a number.";
-    private static final String ERROR_PRICE_NEGATIVE = "Error: Price should not be negative.";
-    private static final String ERROR_QUANTITY_NOT_NUMBER = "Error: Quantity should be a number.";
-    private static final String ERROR_QUANTITY_NEGATIVE = "Error: Quantity should not be negative.";
-    private static final String ERROR_QUANTITY_DECIMAL = "Error: Quantity should not be decimal.";
     private static final String ERROR_ITEM_EXISTS = "Error: Exactly the same item already exists.";
 
-    private static final String REGEX_NUMBER = "-?[0-9]+(.[0-9]+)?";
-    private static final String REGEX_NOT_NEGATIVE_NUMBER = "[0-9]+(.[0-9]+)?";
-    private static final String REGEX_NOT_DECIMAL_NUMBER = "[0-9]+";
-
     private final Database database;
+    private final InputStringValidator inputStringValidator;
     private List<CoreError> errors;
 
-    public ChangeItemDataValidator(Database database) {
+    public ChangeItemDataValidator(Database database, InputStringValidator inputStringValidator) {
         this.database = database;
+        this.inputStringValidator = inputStringValidator;
     }
 
     public List<CoreError> validate(ChangeItemDataRequest request) {
@@ -53,24 +47,27 @@ public class ChangeItemDataValidator {
     }
 
     private void validateId(String id) {
-        validateIdIsPresent(id).ifPresent(errors::add);
-        validateIsNumber(id, FIELD_ID, ERROR_ID_NOT_NUMBER).ifPresent(errors::add);
-        validateIsPositive(id, FIELD_ID, ERROR_ID_NEGATIVE).ifPresent(errors::add);
-        validateIsNotDecimal(id, FIELD_ID, ERROR_ID_DECIMAL).ifPresent(errors::add);
+        InputStringValidatorRecord record = new InputStringValidatorRecord(id, FIELD_ID, VALUE_NAME_ID);
+        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
+        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
+        inputStringValidator.validateIsNotDecimal(record).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateIdExistsInShop(id).ifPresent(errors::add);
         }
     }
 
     private void validatePrice(String price) {
-        validateIsNumber(price, FIELD_PRICE, ERROR_PRICE_NOT_NUMBER).ifPresent(errors::add);
-        validateIsPositive(price, FIELD_PRICE, ERROR_PRICE_NEGATIVE).ifPresent(errors::add);
+        InputStringValidatorRecord record = new InputStringValidatorRecord(price, FIELD_PRICE, VALUE_NAME_PRICE);
+        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
+        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
     }
 
     private void validateQuantity(String availableQuantity) {
-        validateIsNumber(availableQuantity, FIELD_QUANTITY, ERROR_QUANTITY_NOT_NUMBER).ifPresent(errors::add);
-        validateIsPositive(availableQuantity, FIELD_QUANTITY, ERROR_QUANTITY_NEGATIVE).ifPresent(errors::add);
-        validateIsNotDecimal(availableQuantity, FIELD_QUANTITY, ERROR_QUANTITY_DECIMAL).ifPresent(errors::add);
+        InputStringValidatorRecord record = new InputStringValidatorRecord(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
+        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
+        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
+        inputStringValidator.validateIsNotDecimal(record).ifPresent(errors::add);
     }
 
     private Optional<CoreError> validateDuplicate(ChangeItemDataRequest request) {
@@ -81,33 +78,6 @@ public class ChangeItemDataValidator {
         Item newItem = new Item(newItemName, newPrice, newAvailableQuantity);
         return (database.accessItemDatabase().getAllItems().contains(newItem))
                 ? Optional.of(new CoreError(FIELD_BUTTON, ERROR_ITEM_EXISTS))
-                : Optional.empty();
-    }
-
-    private Optional<CoreError> validateIdIsPresent(String id) {
-        return (id == null || id.isBlank())
-                ? Optional.of(new CoreError(FIELD_ID, ERROR_ID_MISSING))
-                : Optional.empty();
-    }
-
-    private Optional<CoreError> validateIsNumber(String value, String field, String errorMessage) {
-        return (value != null && !value.isBlank() &&
-                !value.matches(REGEX_NUMBER))
-                ? Optional.of(new CoreError(field, errorMessage))
-                : Optional.empty();
-    }
-
-    private Optional<CoreError> validateIsPositive(String value, String field, String errorMessage) {
-        return (value != null && !value.isBlank() &&
-                !value.matches(REGEX_NOT_NEGATIVE_NUMBER))
-                ? Optional.of(new CoreError(field, errorMessage))
-                : Optional.empty();
-    }
-
-    private Optional<CoreError> validateIsNotDecimal(String value, String field, String errorMessage) {
-        return (value != null && !value.isBlank() &&
-                !value.matches(REGEX_NOT_DECIMAL_NUMBER))
-                ? Optional.of(new CoreError(field, errorMessage))
                 : Optional.empty();
     }
 

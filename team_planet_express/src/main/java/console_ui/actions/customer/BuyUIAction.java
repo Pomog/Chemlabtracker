@@ -28,7 +28,7 @@ public class BuyUIAction extends UIAction {
 
     @Override
     public void execute() {
-        BuyRequest request = new BuyRequest(currentUserId.getValue());
+        BuyRequest request = new BuyRequest(currentUserId);
         BuyResponse response = buyService.execute(request);
         if (response.hasErrors()) {
             response.getErrors().forEach(error -> userCommunication.informUser(error.getMessage()));
