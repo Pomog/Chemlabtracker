@@ -23,7 +23,6 @@ class AddItemToCartServiceTest {
 
     private final Database mockDatabase = mock(Database.class);
     private final AddItemToCartValidator mockValidator = mock(AddItemToCartValidator.class);
-    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
     //TODO Insert CartValidator mock here
 
     private final AddItemToCartRequest mockRequest = mock(AddItemToCartRequest.class);
@@ -34,7 +33,7 @@ class AddItemToCartServiceTest {
     private final Cart mockCart = mock(Cart.class);
 
     private final AddItemToCartService service =
-            new AddItemToCartService(mockDatabase, mockValidator, mockCurrentUserId);
+            new AddItemToCartService(mockDatabase, mockValidator);
 
     // If you have "and" in a name, it means that this thing is bad and breaks SRP
     // Also it leads to a wall of incomprehensible when-s, which are hard to understand and keep track of
@@ -47,7 +46,7 @@ class AddItemToCartServiceTest {
     void shouldAddItemAndDecreaseAvailableQuantity() {
         when(mockRequest.getItemName()).thenReturn("Slurm");
         when(mockRequest.getOrderedQuantity()).thenReturn("10");
-        when(mockCurrentUserId.getValue()).thenReturn(1L);
+        when(mockRequest.getUserId()).thenReturn(1L);
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);

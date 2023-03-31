@@ -1,15 +1,10 @@
 package core.requests.customer;
 
+import lombok.Value;
+
+@Value
 public class ListCartItemsRequest {
 
-    private final Long userId;
-
-    public ListCartItemsRequest(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
+    Long userId;
 
 }

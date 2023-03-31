@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class SearchItemValidator {
+
     private static final String FIELD_PRICE = "price";
     private static final String ERROR_PRICE_NOT_NUMBER = "Error: Price should be a number.";
     private static final String ERROR_PRICE_NEGATIVE = "Error: Price should not be negative.";
@@ -17,13 +18,11 @@ public class SearchItemValidator {
 
     private List<CoreError> errors;
 
-
     public List<CoreError> validate(SearchItemRequest request) {
         errors = new ArrayList<>();
         validatePrice(request.getPrice());
         return errors;
     }
-
 
     private void validatePrice(String price) {
         if (validateIsPresent(price)) {
@@ -32,11 +31,9 @@ public class SearchItemValidator {
         }
     }
 
-
     private boolean validateIsPresent(String value) {
         return value != null && !value.isBlank();
     }
-
 
     //I would have made those price specific
     //But I guess it is some sort of future-proofing of whatever..
@@ -53,6 +50,5 @@ public class SearchItemValidator {
                 ? Optional.of(new CoreError(field, errorMessage))
                 : Optional.empty();
     }
-
 
 }

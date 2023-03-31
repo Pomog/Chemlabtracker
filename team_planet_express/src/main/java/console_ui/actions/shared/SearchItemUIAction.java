@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchItemUIAction extends UIAction {
-    private static final String ACTION_NAME = "Search item in the shop";
 
-    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.ALLUSERS);
+    private static final String ACTION_NAME = "Search item in the shop";
+    private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.ALL_USERS);
 
     private static final String PROMPT_TOPIC_ITEM = "item name for search: ";
     private static final String PROMPT_TOPIC_PRICE = "item price for search: ";
@@ -22,10 +22,8 @@ public class SearchItemUIAction extends UIAction {
     private static final String PROMPT_TOPIC_ORDER_BY_PRICE = "Order by price(type y if yes): ";
     private static final String PROMPT_TOPIC_ORDER_BY_ITEM_DIRECTION = "Revert ordering(type y if yes): ";
     private static final String PROMPT_TOPIC_ORDER_BY_PRICE_DIRECTION = "Revert ordering(type y if yes): ";
-
-    private static final String MESSAGE_SEARCH_SUCCESS = "Search results:";
-    private static final String MESSAGE_NOT_FOUND = "No items matched search parameters.";
-
+    private static final String MESSAGE_NO_MATCH = "No items matched search parameters.";
+    private static final String MESSAGE_SEARCH_RESULTS = "Search results:";
 
     private final SearchItemService searchItemService;
     private final UserCommunication userCommunication;
@@ -35,7 +33,6 @@ public class SearchItemUIAction extends UIAction {
         this.searchItemService = searchItemService;
         this.userCommunication = userCommunication;
     }
-
 
     @Override
     public void execute() {
@@ -67,12 +64,11 @@ public class SearchItemUIAction extends UIAction {
         if (response.hasErrors()) {
             response.getErrors().forEach(coreError -> userCommunication.informUser(coreError.getMessage()));
         } else if (response.getItems().isEmpty()) {
-            userCommunication.informUser(MESSAGE_NOT_FOUND);
+            userCommunication.informUser(MESSAGE_NO_MATCH);
         } else {
-            userCommunication.informUser(MESSAGE_SEARCH_SUCCESS);
+            userCommunication.informUser(MESSAGE_SEARCH_RESULTS);
             response.getItems().forEach(item -> userCommunication.informUser(item.toString()));
         }
-
 
     }
 

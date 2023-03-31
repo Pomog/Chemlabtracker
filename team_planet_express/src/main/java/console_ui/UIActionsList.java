@@ -80,36 +80,37 @@ public class UIActionsList {
 
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
         SearchItemService searchItemService = new SearchItemService(database, searchItemValidator);
-        AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator, currentUserId);
-        RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator, currentUserId);
-        ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator, currentUserId);
-        BuyService buyService = new BuyService(database, buyValidator, currentUserId);
+        AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator);
+        RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator);
+        ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator);
+        BuyService buyService = new BuyService(database, buyValidator);
         AddItemToShopService addItemToShopService = new AddItemToShopService(database, addItemToShopValidator);
         ChangeItemDataService changeItemDataService = new ChangeItemDataService(database, changeItemDataValidator);
         ChangeUserDataService changeUserDataService = new ChangeUserDataService(database);
-        SignInService signInService = new SignInService(database, signInValidator, currentUserId);
-        SignUpService signUpService = new SignUpService(database, signUpValidator, currentUserId);
-        SignOutService signOutService = new SignOutService(database, currentUserId);
+        SignInService signInService = new SignInService(database, signInValidator);
+        SignUpService signUpService = new SignUpService(database, signUpValidator);
+        SignOutService signOutService = new SignOutService(database);
         ExitService exitService = new ExitService();
 
         List<UIAction> uiActions = new ArrayList<>();
         uiActions.add(new ListShopItemsUIAction(listShopItemsService, userCommunication));
         uiActions.add(new SearchItemUIAction(searchItemService, userCommunication));
-        uiActions.add(new AddItemToCartUIAction(addItemToCartService, userCommunication));
-        uiActions.add(new RemoveItemFromCartUIAction(removeItemFromCartService, userCommunication));
-        uiActions.add(new ListCartItemsUIAction(listCartItemsService, userCommunication));
-        uiActions.add(new BuyUIAction(buyService, userCommunication));
+        uiActions.add(new AddItemToCartUIAction(addItemToCartService, currentUserId, userCommunication));
+        uiActions.add(new RemoveItemFromCartUIAction(removeItemFromCartService, currentUserId, userCommunication));
+        uiActions.add(new ListCartItemsUIAction(listCartItemsService, currentUserId, userCommunication));
+        uiActions.add(new BuyUIAction(buyService, currentUserId, userCommunication));
         uiActions.add(new AddItemToShopUIAction(addItemToShopService, userCommunication));
         uiActions.add(new ChangeItemDataUIAction(changeItemDataService, userCommunication));
         uiActions.add(new ChangeUserDataUIAction(changeUserDataService, userCommunication));
-        uiActions.add(new SignInUIAction(signInService, userCommunication));
-        uiActions.add(new SignUpUIAction(signUpService, userCommunication));
-        uiActions.add(new SignOutUIAction(signOutService, userCommunication));
+        uiActions.add(new SignInUIAction(signInService, currentUserId, userCommunication));
+        uiActions.add(new SignUpUIAction(signUpService, currentUserId, userCommunication));
+        uiActions.add(new SignOutUIAction(signOutService, currentUserId, userCommunication));
         uiActions.add(new ExitUIAction(exitService, userCommunication));
 
         return uiActions;
     }
 
+    //TODO yeet, duplicate
     private User getUserById(Long userId) {
         return database.accessUserDatabase().findById(userId)
                 .orElseThrow(ServiceMissingDataException::new);

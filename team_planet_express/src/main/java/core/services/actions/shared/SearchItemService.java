@@ -34,13 +34,11 @@ public class SearchItemService {
             items = order(items, request.getOrderings());
             response = new SearchItemResponse(items, null);
         }
-        // only one return POG
         return response;
     }
 
     private List<Item> search(SearchItemRequest request) {
         List<Item> items;
-
         if (request.getItemName() != null && !isPresent(request.getPrice())) {
             items = database.accessItemDatabase().searchByName(request.getItemName());
         } else if (request.getItemName() != null && isPresent(request.getPrice())) {
@@ -80,4 +78,5 @@ public class SearchItemService {
     private boolean isPresent(String value) {
         return value != null && !value.isBlank();
     }
+
 }

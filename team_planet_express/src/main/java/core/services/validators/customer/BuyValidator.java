@@ -26,6 +26,7 @@ public class BuyValidator {
 
     public List<CoreError> validate(BuyRequest request) {
         List<CoreError> errors = new ArrayList<>();
+        //TODO validate id
         cartValidator.validateOpenCartExistsForUserId(request.getUserId()).ifPresent(errors::add);
         if (errors.isEmpty()) {
             validateCartIsNotEmpty(request.getUserId()).ifPresent(errors::add);
@@ -40,6 +41,7 @@ public class BuyValidator {
                 : Optional.empty();
     }
 
+    //TODO yeet, duplicate
     private Cart getOpenCartForUserId(Long userId) {
         return database.accessCartDatabase().findOpenCartForUserId(userId)
                 .orElseThrow(ServiceMissingDataException::new);
