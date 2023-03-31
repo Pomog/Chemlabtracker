@@ -65,15 +65,10 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
         return shopItems;
     }
 
-    //Method names should not start with capital letters
-    //I would call params as nameToSearch etc.
-    //Tests missing
     @Override
     public List<Item> searchByName(String itemName) {
-        //why do you format this in such a weird way?
         return shopItems.stream().filter(
-                //What's the subSequence for?
-                item -> item.getName().contains(itemName.subSequence(0, itemName.length()))
+                item -> item.getName().contains(itemName)
         ).collect(Collectors.toList());
     }
 
@@ -81,8 +76,8 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
     @Override
     public List<Item> searchByNameAndPrice(String itemName, BigDecimal price) {
         return shopItems.stream().filter(
-                item -> item.getName().contains(itemName.subSequence(0, itemName.length())) &&
-                        item.getPrice().equals(price)
+                item -> item.getName().contains(itemName) &&
+                        item.getPrice().compareTo(price) <= 0
         ).collect(Collectors.toList());
 
     }
