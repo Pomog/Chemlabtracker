@@ -67,17 +67,16 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
 
     @Override
     public List<Item> searchByName(String itemName) {
-        return shopItems.stream().filter(
-                item -> item.getName().contains(itemName)
-        ).collect(Collectors.toList());
+        return shopItems.stream()
+                .filter(item -> item.getName().contains(itemName))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Item> searchByNameAndPrice(String itemName, BigDecimal price) {
-        return shopItems.stream().filter(
-                item -> item.getName().contains(itemName) &&
-                        item.getPrice().compareTo(price) <= 0
-        ).collect(Collectors.toList());
+        return shopItems.stream()
+                .filter(item -> item.getName().contains(itemName) && item.getPrice().compareTo(price) <= 0)
+                .collect(Collectors.toList());
     }
 
 }

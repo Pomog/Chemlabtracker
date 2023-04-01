@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+//TODO validate orderingRules ?
 public class SearchItemValidator {
 
     private static final String FIELD_PRICE = "price";
