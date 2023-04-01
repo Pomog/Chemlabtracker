@@ -22,18 +22,21 @@ import core.services.actions.shared.ExitService;
 import core.services.actions.shared.SearchItemService;
 import core.services.actions.shared.SignInService;
 import core.services.actions.shared.SignOutService;
-import core.services.cart.CartValidator;
 import core.services.exception.ServiceMissingDataException;
 import core.services.user.UserService;
-import core.services.validators.customer.AddItemToCartValidator;
-import core.services.validators.customer.BuyValidator;
-import core.services.validators.customer.ListCartItemValidator;
-import core.services.validators.customer.RemoveItemFromCartValidator;
-import core.services.validators.guest.SignUpValidator;
-import core.services.validators.manager.AddItemToShopValidator;
-import core.services.validators.manager.ChangeItemDataValidator;
-import core.services.validators.shared.SearchItemValidator;
-import core.services.validators.shared.SignInValidator;
+import core.services.validators.actions.customer.AddItemToCartValidator;
+import core.services.validators.actions.customer.BuyValidator;
+import core.services.validators.actions.customer.ListCartItemValidator;
+import core.services.validators.actions.customer.RemoveItemFromCartValidator;
+import core.services.validators.actions.guest.SignUpValidator;
+import core.services.validators.actions.manager.AddItemToShopValidator;
+import core.services.validators.actions.manager.ChangeItemDataValidator;
+import core.services.validators.actions.shared.SearchItemValidator;
+import core.services.validators.actions.shared.SignInValidator;
+import core.services.validators.actions.shared.SignOutValidator;
+import core.services.validators.cart.CartValidator;
+import core.services.validators.universal.system.MutableLongUserIdValidator;
+import core.services.validators.universal.user_input.InputStringValidator;
 import core.support.MutableLong;
 
 import java.util.ArrayList;
@@ -70,16 +73,19 @@ public class UIActionsList {
     private List<UIAction> createUIActionsList() {
         UserService userService = new UserService(database);
 
+        MutableLongUserIdValidator mutableLongUserIdValidator = new MutableLongUserIdValidator();
+        InputStringValidator inputStringValidator = new InputStringValidator();
         CartValidator cartValidator = new CartValidator(database);
-        SearchItemValidator searchItemValidator = new SearchItemValidator();
-        AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, cartValidator);
-        RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, cartValidator);
-        ListCartItemValidator listCartItemValidator = new ListCartItemValidator(cartValidator);
-        BuyValidator buyValidator = new BuyValidator(database, cartValidator);
-        AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database);
-        ChangeItemDataValidator changeItemDataValidator = new ChangeItemDataValidator(database);
-        SignInValidator signInValidator = new SignInValidator(database);
-        SignUpValidator signUpValidator = new SignUpValidator(database);
+        SearchItemValidator searchItemValidator = new SearchItemValidator(inputStringValidator);
+        AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, mutableLongUserIdValidator, cartValidator, inputStringValidator);
+        RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, mutableLongUserIdValidator, cartValidator, inputStringValidator);
+        ListCartItemValidator listCartItemValidator = new ListCartItemValidator(mutableLongUserIdValidator, cartValidator);
+        BuyValidator buyValidator = new BuyValidator(database, mutableLongUserIdValidator, cartValidator);
+        AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database, inputStringValidator);
+        ChangeItemDataValidator changeItemDataValidator = new ChangeItemDataValidator(database, inputStringValidator);
+        SignInValidator signInValidator = new SignInValidator(database, mutableLongUserIdValidator, inputStringValidator);
+        SignUpValidator signUpValidator = new SignUpValidator(database, mutableLongUserIdValidator, inputStringValidator);
+        SignOutValidator signOutValidator = new SignOutValidator(mutableLongUserIdValidator);
 
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
         SearchItemService searchItemService = new SearchItemService(database, searchItemValidator);
@@ -92,7 +98,7 @@ public class UIActionsList {
         ChangeUserDataService changeUserDataService = new ChangeUserDataService(database);
         SignInService signInService = new SignInService(database, signInValidator);
         SignUpService signUpService = new SignUpService(signUpValidator, userService);
-        SignOutService signOutService = new SignOutService(userService);
+        SignOutService signOutService = new SignOutService(signOutValidator, userService);
         ExitService exitService = new ExitService();
 
         List<UIAction> uiActions = new ArrayList<>();

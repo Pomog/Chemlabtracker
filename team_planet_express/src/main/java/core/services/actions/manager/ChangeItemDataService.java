@@ -4,7 +4,7 @@ import core.database.Database;
 import core.requests.manager.ChangeItemDataRequest;
 import core.responses.CoreError;
 import core.responses.manager.ChangeItemDataResponse;
-import core.services.validators.manager.ChangeItemDataValidator;
+import core.services.validators.actions.manager.ChangeItemDataValidator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

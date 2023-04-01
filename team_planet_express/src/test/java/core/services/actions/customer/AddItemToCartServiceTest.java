@@ -8,7 +8,7 @@ import core.domain.cart.Cart;
 import core.domain.cart_item.CartItem;
 import core.domain.item.Item;
 import core.requests.customer.AddItemToCartRequest;
-import core.services.validators.customer.AddItemToCartValidator;
+import core.services.validators.actions.customer.AddItemToCartValidator;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +26,7 @@ class AddItemToCartServiceTest {
     //TODO Insert CartValidator mock here
 
     private final AddItemToCartRequest mockRequest = mock(AddItemToCartRequest.class);
+    private final MutableLong mockUserId = mock(MutableLong.class);
     private final ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
     private final CartItemDatabase mockCartItemDatabase = mock(CartItemDatabase.class);
     private final CartDatabase mockCartDatabase = mock(CartDatabase.class);
@@ -46,7 +47,8 @@ class AddItemToCartServiceTest {
     void shouldAddItemAndDecreaseAvailableQuantity() {
         when(mockRequest.getItemName()).thenReturn("Slurm");
         when(mockRequest.getOrderedQuantity()).thenReturn("10");
-        when(mockRequest.getUserId()).thenReturn(1L);
+        when(mockRequest.getUserId()).thenReturn(mockUserId);
+        when(mockUserId.getValue()).thenReturn(1L);
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);

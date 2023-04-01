@@ -8,7 +8,7 @@ import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.AddItemToCartResponse;
 import core.services.exception.ServiceMissingDataException;
-import core.services.validators.customer.AddItemToCartValidator;
+import core.services.validators.actions.customer.AddItemToCartValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +28,7 @@ public class AddItemToCartService {
         if (!errors.isEmpty()) {
             return new AddItemToCartResponse(errors);
         }
-        Cart cart = getOpenCartForUserId(request.getUserId());
+        Cart cart = getOpenCartForUserId(request.getUserId().getValue());
         Item item = getItemByName(request.getItemName());
         Integer orderedQuantity = Integer.parseInt(request.getOrderedQuantity());
         addItemToCart(cart, item, orderedQuantity);

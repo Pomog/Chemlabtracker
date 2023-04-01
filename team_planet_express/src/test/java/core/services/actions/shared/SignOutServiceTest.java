@@ -4,6 +4,7 @@ import core.domain.user.User;
 import core.requests.shared.SignOutRequest;
 import core.services.user.UserRecord;
 import core.services.user.UserService;
+import core.services.validators.actions.shared.SignOutValidator;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +14,13 @@ import static org.mockito.Mockito.*;
 
 public class SignOutServiceTest {
 
+    private final SignOutValidator mockValidator = mock(SignOutValidator.class);
     private final UserService mockUserService = mock(UserService.class);
     private final SignOutRequest mockRequest = mock(SignOutRequest.class);
     private final User mockUser = mock(User.class);
     private final MutableLong mockCurrentUserId = mock(MutableLong.class);
 
-    private final SignOutService service = new SignOutService(mockUserService);
+    private final SignOutService service = new SignOutService(mockValidator, mockUserService);
 
     @Test
     void shouldUseExistingGuestIfPresent() {
@@ -49,5 +51,7 @@ public class SignOutServiceTest {
         service.execute(mockRequest);
         verify(mockCurrentUserId).setValue(1L);
     }
+
+    //TODO test validator
 
 }

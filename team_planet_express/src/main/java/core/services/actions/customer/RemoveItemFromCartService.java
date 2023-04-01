@@ -8,7 +8,7 @@ import core.requests.customer.RemoveItemFromCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.RemoveItemFromCartResponse;
 import core.services.exception.ServiceMissingDataException;
-import core.services.validators.customer.RemoveItemFromCartValidator;
+import core.services.validators.actions.customer.RemoveItemFromCartValidator;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class RemoveItemFromCartService {
         if (!errors.isEmpty()) {
             return new RemoveItemFromCartResponse(errors);
         }
-        Cart cart = getOpenCartForUserId(request.getUserId());
+        Cart cart = getOpenCartForUserId(request.getUserId().getValue());
         Item item = getItemByName(request.getItemName());
         CartItem cartItem = getCartItemByCartIdAndItemId(cart.getId(), item.getId());
         Integer newAvailableQuantity = item.getAvailableQuantity() + cartItem.getOrderedQuantity();

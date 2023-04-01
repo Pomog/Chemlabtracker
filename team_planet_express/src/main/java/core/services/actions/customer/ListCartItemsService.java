@@ -8,7 +8,7 @@ import core.responses.CoreError;
 import core.responses.customer.ListCartItemsResponse;
 import core.services.cart.CartService;
 import core.services.exception.ServiceMissingDataException;
-import core.services.validators.customer.ListCartItemValidator;
+import core.services.validators.actions.customer.ListCartItemValidator;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -33,7 +33,7 @@ public class ListCartItemsService {
         if (!errors.isEmpty()) {
             return new ListCartItemsResponse(errors);
         }
-        Cart cart = getOpenCartForUserId(request.getUserId());
+        Cart cart = getOpenCartForUserId(request.getUserId().getValue());
         List<CartItem> cartItems = database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId());
         BigDecimal cartTotal = cartService.getSum(cart.getUserId());
         return new ListCartItemsResponse(cartItems, cartTotal);
