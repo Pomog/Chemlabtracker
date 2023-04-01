@@ -16,7 +16,7 @@ public class InputStringValidator {
 
     private static final String REGEX_NUMBER = "-?[0-9]+(.[0-9]+)?";
     private static final String REGEX_NOT_NEGATIVE = "[0-9]+(.[0-9]+)?";
-    private static final String REGEX_GREATER_ZERO = "(0*)?[1-9][0-9]+(.[0-9]+)?";
+    private static final String REGEX_GREATER_ZERO = "0*[1-9][0-9]*(.[0-9]+)?";
     private static final String REGEX_NOT_DECIMAL = "-?[0-9]+";
 
     public Optional<CoreError> validateIsPresent(InputStringValidatorRecord record) {

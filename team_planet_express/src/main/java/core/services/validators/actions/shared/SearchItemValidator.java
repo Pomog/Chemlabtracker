@@ -8,6 +8,7 @@ import core.services.validators.universal.user_input.InputStringValidatorRecord;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO validate orderingRules ?
 public class SearchItemValidator {
 
     private static final String FIELD_PRICE = "price";

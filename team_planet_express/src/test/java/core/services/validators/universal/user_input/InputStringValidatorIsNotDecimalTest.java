@@ -52,28 +52,28 @@ class InputStringValidatorIsNotDecimalTest {
     }
 
     @Test
-    void shouldReturnNoErrorForPositiveDecimalNumber() {
+    void shouldReturnErrorForPositiveDecimalNumber() {
         when(mockRecord.value()).thenReturn("10.21");
         Optional<CoreError> error = validator.validateIsNotDecimal(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
-    void shouldReturnNoErrorForPositiveDecimalNumberWithLeadingZeros() {
+    void shouldReturnErrorForPositiveDecimalNumberWithLeadingZeros() {
         when(mockRecord.value()).thenReturn("010.21");
         Optional<CoreError> error = validator.validateIsNotDecimal(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
-    void shouldReturnNoErrorForNegativeDecimalNumber() {
+    void shouldReturnErrorForNegativeDecimalNumber() {
         when(mockRecord.value()).thenReturn("-10.21");
         Optional<CoreError> error = validator.validateIsNotDecimal(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
-    void shouldReturnNoErrorForNegativeDecimalNumberWithLeadingZeros() {
+    void shouldReturnErrorForNegativeDecimalNumberWithLeadingZeros() {
         when(mockRecord.value()).thenReturn("-010.21");
         Optional<CoreError> error = validator.validateIsNotDecimal(mockRecord);
         assertCorrectErrorIsPresent(error);

@@ -1,24 +1,24 @@
 package core.services.actions.guest;
 
-import core.database.Database;
 import core.domain.user.User;
 import core.domain.user.UserRole;
 import core.requests.guest.SignUpRequest;
 import core.responses.CoreError;
 import core.responses.guest.SignUpResponse;
+import core.services.user.UserRecord;
+import core.services.user.UserService;
 import core.services.validators.actions.guest.SignUpValidator;
-import core.support.MutableLong;
 
 import java.util.List;
 
 public class SignUpService {
 
-    private final Database database;
     private final SignUpValidator validator;
+    private final UserService userService;
 
-    public SignUpService(Database database, SignUpValidator validator) {
-        this.database = database;
+    public SignUpService(SignUpValidator validator, UserService userService) {
         this.validator = validator;
+        this.userService = userService;
     }
 
     public SignUpResponse execute(SignUpRequest request) {
@@ -29,7 +29,8 @@ public class SignUpService {
         String name = request.getName();
         String loginName = request.getLoginName();
         String password = request.getPassword();
-        User createdUser = database.accessUserDatabase().save(new User(name, loginName, password, UserRole.CUSTOMER));
+        UserRecord userRecord = new UserRecord(name, loginName, password, UserRole.CUSTOMER);
+        User createdUser = userService.createUser(userRecord);
         request.getUserId().setValue(createdUser.getId());
         return new SignUpResponse(createdUser);
     }

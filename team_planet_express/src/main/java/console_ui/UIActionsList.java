@@ -23,6 +23,7 @@ import core.services.actions.shared.SearchItemService;
 import core.services.actions.shared.SignInService;
 import core.services.actions.shared.SignOutService;
 import core.services.exception.ServiceMissingDataException;
+import core.services.user.UserService;
 import core.services.validators.actions.customer.AddItemToCartValidator;
 import core.services.validators.actions.customer.BuyValidator;
 import core.services.validators.actions.customer.ListCartItemValidator;
@@ -70,6 +71,8 @@ public class UIActionsList {
     }
 
     private List<UIAction> createUIActionsList() {
+        UserService userService = new UserService(database);
+
         MutableLongUserIdValidator mutableLongUserIdValidator = new MutableLongUserIdValidator();
         InputStringValidator inputStringValidator = new InputStringValidator();
         CartValidator cartValidator = new CartValidator(database);
@@ -94,8 +97,8 @@ public class UIActionsList {
         ChangeItemDataService changeItemDataService = new ChangeItemDataService(database, changeItemDataValidator);
         ChangeUserDataService changeUserDataService = new ChangeUserDataService(database);
         SignInService signInService = new SignInService(database, signInValidator);
-        SignUpService signUpService = new SignUpService(database, signUpValidator);
-        SignOutService signOutService = new SignOutService(database, signOutValidator);
+        SignUpService signUpService = new SignUpService(signUpValidator, userService);
+        SignOutService signOutService = new SignOutService(signOutValidator, userService);
         ExitService exitService = new ExitService();
 
         List<UIAction> uiActions = new ArrayList<>();

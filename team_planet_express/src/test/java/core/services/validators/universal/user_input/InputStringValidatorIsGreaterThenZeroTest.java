@@ -52,42 +52,42 @@ class InputStringValidatorIsGreaterThenZeroTest {
     }
 
     @Test
-    void shouldReturnNoErrorForNegativeNumber() {
+    void shouldReturnErrorForNegativeNumber() {
         when(mockRecord.value()).thenReturn("-10");
         Optional<CoreError> error = validator.validateIsGreaterThanZero(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
-    void shouldReturnNoErrorForNegativeNumberWithLeadingZeros() {
+    void shouldReturnErrorForNegativeNumberWithLeadingZeros() {
         when(mockRecord.value()).thenReturn("-00010");
         Optional<CoreError> error = validator.validateIsGreaterThanZero(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
-    void shouldReturnNoErrorForZero() {
+    void shouldReturnErrorForZero() {
         when(mockRecord.value()).thenReturn("0");
         Optional<CoreError> error = validator.validateIsGreaterThanZero(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
-    void shouldReturnNoErrorForMultipleZeros() {
+    void shouldReturnErrorForMultipleZeros() {
         when(mockRecord.value()).thenReturn("0000");
         Optional<CoreError> error = validator.validateIsGreaterThanZero(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
-    void shouldReturnNoErrorForNegativeDecimalNumber() {
+    void shouldReturnErrorForNegativeDecimalNumber() {
         when(mockRecord.value()).thenReturn("-10.21");
         Optional<CoreError> error = validator.validateIsGreaterThanZero(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
-    void shouldReturnNoErrorForNegativeDecimalNumberWithLeadingZeros() {
+    void shouldReturnErrorForNegativeDecimalNumberWithLeadingZeros() {
         when(mockRecord.value()).thenReturn("-010.21");
         Optional<CoreError> error = validator.validateIsGreaterThanZero(mockRecord);
         assertCorrectErrorIsPresent(error);
@@ -95,7 +95,7 @@ class InputStringValidatorIsGreaterThenZeroTest {
 
     @Test
     void shouldReturnNoErrorForPositiveNumber() {
-        when(mockRecord.value()).thenReturn("10");
+        when(mockRecord.value()).thenReturn("22");
         Optional<CoreError> error = validator.validateIsGreaterThanZero(mockRecord);
         assertTrue(error.isEmpty());
     }

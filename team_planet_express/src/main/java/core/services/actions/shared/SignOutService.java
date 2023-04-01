@@ -1,29 +1,30 @@
 package core.services.actions.shared;
 
-import core.database.Database;
 import core.domain.user.User;
 import core.domain.user.UserRole;
 import core.requests.shared.SignOutRequest;
 import core.responses.shared.SignOutResponse;
+import core.services.user.UserRecord;
+import core.services.user.UserService;
 import core.services.validators.actions.shared.SignOutValidator;
 
 public class SignOutService {
 
-    private static final User DEFAULT_USER = new User("Guest", "", "", UserRole.GUEST);
+    public static final String BLANK = "";
 
-    private final Database database;
     private final SignOutValidator validator;
+    private final UserService userService;
 
-    public SignOutService(Database database, SignOutValidator validator) {
-        this.database = database;
+    public SignOutService(SignOutValidator validator, UserService userService) {
         this.validator = validator;
+        this.userService = userService;
     }
 
     public SignOutResponse execute(SignOutRequest request) {
         validator.validate(request);
-        //TODO search, then create
-        //TODO this dude has no cart
-        User newUser = database.accessUserDatabase().save(DEFAULT_USER);
+        UserRecord userRecord = new UserRecord(UserRole.GUEST.getDefaultName(), BLANK, BLANK, UserRole.GUEST);
+        User newUser = userService.findGuestWithOpenCart().orElseGet(
+                () -> userService.createUser(userRecord));
         request.getUserId().setValue(newUser.getId());
         return new SignOutResponse();
     }

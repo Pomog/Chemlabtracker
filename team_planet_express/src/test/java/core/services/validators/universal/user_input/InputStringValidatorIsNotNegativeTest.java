@@ -59,21 +59,21 @@ class InputStringValidatorIsNotNegativeTest {
     }
 
     @Test
-    void shouldReturnNoErrorForNegativeNumberWithLeadingZeros() {
+    void shouldReturnErrorForNegativeNumberWithLeadingZeros() {
         when(mockRecord.value()).thenReturn("-00010");
         Optional<CoreError> error = validator.validateIsNotNegative(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
-    void shouldReturnNoErrorForNegativeDecimalNumber() {
+    void shouldReturnErrorForNegativeDecimalNumber() {
         when(mockRecord.value()).thenReturn("-10.21");
         Optional<CoreError> error = validator.validateIsNotNegative(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
-    void shouldReturnNoErrorForNegativeDecimalNumberWithLeadingZeros() {
+    void shouldReturnErrorForNegativeDecimalNumberWithLeadingZeros() {
         when(mockRecord.value()).thenReturn("-010.21");
         Optional<CoreError> error = validator.validateIsNotNegative(mockRecord);
         assertCorrectErrorIsPresent(error);

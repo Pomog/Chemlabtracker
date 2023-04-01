@@ -28,7 +28,7 @@ class AddItemToCartUIActionTest {
             new AddItemToCartUIAction(mockAddItemToCartService, mockCurrentUserId, mockUserCommunication);
 
     @BeforeEach
-    void setupSharedMockBehaviour() {
+    void setupMockResponse() {
         when(mockAddItemToCartService.execute(any(AddItemToCartRequest.class)))
                 .thenReturn(mockAddItemToCartResponse);
     }
