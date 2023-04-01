@@ -1,12 +1,12 @@
 package core.services.actions.guest;
 
-import core.database.Database;
-import core.database.UserDatabase;
 import core.domain.user.User;
 import core.domain.user.UserRole;
 import core.requests.guest.SignUpRequest;
 import core.responses.CoreError;
 import core.responses.guest.SignUpResponse;
+import core.services.user.UserRecord;
+import core.services.user.UserService;
 import core.services.validators.guest.SignUpValidator;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
@@ -20,15 +20,14 @@ import static org.mockito.Mockito.*;
 
 class SignUpServiceTest {
 
-    private final Database mockDatabase = mock(Database.class);
     private final SignUpValidator mockValidator = mock(SignUpValidator.class);
+    private final UserService mockUserService = mock(UserService.class);
     private final SignUpRequest mockRequest = mock(SignUpRequest.class);
     private final CoreError mockCoreError = mock(CoreError.class);
-    private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
     private final User mockUser = mock(User.class);
     private final MutableLong mockCurrentUserId = mock(MutableLong.class);
 
-    private final SignUpService service = new SignUpService(mockDatabase, mockValidator);
+    private final SignUpService service = new SignUpService(mockValidator, mockUserService);
 
     @Test
     void shouldReturnErrorsIfPresent() {
@@ -40,36 +39,33 @@ class SignUpServiceTest {
     @Test
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+        when(mockUserService.createUser(any(UserRecord.class))).thenReturn(mockUser);
         when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
-        when(mockUserDatabase.save(any(User.class))).thenReturn(mockUser);
         SignUpResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
     }
 
     @Test
-    void shouldSaveValidRequest() {
+    void shouldCalUserServiceToSaveValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getName()).thenReturn("name");
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("password");
+        when(mockUserService.createUser(any(UserRecord.class))).thenReturn(mockUser);
         when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
-        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
-        when(mockUserDatabase.save(new User("name", "login", "password", UserRole.CUSTOMER)))
-                .thenReturn(mockUser);
         service.execute(mockRequest);
-        verify(mockUserDatabase)
-                .save(new User("name", "login", "password", UserRole.CUSTOMER));
+        UserRecord record = new UserRecord("name", "login", "password", UserRole.CUSTOMER);
+        verify(mockUserService).createUser(record);
     }
 
     @Test
     void shouldUpdateCurrentUserId() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
+        when(mockUserService.createUser(any(UserRecord.class))).thenReturn(mockUser);
+        when(mockUser.getId()).thenReturn(1L);
         when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
-        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
-        when(mockUserDatabase.save(any(User.class))).thenReturn(mockUser);
         service.execute(mockRequest);
-        verify(mockCurrentUserId).setValue(any(Long.class));
+        verify(mockCurrentUserId).setValue(1L);
     }
 
 }
