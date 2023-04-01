@@ -1,4 +1,4 @@
-package com.fightclub.core.domain.command;
+package com.fightclub.in.rest.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterResult {
+public class RegistrationResponse {
 
-    private Long userId;
+    private Object data;
+    private String error;
 
 }
