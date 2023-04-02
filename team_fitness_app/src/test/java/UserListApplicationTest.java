@@ -22,7 +22,7 @@ public class UserListApplicationTest {
         User user2 = new User("B", "b");
         database.add (user1);
         database.add (user2);
-        database.deleteUser(1L, "a");
+        database.deleteUser(user1);
         assertEquals(1, database.getAllUsers().size());
     }
 

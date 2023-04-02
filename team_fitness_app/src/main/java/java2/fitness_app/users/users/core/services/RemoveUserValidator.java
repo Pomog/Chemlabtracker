@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class RemoveUserValidator {
+
+
     public List<CoreError> validate (RemoveUserRequest request){
         List<CoreError> errors = new ArrayList<>();
         validateId(request).ifPresent(errors::add);
@@ -16,7 +18,7 @@ public class RemoveUserValidator {
     }
 
     private Optional<CoreError> validateId(RemoveUserRequest request){
-        return (request.getUserIdToRemove() == null || request.getUserIdToRemove().toString().isBlank())
+        return (request.getUserId() == null || request.getUserId().toString().isBlank())
                 ? Optional.of(new CoreError("Id", "Must not be empty!"))
                 : Optional.empty();
     }

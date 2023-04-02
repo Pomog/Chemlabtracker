@@ -2,17 +2,17 @@ package java2.fitness_app.users.users.core.requests;
 
 public class RemoveUserRequest {
 
-    private String userIdToRemove;
+    private Long userId;
 
     private String password;
 
-    public RemoveUserRequest(String userIdToRemove, String password) {
-        this.userIdToRemove = userIdToRemove;
+    public RemoveUserRequest(Long userId, String password) {
+        this.userId = userId;
         this.password = password;
     }
 
-    public String getUserIdToRemove() {
-        return userIdToRemove;
+    public Long getUserId() {
+        return userId;
     }
 
     public String getPassword() {

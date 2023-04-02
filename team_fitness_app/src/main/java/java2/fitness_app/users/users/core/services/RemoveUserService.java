@@ -1,11 +1,11 @@
 package java2.fitness_app.users.users.core.services;
 
 import java2.fitness_app.users.users.core.database.Database;
+import java2.fitness_app.users.users.core.domain.User;
 import java2.fitness_app.users.users.core.requests.RemoveUserRequest;
 import java2.fitness_app.users.users.core.responses.CoreError;
 import java2.fitness_app.users.users.core.responses.RemoveUserResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RemoveUserService {
@@ -20,21 +20,16 @@ public class RemoveUserService {
 
     public RemoveUserResponse execute(RemoveUserRequest request) {
         List<CoreError> errors = validator.validate(request);
-        if(!errors.isEmpty()){
+        boolean isUserRemoved = false;
+        if (!errors.isEmpty()) {
             return new RemoveUserResponse(errors);
-        }else {
-            boolean isUserRemoved = database.deleteUser(Long.parseLong(request.getUserIdToRemove()), request.getPassword());
-            return new RemoveUserResponse(isUserRemoved);
+        } else if (database.findUserById(request.getUserId()).isPresent()) {
+            User user = database.findUserById(request.getUserId()).get();
+            if (user.getId().equals(request.getUserId()) && user.getPassword().equals(request.getPassword())) {
+                database.deleteUser(user);
+                isUserRemoved = true;
+            }
         }
+        return new RemoveUserResponse(isUserRemoved);
     }
-
-
-
-
-
-
-
-
-
-
 }
