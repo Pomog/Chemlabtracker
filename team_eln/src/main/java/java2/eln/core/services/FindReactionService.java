@@ -3,6 +3,8 @@ package java2.eln.core.services;
 import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.requests.FindReactionRequest;
 import java2.eln.core.responses.FindReactionResponse;
+import java2.eln.core.responses.errorPattern.CoreError;
+import java2.eln.core.services.validators.SearchReactionValidator;
 import java2.eln.domain.ReactionData;
 import java2.eln.domain.StructureData;
 
@@ -11,12 +13,19 @@ import java.util.stream.Collectors;
 
 public class FindReactionService {
     private final DatabaseIM databaseIM;
+    private SearchReactionValidator searchReactionValidator;
 
-    public FindReactionService(DatabaseIM databaseIM) {
+    public FindReactionService(DatabaseIM databaseIM, SearchReactionValidator searchReactionValidator) {
         this.databaseIM = databaseIM;
+        this.searchReactionValidator = searchReactionValidator;
     }
 
     public FindReactionResponse execute (FindReactionRequest findReactionRequest) {
+        List<CoreError> errors = searchReactionValidator.validate(findReactionRequest);
+        if (!errors.isEmpty()) {
+            return new FindReactionResponse(errors, true);
+        }
+
         List<ReactionData> searchingResults = databaseIM.getAllReactions().stream()
             .filter(reaction -> compareObjects(findReactionRequest, reaction))
             .collect(Collectors.toList());
@@ -38,9 +47,9 @@ public class FindReactionService {
             verdict = true; // match all values if search criteria is null
 
             } else if (searchCriteria instanceof String) {
-                String strSearchCriteria = ((String) searchCriteria).trim();
-                String strBookProperty = ((String) reactionProperty).toLowerCase();
-            verdict = strSearchCriteria.isEmpty() || strBookProperty.contains(strSearchCriteria.toLowerCase());
+                String strSearchCriteria = ((String) searchCriteria).trim().toLowerCase();
+                String strProperty = ((String) reactionProperty).toLowerCase();
+            verdict = strSearchCriteria.isEmpty() || strProperty.contains(strSearchCriteria.toLowerCase());
 
             } else if (reactionProperty instanceof List) {
             verdict = ((List<?>) reactionProperty).contains(searchCriteria) ||
