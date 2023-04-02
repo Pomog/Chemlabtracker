@@ -9,12 +9,14 @@ import core.services.validators.actions.shared.SearchItemValidator;
 import core.support.ordering.OrderBy;
 import core.support.ordering.OrderDirection;
 import core.support.ordering.OrderingRule;
+import core.support.paging.PagingRule;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class SearchItemService {
 
@@ -30,11 +32,13 @@ public class SearchItemService {
         List<CoreError> errors = validator.validate(request);
         SearchItemResponse response;
         if (!errors.isEmpty()) {
-            response = new SearchItemResponse(null, errors);
+            response = new SearchItemResponse(errors);
         } else {
             List<Item> items = search(request);
+            Integer totalFoundItemCount = items.size();
             items = order(items, request.getOrderingRules());
-            response = new SearchItemResponse(items, null);
+            items = paging(items, request.getPagingRule());
+            response = new SearchItemResponse(items, totalFoundItemCount);
         }
         return response;
     }
@@ -58,6 +62,19 @@ public class SearchItemService {
         if (orderingRules != null && orderingRules.size() > 0) {
             items = orderByPrice(items, orderingRules);
             items = orderByName(items, orderingRules);
+        }
+        return items;
+    }
+
+    //TODO def move somewhere
+    private List<Item> paging(List<Item> items, PagingRule pagingRule) {
+        if (pagingRule != null) {
+            long pageSize = Long.parseLong(pagingRule.getPageSize());
+            long itemCountToSkip = (pagingRule.getPageNumber() - 1) * pageSize;
+            items = items.stream()
+                    .skip(itemCountToSkip)
+                    .limit(pageSize)
+                    .collect(Collectors.toList());
         }
         return items;
     }

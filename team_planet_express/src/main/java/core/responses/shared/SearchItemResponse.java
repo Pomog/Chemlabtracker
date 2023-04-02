@@ -8,15 +8,24 @@ import java.util.List;
 
 public class SearchItemResponse extends CoreResponse {
 
-    private final List<Item> items;
+    private List<Item> items;
+    private Integer totalFoundItemCount;
 
-    public SearchItemResponse(List<Item> items, List<CoreError> errors) {
-        super(errors);
+    public SearchItemResponse(List<Item> items, Integer totalFoundItemCount) {
         this.items = items;
+        this.totalFoundItemCount = totalFoundItemCount;
+    }
+
+    public SearchItemResponse(List<CoreError> errors) {
+        super(errors);
     }
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public Integer getTotalFoundItemCount() {
+        return totalFoundItemCount;
     }
 
 }
