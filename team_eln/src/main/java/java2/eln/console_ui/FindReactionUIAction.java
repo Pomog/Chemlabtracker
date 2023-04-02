@@ -28,14 +28,14 @@ public class FindReactionUIAction implements UIAction{
         System.out.println("Enter Starting Material SMILE to search: ");
         String  smile = scanner.nextLine();
 
-
         System.out.println("Enter reaction Yield to search: ");
         String  yieldStr = scanner.nextLine();
         Double yield = null;
         try {
             yield = Double.parseDouble(yieldStr);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Yield set to null.");
+            yield = 0d;
+            System.out.println("Invalid input. Yield set to 0.");
         }
 
 
@@ -48,6 +48,16 @@ public class FindReactionUIAction implements UIAction{
         FindReactionResponse findReactionResponse =
                 findReactionService.execute(findReactionRequest);
 
-        findReactionResponse.getSearchingResults().forEach(System.out::println);
+        if (findReactionResponse.hasErrors()) {
+            findReactionResponse.getErrors().forEach(coreError ->
+                    System.out.println("InputError: " + coreError.getField() + " " + coreError.getMessage())
+            );
+        } else {
+            System.out.println("Search results");
+            findReactionResponse.getSearchingResults().forEach(System.out::println);
+            System.out.println("Reactions log end.");
+        }
+
+
     }
 }

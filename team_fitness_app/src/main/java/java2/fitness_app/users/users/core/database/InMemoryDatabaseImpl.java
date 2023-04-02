@@ -17,7 +17,7 @@ public class InMemoryDatabaseImpl implements Database {
     }
 
     @Override
-    public void registerNewUser(User user) {
+    public void add (User user) {
         user.setId(nextId);
         nextId++;
         users.add(user);

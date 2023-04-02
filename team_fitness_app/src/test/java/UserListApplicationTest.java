@@ -12,7 +12,7 @@ public class UserListApplicationTest {
     @Test
     public void registerUser() {
         User user = new User("A", "a");
-        database.registerNewUser(user);
+        database.add (user);
         assertEquals(1, database.getAllUsers().size());
     }
 
@@ -20,8 +20,8 @@ public class UserListApplicationTest {
     public void deleteUser() {
         User user1 = new User("A", "a");
         User user2 = new User("B", "b");
-        database.registerNewUser(user1);
-        database.registerNewUser(user2);
+        database.add (user1);
+        database.add (user2);
         database.deleteUser(1L, "a");
         assertEquals(1, database.getAllUsers().size());
     }
@@ -29,15 +29,15 @@ public class UserListApplicationTest {
     @Test
     public void login() {
         User user1 = new User("A", "a");
-        database.registerNewUser(user1);
+        database.add (user1);
         assertTrue(database.login(1L, "a"));
     }
     @Test
     public void getUsers() {
         User user1 = new User("A", "a");
         User user2 = new User("B", "b");
-        database.registerNewUser(user1);
-        database.registerNewUser(user2);
+        database.add (user1);
+        database.add (user2);
         assertEquals(2, database.getAllUsers().size());
     }
 }

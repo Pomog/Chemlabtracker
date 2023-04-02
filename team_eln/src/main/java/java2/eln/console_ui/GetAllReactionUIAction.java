@@ -20,8 +20,9 @@ public class GetAllReactionUIAction implements UIAction{
         GetAllReactionsResponse getAllReactionsResponse =
                 getAllReactionsService.execute(getAllReactionsRequest);
 
+        System.out.println("Search results");
         getAllReactionsResponse.getReactionsList().forEach(System.out::println);
-        System.out.println("Reaction log end.");
+        System.out.println("Reactions log end.");
 
     }
 }

@@ -31,10 +31,15 @@ public class FindReactionRequest {
         return startingMaterial;
     }
 
-    public double getYield() {
+    public double getFormattedYield() {
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
         symbols.setDecimalSeparator('.');
         DecimalFormat df = new DecimalFormat("#.##", symbols);
         return Double.parseDouble(df.format(yield));
     }
+
+    public Double getYield() {
+        return yield;
+    }
 }
+

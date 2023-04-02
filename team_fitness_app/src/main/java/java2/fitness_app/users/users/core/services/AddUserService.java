@@ -24,7 +24,7 @@ public class AddUserService {
             return new AddUserResponse(errors);
         }else{
             User user = new User(request.getUsername(), request.getPassword());
-            database.registerNewUser(user);
+            database.add(user);
             return new AddUserResponse(user);
         }
     }
