@@ -18,14 +18,8 @@ public class PagingRule {
         return pageSize;
     }
 
-    public void nextPage() {
-        pageNumber++;
-    }
-
-    public void previousPage() {
-        if (pageNumber > 1) {
-            pageNumber--;
-        }
+    public void changePageNumber(Integer pageNumberDelta) {
+        this.pageNumber += pageNumberDelta;
     }
 
 }

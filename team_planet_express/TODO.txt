@@ -5,4 +5,4 @@ yeet lombok @Data from domain, make @Getter
 listCartItem name of item
 input requests into its own method
 searchitem request validate ordering ?
-paging out + to lists
+sorting & paging to list items and cart

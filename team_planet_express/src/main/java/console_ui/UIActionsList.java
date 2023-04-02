@@ -10,6 +10,8 @@ import console_ui.actions.shared.ExitUIAction;
 import console_ui.actions.shared.SearchItemUIAction;
 import console_ui.actions.shared.SignInUIAction;
 import console_ui.actions.shared.SignOutUIAction;
+import console_ui.item.ordering.OrderingUIElement;
+import console_ui.item.paging.PagingUIElement;
 import core.database.Database;
 import core.domain.user.User;
 import core.domain.user.UserRole;
@@ -23,6 +25,8 @@ import core.services.actions.shared.SearchItemService;
 import core.services.actions.shared.SignInService;
 import core.services.actions.shared.SignOutService;
 import core.services.exception.ServiceMissingDataException;
+import core.services.item.ordering.OrderingService;
+import core.services.item.paging.PagingService;
 import core.services.user.UserService;
 import core.services.validators.actions.customer.AddItemToCartValidator;
 import core.services.validators.actions.customer.BuyValidator;
@@ -72,6 +76,8 @@ public class UIActionsList {
 
     private List<UIAction> createUIActionsList() {
         UserService userService = new UserService(database);
+        OrderingService orderingService = new OrderingService();
+        PagingService pagingService = new PagingService();
 
         MutableLongUserIdValidator mutableLongUserIdValidator = new MutableLongUserIdValidator();
         InputStringValidator inputStringValidator = new InputStringValidator();
@@ -88,7 +94,7 @@ public class UIActionsList {
         SignOutValidator signOutValidator = new SignOutValidator(mutableLongUserIdValidator);
 
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
-        SearchItemService searchItemService = new SearchItemService(database, searchItemValidator);
+        SearchItemService searchItemService = new SearchItemService(database, searchItemValidator, orderingService, pagingService);
         AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator);
         RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator);
         ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator);
@@ -101,9 +107,11 @@ public class UIActionsList {
         SignOutService signOutService = new SignOutService(signOutValidator, userService);
         ExitService exitService = new ExitService();
 
+        OrderingUIElement orderingUIElement = new OrderingUIElement(userCommunication);
+        PagingUIElement pagingUIElement = new PagingUIElement(userCommunication);
         List<UIAction> uiActions = new ArrayList<>();
         uiActions.add(new ListShopItemsUIAction(listShopItemsService, userCommunication));
-        uiActions.add(new SearchItemUIAction(searchItemService, userCommunication));
+        uiActions.add(new SearchItemUIAction(searchItemService, orderingUIElement, pagingUIElement, userCommunication));
         uiActions.add(new AddItemToCartUIAction(addItemToCartService, currentUserId, userCommunication));
         uiActions.add(new RemoveItemFromCartUIAction(removeItemFromCartService, currentUserId, userCommunication));
         uiActions.add(new ListCartItemsUIAction(listCartItemsService, currentUserId, userCommunication));

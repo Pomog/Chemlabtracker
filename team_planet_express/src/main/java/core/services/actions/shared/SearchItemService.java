@@ -5,27 +5,26 @@ import core.domain.item.Item;
 import core.requests.shared.SearchItemRequest;
 import core.responses.CoreError;
 import core.responses.shared.SearchItemResponse;
+import core.services.item.ordering.OrderingService;
+import core.services.item.paging.PagingService;
 import core.services.validators.actions.shared.SearchItemValidator;
-import core.support.ordering.OrderBy;
-import core.support.ordering.OrderDirection;
-import core.support.ordering.OrderingRule;
-import core.support.paging.PagingRule;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class SearchItemService {
 
     private final Database database;
     private final SearchItemValidator validator;
+    private final OrderingService orderingService;
+    private final PagingService pagingService;
 
-    public SearchItemService(Database database, SearchItemValidator validator) {
+    public SearchItemService(Database database, SearchItemValidator validator, OrderingService orderingService, PagingService pagingService) {
         this.database = database;
         this.validator = validator;
+        this.orderingService = orderingService;
+        this.pagingService = pagingService;
     }
 
     public SearchItemResponse execute(SearchItemRequest request) {
@@ -36,8 +35,8 @@ public class SearchItemService {
         } else {
             List<Item> items = search(request);
             Integer totalFoundItemCount = items.size();
-            items = order(items, request.getOrderingRules());
-            items = paging(items, request.getPagingRule());
+            items = orderingService.getOrderedItems(items, request.getOrderingRules());
+            items = pagingService.getPage(items, request.getPagingRule());
             response = new SearchItemResponse(items, totalFoundItemCount);
         }
         return response;
@@ -57,54 +56,8 @@ public class SearchItemService {
         return items;
     }
 
-    //TODO move it somewhere ?
-    private List<Item> order(List<Item> items, List<OrderingRule> orderingRules) {
-        if (orderingRules != null && orderingRules.size() > 0) {
-            items = orderByPrice(items, orderingRules);
-            items = orderByName(items, orderingRules);
-        }
-        return items;
-    }
-
-    //TODO def move somewhere
-    private List<Item> paging(List<Item> items, PagingRule pagingRule) {
-        if (pagingRule != null) {
-            long pageSize = Long.parseLong(pagingRule.getPageSize());
-            long itemCountToSkip = (pagingRule.getPageNumber() - 1) * pageSize;
-            items = items.stream()
-                    .skip(itemCountToSkip)
-                    .limit(pageSize)
-                    .collect(Collectors.toList());
-        }
-        return items;
-    }
-
     private boolean isPresent(String value) {
         return value != null && !value.isBlank();
-    }
-
-    private List<Item> orderByPrice(List<Item> items, List<OrderingRule> orderingRules) {
-        Optional<OrderingRule> orderingRuleForPrice = getOrderingRule(orderingRules, OrderBy.PRICE);
-        return orderWithDirection(items, orderingRuleForPrice, Comparator.comparing(Item::getPrice));
-    }
-
-    private List<Item> orderByName(List<Item> items, List<OrderingRule> orderingRules) {
-        Optional<OrderingRule> orderingRuleForName = getOrderingRule(orderingRules, OrderBy.NAME);
-        return orderWithDirection(items, orderingRuleForName, Comparator.comparing(Item::getName));
-    }
-
-    private Optional<OrderingRule> getOrderingRule(List<OrderingRule> orderingRules, OrderBy orderBy) {
-        return orderingRules.stream()
-                .filter(orderingRule -> orderBy.equals(orderingRule.getOrderBy()))
-                .findFirst();
-    }
-
-    private List<Item> orderWithDirection(List<Item> items, Optional<OrderingRule> orderingRule, Comparator<Item> comparator) {
-        return orderingRule.map(rule -> items.stream()
-                .sorted(rule.getOrderDirection().equals(OrderDirection.DESCENDING)
-                        ? comparator.reversed()
-                        : comparator)
-                .toList()).orElse(items);
     }
 
 }
