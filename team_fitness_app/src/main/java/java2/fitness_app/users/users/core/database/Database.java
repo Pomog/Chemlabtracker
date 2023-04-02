@@ -1,6 +1,6 @@
 package java2.fitness_app.users.users.core.database;
 
-import java2.fitness_app.users.users.User;
+import java2.fitness_app.users.users.core.domain.User;
 
 import java.util.List;
 

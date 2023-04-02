@@ -1,4 +1,4 @@
-package java2.fitness_app.users.users;
+package java2.fitness_app.users.users.core.domain;
 
 import java.util.Objects;
 
