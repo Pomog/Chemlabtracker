@@ -1,6 +1,6 @@
-import java2.fitness_app.users.users.core.database.Database;
-import java2.fitness_app.users.users.core.database.InMemoryDatabaseImpl;
-import java2.fitness_app.users.users.core.domain.User;
+import java2.fitness_app.users.core.database.Database;
+import java2.fitness_app.users.core.database.InMemoryDatabaseImpl;
+import java2.fitness_app.users.core.domain.User;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
