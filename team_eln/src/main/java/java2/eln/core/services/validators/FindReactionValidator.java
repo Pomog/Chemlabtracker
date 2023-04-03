@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SearchReactionValidator {
+public class FindReactionValidator {
     private Optional<CoreError> allFieldsAreEmpty(FindReactionRequest findReactionRequest){
         return (!requestValid(findReactionRequest))
                 ? Optional.of(new CoreError("Search request", "Must not be empty!"))
