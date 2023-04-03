@@ -1,9 +1,11 @@
 import java2.fitness_app.users.users.core.database.Database;
 import java2.fitness_app.users.users.core.database.InMemoryDatabaseImpl;
 import java2.fitness_app.users.users.core.domain.User;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 
 public class UserListApplicationTest {
 

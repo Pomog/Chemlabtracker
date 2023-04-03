@@ -1,7 +1,7 @@
 import java2.fitness_app.users.users.core.requests.AddUserRequest;
 import java2.fitness_app.users.users.core.responses.CoreError;
 import java2.fitness_app.users.users.core.services.AddUserValidator;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.List;
 
