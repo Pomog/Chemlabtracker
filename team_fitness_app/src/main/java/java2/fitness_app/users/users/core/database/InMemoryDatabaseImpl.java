@@ -25,7 +25,7 @@ public class InMemoryDatabaseImpl implements Database {
     }
 
     @Override
-    public void add (User user) {
+    public void add(User user) {
         user.setId(nextId);
         nextId++;
         users.add(user);
@@ -33,13 +33,6 @@ public class InMemoryDatabaseImpl implements Database {
 
     @Override
     public void deleteUser(User user) {
-            users.remove(user);
+        users.remove(user);
     }
-
-    @Override
-    public boolean login(Long id, String password) {
-        return users.stream()
-                .anyMatch(user -> user.getId().equals(id) && user.getPassword().equals(password));
-    }
-
 }

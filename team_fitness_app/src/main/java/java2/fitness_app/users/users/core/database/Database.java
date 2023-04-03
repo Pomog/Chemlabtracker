@@ -7,11 +7,9 @@ import java.util.Optional;
 
 public interface Database {
 
-    void add (User user);
+    void add(User user);
 
     void deleteUser(User user);
-
-    boolean login(Long id, String password);
 
     List<User> getAllUsers();
 
