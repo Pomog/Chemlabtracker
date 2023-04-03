@@ -1,10 +1,10 @@
-package java2.fitness_app.users.users.core.services;
+package java2.fitness_app.users.core.services;
 
-import java2.fitness_app.users.users.core.database.Database;
-import java2.fitness_app.users.users.core.domain.User;
-import java2.fitness_app.users.users.core.requests.LoginUserRequest;
-import java2.fitness_app.users.users.core.responses.CoreError;
-import java2.fitness_app.users.users.core.responses.LoginUserResponse;
+import java2.fitness_app.users.core.database.Database;
+import java2.fitness_app.users.core.domain.User;
+import java2.fitness_app.users.core.requests.LoginUserRequest;
+import java2.fitness_app.users.core.responses.CoreError;
+import java2.fitness_app.users.core.responses.LoginUserResponse;
 
 import java.util.List;
 
