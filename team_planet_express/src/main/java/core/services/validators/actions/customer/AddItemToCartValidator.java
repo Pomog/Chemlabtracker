@@ -27,7 +27,6 @@ public class AddItemToCartValidator {
     private final CartValidator cartValidator;
     private final InputStringValidator inputStringValidator;
     private final DatabaseAccessValidator databaseAccessValidator;
-    private List<CoreError> errors;
 
     public AddItemToCartValidator(Database database, MutableLongUserIdValidator userIdValidator, CartValidator cartValidator, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
         this.database = database;
@@ -39,11 +38,11 @@ public class AddItemToCartValidator {
 
     public List<CoreError> validate(AddItemToCartRequest request) {
         userIdValidator.validateMutableLongUserIdIsPresent(request.getUserId());
-        errors = new ArrayList<>();
+        List<CoreError> errors = new ArrayList<>();
         cartValidator.validateOpenCartExistsForUserId(request.getUserId().getValue()).ifPresent(errors::add);
         if (errors.isEmpty()) {
-            validateItemName(request.getItemName());
-            validateQuantity(request.getOrderedQuantity());
+            validateItemName(request.getItemName(), errors);
+            validateQuantity(request.getOrderedQuantity(), errors);
             if (errors.isEmpty()) {
                 validateOrderedQuantityNotGreaterThanAvailable(request).ifPresent(errors::add);
             }
@@ -51,13 +50,13 @@ public class AddItemToCartValidator {
         return errors;
     }
 
-    private void validateItemName(String itemName) {
+    private void validateItemName(String itemName, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(itemName, FIELD_NAME, VALUE_NAME_ITEM);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         validateItemNameExistsInShop(itemName).ifPresent(errors::add);
     }
 
-    private void validateQuantity(String orderedQuantity) {
+    private void validateQuantity(String orderedQuantity, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(orderedQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);

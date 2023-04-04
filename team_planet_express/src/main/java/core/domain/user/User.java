@@ -7,8 +7,6 @@ import java.util.Objects;
 @Data
 public class User {
 
-    public static final String BLANK = "";
-
     private Long id;
     private String name;
     private String login;
@@ -19,13 +17,6 @@ public class User {
         this.name = name;
         this.login = login;
         this.password = password;
-        this.userRole = userRole;
-    }
-
-    public User(UserRole userRole) {
-        this.name = BLANK;
-        this.login = BLANK;
-        this.password = BLANK;
         this.userRole = userRole;
     }
 
