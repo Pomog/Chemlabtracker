@@ -7,7 +7,7 @@ import core.responses.shared.SignOutResponse;
 import core.services.user.UserRecord;
 import core.services.user.UserService;
 import core.services.validators.actions.shared.SignOutValidator;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +30,7 @@ public class SignOutServiceTest {
     @Mock private SignOutRequest mockRequest;
     @Mock private CoreError mockCoreError;
     @Mock private User mockUser;
-    @Mock private MutableLong mockCurrentUserId;
+    @Mock private CurrentUserId mockCurrentUserId;
 
     @InjectMocks private SignOutService service;
 

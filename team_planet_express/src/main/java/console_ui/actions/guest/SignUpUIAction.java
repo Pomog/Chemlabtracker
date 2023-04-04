@@ -6,7 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.guest.SignUpRequest;
 import core.responses.guest.SignUpResponse;
 import core.services.actions.guest.SignUpService;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 
 public class SignUpUIAction extends UIAction {
 
@@ -20,10 +20,10 @@ public class SignUpUIAction extends UIAction {
     private static final String MESSAGE_EXCLAMATION = "!";
 
     private final SignUpService signUpService;
-    private final MutableLong currentUserId;
+    private final CurrentUserId currentUserId;
     private final UserCommunication userCommunication;
 
-    public SignUpUIAction(SignUpService signUpService, MutableLong currentUserId, UserCommunication userCommunication) {
+    public SignUpUIAction(SignUpService signUpService, CurrentUserId currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.signUpService = signUpService;
         this.currentUserId = currentUserId;

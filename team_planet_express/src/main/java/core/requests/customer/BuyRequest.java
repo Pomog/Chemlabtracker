@@ -1,11 +1,11 @@
 package core.requests.customer;
 
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import lombok.Value;
 
 @Value
 public class BuyRequest {
 
-    MutableLong userId;
+    CurrentUserId userId;
 
 }

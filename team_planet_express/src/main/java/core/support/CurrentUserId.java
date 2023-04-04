@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MutableLong {
+public class CurrentUserId {
 
     private Long value;
 

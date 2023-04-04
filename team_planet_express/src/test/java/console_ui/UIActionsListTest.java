@@ -4,7 +4,7 @@ import core.database.Database;
 import core.database.UserDatabase;
 import core.domain.user.User;
 import core.domain.user.UserRole;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +21,7 @@ class UIActionsListTest {
 
     @Mock private Database mockDatabase;
     @Mock private UserDatabase mockUserDatabase;
-    @Mock private MutableLong mockCurrentUserId;
+    @Mock private CurrentUserId mockCurrentUserId;
     @Mock private User mockUser;
 
     @InjectMocks private UIActionsList uiActionsList;

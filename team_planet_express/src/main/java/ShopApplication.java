@@ -8,7 +8,7 @@ import core.services.fake.FakeDatabaseInitializer;
 import core.services.user.UserRecord;
 import core.services.user.UserService;
 import core.services.validators.universal.system.DatabaseAccessValidator;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 
 public class ShopApplication {
 
@@ -26,7 +26,7 @@ public class ShopApplication {
         UserRecord userRecord = new UserRecord(UserRole.GUEST.getDefaultName(), BLANK, BLANK, UserRole.GUEST);
         User currentUser = userService.findGuestWithOpenCart().orElseGet(
                 () -> userService.createUser(userRecord));
-        MutableLong currentUserId = new MutableLong(currentUser.getId());
+        CurrentUserId currentUserId = new CurrentUserId(currentUser.getId());
 
         UserCommunication userCommunication = new UserCommunication();
 

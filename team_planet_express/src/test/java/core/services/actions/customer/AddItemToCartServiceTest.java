@@ -9,7 +9,7 @@ import core.domain.item.Item;
 import core.requests.customer.AddItemToCartRequest;
 import core.services.validators.actions.customer.AddItemToCartValidator;
 import core.services.validators.universal.system.DatabaseAccessValidator;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,7 +28,7 @@ class AddItemToCartServiceTest {
     @Mock private AddItemToCartValidator mockValidator;
     @Mock private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock private AddItemToCartRequest mockRequest = mock(AddItemToCartRequest.class);
-    @Mock private MutableLong mockUserId = mock(MutableLong.class);
+    @Mock private CurrentUserId mockUserId = mock(CurrentUserId.class);
     @Mock private ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
     @Mock private CartItemDatabase mockCartItemDatabase = mock(CartItemDatabase.class);
     @Mock private Item mockItem = mock(Item.class);

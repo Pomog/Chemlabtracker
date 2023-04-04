@@ -6,7 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.customer.RemoveItemFromCartRequest;
 import core.responses.customer.RemoveItemFromCartResponse;
 import core.services.actions.customer.RemoveItemFromCartService;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 
 public class RemoveItemFromCartUIAction extends UIAction {
 
@@ -17,11 +17,11 @@ public class RemoveItemFromCartUIAction extends UIAction {
     private static final String MESSAGE_ITEM_REMOVED = "Item removed from your cart.";
 
     private final RemoveItemFromCartService removeItemFromCartService;
-    private final MutableLong currentUserId;
+    private final CurrentUserId currentUserId;
     private final UserCommunication userCommunication;
 
 
-    public RemoveItemFromCartUIAction(RemoveItemFromCartService removeItemFromCartService, MutableLong currentUserId, UserCommunication userCommunication) {
+    public RemoveItemFromCartUIAction(RemoveItemFromCartService removeItemFromCartService, CurrentUserId currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.removeItemFromCartService = removeItemFromCartService;
         this.currentUserId = currentUserId;

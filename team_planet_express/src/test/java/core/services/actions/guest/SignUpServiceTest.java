@@ -8,7 +8,7 @@ import core.responses.guest.SignUpResponse;
 import core.services.user.UserRecord;
 import core.services.user.UserService;
 import core.services.validators.actions.guest.SignUpValidator;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +30,7 @@ class SignUpServiceTest {
     @Mock private SignUpRequest mockRequest;
     @Mock private CoreError mockCoreError;
     @Mock private User mockUser;
-    @Mock private MutableLong mockCurrentUserId;
+    @Mock private CurrentUserId mockCurrentUserId;
 
     @InjectMocks private SignUpService service;
 

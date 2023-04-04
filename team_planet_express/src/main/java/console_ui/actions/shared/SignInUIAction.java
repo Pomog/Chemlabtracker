@@ -6,7 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.shared.SignInRequest;
 import core.responses.shared.SignInResponse;
 import core.services.actions.shared.SignInService;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 
 public class SignInUIAction extends UIAction {
 
@@ -19,10 +19,10 @@ public class SignInUIAction extends UIAction {
     private static final String MESSAGE_EXCLAMATION = "!";
 
     private final SignInService signInService;
-    private final MutableLong currentUserId;
+    private final CurrentUserId currentUserId;
     private final UserCommunication userCommunication;
 
-    public SignInUIAction(SignInService SignInService, MutableLong currentUserId, UserCommunication userCommunication) {
+    public SignInUIAction(SignInService SignInService, CurrentUserId currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUM);
         this.signInService = SignInService;
         this.currentUserId = currentUserId;

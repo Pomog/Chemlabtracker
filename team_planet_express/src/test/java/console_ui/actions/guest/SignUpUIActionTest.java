@@ -6,7 +6,7 @@ import core.requests.guest.SignUpRequest;
 import core.responses.CoreError;
 import core.responses.guest.SignUpResponse;
 import core.services.actions.guest.SignUpService;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 class SignUpUIActionTest {
 
     @Mock private SignUpService mockSignUpService;
-    @Mock private MutableLong mockCurrentUserId;
+    @Mock private CurrentUserId mockCurrentUserId;
     @Mock private UserCommunication mockUserCommunication;
     @Mock private SignUpResponse mockSignUpResponse;
     @Mock private User mockUser;

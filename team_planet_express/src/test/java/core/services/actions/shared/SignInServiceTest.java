@@ -6,7 +6,7 @@ import core.responses.CoreError;
 import core.responses.shared.SignInResponse;
 import core.services.validators.actions.shared.SignInValidator;
 import core.services.validators.universal.system.DatabaseAccessValidator;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +30,7 @@ class SignInServiceTest {
     @Mock private SignInRequest mockRequest;
     @Mock private CoreError mockCoreError;
     @Mock private User mockUser;
-    @Mock private MutableLong mockCurrentUserId;
+    @Mock private CurrentUserId mockCurrentUserId;
 
     @InjectMocks private SignInService service;
 

@@ -6,7 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.customer.AddItemToCartRequest;
 import core.responses.customer.AddItemToCartResponse;
 import core.services.actions.customer.AddItemToCartService;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 
 public class AddItemToCartUIAction extends UIAction {
 
@@ -18,10 +18,10 @@ public class AddItemToCartUIAction extends UIAction {
     private static final String MESSAGE_ITEM_ADDED = "Item added to your cart.";
 
     private final AddItemToCartService addItemToCartService;
-    private final MutableLong currentUserId;
+    private final CurrentUserId currentUserId;
     private final UserCommunication userCommunication;
 
-    public AddItemToCartUIAction(AddItemToCartService addItemToCartService, MutableLong currentUserId, UserCommunication userCommunication) {
+    public AddItemToCartUIAction(AddItemToCartService addItemToCartService, CurrentUserId currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.addItemToCartService = addItemToCartService;
         this.currentUserId = currentUserId;

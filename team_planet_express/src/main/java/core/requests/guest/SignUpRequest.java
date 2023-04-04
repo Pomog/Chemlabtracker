@@ -1,12 +1,12 @@
 package core.requests.guest;
 
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import lombok.Value;
 
 @Value
 public class SignUpRequest {
 
-    MutableLong userId;
+    CurrentUserId userId;
     String name;
     String loginName;
     String password;

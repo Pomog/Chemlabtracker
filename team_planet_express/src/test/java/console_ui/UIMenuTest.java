@@ -12,7 +12,7 @@ class UIMenuTest {
 //    @Mock private UserCommunication mockUserCommunication;
 //    @Mock private Database mockDatabase;
 //    @Mock private UserDatabase mockUserDatabase;
-//    @Mock private MutableLong mockCurrentUserId;
+//    @Mock private CurrentUserId mockCurrentUserId;
 //    @Mock private User mockUser;
 //
 //    @InjectMocks private UIMenu uiMenu;

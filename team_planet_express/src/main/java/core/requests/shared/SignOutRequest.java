@@ -1,11 +1,11 @@
 package core.requests.shared;
 
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import lombok.Value;
 
 @Value
 public class SignOutRequest {
 
-    MutableLong userId;
+    CurrentUserId userId;
 
 }

@@ -6,7 +6,7 @@ import core.domain.user.UserRole;
 import core.requests.customer.ListCartItemsRequest;
 import core.responses.customer.ListCartItemsResponse;
 import core.services.actions.customer.ListCartItemsService;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 
 import java.math.BigDecimal;
 
@@ -20,10 +20,10 @@ public class ListCartItemsUIAction extends UIAction {
     private static final String MESSAGE_CART_TOTAL = "Your cart total is: ";
 
     private final ListCartItemsService listCartItemsService;
-    private final MutableLong currentUserId;
+    private final CurrentUserId currentUserId;
     private final UserCommunication userCommunication;
 
-    public ListCartItemsUIAction(ListCartItemsService listCartItemsService, MutableLong currentUserId, UserCommunication userCommunication) {
+    public ListCartItemsUIAction(ListCartItemsService listCartItemsService, CurrentUserId currentUserId, UserCommunication userCommunication) {
         super(ACTION_NAME, ACCESS_NUMBER);
         this.listCartItemsService = listCartItemsService;
         this.currentUserId = currentUserId;

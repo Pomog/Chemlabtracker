@@ -1,12 +1,12 @@
 package core.requests.shared;
 
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import lombok.Value;
 
 @Value
 public class SignInRequest {
 
-    MutableLong userId;
+    CurrentUserId userId;
     String loginName;
     String password;
 

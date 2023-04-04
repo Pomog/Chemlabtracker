@@ -42,7 +42,7 @@ import core.services.validators.cart.CartValidator;
 import core.services.validators.universal.system.DatabaseAccessValidator;
 import core.services.validators.universal.system.MutableLongUserIdValidator;
 import core.services.validators.universal.user_input.InputStringValidator;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,18 +52,18 @@ import java.util.stream.Collectors;
 public class UIActionsList {
 
     private final Database database;
-    private final MutableLong currentUserId;
+    private final CurrentUserId currentUserId;
     private final UserCommunication userCommunication;
     private final List<UIAction> uiActionsList;
 
-    public UIActionsList(Database database, MutableLong currentUserId, UserCommunication userCommunication) {
+    public UIActionsList(Database database, CurrentUserId currentUserId, UserCommunication userCommunication) {
         this.database = database;
         this.currentUserId = currentUserId;
         this.userCommunication = userCommunication;
         this.uiActionsList = createUIActionsList();
     }
 
-    public MutableLong getCurrentUserId() {
+    public CurrentUserId getCurrentUserId() {
         return currentUserId;
     }
 

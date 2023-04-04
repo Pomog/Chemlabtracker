@@ -9,7 +9,7 @@ import core.services.validators.universal.system.DatabaseAccessValidator;
 import core.services.validators.universal.system.MutableLongUserIdValidator;
 import core.services.validators.universal.user_input.InputStringValidator;
 import core.services.validators.universal.user_input.InputStringValidatorRecord;
-import core.support.MutableLong;
+import core.support.CurrentUserId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,7 +31,7 @@ class SignInValidatorTest {
     @Mock private InputStringValidator mockInputStringValidator;
     @Mock private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock private SignInRequest mockRequest;
-    @Mock private MutableLong mockUserId;
+    @Mock private CurrentUserId mockUserId;
     @Mock private UserDatabase mockUserDatabase;
     @Mock private User mockUser;
     @Mock private CoreError mockCoreError;
