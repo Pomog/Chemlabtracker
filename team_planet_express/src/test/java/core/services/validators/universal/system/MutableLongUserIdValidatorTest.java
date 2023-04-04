@@ -3,16 +3,20 @@ package core.services.validators.universal.system;
 import core.services.exception.ServiceMissingDataException;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
 
+@ExtendWith(MockitoExtension.class)
 class MutableLongUserIdValidatorTest {
 
-    private final MutableLong mockUserId = mock(MutableLong.class);
+    @Mock private MutableLong mockUserId;
 
-    private final MutableLongUserIdValidator validator = new MutableLongUserIdValidator();
+    @InjectMocks private MutableLongUserIdValidator validator;
 
     @Test
     void shouldThrowMissingDataException() {

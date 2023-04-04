@@ -1,4 +1,4 @@
-package console_ui.item.ordering;
+package console_ui.item_list.ordering;
 
 class OrderingUIElementTest {
 

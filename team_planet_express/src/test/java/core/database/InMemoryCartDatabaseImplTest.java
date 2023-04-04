@@ -3,18 +3,24 @@ package core.database;
 import core.domain.cart.Cart;
 import core.domain.cart.CartStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class InMemoryCartDatabaseImplTest {
 
-    private final Cart mockCart = mock(Cart.class);
+    @Mock private Cart mockCart;
 
-    private final InMemoryCartDatabaseImpl database = new InMemoryCartDatabaseImpl();
+    @InjectMocks private InMemoryCartDatabaseImpl database;
 
     @Test
     void shouldIncreaseInSizeAfterSave() {

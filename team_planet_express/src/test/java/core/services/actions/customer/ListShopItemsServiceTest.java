@@ -1,27 +1,31 @@
 package core.services.actions.customer;
 
 import core.database.Database;
+import core.database.ItemDatabase;
 import core.requests.customer.ListShopItemsRequest;
-import core.responses.customer.ListShopItemsResponse;
-import core.services.fake.FakeDatabaseInitializer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class ListShopItemsServiceTest {
 
-    private final Database fakeDatabase = new Database();
-    private final ListShopItemsRequest mockRequest = mock(ListShopItemsRequest.class);
+    @Mock private Database mockDatabase;
+    @Mock private ItemDatabase mockItemDatabase;
+    @Mock private ListShopItemsRequest mockRequest;
 
-    private final ListShopItemsService service =
-            new ListShopItemsService(fakeDatabase);
+    @InjectMocks private ListShopItemsService service;
 
     @Test
-    void shouldListHeaderAndItem() {
-        new FakeDatabaseInitializer(fakeDatabase).initialize();
-        ListShopItemsResponse response = service.execute(mockRequest);
-        assertEquals(10, response.getShopItems().size());
+    void shouldGetItemsFromDatabase() {
+        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        service.execute(mockRequest);
+        verify(mockItemDatabase).getAllItems();
     }
 
 }

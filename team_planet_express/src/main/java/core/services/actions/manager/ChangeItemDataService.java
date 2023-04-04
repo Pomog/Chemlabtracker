@@ -25,21 +25,31 @@ public class ChangeItemDataService {
         if (!errors.isEmpty()) {
             return new ChangeItemDataResponse(errors);
         }
-        //TODO 大きくて、可愛くない
         Long itemId = Long.parseLong(request.getItemId());
-        //TODO this is bad, but I am stupid tonight
-        if (request.getNewItemName() != null && !request.getNewItemName().isBlank()) {
-            database.accessItemDatabase().changeName(itemId, request.getNewItemName());
+        changeItemName(itemId, request.getNewItemName());
+        changePrice(itemId, request.getNewPrice());
+        changeAvailableQuantity(itemId, request.getNewAvailableQuantity());
+        return new ChangeItemDataResponse();
+    }
+
+    private void changeItemName(Long itemId, String newItemName) {
+        if (newItemName != null && !newItemName.isBlank()) {
+            database.accessItemDatabase().changeName(itemId, newItemName);
         }
-        if (request.getNewPrice() != null && !request.getNewPrice().isBlank()) {
-            BigDecimal newPrice = new BigDecimal(request.getNewPrice()).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private void changePrice(Long itemId, String newPriceString) {
+        if (newPriceString != null && !newPriceString.isBlank()) {
+            BigDecimal newPrice = new BigDecimal(newPriceString).setScale(2, RoundingMode.HALF_UP);
             database.accessItemDatabase().changePrice(itemId, newPrice);
         }
-        if (request.getNewAvailableQuantity() != null && !request.getNewAvailableQuantity().isBlank()) {
-            Integer newAvailableQuantity = Integer.parseInt(request.getNewAvailableQuantity());
+    }
+
+    private void changeAvailableQuantity(Long itemId, String newAvailableQuantityString) {
+        if (newAvailableQuantityString != null && !newAvailableQuantityString.isBlank()) {
+            Integer newAvailableQuantity = Integer.parseInt(newAvailableQuantityString);
             database.accessItemDatabase().changeAvailableQuantity(itemId, newAvailableQuantity);
         }
-        return new ChangeItemDataResponse();
     }
 
 }

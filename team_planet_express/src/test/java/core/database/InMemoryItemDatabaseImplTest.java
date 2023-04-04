@@ -2,18 +2,24 @@ package core.database;
 
 import core.domain.item.Item;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class InMemoryItemDatabaseImplTest {
 
-    private final Item mockItem = mock(Item.class);
+    @Mock private Item mockItem;
 
-    private final InMemoryItemDatabaseImpl database = new InMemoryItemDatabaseImpl();
+    @InjectMocks private InMemoryItemDatabaseImpl database;
 
     @Test
     void shouldIncreaseInSizeAfterSave() {

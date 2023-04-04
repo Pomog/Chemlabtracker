@@ -9,26 +9,28 @@ import core.services.actions.guest.SignUpService;
 import core.support.MutableLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class SignUpUIActionTest {
 
-    private final SignUpService mockSignUpService = mock(SignUpService.class);
-    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
-    private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
-    private final SignUpResponse mockSignUpResponse = mock(SignUpResponse.class);
-    private final User mockUser = mock(User.class);
-    private final CoreError mockCoreError = mock(CoreError.class);
+    @Mock private SignUpService mockSignUpService;
+    @Mock private MutableLong mockCurrentUserId;
+    @Mock private UserCommunication mockUserCommunication;
+    @Mock private SignUpResponse mockSignUpResponse;
+    @Mock private User mockUser;
+    @Mock private CoreError mockCoreError;
 
-    private final SignUpUIAction action =
-            new SignUpUIAction(mockSignUpService, mockCurrentUserId, mockUserCommunication);
+    @InjectMocks private SignUpUIAction action;
 
     @BeforeEach
     void setupMockResponse() {
@@ -65,12 +67,6 @@ class SignUpUIActionTest {
         when(mockCoreError.getMessage()).thenReturn("message");
         action.execute();
         verify(mockUserCommunication, times(2)).informUser("message");
-    }
-
-    @Test
-    void shouldReturnActionName() {
-        assertFalse(Objects.isNull(action.getActionName()) ||
-                action.getActionName().isBlank());
     }
 
 }

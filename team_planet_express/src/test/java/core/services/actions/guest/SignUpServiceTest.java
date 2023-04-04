@@ -10,6 +10,10 @@ import core.services.user.UserService;
 import core.services.validators.actions.guest.SignUpValidator;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,16 +22,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class SignUpServiceTest {
 
-    private final SignUpValidator mockValidator = mock(SignUpValidator.class);
-    private final UserService mockUserService = mock(UserService.class);
-    private final SignUpRequest mockRequest = mock(SignUpRequest.class);
-    private final CoreError mockCoreError = mock(CoreError.class);
-    private final User mockUser = mock(User.class);
-    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
+    @Mock private SignUpValidator mockValidator;
+    @Mock private UserService mockUserService;
+    @Mock private SignUpRequest mockRequest;
+    @Mock private CoreError mockCoreError;
+    @Mock private User mockUser;
+    @Mock private MutableLong mockCurrentUserId;
 
-    private final SignUpService service = new SignUpService(mockValidator, mockUserService);
+    @InjectMocks private SignUpService service;
 
     @Test
     void shouldReturnErrorsIfPresent() {

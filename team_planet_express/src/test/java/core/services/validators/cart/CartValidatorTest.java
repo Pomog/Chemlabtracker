@@ -5,20 +5,24 @@ import core.database.Database;
 import core.domain.cart.Cart;
 import core.responses.CoreError;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class CartValidatorTest {
 
-    private final Database mockDatabase = mock(Database.class);
-    private final CartDatabase mockCartDatabase = mock(CartDatabase.class);
-    private final Cart mockCart = mock(Cart.class);
+    @Mock private Database mockDatabase;
+    @Mock private CartDatabase mockCartDatabase;
+    @Mock private Cart mockCart;
 
-    private final CartValidator validator = new CartValidator(mockDatabase);
+    @InjectMocks private CartValidator validator;
 
     @Test
     void shouldReturnNoError() {

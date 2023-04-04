@@ -1,4 +1,4 @@
-package console_ui.item.paging;
+package console_ui.item_list.paging;
 
 import console_ui.UserCommunication;
 import core.support.paging.PageNavigation;

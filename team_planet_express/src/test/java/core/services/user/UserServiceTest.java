@@ -6,8 +6,11 @@ import core.database.UserDatabase;
 import core.domain.cart.Cart;
 import core.domain.user.User;
 import core.domain.user.UserRole;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,24 +18,21 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-    private final Database mockDatabase = mock(Database.class);
-    private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
-    private final CartDatabase mockCartDatabase = mock(CartDatabase.class);
-    private final User mockUser = mock(User.class);
-    private final Cart mockCart = mock(Cart.class);
+    @Mock private Database mockDatabase;
+    @Mock private UserDatabase mockUserDatabase;
+    @Mock private CartDatabase mockCartDatabase;
+    @Mock private User mockUser;
+    @Mock private Cart mockCart;
 
-    private final UserService service = new UserService(mockDatabase);
-
-    @BeforeEach
-    void setupSharedMockBehaviour() {
-        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
-        when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
-    }
+    @InjectMocks private UserService service;
 
     @Test
     void shouldSaveUserAndCart() {
+        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+        when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
         when(mockUserDatabase.save(any(User.class))).thenReturn(mockUser);
         when(mockUser.getId()).thenReturn(1L);
         UserRecord record = new UserRecord("Name", "login name", "password", UserRole.GUEST);
@@ -43,6 +43,8 @@ class UserServiceTest {
 
     @Test
     void shouldReturnExistingGuest() {
+        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+        when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
         when(mockUserDatabase.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         when(mockUser.getId()).thenReturn(1L);
@@ -52,15 +54,16 @@ class UserServiceTest {
 
     @Test
     void shouldReturnEmptyOptionalForNoGuest() {
+        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         when(mockUserDatabase.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.ADMIN);
-        when(mockUser.getId()).thenReturn(1L);
-        when(mockCartDatabase.findOpenCartForUserId(1L)).thenReturn(Optional.of(mockCart));
         assertTrue(service.findGuestWithOpenCart().isEmpty());
     }
 
     @Test
     void shouldReturnEmptyOptionalForNoOpenCart() {
+        when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
+        when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
         when(mockUserDatabase.getAllUsers()).thenReturn(List.of(mockUser));
         when(mockUser.getUserRole()).thenReturn(UserRole.GUEST);
         when(mockUser.getId()).thenReturn(1L);

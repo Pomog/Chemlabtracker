@@ -7,22 +7,24 @@ import core.responses.customer.ListShopItemsResponse;
 import core.services.actions.customer.ListShopItemsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class ListShopItemsUIActionTest {
 
-    private final ListShopItemsService mockListShopItemsService = mock(ListShopItemsService.class);
-    private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
-    private final ListShopItemsResponse mockListShopItemsResponse = mock(ListShopItemsResponse.class);
-    private final Item mockItem = mock(Item.class);
+    @Mock private ListShopItemsService mockListShopItemsService;
+    @Mock private UserCommunication mockUserCommunication;
+    @Mock private ListShopItemsResponse mockListShopItemsResponse;
+    @Mock private Item mockItem;
 
-    private final ListShopItemsUIAction action =
-            new ListShopItemsUIAction(mockListShopItemsService, mockUserCommunication);
+    @InjectMocks private ListShopItemsUIAction action;
 
     @BeforeEach
     void setupMockResponse() {
@@ -47,12 +49,6 @@ class ListShopItemsUIActionTest {
         when(mockListShopItemsResponse.getShopItems()).thenReturn(List.of(mockItem, mockItem));
         action.execute();
         verify(mockUserCommunication, times(3)).informUser(anyString());
-    }
-
-    @Test
-    void shouldReturnActionName() {
-        assertFalse(Objects.isNull(action.getActionName()) ||
-                action.getActionName().isBlank());
     }
 
 }

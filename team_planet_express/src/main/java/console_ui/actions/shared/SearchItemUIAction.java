@@ -2,8 +2,8 @@ package console_ui.actions.shared;
 
 import console_ui.UserCommunication;
 import console_ui.actions.UIAction;
-import console_ui.item.ordering.OrderingUIElement;
-import console_ui.item.paging.PagingUIElement;
+import console_ui.item_list.ordering.OrderingUIElement;
+import console_ui.item_list.paging.PagingUIElement;
 import core.domain.user.UserRole;
 import core.requests.shared.SearchItemRequest;
 import core.responses.shared.SearchItemResponse;

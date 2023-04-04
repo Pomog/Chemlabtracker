@@ -10,6 +10,10 @@ import core.services.validators.universal.user_input.InputStringValidator;
 import core.services.validators.universal.user_input.InputStringValidatorRecord;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,19 +22,19 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class SignUpValidatorTest {
 
-    private final Database mockDatabase = mock(Database.class);
-    private final MutableLongUserIdValidator mockMutableLongUserIdValidator = mock(MutableLongUserIdValidator.class);
-    private final InputStringValidator mockInputStringValidator = mock(InputStringValidator.class);
-    private final SignUpRequest mockRequest = mock(SignUpRequest.class);
-    private final MutableLong mockUserId = mock(MutableLong.class);
-    private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
-    private final User mockUser = mock(User.class);
-    private final CoreError mockCoreError = mock(CoreError.class);
+    @Mock private Database mockDatabase;
+    @Mock private MutableLongUserIdValidator mockMutableLongUserIdValidator;
+    @Mock private InputStringValidator mockInputStringValidator;
+    @Mock private SignUpRequest mockRequest;
+    @Mock private MutableLong mockUserId;
+    @Mock private UserDatabase mockUserDatabase;
+    @Mock private User mockUser;
+    @Mock private CoreError mockCoreError;
 
-    private final SignUpValidator validator =
-            new SignUpValidator(mockDatabase, mockMutableLongUserIdValidator, mockInputStringValidator);
+    @InjectMocks private SignUpValidator validator;
 
     @Test
     void shouldValidateUserIdIsPresent() {

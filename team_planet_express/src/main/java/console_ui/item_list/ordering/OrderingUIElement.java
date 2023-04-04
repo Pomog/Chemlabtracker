@@ -1,4 +1,4 @@
-package console_ui.item.ordering;
+package console_ui.item_list.ordering;
 
 import console_ui.UserCommunication;
 import core.support.ordering.OrderBy;

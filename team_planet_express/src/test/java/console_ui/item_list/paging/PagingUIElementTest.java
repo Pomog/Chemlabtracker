@@ -1,4 +1,4 @@
-package console_ui.item.paging;
+package console_ui.item_list.paging;
 
 class PagingUIElementTest {
 

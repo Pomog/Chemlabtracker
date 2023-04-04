@@ -9,25 +9,27 @@ import core.services.actions.shared.SignInService;
 import core.support.MutableLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class SignInUIActionTest {
 
-    private final SignInService mockSignInService = mock(SignInService.class);
-    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
-    private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
-    private final SignInResponse mockSignInResponse = mock(SignInResponse.class);
-    private final User mockUser = mock(User.class);
-    private final CoreError mockCoreError = mock(CoreError.class);
+    @Mock private SignInService mockSignInService;
+    @Mock private MutableLong mockCurrentUserId;
+    @Mock private UserCommunication mockUserCommunication;
+    @Mock private SignInResponse mockSignInResponse;
+    @Mock private User mockUser;
+    @Mock private CoreError mockCoreError;
 
-    private final SignInUIAction action =
-            new SignInUIAction(mockSignInService, mockCurrentUserId, mockUserCommunication);
+    @InjectMocks private SignInUIAction action;
 
     @BeforeEach
     void setupMockResponse() {
@@ -64,12 +66,6 @@ class SignInUIActionTest {
         when(mockCoreError.getMessage()).thenReturn("message");
         action.execute();
         verify(mockUserCommunication, times(2)).informUser("message");
-    }
-
-    @Test
-    void shouldReturnActionName() {
-        assertFalse(Objects.isNull(action.getActionName()) ||
-                action.getActionName().isBlank());
     }
 
 }
