@@ -1,10 +1,9 @@
 package core.services.validators.actions.shared;
 
 import core.database.Database;
-import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
-import core.services.exception.ServiceMissingDataException;
+import core.services.validators.universal.system.DatabaseAccessValidator;
 import core.services.validators.universal.system.MutableLongUserIdValidator;
 import core.services.validators.universal.user_input.InputStringValidator;
 import core.services.validators.universal.user_input.InputStringValidatorRecord;
@@ -25,12 +24,14 @@ public class SignInValidator {
     private final Database database;
     private final MutableLongUserIdValidator userIdValidator;
     private final InputStringValidator inputStringValidator;
+    private final DatabaseAccessValidator databaseAccessValidator;
     private List<CoreError> errors;
 
-    public SignInValidator(Database database, MutableLongUserIdValidator userIdValidator, InputStringValidator inputStringValidator) {
+    public SignInValidator(Database database, MutableLongUserIdValidator userIdValidator, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
         this.database = database;
         this.userIdValidator = userIdValidator;
         this.inputStringValidator = inputStringValidator;
+        this.databaseAccessValidator = databaseAccessValidator;
     }
 
     public List<CoreError> validate(SignInRequest request) {
@@ -57,22 +58,16 @@ public class SignInValidator {
 
     private Optional<CoreError> validatePasswordMatches(SignInRequest request) {
         return (!request.getPassword().equals(
-                getUserByLoginName(request.getLoginName()).getPassword()))
+                databaseAccessValidator.getUserByLoginName(request.getLoginName()).getPassword()))
                 ? Optional.of(new CoreError(FIELD_PASSWORD, ERROR_PASSWORD_INCORRECT))
                 : Optional.empty();
     }
 
     private Optional<CoreError> validateLoginNameExists(String loginName) {
         return (loginName != null && !loginName.isBlank() &&
-                database.accessUserDatabase().findByLogin(loginName).isEmpty())
+                database.accessUserDatabase().findByLoginName(loginName).isEmpty())
                 ? Optional.of(new CoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_NOT_EXISTS))
                 : Optional.empty();
-    }
-
-    //TODO yeet, duplicate
-    private User getUserByLoginName(String login) {
-        return database.accessUserDatabase().findByLogin(login)
-                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }

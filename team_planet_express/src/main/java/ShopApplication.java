@@ -7,13 +7,17 @@ import core.domain.user.UserRole;
 import core.services.fake.FakeDatabaseInitializer;
 import core.services.user.UserRecord;
 import core.services.user.UserService;
+import core.services.validators.universal.system.DatabaseAccessValidator;
 import core.support.MutableLong;
 
-public class Shop {
+public class ShopApplication {
 
     public static final String BLANK = "";
 
     public static void main(String[] args) {
+
+        //TODO appContext should do all of those "new" at the beginning
+        //TODO we got duplicates of them
 
         Database database = new Database();
         new FakeDatabaseInitializer(database).initialize();
@@ -27,7 +31,8 @@ public class Shop {
         UserCommunication userCommunication = new UserCommunication();
 
         UIActionsList uiActionList = new UIActionsList(database, currentUserId, userCommunication);
-        UIMenu uiMenu = new UIMenu(uiActionList, userCommunication);
+        DatabaseAccessValidator databaseAccessValidator = new DatabaseAccessValidator(database);
+        UIMenu uiMenu = new UIMenu(uiActionList, databaseAccessValidator, userCommunication);
 
         uiMenu.startUI();
 

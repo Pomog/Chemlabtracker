@@ -1,0 +1,5 @@
+class ShopApplicationTest {
+
+    //TODO test
+
+}

@@ -64,7 +64,7 @@ class SignUpValidatorTest {
     void shouldReturnErrorForExistingLoginName() {
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
-        when(mockUserDatabase.findByLogin("login")).thenReturn(Optional.of(mockUser));
+        when(mockUserDatabase.findByLoginName("login")).thenReturn(Optional.of(mockUser));
         List<CoreError> errors = validator.validate(mockRequest);
         Optional<CoreError> error = errors.stream()
                 .filter(coreError -> coreError.getField().equals("login"))

@@ -29,7 +29,7 @@ public class InMemoryUserDatabaseImpl implements UserDatabase {
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
+    public Optional<User> findByLoginName(String login) {
         return users.stream()
                 .filter(user -> user.getLogin().equals(login))
                 .findFirst();

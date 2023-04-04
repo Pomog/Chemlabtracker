@@ -24,7 +24,7 @@ import core.services.actions.shared.ExitService;
 import core.services.actions.shared.SearchItemService;
 import core.services.actions.shared.SignInService;
 import core.services.actions.shared.SignOutService;
-import core.services.exception.ServiceMissingDataException;
+import core.services.cart.CartService;
 import core.services.item.ordering.OrderingService;
 import core.services.item.paging.PagingService;
 import core.services.user.UserService;
@@ -39,6 +39,7 @@ import core.services.validators.actions.shared.SearchItemValidator;
 import core.services.validators.actions.shared.SignInValidator;
 import core.services.validators.actions.shared.SignOutValidator;
 import core.services.validators.cart.CartValidator;
+import core.services.validators.universal.system.DatabaseAccessValidator;
 import core.services.validators.universal.system.MutableLongUserIdValidator;
 import core.services.validators.universal.user_input.InputStringValidator;
 import core.support.MutableLong;
@@ -62,6 +63,10 @@ public class UIActionsList {
         this.uiActionsList = createUIActionsList();
     }
 
+    public MutableLong getCurrentUserId() {
+        return currentUserId;
+    }
+
     public List<UIAction> getUIActionsListForUserRole() {
         Optional<User> currentUser = database.accessUserDatabase().findById(currentUserId.getValue());
         UserRole filterRole = currentUser.isEmpty() ? UserRole.GUEST : currentUser.get().getUserRole();
@@ -70,39 +75,36 @@ public class UIActionsList {
                 .collect(Collectors.toList());
     }
 
-    public String getCurrentUserName() {
-        return getUserById(currentUserId.getValue()).getName();
-    }
-
     private List<UIAction> createUIActionsList() {
-        UserService userService = new UserService(database);
-        OrderingService orderingService = new OrderingService();
-        PagingService pagingService = new PagingService();
-
         MutableLongUserIdValidator mutableLongUserIdValidator = new MutableLongUserIdValidator();
         InputStringValidator inputStringValidator = new InputStringValidator();
         CartValidator cartValidator = new CartValidator(database);
+        DatabaseAccessValidator databaseAccessValidator = new DatabaseAccessValidator(database);
         SearchItemValidator searchItemValidator = new SearchItemValidator(inputStringValidator);
-        AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, mutableLongUserIdValidator, cartValidator, inputStringValidator);
-        RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, mutableLongUserIdValidator, cartValidator, inputStringValidator);
+        AddItemToCartValidator addItemToCartValidator = new AddItemToCartValidator(database, mutableLongUserIdValidator, cartValidator, inputStringValidator, databaseAccessValidator);
+        RemoveItemFromCartValidator removeItemFromCartValidator = new RemoveItemFromCartValidator(database, mutableLongUserIdValidator, cartValidator, inputStringValidator, databaseAccessValidator);
         ListCartItemValidator listCartItemValidator = new ListCartItemValidator(mutableLongUserIdValidator, cartValidator);
-        BuyValidator buyValidator = new BuyValidator(database, mutableLongUserIdValidator, cartValidator);
+        BuyValidator buyValidator = new BuyValidator(database, mutableLongUserIdValidator, cartValidator, databaseAccessValidator);
         AddItemToShopValidator addItemToShopValidator = new AddItemToShopValidator(database, inputStringValidator);
-        ChangeItemDataValidator changeItemDataValidator = new ChangeItemDataValidator(database, inputStringValidator);
-        SignInValidator signInValidator = new SignInValidator(database, mutableLongUserIdValidator, inputStringValidator);
+        ChangeItemDataValidator changeItemDataValidator = new ChangeItemDataValidator(database, inputStringValidator, databaseAccessValidator);
+        SignInValidator signInValidator = new SignInValidator(database, mutableLongUserIdValidator, inputStringValidator, databaseAccessValidator);
         SignUpValidator signUpValidator = new SignUpValidator(database, mutableLongUserIdValidator, inputStringValidator);
         SignOutValidator signOutValidator = new SignOutValidator(mutableLongUserIdValidator);
 
+        UserService userService = new UserService(database);
+        OrderingService orderingService = new OrderingService();
+        PagingService pagingService = new PagingService();
+        CartService cartService = new CartService(database, databaseAccessValidator);
         ListShopItemsService listShopItemsService = new ListShopItemsService(database);
         SearchItemService searchItemService = new SearchItemService(database, searchItemValidator, orderingService, pagingService);
-        AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator);
-        RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator);
-        ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator);
-        BuyService buyService = new BuyService(database, buyValidator);
+        AddItemToCartService addItemToCartService = new AddItemToCartService(database, addItemToCartValidator, databaseAccessValidator);
+        RemoveItemFromCartService removeItemFromCartService = new RemoveItemFromCartService(database, removeItemFromCartValidator, databaseAccessValidator);
+        ListCartItemsService listCartItemsService = new ListCartItemsService(database, listCartItemValidator, databaseAccessValidator, cartService);
+        BuyService buyService = new BuyService(database, buyValidator, databaseAccessValidator);
         AddItemToShopService addItemToShopService = new AddItemToShopService(database, addItemToShopValidator);
         ChangeItemDataService changeItemDataService = new ChangeItemDataService(database, changeItemDataValidator);
         ChangeUserDataService changeUserDataService = new ChangeUserDataService(database);
-        SignInService signInService = new SignInService(database, signInValidator);
+        SignInService signInService = new SignInService(signInValidator, databaseAccessValidator);
         SignUpService signUpService = new SignUpService(signUpValidator, userService);
         SignOutService signOutService = new SignOutService(signOutValidator, userService);
         ExitService exitService = new ExitService();
@@ -125,12 +127,6 @@ public class UIActionsList {
         uiActions.add(new ExitUIAction(exitService, userCommunication));
 
         return uiActions;
-    }
-
-    //TODO yeet, duplicate
-    private User getUserById(Long userId) {
-        return database.accessUserDatabase().findById(userId)
-                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }

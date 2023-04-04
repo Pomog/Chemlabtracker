@@ -1,11 +1,10 @@
 package core.services.validators.actions.customer;
 
 import core.database.Database;
-import core.domain.item.Item;
 import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
-import core.services.exception.ServiceMissingDataException;
 import core.services.validators.cart.CartValidator;
+import core.services.validators.universal.system.DatabaseAccessValidator;
 import core.services.validators.universal.system.MutableLongUserIdValidator;
 import core.services.validators.universal.user_input.InputStringValidator;
 import core.services.validators.universal.user_input.InputStringValidatorRecord;
@@ -27,13 +26,15 @@ public class AddItemToCartValidator {
     private final MutableLongUserIdValidator userIdValidator;
     private final CartValidator cartValidator;
     private final InputStringValidator inputStringValidator;
+    private final DatabaseAccessValidator databaseAccessValidator;
     private List<CoreError> errors;
 
-    public AddItemToCartValidator(Database database, MutableLongUserIdValidator userIdValidator, CartValidator cartValidator, InputStringValidator inputStringValidator) {
+    public AddItemToCartValidator(Database database, MutableLongUserIdValidator userIdValidator, CartValidator cartValidator, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
         this.database = database;
         this.userIdValidator = userIdValidator;
         this.cartValidator = cartValidator;
         this.inputStringValidator = inputStringValidator;
+        this.databaseAccessValidator = databaseAccessValidator;
     }
 
     public List<CoreError> validate(AddItemToCartRequest request) {
@@ -73,15 +74,9 @@ public class AddItemToCartValidator {
 
     private Optional<CoreError> validateOrderedQuantityNotGreaterThanAvailable(AddItemToCartRequest request) {
         return (Integer.parseInt(request.getOrderedQuantity()) >
-                getItemByName(request.getItemName()).getAvailableQuantity())
+                databaseAccessValidator.getItemByName(request.getItemName()).getAvailableQuantity())
                 ? Optional.of(new CoreError(FIELD_QUANTITY, ERROR_NOT_ENOUGH_QUANTITY))
                 : Optional.empty();
-    }
-
-    //TODO yeet, duplicate
-    private Item getItemByName(String itemName) {
-        return database.accessItemDatabase().findByName(itemName)
-                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }
