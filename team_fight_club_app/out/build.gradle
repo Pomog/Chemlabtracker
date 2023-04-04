@@ -1,0 +1,6 @@
+dependencies {
+    testImplementation('junit:junit:4.13.2')
+    implementation project(':team_fight_club_app:core')
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+}
