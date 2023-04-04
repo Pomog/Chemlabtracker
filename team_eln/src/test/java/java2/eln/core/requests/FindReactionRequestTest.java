@@ -28,7 +28,7 @@ class FindReactionRequestTest {
         FindReactionRequest findReactionRequestTest =
                 new FindReactionRequest("","", new StructureData("C"), 90.225);
         double testYield = 90.22;
-        assertEquals(testYield, findReactionRequestTest.getYield() );
+        assertEquals(testYield, findReactionRequestTest.getFormattedYield() );
     }
 
     @Test
@@ -36,7 +36,7 @@ class FindReactionRequestTest {
         FindReactionRequest findReactionRequestTest =
                 new FindReactionRequest("","", new StructureData("C"), 90.2251);
         double testYield = 90.23;
-        assertEquals(testYield, findReactionRequestTest.getYield() );
+        assertEquals(testYield, findReactionRequestTest.getFormattedYield() );
     }
 
     @Test

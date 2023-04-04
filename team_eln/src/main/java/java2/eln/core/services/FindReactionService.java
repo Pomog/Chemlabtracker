@@ -4,7 +4,7 @@ import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.requests.FindReactionRequest;
 import java2.eln.core.responses.FindReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
-import java2.eln.core.services.validators.SearchReactionValidator;
+import java2.eln.core.services.validators.FindReactionValidator;
 import java2.eln.domain.ReactionData;
 import java2.eln.domain.StructureData;
 
@@ -13,15 +13,15 @@ import java.util.stream.Collectors;
 
 public class FindReactionService {
     private final DatabaseIM databaseIM;
-    private SearchReactionValidator searchReactionValidator;
+    private FindReactionValidator findReactionValidator;
 
-    public FindReactionService(DatabaseIM databaseIM, SearchReactionValidator searchReactionValidator) {
+    public FindReactionService(DatabaseIM databaseIM, FindReactionValidator findReactionValidator) {
         this.databaseIM = databaseIM;
-        this.searchReactionValidator = searchReactionValidator;
+        this.findReactionValidator = findReactionValidator;
     }
 
     public FindReactionResponse execute (FindReactionRequest findReactionRequest) {
-        List<CoreError> errors = searchReactionValidator.validate(findReactionRequest);
+        List<CoreError> errors = findReactionValidator.validate(findReactionRequest);
         if (!errors.isEmpty()) {
             return new FindReactionResponse(errors, true);
         }

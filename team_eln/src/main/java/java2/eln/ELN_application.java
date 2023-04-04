@@ -6,7 +6,7 @@ import java2.eln.core.database.InMemoryDatabaseImplIM;
 import java2.eln.core.services.*;
 import java2.eln.core.services.validators.AddReactionValidator;
 import java2.eln.core.services.validators.DelReactionValidator;
-import java2.eln.core.services.validators.SearchReactionValidator;
+import java2.eln.core.services.validators.FindReactionValidator;
 
 import java.util.Scanner;
 
@@ -26,10 +26,10 @@ public class ELN_application {
             new FindReactionsByMainProductService(inMemoryDataBase);
     private static FindReactionByMainProductUIAction findReactionByMainProductUIAction =
             new FindReactionByMainProductUIAction(findReactionByMainProductService);
-    private static SearchReactionValidator searchReactionValidator =
-            new SearchReactionValidator();
+    private static FindReactionValidator findReactionValidator =
+            new FindReactionValidator();
     private static FindReactionService findReactionService =
-            new FindReactionService(inMemoryDataBase, searchReactionValidator);
+            new FindReactionService(inMemoryDataBase, findReactionValidator);
     private static FindReactionUIAction findReactionUIAction =
             new FindReactionUIAction(findReactionService);
     private static ExitUIService exitUIService =

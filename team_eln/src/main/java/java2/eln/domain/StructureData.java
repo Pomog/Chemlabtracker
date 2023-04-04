@@ -68,7 +68,7 @@ public class StructureData {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
         if (smiles.isBlank()) {
-            setSmiles("C");
+            setSmiles(".");
         }
         try {
             mol = parser.parseSmiles(smiles);
