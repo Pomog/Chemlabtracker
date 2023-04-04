@@ -35,20 +35,22 @@ public class AddBookServiceTest {
 	@InjectMocks private AddBookService service;
 
 
+/*
 	@Before
 	public void init() {
 		database = Mockito.mock(Database.class);
 		validator = Mockito.mock(AddBookRequestValidator.class);
 		service = new AddBookService(database, validator);
 	}
+*/
 
 	@Test
 	public void testMyMock() {
-		validator = Mockito.mock(AddBookRequestValidatorMock.class);
+		//validator = Mockito.mock(AddBookRequestValidatorMock.class);
 
 		AddBookRequest request1 = new AddBookRequest("Title", "Au");
 		AddBookRequest request2 = new AddBookRequest("Title", "Au");
-		validator = Mockito.mock(AddBookRequestValidator.class);
+		//validator = Mockito.mock(AddBookRequestValidator.class);
 		//Mockito.when(validator.validate(request1)).thenReturn(List.of());
 		/*Mockito.when(validator.validate(request2)).thenReturn(List.of(
 				new CoreError("title", "errorMesage")

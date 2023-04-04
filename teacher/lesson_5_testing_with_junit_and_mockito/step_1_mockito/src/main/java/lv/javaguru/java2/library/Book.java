@@ -1,5 +1,6 @@
 package lv.javaguru.java2.library;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Book {
@@ -7,6 +8,10 @@ public class Book {
 	private Long id;
 	private String title;
 	private String author;
+
+	private List<Page> pages;
+
+	public Book() { }
 
 	public Book(String title, String author) {
 		this.title = title;
@@ -35,6 +40,14 @@ public class Book {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	public List<Page> getPages() {
+		return pages;
+	}
+
+	public void setPages(List<Page> pages) {
+		this.pages = pages;
 	}
 
 	@Override
