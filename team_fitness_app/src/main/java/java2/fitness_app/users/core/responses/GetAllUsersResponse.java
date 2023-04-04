@@ -4,7 +4,7 @@ import java2.fitness_app.users.core.domain.User;
 
 import java.util.List;
 
-public class GetAllUsersResponse {
+public class GetAllUsersResponse extends CoreResponse{
 
     private List<User> users;
 

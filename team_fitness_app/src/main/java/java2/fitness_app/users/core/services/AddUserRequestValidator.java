@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AddUserValidator {
+public class AddUserRequestValidator {
     public List<CoreError> validate(AddUserRequest request) {
         List<CoreError> errors = new ArrayList<>();
         validateUsername(request).ifPresent(errors::add);

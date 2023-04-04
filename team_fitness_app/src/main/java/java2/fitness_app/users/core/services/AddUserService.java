@@ -11,9 +11,9 @@ import java.util.List;
 public class AddUserService {
 
     private Database database;
-    private AddUserValidator validator;
+    private AddUserRequestValidator validator;
 
-    public AddUserService(Database database, AddUserValidator validator) {
+    public AddUserService(Database database, AddUserRequestValidator validator) {
         this.database = database;
         this.validator = validator;
     }

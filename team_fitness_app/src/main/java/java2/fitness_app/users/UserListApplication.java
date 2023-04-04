@@ -11,9 +11,9 @@ import java.util.Scanner;
 public class UserListApplication {
 
     private static Database database = new InMemoryDatabaseImpl();
-    private static AddUserValidator addUserValidator = new AddUserValidator();
+    private static AddUserRequestValidator addUserRequestValidator = new AddUserRequestValidator();
     private static LoginUserValidator loginUserValidator = new LoginUserValidator();
-    private static AddUserService addUserService = new AddUserService(database, addUserValidator);
+    private static AddUserService addUserService = new AddUserService(database, addUserRequestValidator);
     private static LoginUserService loginUserService = new LoginUserService(database, loginUserValidator);
     private static RemoveUserValidator removeUserValidator = new RemoveUserValidator();
     private static RemoveUserService removeUserService = new RemoveUserService(database, removeUserValidator);

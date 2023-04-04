@@ -1,6 +1,8 @@
+package java2.fitness_app.users.core.services.validators;
+
 import java2.fitness_app.users.core.requests.AddUserRequest;
 import java2.fitness_app.users.core.responses.CoreError;
-import java2.fitness_app.users.core.services.AddUserValidator;
+import java2.fitness_app.users.core.services.AddUserRequestValidator;
 import org.junit.Test;
 
 import java.util.List;
@@ -40,9 +42,9 @@ public class AddUserServiceValidatorTest {
     }
 
     public List<CoreError> prepareRequest(String userName, String password){
-        AddUserValidator addUserValidator = new AddUserValidator();
+        AddUserRequestValidator addUserRequestValidator = new AddUserRequestValidator();
         AddUserRequest request = new AddUserRequest(userName, password);
-        List<CoreError> errors = addUserValidator.validate(request);
+        List<CoreError> errors = addUserRequestValidator.validate(request);
         return errors;
     }
 }
