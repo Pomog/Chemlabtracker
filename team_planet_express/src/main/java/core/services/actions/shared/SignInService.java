@@ -1,24 +1,22 @@
 package core.services.actions.shared;
 
-import core.database.Database;
 import core.domain.user.User;
 import core.requests.shared.SignInRequest;
 import core.responses.CoreError;
 import core.responses.shared.SignInResponse;
-import core.services.exception.ServiceMissingDataException;
 import core.services.validators.actions.shared.SignInValidator;
-import core.support.MutableLong;
+import core.services.validators.universal.system.DatabaseAccessValidator;
 
 import java.util.List;
 
 public class SignInService {
 
-    private final Database database;
     private final SignInValidator validator;
+    private final DatabaseAccessValidator databaseAccessValidator;
 
-    public SignInService(Database database, SignInValidator validator) {
-        this.database = database;
+    public SignInService(SignInValidator validator, DatabaseAccessValidator databaseAccessValidator) {
         this.validator = validator;
+        this.databaseAccessValidator = databaseAccessValidator;
     }
 
     public SignInResponse execute(SignInRequest request) {
@@ -26,15 +24,9 @@ public class SignInService {
         if (!errors.isEmpty()) {
             return new SignInResponse(errors);
         }
-        User newUser = getUserByLoginName(request.getLoginName());
+        User newUser = databaseAccessValidator.getUserByLoginName(request.getLoginName());
         request.getUserId().setValue(newUser.getId());
         return new SignInResponse(newUser);
-    }
-
-    //TODO yeet, duplicate
-    private User getUserByLoginName(String login) {
-        return database.accessUserDatabase().findByLogin(login)
-                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }

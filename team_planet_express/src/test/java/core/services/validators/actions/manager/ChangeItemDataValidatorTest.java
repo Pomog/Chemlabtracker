@@ -5,7 +5,7 @@ import core.database.ItemDatabase;
 import core.domain.item.Item;
 import core.requests.manager.ChangeItemDataRequest;
 import core.responses.CoreError;
-import core.services.exception.ServiceMissingDataException;
+import core.services.validators.universal.system.DatabaseAccessValidator;
 import core.services.validators.universal.user_input.InputStringValidator;
 import core.services.validators.universal.user_input.InputStringValidatorRecord;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,6 +27,7 @@ class ChangeItemDataValidatorTest {
 
     @Mock private Database mockDatabase;
     @Mock private InputStringValidator mockInputStringValidator;
+    @Mock private DatabaseAccessValidator mockDatabaseAccessValidator;
     @Mock private ChangeItemDataRequest mockRequest;
     @Mock private ItemDatabase mockItemDatabase;
     @Mock private Item mockItem;
@@ -90,6 +92,7 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getNewAvailableQuantity()).thenReturn("10");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
+        when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         when(mockItemDatabase.getAllItems()).thenReturn(List.of(new Item("name", new BigDecimal("10.10"), 10)));
         List<CoreError> errors = validator.validate(mockRequest);
         Optional<CoreError> error = errors.stream()
@@ -111,17 +114,9 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem));
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
+        when(mockDatabaseAccessValidator.getItemById(1L)).thenReturn(mockItem);
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.isEmpty());
-    }
-
-    @Test
-    void shouldThrowExceptionForMissingOptional() {
-        when(mockRequest.getItemId()).thenReturn("1");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
-        when(mockItemDatabase.findById(1L)).thenReturn(Optional.of(mockItem), Optional.empty());
-        assertThrows(ServiceMissingDataException.class, () -> validator.validate(mockRequest));
     }
 
 }
