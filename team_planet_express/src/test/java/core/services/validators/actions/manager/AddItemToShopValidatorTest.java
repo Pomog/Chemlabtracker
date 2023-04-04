@@ -8,6 +8,10 @@ import core.responses.CoreError;
 import core.services.validators.universal.user_input.InputStringValidator;
 import core.services.validators.universal.user_input.InputStringValidatorRecord;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,17 +20,17 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class AddItemToShopValidatorTest {
 
-    private final Database mockDatabase = mock(Database.class);
-    private final InputStringValidator mockInputStringValidator = mock(InputStringValidator.class);
-    private final AddItemToShopRequest mockRequest = mock(AddItemToShopRequest.class);
-    private final ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
-    private final Item mockItem = mock(Item.class);
-    private final CoreError mockCoreError = mock(CoreError.class);
+    @Mock private Database mockDatabase;
+    @Mock private InputStringValidator mockInputStringValidator;
+    @Mock private AddItemToShopRequest mockRequest;
+    @Mock private ItemDatabase mockItemDatabase;
+    @Mock private Item mockItem;
+    @Mock private CoreError mockCoreError;
 
-    private final AddItemToShopValidator validator =
-            new AddItemToShopValidator(mockDatabase, mockInputStringValidator);
+    @InjectMocks private AddItemToShopValidator validator;
 
     @Test
     void shouldValidateNameIsPresent() {

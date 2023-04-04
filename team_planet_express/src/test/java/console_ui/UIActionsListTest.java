@@ -7,22 +7,27 @@ import core.domain.user.UserRole;
 import core.services.exception.ServiceMissingDataException;
 import core.support.MutableLong;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class UIActionsListTest {
 
-    private final Database mockDatabase = mock(Database.class);
-    private final UserDatabase mockUserDatabase = mock(UserDatabase.class);
-    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
-    private final User mockUser = mock(User.class);
-    private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
+    @Mock private Database mockDatabase;
+    @Mock private UserDatabase mockUserDatabase;
+    @Mock private MutableLong mockCurrentUserId;
+    @Mock private User mockUser;
 
-    private final UIActionsList uiActionsList = new UIActionsList(mockDatabase, mockCurrentUserId, mockUserCommunication);
+    @InjectMocks private UIActionsList uiActionsList;
 
     @Test
     void shouldReturn8ActionsForNoId() {

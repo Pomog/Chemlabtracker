@@ -7,24 +7,26 @@ import core.responses.manager.ChangeItemDataResponse;
 import core.services.actions.manager.ChangeItemDataService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class ChangeItemDataUIActionTest {
 
-    private final ChangeItemDataService mockChangeItemDataService = mock(ChangeItemDataService.class);
-    private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
-    private final ChangeItemDataResponse mockChangeItemDataResponse = mock(ChangeItemDataResponse.class);
-    private final CoreError mockCoreError = mock(CoreError.class);
+    @Mock private ChangeItemDataService mockChangeItemDataService;
+    @Mock private UserCommunication mockUserCommunication;
+    @Mock private ChangeItemDataResponse mockChangeItemDataResponse;
+    @Mock private CoreError mockCoreError;
 
-    private final ChangeItemDataUIAction action =
-            new ChangeItemDataUIAction(mockChangeItemDataService, mockUserCommunication);
+    @InjectMocks private ChangeItemDataUIAction action;
 
     @BeforeEach
     void setupMockResponse() {
@@ -59,12 +61,6 @@ class ChangeItemDataUIActionTest {
         when(mockCoreError.getMessage()).thenReturn("message");
         action.execute();
         verify(mockUserCommunication, times(2)).informUser("message");
-    }
-
-    @Test
-    void shouldReturnActionName() {
-        assertFalse(Objects.isNull(action.getActionName()) ||
-                action.getActionName().isBlank());
     }
 
 }

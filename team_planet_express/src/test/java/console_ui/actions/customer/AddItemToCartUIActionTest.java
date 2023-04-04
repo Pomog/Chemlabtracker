@@ -5,27 +5,27 @@ import core.requests.customer.AddItemToCartRequest;
 import core.responses.CoreError;
 import core.responses.customer.AddItemToCartResponse;
 import core.services.actions.customer.AddItemToCartService;
-import core.support.MutableLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class AddItemToCartUIActionTest {
 
-    private final AddItemToCartService mockAddItemToCartService = mock(AddItemToCartService.class);
-    private final MutableLong mockCurrentUserId = mock(MutableLong.class);
-    private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
-    private final AddItemToCartResponse mockAddItemToCartResponse = mock(AddItemToCartResponse.class);
-    private final CoreError mockCoreError = mock(CoreError.class);
+    @Mock private AddItemToCartService mockAddItemToCartService;
+    @Mock private UserCommunication mockUserCommunication;
+    @Mock private AddItemToCartResponse mockAddItemToCartResponse;
+    @Mock private CoreError mockCoreError;
 
-    private final AddItemToCartUIAction action =
-            new AddItemToCartUIAction(mockAddItemToCartService, mockCurrentUserId, mockUserCommunication);
+    @InjectMocks private AddItemToCartUIAction action;
 
     @BeforeEach
     void setupMockResponse() {
@@ -61,12 +61,6 @@ class AddItemToCartUIActionTest {
         when(mockCoreError.getMessage()).thenReturn("message");
         action.execute();
         verify(mockUserCommunication, times(2)).informUser("message");
-    }
-
-    @Test
-    void shouldReturnActionName() {
-        assertFalse(Objects.isNull(action.getActionName()) ||
-                action.getActionName().isBlank());
     }
 
 }

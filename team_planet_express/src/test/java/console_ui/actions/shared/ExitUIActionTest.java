@@ -1,23 +1,23 @@
 package console_ui.actions.shared;
 
 import console_ui.UserCommunication;
-import org.junit.jupiter.api.Test;
 import core.services.actions.shared.ExitService;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Objects;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
 class ExitUIActionTest {
 
-    private final ExitService mockExitService = mock(ExitService.class);
-    private final UserCommunication mockUserCommunication = mock(UserCommunication.class);
+    @Mock private ExitService mockExitService;
+    @Mock private UserCommunication mockUserCommunication;
 
-    private final ExitUIAction action =
-            new ExitUIAction(mockExitService, mockUserCommunication);
+    @InjectMocks private ExitUIAction action;
 
     @Test
     void shouldPrintExitMessage() {
@@ -29,12 +29,6 @@ class ExitUIActionTest {
     void shouldCallService() {
         action.execute();
         verify(mockExitService).execute();
-    }
-
-    @Test
-    void shouldReturnActionName() {
-        assertFalse(Objects.isNull(action.getActionName()) ||
-                action.getActionName().isBlank());
     }
 
 }

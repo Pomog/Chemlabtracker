@@ -6,19 +6,24 @@ import core.services.validators.universal.user_input.InputStringValidator;
 import core.services.validators.universal.user_input.InputStringValidatorRecord;
 import core.support.paging.PagingRule;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class SearchItemValidatorTest {
 
-    private final InputStringValidator mockInputStringValidator = mock(InputStringValidator.class);
-    private final SearchItemRequest mockRequest = mock(SearchItemRequest.class);
-    private final PagingRule mockPagingRule = mock(PagingRule.class);
+    @Mock private InputStringValidator mockInputStringValidator;
+    @Mock private SearchItemRequest mockRequest;
+    @Mock private PagingRule mockPagingRule;
 
-    private final SearchItemValidator validator =
-            new SearchItemValidator(mockInputStringValidator);
+    @InjectMocks private SearchItemValidator validator;
 
     @Test
     void shouldThrowInternalSystemCollapseExceptionForMissingPageNumber() {

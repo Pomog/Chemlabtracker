@@ -2,15 +2,21 @@ package core.database;
 
 import core.domain.user.User;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class InMemoryUserDatabaseImplTest {
 
-    private final User mockUser = mock(User.class);
+    @Mock private User mockUser;
 
-    private final InMemoryUserDatabaseImpl database = new InMemoryUserDatabaseImpl();
+    @InjectMocks private InMemoryUserDatabaseImpl database;
 
     @Test
     void shouldIncreaseInSizeAfterSave() {

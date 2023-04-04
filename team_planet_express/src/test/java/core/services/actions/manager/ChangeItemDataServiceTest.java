@@ -7,6 +7,10 @@ import core.responses.CoreError;
 import core.responses.manager.ChangeItemDataResponse;
 import core.services.validators.actions.manager.ChangeItemDataValidator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -16,15 +20,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class ChangeItemDataServiceTest {
 
-    private final Database mockDatabase = mock(Database.class);
-    private final ChangeItemDataValidator mockValidator = mock(ChangeItemDataValidator.class);
-    private final ChangeItemDataRequest mockRequest = mock(ChangeItemDataRequest.class);
-    private final CoreError mockCoreError = mock(CoreError.class);
-    private final ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
+    @Mock private Database mockDatabase;
+    @Mock private ChangeItemDataValidator mockValidator;
+    @Mock private ChangeItemDataRequest mockRequest;
+    @Mock private CoreError mockCoreError;
+    @Mock private ItemDatabase mockItemDatabase;
 
-    private final ChangeItemDataService service = new ChangeItemDataService(mockDatabase, mockValidator);
+    @InjectMocks private ChangeItemDataService service;
 
     @Test
     void shouldReturnErrorsIfPresent() {
@@ -56,9 +61,8 @@ class ChangeItemDataServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewItemName()).thenReturn("");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         service.execute(mockRequest);
-        verify(mockItemDatabase, times(0)).changeName(1L, "");
+        verify(mockItemDatabase, times(0)).changeName(anyLong(), anyString());
     }
 
     @Test
@@ -76,7 +80,6 @@ class ChangeItemDataServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewPrice()).thenReturn(" ");
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         service.execute(mockRequest);
         verify(mockItemDatabase, times(0)).changePrice(anyLong(), any(BigDecimal.class));
     }
@@ -96,7 +99,6 @@ class ChangeItemDataServiceTest {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockRequest.getNewItemName()).thenReturn(null);
-        when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         service.execute(mockRequest);
         verify(mockItemDatabase, times(0)).changeAvailableQuantity(anyLong(), anyInt());
     }

@@ -8,6 +8,10 @@ import core.responses.CoreError;
 import core.responses.manager.AddItemToShopResponse;
 import core.services.validators.actions.manager.AddItemToShopValidator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -15,17 +19,19 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class AddItemToShopServiceTest {
 
-    private final Database mockDatabase = mock(Database.class);
-    private final AddItemToShopValidator mockValidator = mock(AddItemToShopValidator.class);
-    private final AddItemToShopRequest mockRequest = mock(AddItemToShopRequest.class);
-    private final CoreError mockCoreError = mock(CoreError.class);
-    private final ItemDatabase mockItemDatabase = mock(ItemDatabase.class);
+    @Mock private Database mockDatabase;
+    @Mock private AddItemToShopValidator mockValidator;
+    @Mock private AddItemToShopRequest mockRequest;
+    @Mock private CoreError mockCoreError;
+    @Mock private ItemDatabase mockItemDatabase;
 
-    private final AddItemToShopService service = new AddItemToShopService(mockDatabase, mockValidator);
+    @InjectMocks private AddItemToShopService service;
 
     @Test
     void shouldReturnErrorsIfPresent() {

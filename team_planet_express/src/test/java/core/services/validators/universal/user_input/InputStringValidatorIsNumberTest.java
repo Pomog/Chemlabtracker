@@ -1,31 +1,30 @@
 package core.services.validators.universal.user_input;
 
 import core.responses.CoreError;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class InputStringValidatorIsNumberTest {
 
-    private final InputStringValidatorRecord mockRecord = mock(InputStringValidatorRecord.class);
+    @Mock private InputStringValidatorRecord mockRecord;
 
-    private final InputStringValidator validator = new InputStringValidator();
-
-    @BeforeEach
-    void setupSharedMockBehaviour() {
-        when(mockRecord.field()).thenReturn("field");
-        when(mockRecord.valueName()).thenReturn("Field");
-    }
+    @InjectMocks private InputStringValidator validator;
 
     @Test
     void shouldReturnErrorForLetters() {
         when(mockRecord.value()).thenReturn("abc");
+        when(mockRecord.field()).thenReturn("field");
+        when(mockRecord.valueName()).thenReturn("Field");
         Optional<CoreError> error = validator.validateIsNumber(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
@@ -33,6 +32,8 @@ class InputStringValidatorIsNumberTest {
     @Test
     void shouldReturnErrorForNonNumberValue() {
         when(mockRecord.value()).thenReturn("#&fml");
+        when(mockRecord.field()).thenReturn("field");
+        when(mockRecord.valueName()).thenReturn("Field");
         Optional<CoreError> error = validator.validateIsNumber(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
@@ -40,6 +41,8 @@ class InputStringValidatorIsNumberTest {
     @Test
     void shouldReturnErrorForBorkedNumber() {
         when(mockRecord.value()).thenReturn("0-23.0040");
+        when(mockRecord.field()).thenReturn("field");
+        when(mockRecord.valueName()).thenReturn("Field");
         Optional<CoreError> error = validator.validateIsNumber(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
@@ -47,6 +50,8 @@ class InputStringValidatorIsNumberTest {
     @Test
     void shouldReturnErrorForCharacterMess() {
         when(mockRecord.value()).thenReturn("132#re01-dd");
+        when(mockRecord.field()).thenReturn("field");
+        when(mockRecord.valueName()).thenReturn("Field");
         Optional<CoreError> error = validator.validateIsNumber(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
