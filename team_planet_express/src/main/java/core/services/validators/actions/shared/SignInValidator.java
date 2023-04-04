@@ -25,7 +25,6 @@ public class SignInValidator {
     private final MutableLongUserIdValidator userIdValidator;
     private final InputStringValidator inputStringValidator;
     private final DatabaseAccessValidator databaseAccessValidator;
-    private List<CoreError> errors;
 
     public SignInValidator(Database database, MutableLongUserIdValidator userIdValidator, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
         this.database = database;
@@ -36,22 +35,22 @@ public class SignInValidator {
 
     public List<CoreError> validate(SignInRequest request) {
         userIdValidator.validateMutableLongUserIdIsPresent(request.getUserId());
-        errors = new ArrayList<>();
-        validateLoginName(request.getLoginName());
-        validatePassword(request.getPassword());
+        List<CoreError> errors = new ArrayList<>();
+        validateLoginName(request.getLoginName(), errors);
+        validatePassword(request.getPassword(), errors);
         if (errors.isEmpty()) {
             validatePasswordMatches(request).ifPresent(errors::add);
         }
         return errors;
     }
 
-    private void validateLoginName(String loginName) {
+    private void validateLoginName(String loginName, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         validateLoginNameExists(loginName).ifPresent(errors::add);
     }
 
-    private void validatePassword(String password) {
+    private void validatePassword(String password, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
     }

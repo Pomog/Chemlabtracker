@@ -29,7 +29,6 @@ public class ChangeItemDataValidator {
     private final Database database;
     private final InputStringValidator inputStringValidator;
     private final DatabaseAccessValidator databaseAccessValidator;
-    private List<CoreError> errors;
 
     public ChangeItemDataValidator(Database database, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
         this.database = database;
@@ -38,17 +37,17 @@ public class ChangeItemDataValidator {
     }
 
     public List<CoreError> validate(ChangeItemDataRequest request) {
-        errors = new ArrayList<>();
-        validateId(request.getItemId());
-        validatePrice(request.getNewPrice());
-        validateQuantity(request.getNewAvailableQuantity());
+        List<CoreError> errors = new ArrayList<>();
+        validateId(request.getItemId(), errors);
+        validatePrice(request.getNewPrice(), errors);
+        validateQuantity(request.getNewAvailableQuantity(), errors);
         if (errors.isEmpty()) {
             validateDuplicate(request).ifPresent(errors::add);
         }
         return errors;
     }
 
-    private void validateId(String id) {
+    private void validateId(String id, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(id, FIELD_ID, VALUE_NAME_ID);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
@@ -59,13 +58,13 @@ public class ChangeItemDataValidator {
         }
     }
 
-    private void validatePrice(String price) {
+    private void validatePrice(String price, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(price, FIELD_PRICE, VALUE_NAME_PRICE);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
         inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
     }
 
-    private void validateQuantity(String availableQuantity) {
+    private void validateQuantity(String availableQuantity, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
         inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);

@@ -27,7 +27,6 @@ public class RemoveItemFromCartValidator {
     private final CartValidator cartValidator;
     private final InputStringValidator inputStringValidator;
     private final DatabaseAccessValidator databaseAccessValidator;
-    private List<CoreError> errors;
 
     public RemoveItemFromCartValidator(Database database, MutableLongUserIdValidator userIdValidator, CartValidator cartValidator, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
         this.database = database;
@@ -39,10 +38,10 @@ public class RemoveItemFromCartValidator {
 
     public List<CoreError> validate(RemoveItemFromCartRequest request) {
         userIdValidator.validateMutableLongUserIdIsPresent(request.getUserId());
-        errors = new ArrayList<>();
+        List<CoreError> errors = new ArrayList<>();
         cartValidator.validateOpenCartExistsForUserId(request.getUserId().getValue()).ifPresent(errors::add);
         if (errors.isEmpty()) {
-            validateItemName(request.getItemName());
+            validateItemName(request.getItemName(), errors);
             if (errors.isEmpty()) {
                 validateItemNameInCart(request).ifPresent(errors::add);
             }
@@ -50,7 +49,7 @@ public class RemoveItemFromCartValidator {
         return errors;
     }
 
-    private void validateItemName(String itemName) {
+    private void validateItemName(String itemName, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(itemName, FIELD_NAME, VALUE_NAME_ITEM);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         validateItemNameInShop(itemName).ifPresent(errors::add);
