@@ -5,8 +5,8 @@ import shop.core.domain.item.Item;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.shared.SearchItemResponse;
-import shop.core.services.item.ordering.OrderingService;
-import shop.core.services.item.paging.PagingService;
+import shop.core.services.item_list.ordering.OrderingService;
+import shop.core.services.item_list.paging.PagingService;
 import shop.core.services.validators.actions.shared.SearchItemValidator;
 
 import java.math.BigDecimal;

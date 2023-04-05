@@ -1,4 +1,4 @@
-package shop.core.services.item.ordering;
+package shop.core.services.item_list.ordering;
 
 import shop.core.domain.item.Item;
 import shop.core.support.ordering.OrderBy;
@@ -26,7 +26,7 @@ public class OrderingService {
 
     private List<Item> orderByName(List<Item> items, List<OrderingRule> orderingRules) {
         Optional<OrderingRule> orderingRuleForName = getOrderingRule(orderingRules, OrderBy.NAME);
-        return orderWithDirection(items, orderingRuleForName, Comparator.comparing(Item::getName));
+        return orderWithDirection(items, orderingRuleForName, Comparator.comparing(Item::getName, String.CASE_INSENSITIVE_ORDER));
     }
 
     private Optional<OrderingRule> getOrderingRule(List<OrderingRule> orderingRules, OrderBy orderBy) {

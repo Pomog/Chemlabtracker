@@ -1,4 +1,4 @@
-package shop.core.services.item.paging;
+package shop.core.services.item_list.paging;
 
 import shop.core.domain.item.Item;
 import shop.core.support.paging.PagingRule;
