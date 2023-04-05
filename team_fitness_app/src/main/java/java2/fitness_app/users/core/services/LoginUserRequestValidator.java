@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class LoginUserValidator {
+public class LoginUserRequestValidator {
 
     public List<CoreError> validate(LoginUserRequest request) {
         List<CoreError> errors = new ArrayList<>();
