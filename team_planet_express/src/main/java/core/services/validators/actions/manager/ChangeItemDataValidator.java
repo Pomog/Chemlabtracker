@@ -4,7 +4,7 @@ import core.database.Database;
 import core.domain.item.Item;
 import core.requests.manager.ChangeItemDataRequest;
 import core.responses.CoreError;
-import core.services.exception.ServiceMissingDataException;
+import core.services.validators.universal.system.DatabaseAccessValidator;
 import core.services.validators.universal.user_input.InputStringValidator;
 import core.services.validators.universal.user_input.InputStringValidatorRecord;
 
@@ -28,25 +28,26 @@ public class ChangeItemDataValidator {
 
     private final Database database;
     private final InputStringValidator inputStringValidator;
-    private List<CoreError> errors;
+    private final DatabaseAccessValidator databaseAccessValidator;
 
-    public ChangeItemDataValidator(Database database, InputStringValidator inputStringValidator) {
+    public ChangeItemDataValidator(Database database, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
         this.database = database;
         this.inputStringValidator = inputStringValidator;
+        this.databaseAccessValidator = databaseAccessValidator;
     }
 
     public List<CoreError> validate(ChangeItemDataRequest request) {
-        errors = new ArrayList<>();
-        validateId(request.getItemId());
-        validatePrice(request.getNewPrice());
-        validateQuantity(request.getNewAvailableQuantity());
+        List<CoreError> errors = new ArrayList<>();
+        validateId(request.getItemId(), errors);
+        validatePrice(request.getNewPrice(), errors);
+        validateQuantity(request.getNewAvailableQuantity(), errors);
         if (errors.isEmpty()) {
             validateDuplicate(request).ifPresent(errors::add);
         }
         return errors;
     }
 
-    private void validateId(String id) {
+    private void validateId(String id, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(id, FIELD_ID, VALUE_NAME_ID);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
@@ -57,13 +58,13 @@ public class ChangeItemDataValidator {
         }
     }
 
-    private void validatePrice(String price) {
+    private void validatePrice(String price, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(price, FIELD_PRICE, VALUE_NAME_PRICE);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
         inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
     }
 
-    private void validateQuantity(String availableQuantity) {
+    private void validateQuantity(String availableQuantity, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
         inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
@@ -71,7 +72,7 @@ public class ChangeItemDataValidator {
     }
 
     private Optional<CoreError> validateDuplicate(ChangeItemDataRequest request) {
-        Item originalItem = getItemById(Long.parseLong(request.getItemId()));
+        Item originalItem = databaseAccessValidator.getItemById(Long.parseLong(request.getItemId()));
         String newItemName = setNewItemName(request, originalItem);
         BigDecimal newPrice = setNewPrice(request, originalItem);
         Integer newAvailableQuantity = setNewQuantity(request, originalItem);
@@ -86,12 +87,6 @@ public class ChangeItemDataValidator {
                 database.accessItemDatabase().findById(Long.parseLong(id)).isEmpty())
                 ? Optional.of(new CoreError(FIELD_ID, ERROR_ID_NOT_EXISTS))
                 : Optional.empty();
-    }
-
-    //TODO yeet, duplicate
-    private Item getItemById(Long itemId) {
-        return database.accessItemDatabase().findById(itemId)
-                .orElseThrow(ServiceMissingDataException::new);
     }
 
     private String setNewItemName(ChangeItemDataRequest request, Item originalItem) {

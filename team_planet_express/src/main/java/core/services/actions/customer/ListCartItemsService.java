@@ -7,8 +7,8 @@ import core.requests.customer.ListCartItemsRequest;
 import core.responses.CoreError;
 import core.responses.customer.ListCartItemsResponse;
 import core.services.cart.CartService;
-import core.services.exception.ServiceMissingDataException;
 import core.services.validators.actions.customer.ListCartItemValidator;
+import core.services.validators.universal.system.DatabaseAccessValidator;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,15 +17,14 @@ public class ListCartItemsService {
 
     private final Database database;
     private final ListCartItemValidator validator;
-
-    //TODO constructorize aka mockableize
-    //TODO this should not be here to begin with..
+    private final DatabaseAccessValidator databaseAccessValidator;
     private final CartService cartService;
 
-    public ListCartItemsService(Database database, ListCartItemValidator validator) {
+    public ListCartItemsService(Database database, ListCartItemValidator validator, DatabaseAccessValidator databaseAccessValidator, CartService cartService) {
         this.database = database;
         this.validator = validator;
-        this.cartService = new CartService(database);
+        this.databaseAccessValidator = databaseAccessValidator;
+        this.cartService = cartService;
     }
 
     public ListCartItemsResponse execute(ListCartItemsRequest request) {
@@ -33,16 +32,10 @@ public class ListCartItemsService {
         if (!errors.isEmpty()) {
             return new ListCartItemsResponse(errors);
         }
-        Cart cart = getOpenCartForUserId(request.getUserId().getValue());
+        Cart cart = databaseAccessValidator.getOpenCartByUserId(request.getUserId().getValue());
         List<CartItem> cartItems = database.accessCartItemDatabase().getAllCartItemsForCartId(cart.getId());
         BigDecimal cartTotal = cartService.getSum(cart.getUserId());
         return new ListCartItemsResponse(cartItems, cartTotal);
-    }
-
-    //TODO yeet, duplicate
-    private Cart getOpenCartForUserId(Long userId) {
-        return database.accessCartDatabase().findOpenCartForUserId(userId)
-                .orElseThrow(ServiceMissingDataException::new);
     }
 
 }

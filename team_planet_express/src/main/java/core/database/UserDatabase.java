@@ -12,7 +12,7 @@ public interface UserDatabase {
 
     Optional<User> findById(Long itemId);
 
-    Optional<User> findByLogin(String login);
+    Optional<User> findByLoginName(String login);
 
     List<User> getAllUsers();
 

@@ -63,14 +63,14 @@ class InMemoryUserDatabaseImplTest {
     void shouldReturnFoundUserByLogin() {
         when(mockUser.getLogin()).thenReturn("user");
         database.getUsers().add(mockUser);
-        assertTrue(database.findByLogin("user").isPresent());
+        assertTrue(database.findByLoginName("user").isPresent());
     }
 
     @Test
     void shouldReturnEmptyOptionalForNonexistentUserByLogin() {
         when(mockUser.getLogin()).thenReturn("different user");
         database.getUsers().add(mockUser);
-        assertTrue(database.findByLogin("user").isEmpty());
+        assertTrue(database.findByLoginName("user").isEmpty());
     }
 
     @Test

@@ -18,23 +18,22 @@ public class SearchItemValidator {
     private static final String VALUE_NAME_PAGE_SIZE = "Page size";
 
     private final InputStringValidator inputStringValidator;
-    private List<CoreError> errors;
 
     public SearchItemValidator(InputStringValidator inputStringValidator) {
         this.inputStringValidator = inputStringValidator;
     }
 
     public List<CoreError> validate(SearchItemRequest request) {
-        errors = new ArrayList<>();
-        validatePrice(request.getPrice());
+        List<CoreError> errors = new ArrayList<>();
+        validatePrice(request.getPrice(), errors);
         if (request.getPagingRule() != null) {
             validatePageNumber(request.getPagingRule().getPageNumber());
-            validatePageSize(request.getPagingRule().getPageSize());
+            validatePageSize(request.getPagingRule().getPageSize(), errors);
         }
         return errors;
     }
 
-    private void validatePrice(String price) {
+    private void validatePrice(String price, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(price, FIELD_PRICE, VALUE_NAME_PRICE);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
         inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
@@ -46,7 +45,7 @@ public class SearchItemValidator {
         }
     }
 
-    private void validatePageSize(String pageSize) {
+    private void validatePageSize(String pageSize, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(pageSize, FIELD_PAGE_SIZE, VALUE_NAME_PAGE_SIZE);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);

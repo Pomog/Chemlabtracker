@@ -25,7 +25,6 @@ public class SignUpValidator {
     private final Database database;
     private final MutableLongUserIdValidator userIdValidator;
     private final InputStringValidator inputStringValidator;
-    private List<CoreError> errors;
 
     public SignUpValidator(Database database, MutableLongUserIdValidator userIdValidator, InputStringValidator inputStringValidator) {
         this.database = database;
@@ -35,25 +34,25 @@ public class SignUpValidator {
 
     public List<CoreError> validate(SignUpRequest request) {
         userIdValidator.validateMutableLongUserIdIsPresent(request.getUserId());
-        errors = new ArrayList<>();
-        validateName(request.getName());
-        validateLoginName(request.getLoginName());
-        validatePassword(request.getPassword());
+        List<CoreError> errors = new ArrayList<>();
+        validateName(request.getName(), errors);
+        validateLoginName(request.getLoginName(), errors);
+        validatePassword(request.getPassword(), errors);
         return errors;
     }
 
-    private void validateName(String name) {
+    private void validateName(String name, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(name, FIELD_NAME, VALUE_NAME_NAME);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
     }
 
-    private void validateLoginName(String loginName) {
+    private void validateLoginName(String loginName, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN_NAME);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         validateLoginNameDoesNotAlreadyExist(loginName).ifPresent(errors::add);
     }
 
-    private void validatePassword(String password) {
+    private void validatePassword(String password, List<CoreError> errors) {
         InputStringValidatorRecord record = new InputStringValidatorRecord(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         validatePasswordLength(password).ifPresent(errors::add);
@@ -61,7 +60,7 @@ public class SignUpValidator {
 
     private Optional<CoreError> validateLoginNameDoesNotAlreadyExist(String loginName) {
         return (loginName != null && !loginName.isBlank() &&
-                database.accessUserDatabase().findByLogin(loginName).isPresent())
+                database.accessUserDatabase().findByLoginName(loginName).isPresent())
                 ? Optional.of(new CoreError(FIELD_LOGIN_NAME, ERROR_LOGIN_EXISTS))
                 : Optional.empty();
     }
