@@ -1,15 +1,12 @@
 package shop;
 
-import shop.console_ui.UIActionsList;
 import shop.console_ui.UIMenu;
-import shop.console_ui.UserCommunication;
 import shop.core.database.Database;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.services.fake.FakeDatabaseInitializer;
 import shop.core.services.user.UserRecord;
 import shop.core.services.user.UserService;
-import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.support.CurrentUserId;
 
 public class ShopApplication {
@@ -29,10 +26,7 @@ public class ShopApplication {
         CurrentUserId currentUserId = applicationContext.getBean(CurrentUserId.class);
         currentUserId.setValue(currentUser.getId());
 
-        //TODO should it be in ApplicationContext ?
-        UIActionsList uiActionList = new UIActionsList(applicationContext);
-        DatabaseAccessValidator databaseAccessValidator = applicationContext.getBean(DatabaseAccessValidator.class);
-        UIMenu uiMenu = new UIMenu(uiActionList, databaseAccessValidator, applicationContext.getBean(UserCommunication.class));
+        UIMenu uiMenu = applicationContext.getBean(UIMenu.class);
         uiMenu.startUI();
 
     }

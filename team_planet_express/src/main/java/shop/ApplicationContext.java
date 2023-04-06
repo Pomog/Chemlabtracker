@@ -1,5 +1,7 @@
 package shop;
 
+import shop.console_ui.UIActionsList;
+import shop.console_ui.UIMenu;
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.admin.ChangeUserDataUIAction;
 import shop.console_ui.actions.customer.*;
@@ -58,6 +60,13 @@ public class ApplicationContext {
         initialiseValidators();
         initialiseServices();
         initialiseUIActions();
+
+        beans.put(UIActionsList.class, new UIActionsList(this));
+        beans.put(UIMenu.class, new UIMenu(
+                getBean(UIActionsList.class),
+                getBean(DatabaseAccessValidator.class),
+                getBean(UserCommunication.class)
+        ));
     }
 
     public <T extends Object> T getBean(Class c) {
