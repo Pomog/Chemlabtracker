@@ -47,7 +47,7 @@ class SignUpUIActionTest {
 
     @Test
     void shouldCallService() {
-        when(mockUserCommunication.getInput()).thenReturn("name", "login", "password");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("name", "login", "password");
         when(mockSignUpResponse.getUser()).thenReturn(mockUser);
         action.execute();
         verify(mockSignUpService).execute(new SignUpRequest(mockCurrentUserId, "name", "login", "password"));

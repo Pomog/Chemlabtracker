@@ -28,12 +28,9 @@ public class AddItemToShopUIAction extends UIAction {
 
     @Override
     public void execute() {
-        userCommunication.requestInput(PROMPT_TOPIC_ITEM);
-        String itemName = userCommunication.getInput();
-        userCommunication.requestInput(PROMPT_TOPIC_PRICE);
-        String price = userCommunication.getInput();
-        userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
-        String availableQuantity = userCommunication.getInput();
+        String itemName = userCommunication.requestInput(PROMPT_TOPIC_ITEM);
+        String price = userCommunication.requestInput(PROMPT_TOPIC_PRICE);
+        String availableQuantity = userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
         AddItemToShopRequest request = new AddItemToShopRequest(itemName, price, availableQuantity);
         AddItemToShopResponse response = addItemToShopService.execute(request);
         if (response.hasErrors()) {

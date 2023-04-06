@@ -41,7 +41,7 @@ class PagingUIElementContinuePagingTest {
     void shouldChangePageToNextWhenAvailable() {
         when(mockPagingRule.getPageNumber()).thenReturn(1);
         when(mockPagingRule.getPageSize()).thenReturn("10");
-        when(mockUserCommunication.getInput()).thenReturn("next");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("next");
         assertTrue(pagingUIElement.continuePagingThrough(mockPagingRule, 20));
         verify(mockPagingRule).changePageNumber(1);
     }
@@ -50,7 +50,7 @@ class PagingUIElementContinuePagingTest {
     void shouldChangePageToPreviousWhenAvailable() {
         when(mockPagingRule.getPageNumber()).thenReturn(2);
         when(mockPagingRule.getPageSize()).thenReturn("10");
-        when(mockUserCommunication.getInput()).thenReturn("back");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("back");
         assertTrue(pagingUIElement.continuePagingThrough(mockPagingRule, 20));
         verify(mockPagingRule).changePageNumber(-1);
     }
@@ -58,7 +58,7 @@ class PagingUIElementContinuePagingTest {
     @Test
     void shouldReturnFalseOnPagingExit() {
         when(mockPagingRule.getPageSize()).thenReturn("10");
-        when(mockUserCommunication.getInput()).thenReturn("exit");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("exit");
         assertFalse(pagingUIElement.continuePagingThrough(mockPagingRule, 20));
         verify(mockPagingRule, times(0)).changePageNumber(anyInt());
     }
@@ -67,7 +67,7 @@ class PagingUIElementContinuePagingTest {
     void shouldIgnoreNextWhenNotAvailable() {
         when(mockPagingRule.getPageNumber()).thenReturn(2);
         when(mockPagingRule.getPageSize()).thenReturn("10");
-        when(mockUserCommunication.getInput()).thenReturn("next", "exit");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("next", "exit");
         assertFalse(pagingUIElement.continuePagingThrough(mockPagingRule, 15));
         verify(mockPagingRule, times(0)).changePageNumber(anyInt());
     }
@@ -76,7 +76,7 @@ class PagingUIElementContinuePagingTest {
     void shouldIgnoreBackWhenNotAvailable() {
         when(mockPagingRule.getPageNumber()).thenReturn(1);
         when(mockPagingRule.getPageSize()).thenReturn("10");
-        when(mockUserCommunication.getInput()).thenReturn("back", "exit");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("back", "exit");
         assertFalse(pagingUIElement.continuePagingThrough(mockPagingRule, 20));
         verify(mockPagingRule, times(0)).changePageNumber(anyInt());
     }

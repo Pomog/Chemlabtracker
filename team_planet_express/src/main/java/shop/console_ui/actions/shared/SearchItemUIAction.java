@@ -38,10 +38,8 @@ public class SearchItemUIAction extends UIAction {
 
     @Override
     public void execute() {
-        userCommunication.requestInput(PROMPT_TOPIC_NAME);
-        String itemName = userCommunication.getInput();
-        userCommunication.requestInput(PROMPT_TOPIC_PRICE);
-        String price = userCommunication.getInput();
+        String itemName = userCommunication.requestInput(PROMPT_TOPIC_NAME);
+        String price = userCommunication.requestInput(PROMPT_TOPIC_PRICE);
         List<OrderingRule> orderingRules = orderingUIElement.getOrderingRules();
         PagingRule pagingRule = pagingUIElement.getPagingRule();
         SearchItemRequest request = new SearchItemRequest(itemName, price, orderingRules, pagingRule);

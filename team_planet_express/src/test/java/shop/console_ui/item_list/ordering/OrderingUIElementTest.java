@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,14 +26,14 @@ class OrderingUIElementTest {
 
     @Test
     void shouldReturnEmptyOrderingRulesList() {
-        when(mockUserCommunication.getInput()).thenReturn("");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertTrue(result.isEmpty());
     }
 
     @Test
     void shouldReturnOrderingRulesListWithName() {
-        when(mockUserCommunication.getInput()).thenReturn("y", "");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(1, result.size());
         assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
@@ -41,7 +42,7 @@ class OrderingUIElementTest {
 
     @Test
     void shouldReturnOrderingRulesListWithPrice() {
-        when(mockUserCommunication.getInput()).thenReturn("", "y", "");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("", "y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(1, result.size());
         assertEquals(OrderBy.PRICE, result.get(0).getOrderBy());
@@ -50,7 +51,7 @@ class OrderingUIElementTest {
 
     @Test
     void shouldReturnOrderingRulesListWithNameAndPrice() {
-        when(mockUserCommunication.getInput()).thenReturn("y", "", "y", "");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("y", "", "y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(2, result.size());
         assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
@@ -61,7 +62,7 @@ class OrderingUIElementTest {
 
     @Test
     void shouldReturnOrderingRulesListWithNameDescending() {
-        when(mockUserCommunication.getInput()).thenReturn("y", "y", "");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("y", "y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(1, result.size());
         assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
@@ -70,7 +71,7 @@ class OrderingUIElementTest {
 
     @Test
     void shouldReturnOrderingRulesListWithPriceDescending() {
-        when(mockUserCommunication.getInput()).thenReturn("", "y", "y");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("", "y", "y");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(1, result.size());
         assertEquals(OrderBy.PRICE, result.get(0).getOrderBy());
@@ -79,7 +80,7 @@ class OrderingUIElementTest {
 
     @Test
     void shouldReturnOrderingRulesListWithNameDescendingAndPrice() {
-        when(mockUserCommunication.getInput()).thenReturn("y", "y", "y", "");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("y", "y", "y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(2, result.size());
         assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
@@ -90,7 +91,7 @@ class OrderingUIElementTest {
 
     @Test
     void shouldReturnOrderingRulesListWithNameAndPriceDescending() {
-        when(mockUserCommunication.getInput()).thenReturn("y", "", "y", "y");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("y", "", "y", "y");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(2, result.size());
         assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
@@ -101,7 +102,7 @@ class OrderingUIElementTest {
 
     @Test
     void shouldReturnOrderingRulesListWithNameAndPriceBothDescending() {
-        when(mockUserCommunication.getInput()).thenReturn("y");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("y");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(2, result.size());
         assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
@@ -112,7 +113,7 @@ class OrderingUIElementTest {
 
     @Test
     void shouldAcceptCapitalLetters() {
-        when(mockUserCommunication.getInput()).thenReturn("Y", "Y", "");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("Y", "Y", "");
         List<OrderingRule> result = orderingUIElement.getOrderingRules();
         assertEquals(1, result.size());
         assertEquals(OrderBy.NAME, result.get(0).getOrderBy());
