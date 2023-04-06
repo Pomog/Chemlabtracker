@@ -16,10 +16,11 @@ public class InMemoryItemDatabaseImpl implements ItemDatabase {
     private final List<Item> shopItems = new ArrayList<>();
 
     @Override
-    public void save(Item item) {
+    public Item save(Item item) {
         item.setId(nextId);
         nextId++;
         shopItems.add(item);
+        return item;
     }
 
     @Override

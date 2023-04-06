@@ -15,10 +15,11 @@ public class InMemoryCartItemDatabaseImpl implements CartItemDatabase {
     private final List<CartItem> cartItems = new ArrayList<>();
 
     @Override
-    public void save(CartItem cartItem) {
+    public CartItem save(CartItem cartItem) {
         cartItem.setId(nextId);
         nextId++;
         cartItems.add(cartItem);
+        return cartItem;
     }
 
     @Override

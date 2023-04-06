@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface CartDatabase {
 
-    void save(Cart cart);
+    Cart save(Cart cart);
 
     Optional<Cart> findOpenCartForUserId(Long userId);
 
