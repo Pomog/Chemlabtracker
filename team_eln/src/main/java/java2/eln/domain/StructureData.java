@@ -64,21 +64,29 @@ public class StructureData {
         this.casNumber = casNumber;
     }
 
-    private void smilesConverter() {
+    public void smilesConverter() {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
         if (smiles.isBlank()) {
-            setSmiles(".");
+            setSmiles("invalidSmiles");
+            setCarbonAsStructure();
+            return;
         }
         try {
             mol = parser.parseSmiles(smiles);
         } catch (InvalidSmilesException e) {
             System.err.println("Invalid SMILES: " + e.getMessage());
-            mol = new AtomContainer();
-            mol.addAtom(new Atom("C"));
+            setCarbonAsStructure();
         }
     }
-    private IAtomContainer parseSmiles(String smiles) {
+
+    private void setCarbonAsStructure() {
+        mol = new AtomContainer();
+        mol.addAtom(new Atom("C"));
+        return;
+    }
+
+    public IAtomContainer parseSmiles(String smiles) {
         try {
             SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
             return parser.parseSmiles(smiles);
@@ -92,7 +100,11 @@ public class StructureData {
     private void calculateBruttoFormula(){
         formula = MolecularFormulaManipulator.getMolecularFormula(mol);
     }
-    public void getBruttoFormula(){
+    public String getBruttoFormula(){
+        return MolecularFormulaManipulator.getString(formula);
+    }
+
+    public void printBruttoFormula(){
         String formulaString = MolecularFormulaManipulator.getString(formula);
         System.out.println(formulaString);
     }
