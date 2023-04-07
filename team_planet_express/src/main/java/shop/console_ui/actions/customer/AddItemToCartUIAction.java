@@ -30,10 +30,8 @@ public class AddItemToCartUIAction extends UIAction {
 
     @Override
     public void execute() {
-        userCommunication.requestInput(PROMPT_TOPIC_ITEM);
-        String itemName = userCommunication.getInput();
-        userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
-        String orderedQuantity = userCommunication.getInput();
+        String itemName = userCommunication.requestInput(PROMPT_TOPIC_ITEM);
+        String orderedQuantity = userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
         AddItemToCartRequest request =
                 new AddItemToCartRequest(currentUserId, itemName, orderedQuantity);
         AddItemToCartResponse response = addItemToCartService.execute(request);

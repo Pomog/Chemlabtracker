@@ -32,9 +32,8 @@ public class UIMenu {
             for (int i = 0; i < uiActionsListForUserRole.size(); i++) {
                 userCommunication.informUser(i + 1 + ". " + uiActionsListForUserRole.get(i).getActionName());
             }
-            userCommunication.requestInput(PROMPT_TOPIC_ACTION);
             try {
-                Integer userChoice = userCommunication.getMenuActionNumber();
+                int userChoice = Integer.parseInt(userCommunication.requestInput(PROMPT_TOPIC_ACTION));
                 if (userChoice > 0 && userChoice < uiActionsListForUserRole.size() + 1) {
                     uiActionsListForUserRole.get(userChoice - 1).execute();
                 } else {

@@ -31,10 +31,8 @@ public class SignInUIAction extends UIAction {
 
     @Override
     public void execute() {
-        userCommunication.requestInput(PROMPT_TOPIC_LOGIN);
-        String login = userCommunication.getInput();
-        userCommunication.requestInput(PROMPT_TOPIC_PASSWORD);
-        String password = userCommunication.getInput();
+        String login = userCommunication.requestInput(PROMPT_TOPIC_LOGIN);
+        String password = userCommunication.requestInput(PROMPT_TOPIC_PASSWORD);
         SignInRequest request = new SignInRequest(currentUserId, login, password);
         SignInResponse response = signInService.execute(request);
         if (response.hasErrors()) {

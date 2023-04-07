@@ -42,7 +42,7 @@ class ChangeItemDataUIActionTest {
 
     @Test
     void shouldCallService() {
-        when(mockUserCommunication.getInput()).thenReturn("1", "new name", "100.10", "10");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("1", "new name", "100.10", "10");
         action.execute();
         verify(mockChangeItemDataService)
                 .execute(new ChangeItemDataRequest("1", "new name", "100.10", "10"));

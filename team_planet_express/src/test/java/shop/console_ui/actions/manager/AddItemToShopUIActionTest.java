@@ -41,7 +41,7 @@ class AddItemToShopUIActionTest {
 
     @Test
     void shouldCallService() {
-        when(mockUserCommunication.getInput()).thenReturn("name", "100.10", "10");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("name", "100.10", "10");
         action.execute();
         verify(mockAddItemToShopService).execute(new AddItemToShopRequest("name", "100.10", "10"));
     }

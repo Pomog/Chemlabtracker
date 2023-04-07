@@ -9,6 +9,7 @@ import shop.console_ui.UserCommunication;
 import shop.core.support.paging.PagingRule;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -20,7 +21,7 @@ class PagingUIElementGetPagingRuleTest {
 
     @Test
     void shouldReturnPagingRule() {
-        when(mockUserCommunication.getInput()).thenReturn("10");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("10");
         PagingRule result = pagingUIElement.getPagingRule();
         assertNotNull(result);
         assertEquals(result.getPageNumber(), 1);
@@ -29,21 +30,21 @@ class PagingUIElementGetPagingRuleTest {
 
     @Test
     void shouldReturnNullForNullPageSize() {
-        when(mockUserCommunication.getInput()).thenReturn(null);
+        when(mockUserCommunication.requestInput(anyString())).thenReturn(null);
         PagingRule result = pagingUIElement.getPagingRule();
         assertNull(result);
     }
 
     @Test
     void shouldReturnNullForBlankPageSize() {
-        when(mockUserCommunication.getInput()).thenReturn("");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn("");
         PagingRule result = pagingUIElement.getPagingRule();
         assertNull(result);
     }
 
     @Test
     void shouldReturnNullForEmptyPageSize() {
-        when(mockUserCommunication.getInput()).thenReturn(" ");
+        when(mockUserCommunication.requestInput(anyString())).thenReturn(" ");
         PagingRule result = pagingUIElement.getPagingRule();
         assertNull(result);
     }

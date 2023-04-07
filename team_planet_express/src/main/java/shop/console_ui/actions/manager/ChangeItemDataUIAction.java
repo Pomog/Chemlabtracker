@@ -30,15 +30,11 @@ public class ChangeItemDataUIAction extends UIAction {
 
     @Override
     public void execute() {
-        userCommunication.requestInput(PROMPT_TOPIC_ID);
-        String itemId = userCommunication.getInput();
+        String itemId = userCommunication.requestInput(PROMPT_TOPIC_ID);
         userCommunication.informUser(MESSAGE_INPUT_RULES);
-        userCommunication.requestInput(PROMPT_TOPIC_NAME);
-        String newItemName = userCommunication.getInput();
-        userCommunication.requestInput(PROMPT_TOPIC_PRICE);
-        String newPrice = userCommunication.getInput();
-        userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
-        String newAvailableQuantity = userCommunication.getInput();
+        String newItemName = userCommunication.requestInput(PROMPT_TOPIC_NAME);
+        String newPrice = userCommunication.requestInput(PROMPT_TOPIC_PRICE);
+        String newAvailableQuantity = userCommunication.requestInput(PROMPT_TOPIC_QUANTITY);
         ChangeItemDataRequest request = new ChangeItemDataRequest(itemId, newItemName, newPrice, newAvailableQuantity);
         ChangeItemDataResponse response = changeItemDataService.execute(request);
         if (response.hasErrors()) {

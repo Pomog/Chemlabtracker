@@ -30,15 +30,15 @@ public class OrderingUIElement {
     }
 
     private Optional<OrderingRule> getOrderingRule(String promptOrderBy, OrderBy orderBy) {
-        userCommunication.requestInput(promptOrderBy);
-        return (userCommunication.getInput().strip().equalsIgnoreCase(YES))
+        return (userCommunication.requestInput(promptOrderBy)
+                .strip().equalsIgnoreCase(YES))
                 ? getOrderingRuleWithDirection(orderBy)
                 : Optional.empty();
     }
 
     private Optional<OrderingRule> getOrderingRuleWithDirection(OrderBy orderBy) {
-        userCommunication.requestInput(PROMPT_TOPIC_REVERSE_ORDERING_DIRECTION);
-        return (userCommunication.getInput().strip().equalsIgnoreCase(YES))
+        return (userCommunication.requestInput(PROMPT_TOPIC_REVERSE_ORDERING_DIRECTION)
+                .strip().equalsIgnoreCase(YES))
                 ? Optional.of(new OrderingRule(orderBy, OrderDirection.DESCENDING))
                 : Optional.of(new OrderingRule(orderBy, OrderDirection.ASCENDING));
     }

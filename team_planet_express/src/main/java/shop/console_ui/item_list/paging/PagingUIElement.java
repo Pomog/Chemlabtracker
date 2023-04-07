@@ -18,8 +18,7 @@ public class PagingUIElement {
     }
 
     public PagingRule getPagingRule() {
-        userCommunication.requestInput(PROMPT_TOPIC_PAGE_SIZE);
-        String pageSize = userCommunication.getInput();
+        String pageSize = userCommunication.requestInput(PROMPT_TOPIC_PAGE_SIZE);
         return (pageSize == null || pageSize.isBlank())
                 ? null
                 : new PagingRule(1, pageSize);
@@ -33,8 +32,7 @@ public class PagingUIElement {
         String pageNavigationOptions = getPageNavigationOptions(pagingRule.getPageNumber(), Integer.parseInt(pagingRule.getPageSize()), totalFoundItemCount);
         int pageNumberDelta = 0;
         do {
-            userCommunication.requestInput(pageNavigationOptions + PROMPT_PAGE_NAVIGATION);
-            String userInput = userCommunication.getInput();
+            String userInput = userCommunication.requestInput(pageNavigationOptions + PROMPT_PAGE_NAVIGATION);
             if (PageNavigation.NEXT.getText().equalsIgnoreCase(userInput) &&
                     pageNavigationOptions.contains(PageNavigation.NEXT.getText())) {
                 pageNumberDelta = 1;

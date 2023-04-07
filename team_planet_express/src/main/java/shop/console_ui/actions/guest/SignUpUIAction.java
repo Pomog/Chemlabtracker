@@ -32,12 +32,9 @@ public class SignUpUIAction extends UIAction {
 
     @Override
     public void execute() {
-        userCommunication.requestInput(PROMPT_TOPIC_NAME);
-        String name = userCommunication.getInput();
-        userCommunication.requestInput(PROMPT_TOPIC_LOGIN);
-        String login = userCommunication.getInput();
-        userCommunication.requestInput(PROMPT_TOPIC_PASSWORD);
-        String password = userCommunication.getInput();
+        String name = userCommunication.requestInput(PROMPT_TOPIC_NAME);
+        String login = userCommunication.requestInput(PROMPT_TOPIC_LOGIN);
+        String password = userCommunication.requestInput(PROMPT_TOPIC_PASSWORD);
         SignUpRequest request = new SignUpRequest(currentUserId, name, login, password);
         SignUpResponse response = signUpService.execute(request);
         if (response.hasErrors()) {
