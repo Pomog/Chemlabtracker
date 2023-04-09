@@ -8,16 +8,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class FindReactionValidator {
-    private Optional<CoreError> allFieldsAreEmpty(FindReactionRequest findReactionRequest){
-        return (!requestValid(findReactionRequest))
-                ? Optional.of(new CoreError("Search request", "Must not be empty!"))
-                : Optional.empty();
-    }
 
     public List<CoreError> validate(FindReactionRequest request) {
         List<CoreError> errors = new ArrayList<>();
         allFieldsAreEmpty(request).ifPresent(errors::add);
         return errors;
+    }
+
+    private Optional<CoreError> allFieldsAreEmpty(FindReactionRequest findReactionRequest){
+        return (!requestValid(findReactionRequest))
+                ? Optional.of(new CoreError("Search request", "Must not be empty!"))
+                : Optional.empty();
     }
 
     private boolean requestValid(FindReactionRequest findReactionRequest) {

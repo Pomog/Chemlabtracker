@@ -5,6 +5,7 @@ import java2.eln.domain.StructureData;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+
 public class FindReactionRequest {
 
     String code;
@@ -12,7 +13,7 @@ public class FindReactionRequest {
     StructureData startingMaterial;
     Double yield;
 
-    public FindReactionRequest(String code, String name, StructureData startingMaterial, double yield) {
+    public FindReactionRequest(String code, String name, StructureData startingMaterial, Double yield) {
         this.code = code;
         this.name = name;
         this.startingMaterial = startingMaterial;
@@ -42,4 +43,7 @@ public class FindReactionRequest {
         return yield;
     }
 }
+
+
+
 

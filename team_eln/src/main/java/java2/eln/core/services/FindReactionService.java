@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class FindReactionService {
     private final DatabaseIM databaseIM;
-    private FindReactionValidator findReactionValidator;
+    private final FindReactionValidator findReactionValidator;
 
     public FindReactionService(DatabaseIM databaseIM, FindReactionValidator findReactionValidator) {
         this.databaseIM = databaseIM;
@@ -25,7 +25,6 @@ public class FindReactionService {
         if (!errors.isEmpty()) {
             return new FindReactionResponse(errors, true);
         }
-
         List<ReactionData> searchingResults = databaseIM.getAllReactions().stream()
             .filter(reaction -> compareObjects(findReactionRequest, reaction))
             .collect(Collectors.toList());
@@ -35,28 +34,29 @@ public class FindReactionService {
     private boolean compareObjects(FindReactionRequest findReactionRequest, ReactionData reaction) {
         boolean codeMatch = matchSearchCriteria(findReactionRequest.getCode(), reaction.getCode());
         boolean nameMatch = matchSearchCriteria(findReactionRequest.getName(), reaction.getName());
-       // boolean yieldMatch = matchSearchCriteria(reaction.getReactionYield(), findReactionRequest.getYield());
+        boolean yieldMatch = matchSearchCriteria(findReactionRequest.getYield(), reaction.getReactionYield());
         boolean startingMaterialMatch = matchSearchCriteria(findReactionRequest.getStartingMaterial(), reaction.getStartingMaterials());
         // return true only if all search criteria match
-        return codeMatch && nameMatch && startingMaterialMatch;
+        return codeMatch && nameMatch && yieldMatch && startingMaterialMatch;
     }
 
     private boolean matchSearchCriteria (Object searchCriteria, Object reactionProperty) {
         boolean verdict = false;
         if (searchCriteria == null) {
             verdict = true; // match all values if search criteria is null
-
-            } else if (searchCriteria instanceof String) {
+        } else if (searchCriteria instanceof String) {
                 String strSearchCriteria = ((String) searchCriteria).trim().toLowerCase();
                 String strProperty = ((String) reactionProperty).toLowerCase();
             verdict = strSearchCriteria.isEmpty() || strProperty.contains(strSearchCriteria.toLowerCase());
-
-            } else if (reactionProperty instanceof List) {
+            }
+        else if (reactionProperty instanceof List) {
             verdict = ((List<?>) reactionProperty).contains(searchCriteria) ||
                     searchCriteria.equals(new StructureData("C"));
-
             }
-            else {
+        else if (searchCriteria instanceof Double doubleSearchCriteria) {
+            verdict = doubleSearchCriteria == 0 || doubleSearchCriteria.equals((Double) reactionProperty);
+           }
+        else {
             verdict = searchCriteria.equals(reactionProperty);
         }
         return verdict;
