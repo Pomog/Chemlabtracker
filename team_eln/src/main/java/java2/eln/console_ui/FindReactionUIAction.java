@@ -31,13 +31,9 @@ public class FindReactionUIAction implements UIAction{
         System.out.println("Enter reaction Yield to search: ");
         String  yieldStr = scanner.nextLine();
         Double yield = null;
-        try {
+        if (!yieldStr.isBlank()){
             yield = Double.parseDouble(yieldStr);
-        } catch (NumberFormatException e) {
-            yield = 0d;
-            System.out.println("Invalid input. Yield set to 0.");
         }
-
 
         GetStructureFromSMILE getStructureFromSMILE = new GetStructureFromSMILE(smile);
         StructureData searchedStructure = getStructureFromSMILE.execute();

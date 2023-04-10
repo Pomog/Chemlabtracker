@@ -5,7 +5,6 @@ import java2.eln.domain.StructureData;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-
 public class FindReactionRequest {
 
     String code;
@@ -33,10 +32,13 @@ public class FindReactionRequest {
     }
 
     public double getFormattedYield() {
-        DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
-        symbols.setDecimalSeparator('.');
-        DecimalFormat df = new DecimalFormat("#.##", symbols);
-        return Double.parseDouble(df.format(yield));
+        if (yield != null) {
+            DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+            symbols.setDecimalSeparator('.');
+            DecimalFormat df = new DecimalFormat("#.##", symbols);
+            return Double.parseDouble(df.format(yield));
+        }
+        return yield;
     }
 
     public Double getYield() {

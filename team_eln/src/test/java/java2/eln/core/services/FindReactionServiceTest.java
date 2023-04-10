@@ -49,6 +49,10 @@ class FindReactionServiceTest {
         // Verify that the response contains the expected result
         List<ReactionData> expectedResults = List.of(demoReactionLog);
 
+        System.out.println(expectedResults);
+
+        System.out.println(response.getSearchingResults());
+
         assert(response.getSearchingResults().equals(expectedResults));
 
 

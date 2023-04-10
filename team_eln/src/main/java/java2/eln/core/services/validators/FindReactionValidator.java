@@ -17,7 +17,7 @@ public class FindReactionValidator {
 
     private Optional<CoreError> allFieldsAreEmpty(FindReactionRequest findReactionRequest){
         return (!requestValid(findReactionRequest))
-                ? Optional.of(new CoreError("Search request", "Must not be empty!"))
+                ? Optional.of(new CoreError("Searching parameters", "Must not be empty!"))
                 : Optional.empty();
     }
 
@@ -28,9 +28,6 @@ public class FindReactionValidator {
             return true;
         } else if (findReactionRequest.getStartingMaterial().getSmiles() != null) {
             return true;
-        } else if (findReactionRequest.getYield() != 0) {
-            return true;
-        }
-        return false;
+        } else return findReactionRequest.getYield() != 0 && findReactionRequest.getYield() != null;
     }
 }
