@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindReactionsByMainProductService {
-    private DatabaseIM databaseIM;
+    private final DatabaseIM databaseIM;
 
     public FindReactionsByMainProductService(DatabaseIM databaseIM) {
         this.databaseIM = databaseIM;

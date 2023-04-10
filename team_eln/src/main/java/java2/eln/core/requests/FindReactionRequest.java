@@ -7,10 +7,10 @@ import java.text.DecimalFormatSymbols;
 
 public class FindReactionRequest {
 
-    String code;
-    String name;
-    StructureData startingMaterial;
-    Double yield;
+   private final String code;
+   private final String name;
+   private final StructureData startingMaterial;
+   private final Double yield;
 
     public FindReactionRequest(String code, String name, StructureData startingMaterial, Double yield) {
         this.code = code;

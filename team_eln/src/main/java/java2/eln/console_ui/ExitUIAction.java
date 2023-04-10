@@ -5,7 +5,7 @@ import java2.eln.core.responses.ExitUIActionResponse;
 import java2.eln.core.services.ExitUIService;
 
 public class ExitUIAction implements UIAction{
-    private ExitUIService exitUIService;
+    private final ExitUIService exitUIService;
 
     public ExitUIAction(ExitUIService exitUIService) {
         this.exitUIService = exitUIService;

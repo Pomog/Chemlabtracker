@@ -5,7 +5,7 @@ import java2.eln.core.responses.GetAllReactionsResponse;
 import java2.eln.core.services.GetAllReactionsService;
 
 public class GetAllReactionUIAction implements UIAction{
-    private GetAllReactionsService getAllReactionsService;
+    private final GetAllReactionsService getAllReactionsService;
 
     public GetAllReactionUIAction(GetAllReactionsService getAllReactionsService) {
         this.getAllReactionsService = getAllReactionsService;

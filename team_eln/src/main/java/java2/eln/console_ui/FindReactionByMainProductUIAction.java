@@ -9,7 +9,7 @@ import java2.eln.domain.StructureData;
 import java.util.Scanner;
 
 public class FindReactionByMainProductUIAction implements UIAction{
-    private FindReactionsByMainProductService findReactionByMainProductService;
+    private final FindReactionsByMainProductService findReactionByMainProductService;
 
     public FindReactionByMainProductUIAction(FindReactionsByMainProductService findReactionByMainProductService) {
         this.findReactionByMainProductService = findReactionByMainProductService;

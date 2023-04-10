@@ -1,9 +1,9 @@
 package java2.eln.core.requests;
 
 public class AddReactionRequest {
-    private String code;
-    private String name;
-    private String filename;
+    private final String code;
+    private final String name;
+    private final String filename;
 
     public AddReactionRequest(String code, String name, String filename) {
         this.code = code;

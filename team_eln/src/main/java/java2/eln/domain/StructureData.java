@@ -85,7 +85,6 @@ public class StructureData {
     private void setCarbonAsStructure() {
         mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
-        return;
     }
 
     private void setMethaneAsStructure() {
@@ -97,7 +96,6 @@ public class StructureData {
             mol.addAtom(hydrogen);
             mol.addBond(new Bond(carbon, hydrogen, Bond.Order.SINGLE));
         }
-        return;
     }
 
     public IAtomContainer parseSmiles(String smiles) {
