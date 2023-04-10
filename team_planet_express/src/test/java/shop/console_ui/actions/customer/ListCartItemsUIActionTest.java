@@ -37,7 +37,7 @@ class ListCartItemsUIActionTest {
     @Test
     void shouldPrintHeader() {
         action.execute();
-        verify(mockUserCommunication, times(1)).informUser(anyString());
+        verify(mockUserCommunication, times(2)).informUser(anyString());
     }
 
     @Test
