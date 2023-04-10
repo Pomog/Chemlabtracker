@@ -30,7 +30,7 @@ public class FindReactionUIAction implements UIAction{
 
         System.out.println("Enter reaction Yield to search: ");
         String  yieldStr = scanner.nextLine();
-        Double yield = null;
+        Double yield = 0d;
         if (!yieldStr.isBlank()){
             yield = Double.parseDouble(yieldStr);
         }
