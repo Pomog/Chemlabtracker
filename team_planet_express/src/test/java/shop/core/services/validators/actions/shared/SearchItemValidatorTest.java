@@ -6,57 +6,64 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.requests.shared.SearchItemRequest;
-import shop.core.services.exception.InternalSystemCollapseException;
+import shop.core.responses.CoreError;
+import shop.core.services.validators.item_list.PagingRuleValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
 import shop.core.support.paging.PagingRule;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class SearchItemValidatorTest {
 
     @Mock private InputStringValidator mockInputStringValidator;
+    @Mock private PagingRuleValidator mockPagingRuleValidator;
     @Mock private SearchItemRequest mockRequest;
     @Mock private PagingRule mockPagingRule;
+    @Mock private CoreError mockCoreError;
 
     @InjectMocks private SearchItemValidator validator;
 
     @Test
-    void shouldThrowInternalSystemCollapseExceptionForMissingPageNumber() {
+    void shouldValidatePagingRuleIfPresent() {
         when(mockRequest.getPagingRule()).thenReturn(mockPagingRule);
-        when(mockPagingRule.getPageNumber()).thenReturn(null);
-        assertThrows(InternalSystemCollapseException.class, () -> validator.validate(mockRequest));
-    }
-
-    @Test
-    void shouldThrowInternalSystemCollapseExceptionForInvalidPageNumber() {
-        when(mockRequest.getPagingRule()).thenReturn(mockPagingRule);
-        when(mockPagingRule.getPageNumber()).thenReturn(0);
-        assertThrows(InternalSystemCollapseException.class, () -> validator.validate(mockRequest));
-    }
-
-    @Test
-    void shouldNotThrowExceptionForValidPageNumber() {
-        when(mockRequest.getPagingRule()).thenReturn(mockPagingRule);
-        when(mockPagingRule.getPageNumber()).thenReturn(1);
-        assertDoesNotThrow(() -> validator.validate(mockRequest));
-    }
-
-    @Test
-    void shouldValidatePageSize() {
-        when(mockRequest.getPagingRule()).thenReturn(mockPagingRule);
-        when(mockPagingRule.getPageNumber()).thenReturn(1);
-        when(mockPagingRule.getPageSize()).thenReturn("10");
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("10", "page_size", "Page size");
-        verify(mockInputStringValidator).validateIsPresent(record);
-        verify(mockInputStringValidator).validateIsNumber(record);
-        verify(mockInputStringValidator).validateIsGreaterThanZero(record);
-        verify(mockInputStringValidator).validateIsNotDecimal(record);
+        verify(mockPagingRuleValidator).validate(mockPagingRule);
+    }
+
+    @Test
+    void shouldNotValidatePagingRuleIfNotPresent() {
+        when(mockRequest.getPagingRule()).thenReturn(null);
+        validator.validate(mockRequest);
+        verify(mockPagingRuleValidator, times(0)).validate(any(PagingRule.class));
+    }
+
+    @Test
+    void shouldReturnNoErrorsWhenPagingHasNoErrors() {
+        when(mockRequest.getPagingRule()).thenReturn(mockPagingRule);
+        when(mockPagingRuleValidator.validate(mockPagingRule)).thenReturn(Collections.emptyList());
+        List<CoreError> errors = validator.validate(mockRequest);
+        assertEquals(0, errors.size());
+    }
+
+    @Test
+    void shouldReturnErrorsWhenPagingHasErrors() {
+        when(mockRequest.getPagingRule()).thenReturn(mockPagingRule);
+        when(mockPagingRuleValidator.validate(mockPagingRule)).thenReturn(List.of(mockCoreError));
+        when(mockCoreError.getField()).thenReturn("field");
+        when(mockCoreError.getMessage()).thenReturn("has errors");
+        List<CoreError> errors = validator.validate(mockRequest);
+        assertTrue(errors.size() > 0);
+        Optional<CoreError> error = errors.stream()
+                .filter(coreError -> coreError.getField().equals("field"))
+                .filter(coreError -> coreError.getMessage().toLowerCase().contains("errors"))
+                .findFirst();
+        assertFalse(error.isEmpty());
     }
 
 }
