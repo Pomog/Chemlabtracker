@@ -8,3 +8,7 @@ sorting & paging to list items and cart
 usercommunication to abstract uiaction
 check role permissions in actions
 mega-error overhaul ?
+return types for change in db
+yeet paging/ordering folder
+validator tests for error catching
+numberValidator skips neg/dec for nonnumbers

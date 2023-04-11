@@ -72,14 +72,12 @@ class ListCartItemsServiceTest {
 
     @Test
     void shouldReturnSum() {
-
         when(mockCartItemDatabase.getAllCartItemsForCartId(anyLong())).thenReturn(List.of(mockCartItem, mockCartItem));
         when(mockDatabaseAccessValidator.getOpenCartByUserId(any())).thenReturn(mockCart);
         when(mockCart.getId()).thenReturn(1L);
         when(mockCart.getUserId()).thenReturn(1L);
         when(mockCartService.getSum(1L)).thenReturn(BigDecimal.valueOf(1));
         ListCartItemsResponse response = service.execute(mockRequest);
-
         assertEquals(response.getCartTotal(), BigDecimal.valueOf(1));
     }
 }

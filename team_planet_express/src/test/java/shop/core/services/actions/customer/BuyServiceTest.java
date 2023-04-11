@@ -22,7 +22,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class BuyServiceTest {
 
-
     @Mock
     private Database mockDatabase;
     @Mock
@@ -53,6 +52,5 @@ class BuyServiceTest {
         verify(mockCartDatabase).changeCartStatus(1L, CartStatus.CLOSED);
         verify(mockCartDatabase).changeLastActionDate(1L, LocalDate.now());
     }
-
 
 }

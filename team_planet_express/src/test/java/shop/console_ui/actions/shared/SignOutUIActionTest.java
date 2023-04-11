@@ -22,7 +22,6 @@ import static org.mockito.Mockito.times;
 @ExtendWith(MockitoExtension.class)
 class SignOutUIActionTest {
 
-
     @Mock
     private SignOutService mockSignOutService;
     @Mock
