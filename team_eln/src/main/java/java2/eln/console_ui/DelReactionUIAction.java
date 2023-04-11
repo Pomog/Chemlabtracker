@@ -7,7 +7,7 @@ import java2.eln.core.services.DelReactionService;
 import java.util.Scanner;
 
 public class DelReactionUIAction implements UIAction{
-    private DelReactionService delReactionService;
+    private final DelReactionService delReactionService;
 
     public DelReactionUIAction(DelReactionService delReactionService) {
         this.delReactionService = delReactionService;

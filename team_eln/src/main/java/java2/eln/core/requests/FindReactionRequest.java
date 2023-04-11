@@ -7,12 +7,12 @@ import java.text.DecimalFormatSymbols;
 
 public class FindReactionRequest {
 
-    String code;
-    String name;
-    StructureData startingMaterial;
-    Double yield;
+   private final String code;
+   private final String name;
+   private final StructureData startingMaterial;
+   private final Double yield;
 
-    public FindReactionRequest(String code, String name, StructureData startingMaterial, double yield) {
+    public FindReactionRequest(String code, String name, StructureData startingMaterial, Double yield) {
         this.code = code;
         this.name = name;
         this.startingMaterial = startingMaterial;
@@ -32,14 +32,20 @@ public class FindReactionRequest {
     }
 
     public double getFormattedYield() {
-        DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
-        symbols.setDecimalSeparator('.');
-        DecimalFormat df = new DecimalFormat("#.##", symbols);
-        return Double.parseDouble(df.format(yield));
+        if (yield != null) {
+            DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+            symbols.setDecimalSeparator('.');
+            DecimalFormat df = new DecimalFormat("#.##", symbols);
+            return Double.parseDouble(df.format(yield));
+        }
+        return yield;
     }
 
     public Double getYield() {
         return yield;
     }
 }
+
+
+
 

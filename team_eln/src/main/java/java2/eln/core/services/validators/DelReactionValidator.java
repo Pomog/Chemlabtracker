@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class DelReactionValidator {
-    private DatabaseIM databaseIM;
+    private final DatabaseIM databaseIM;
 
     public DelReactionValidator(DatabaseIM databaseIM) {
         this.databaseIM = databaseIM;

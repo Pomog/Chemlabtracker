@@ -9,8 +9,8 @@ import java2.eln.core.services.validators.DelReactionValidator;
 import java.util.List;
 
 public class DelReactionService {
-    private DatabaseIM databaseIM;
-    private DelReactionValidator delReactionValidator;
+    private final DatabaseIM databaseIM;
+    private final DelReactionValidator delReactionValidator;
 
     public DelReactionService(DatabaseIM databaseIM, DelReactionValidator delReactionValidator) {
         this.databaseIM = databaseIM;

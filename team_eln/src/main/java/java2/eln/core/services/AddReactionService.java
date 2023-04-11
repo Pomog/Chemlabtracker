@@ -10,8 +10,8 @@ import java2.eln.domain.ReactionData;
 import java.util.List;
 
 public class AddReactionService {
-    private DatabaseIM databaseIM;
-    private AddReactionValidator validator;
+    private final DatabaseIM databaseIM;
+    private final AddReactionValidator validator;
 
     public AddReactionService(DatabaseIM databaseIM, AddReactionValidator validator) {
         this.databaseIM = databaseIM;

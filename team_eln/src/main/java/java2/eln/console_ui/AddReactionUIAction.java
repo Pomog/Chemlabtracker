@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class AddReactionUIAction implements UIAction{
 
-    private AddReactionService addReactionService;
+    private final AddReactionService addReactionService;
 
     public AddReactionUIAction(AddReactionService addReactionService) {
         this.addReactionService = addReactionService;

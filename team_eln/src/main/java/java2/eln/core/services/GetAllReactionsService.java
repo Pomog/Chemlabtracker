@@ -8,7 +8,7 @@ import java2.eln.domain.ReactionData;
 import java.util.List;
 
 public class GetAllReactionsService {
-    private DatabaseIM databaseIM;
+    private final DatabaseIM databaseIM;
 
     public GetAllReactionsService(DatabaseIM databaseIM) {
         this.databaseIM = databaseIM;

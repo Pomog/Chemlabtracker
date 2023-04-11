@@ -9,7 +9,7 @@ import java2.eln.domain.StructureData;
 import java.util.Scanner;
 
 public class FindReactionUIAction implements UIAction{
-    private FindReactionService findReactionService;
+    private final FindReactionService findReactionService;
 
     public FindReactionUIAction(FindReactionService findReactionService) {
         this.findReactionService = findReactionService;
@@ -30,14 +30,10 @@ public class FindReactionUIAction implements UIAction{
 
         System.out.println("Enter reaction Yield to search: ");
         String  yieldStr = scanner.nextLine();
-        Double yield = null;
-        try {
+        Double yield = 0d;
+        if (!yieldStr.isBlank()){
             yield = Double.parseDouble(yieldStr);
-        } catch (NumberFormatException e) {
-            yield = 0d;
-            System.out.println("Invalid input. Yield set to 0.");
         }
-
 
         GetStructureFromSMILE getStructureFromSMILE = new GetStructureFromSMILE(smile);
         StructureData searchedStructure = getStructureFromSMILE.execute();

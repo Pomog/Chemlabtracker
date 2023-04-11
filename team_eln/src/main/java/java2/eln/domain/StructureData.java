@@ -2,6 +2,7 @@ package java2.eln.domain;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -68,22 +69,33 @@ public class StructureData {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
         if (smiles.isBlank()) {
-            setSmiles("invalidSmiles");
-            setCarbonAsStructure();
+            setSmiles("C");
+            setMethaneAsStructure();
             return;
         }
         try {
             mol = parser.parseSmiles(smiles);
         } catch (InvalidSmilesException e) {
             System.err.println("Invalid SMILES: " + e.getMessage());
-            setCarbonAsStructure();
+            setSmiles("C");
+            setMethaneAsStructure();
         }
     }
 
     private void setCarbonAsStructure() {
         mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
-        return;
+    }
+
+    private void setMethaneAsStructure() {
+        mol = new AtomContainer();
+        Atom carbon = new Atom("C");
+        mol.addAtom(carbon);
+        for (int i = 0; i < 4; i++) {
+            Atom hydrogen = new Atom("H");
+            mol.addAtom(hydrogen);
+            mol.addBond(new Bond(carbon, hydrogen, Bond.Order.SINGLE));
+        }
     }
 
     public IAtomContainer parseSmiles(String smiles) {
