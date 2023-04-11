@@ -1,7 +1,6 @@
 package java2.fitness_app.users.core.services;
 
 import java2.fitness_app.users.core.database.Database;
-import java2.fitness_app.users.core.domain.User;
 import java2.fitness_app.users.core.requests.LoginUserRequest;
 import java2.fitness_app.users.core.responses.CoreError;
 import java2.fitness_app.users.core.responses.LoginUserResponse;
@@ -17,6 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,21 +28,19 @@ public class LoginUserServiceTest {
     @InjectMocks
     private LoginUserService service;
 
-
     @Test
     public void shouldReturnResponseWithoutErrorsWhenRequestIsValid() {
-        User user1 = new User("A", "a");
-        database.add(user1);
-        LoginUserRequest request = new LoginUserRequest(1L, "a");
+        Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
+        LoginUserRequest request = new LoginUserRequest(1L, "Password");
         when(validator.validate(request)).thenReturn(List.of());
         LoginUserResponse response = service.execute(request);
         assertFalse(response.hasErrors());
+
     }
 
     @Test
     public void shouldReturnErrorWhenUserIdNotProvided() {
-        User user1 = new User("A", "a");
-        database.add(user1);
+        Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
         LoginUserRequest request = new LoginUserRequest(null, "a");
         List<CoreError> errors = new ArrayList<>();
         errors.add(new CoreError("id", "Must not be empty!"));
@@ -54,4 +52,17 @@ public class LoginUserServiceTest {
         assertEquals(response.getErrors().get(0).getMessage(), "Must not be empty!");
     }
 
+    @Test
+    public void shouldReturnErrorWhenPasswordNotProvided() {
+        Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
+        LoginUserRequest request = new LoginUserRequest(1L, "");
+        List<CoreError> errors = new ArrayList<>();
+        errors.add(new CoreError("password", "Must not be empty!"));
+        Mockito.when(validator.validate(request)).thenReturn(errors);
+        LoginUserResponse response = service.execute(request);
+        assertTrue(response.hasErrors());
+        assertEquals(response.getErrors().size(), 1);
+        assertEquals(response.getErrors().get(0).getField(), "password");
+        assertEquals(response.getErrors().get(0).getMessage(), "Must not be empty!");
+    }
 }
