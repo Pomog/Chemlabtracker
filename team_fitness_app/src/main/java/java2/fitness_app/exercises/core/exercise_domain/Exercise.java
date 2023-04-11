@@ -1,4 +1,4 @@
-package java2.fitness_app.exercises.exercise_domain;
+package java2.fitness_app.exercises.core.exercise_domain;
 
 import java.util.Objects;
 
