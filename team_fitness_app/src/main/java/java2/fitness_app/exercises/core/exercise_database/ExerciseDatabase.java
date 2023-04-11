@@ -1,6 +1,6 @@
-package java2.fitness_app.exercises.exercise_database;
+package java2.fitness_app.exercises.core.exercise_database;
 
-import java2.fitness_app.exercises.exercise_domain.Exercise;
+import java2.fitness_app.exercises.core.exercise_domain.Exercise;
 
 import java.util.List;
 
