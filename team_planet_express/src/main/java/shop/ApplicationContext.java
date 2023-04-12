@@ -78,10 +78,10 @@ public class ApplicationContext {
     private void initialiseValidators() {
         beans.put(CurrentUserIdValidator.class, new CurrentUserIdValidator());
         beans.put(InputStringValidator.class, new InputStringValidator());
+        beans.put(OrderingRuleValidator.class, new OrderingRuleValidator());
         beans.put(PagingRuleValidator.class, new PagingRuleValidator(
                 getBean(InputStringValidator.class)
         ));
-        beans.put(OrderingRuleValidator.class, new OrderingRuleValidator());
         beans.put(DatabaseAccessValidator.class, new DatabaseAccessValidator(
                 getBean(Database.class)
         ));
@@ -90,8 +90,8 @@ public class ApplicationContext {
         ));
         beans.put(SearchItemValidator.class, new SearchItemValidator(
                 getBean(InputStringValidator.class),
-                getBean(PagingRuleValidator.class),
-                getBean(OrderingRuleValidator.class)
+                getBean(OrderingRuleValidator.class),
+                getBean(PagingRuleValidator.class)
         ));
         beans.put(AddItemToCartValidator.class, new AddItemToCartValidator(
                 getBean(Database.class),
