@@ -2,8 +2,8 @@ package shop.console_ui.actions.shared;
 
 import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
-import shop.console_ui.item_list.ordering.OrderingUIElement;
-import shop.console_ui.item_list.paging.PagingUIElement;
+import shop.console_ui.item_list.OrderingUIElement;
+import shop.console_ui.item_list.PagingUIElement;
 import shop.core.domain.user.UserRole;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.shared.SearchItemResponse;

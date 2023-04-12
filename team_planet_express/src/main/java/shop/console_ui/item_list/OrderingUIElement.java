@@ -1,4 +1,4 @@
-package shop.console_ui.item_list.ordering;
+package shop.console_ui.item_list;
 
 import shop.console_ui.UserCommunication;
 import shop.core.support.ordering.OrderBy;

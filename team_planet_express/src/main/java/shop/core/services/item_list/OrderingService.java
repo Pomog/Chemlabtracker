@@ -1,4 +1,4 @@
-package shop.core.services.item_list.ordering;
+package shop.core.services.item_list;
 
 import shop.core.domain.item.Item;
 import shop.core.support.ordering.OrderBy;

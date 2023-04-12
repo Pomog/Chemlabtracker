@@ -1,4 +1,4 @@
-package shop.core.services.item_list.paging;
+package shop.core.services.item_list;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

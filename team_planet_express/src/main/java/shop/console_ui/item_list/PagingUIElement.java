@@ -1,4 +1,4 @@
-package shop.console_ui.item_list.paging;
+package shop.console_ui.item_list;
 
 import shop.console_ui.UserCommunication;
 import shop.core.support.paging.PageNavigation;

@@ -1,4 +1,4 @@
-package shop.console_ui.item_list.paging;
+package shop.console_ui.item_list;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
