@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.requests.shared.SearchItemRequest;
 import shop.core.responses.CoreError;
+import shop.core.services.validators.item_list.OrderingRuleValidator;
 import shop.core.services.validators.item_list.PagingRuleValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.support.paging.PagingRule;
@@ -25,6 +26,7 @@ class SearchItemValidatorTest {
     @Mock private PagingRuleValidator mockPagingRuleValidator;
     @Mock private SearchItemRequest mockRequest;
     @Mock private PagingRule mockPagingRule;
+    @Mock private OrderingRuleValidator mockOrderingRuleValidator;
     @Mock private CoreError mockCoreError;
 
     @InjectMocks private SearchItemValidator validator;
