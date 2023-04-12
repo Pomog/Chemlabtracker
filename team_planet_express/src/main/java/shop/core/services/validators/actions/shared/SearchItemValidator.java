@@ -9,32 +9,27 @@ import shop.core.services.validators.universal.user_input.InputStringValidatorRe
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-//TODO validate orderingRules ?
 public class SearchItemValidator {
 
     private static final String FIELD_PRICE = "price";
     private static final String VALUE_NAME_PRICE = "Price";
 
     private final InputStringValidator inputStringValidator;
-    private final PagingRuleValidator pagingRuleValidator;
     private final OrderingRuleValidator orderingRuleValidator;
+    private final PagingRuleValidator pagingRuleValidator;
 
-    public SearchItemValidator(InputStringValidator inputStringValidator,
-                               PagingRuleValidator pagingRuleValidator,
-                               OrderingRuleValidator orderingRuleValidator
-                               ) {
+    public SearchItemValidator(InputStringValidator inputStringValidator, OrderingRuleValidator orderingRuleValidator, PagingRuleValidator pagingRuleValidator) {
         this.inputStringValidator = inputStringValidator;
-        this.pagingRuleValidator = pagingRuleValidator;
         this.orderingRuleValidator = orderingRuleValidator;
+        this.pagingRuleValidator = pagingRuleValidator;
     }
 
     public List<CoreError> validate(SearchItemRequest request) {
         List<CoreError> errors = new ArrayList<>();
         validatePrice(request.getPrice(), errors);
+        validateOrderingIfPresent(request, errors);
         validatePagingIfPresent(request, errors);
-        validateOrderingIsPresent(request, errors);
         return errors;
     }
 
@@ -44,17 +39,19 @@ public class SearchItemValidator {
         inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
     }
 
+    private void validateOrderingIfPresent(SearchItemRequest request, List<CoreError> errors) {
+        if (request.getOrderingRules() != null) {
+            request.getOrderingRules().stream()
+                    .map(orderingRuleValidator::validate)
+                    .filter(errorList -> !errorList.isEmpty())
+                    .forEach(errors::addAll);
+        }
+    }
+
     private void validatePagingIfPresent(SearchItemRequest request, List<CoreError> errors) {
         if (request.getPagingRule() != null) {
             errors.addAll(pagingRuleValidator.validate(request.getPagingRule()));
         }
     }
-    private void validateOrderingIsPresent(SearchItemRequest request, List<CoreError> errors) {
-        if (request.getOrderingRules() != null) {
-            request.getOrderingRules().stream()
-                    .map(orderingRuleValidator::validate)
-                    .filter(listErrors -> !listErrors.isEmpty())
-                    .forEach(errors::addAll);
-        }
-    }
+
 }

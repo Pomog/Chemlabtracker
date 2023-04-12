@@ -12,3 +12,4 @@ return types for change in db
 yeet paging/ordering folder
 validator tests for error catching
 numberValidator skips neg/dec for nonnumbers
+duplicate in shop & acceptance setup

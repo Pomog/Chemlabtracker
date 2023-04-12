@@ -23,10 +23,10 @@ import static org.mockito.Mockito.*;
 class SearchItemValidatorTest {
 
     @Mock private InputStringValidator mockInputStringValidator;
+    @Mock private OrderingRuleValidator mockOrderingRuleValidator;
     @Mock private PagingRuleValidator mockPagingRuleValidator;
     @Mock private SearchItemRequest mockRequest;
     @Mock private PagingRule mockPagingRule;
-    @Mock private OrderingRuleValidator mockOrderingRuleValidator;
     @Mock private CoreError mockCoreError;
 
     @InjectMocks private SearchItemValidator validator;
