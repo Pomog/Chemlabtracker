@@ -39,6 +39,7 @@ import shop.core.services.validators.actions.shared.SearchItemValidator;
 import shop.core.services.validators.actions.shared.SignInValidator;
 import shop.core.services.validators.actions.shared.SignOutValidator;
 import shop.core.services.validators.cart.CartValidator;
+import shop.core.services.validators.item_list.OrderingRuleValidator;
 import shop.core.services.validators.item_list.PagingRuleValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
@@ -80,6 +81,7 @@ public class ApplicationContext {
         beans.put(PagingRuleValidator.class, new PagingRuleValidator(
                 getBean(InputStringValidator.class)
         ));
+        beans.put(OrderingRuleValidator.class, new OrderingRuleValidator());
         beans.put(DatabaseAccessValidator.class, new DatabaseAccessValidator(
                 getBean(Database.class)
         ));
@@ -88,7 +90,8 @@ public class ApplicationContext {
         ));
         beans.put(SearchItemValidator.class, new SearchItemValidator(
                 getBean(InputStringValidator.class),
-                getBean(PagingRuleValidator.class)
+                getBean(PagingRuleValidator.class),
+                getBean(OrderingRuleValidator.class)
         ));
         beans.put(AddItemToCartValidator.class, new AddItemToCartValidator(
                 getBean(Database.class),
