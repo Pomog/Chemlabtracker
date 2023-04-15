@@ -77,7 +77,9 @@ public class ChangeItemDataValidator {
         BigDecimal newPrice = setNewPrice(request, originalItem);
         Integer newAvailableQuantity = setNewQuantity(request, originalItem);
         Item newItem = new Item(newItemName, newPrice, newAvailableQuantity);
-        return (database.accessItemDatabase().getAllItems().contains(newItem))
+        return (database.accessItemDatabase().getAllItems().stream()
+                .filter(item -> !originalItem.getId().equals(item.getId()))
+                .anyMatch(item -> item.equals(newItem)))
                 ? Optional.of(new CoreError(FIELD_BUTTON, ERROR_ITEM_EXISTS))
                 : Optional.empty();
     }
