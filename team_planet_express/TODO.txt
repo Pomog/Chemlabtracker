@@ -1,8 +1,13 @@
 yeet date change to db
 time machine for date testing
 userRole madness from Q&A (many roles for an action)
-yeet lombok @Data from domain, make @Getter
-listCartItem name of item
-input requests into its own method
-searchitem request validate ordering ?
+mega-error overhaul ?
+usercommunication to abstract uiaction
 sorting & paging to list items and cart
+validator tests for error catching
+yeet lombok @Data from domain, make @Getter
+check role permissions in actions
+duplicate in shop & acceptance setup
+listCartItem name of item
+numberValidator skips neg/dec for nonnumbers
+make matchers, fix equals to default
