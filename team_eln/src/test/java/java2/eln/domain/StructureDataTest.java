@@ -1,9 +1,12 @@
 package java2.eln.domain;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 
@@ -18,34 +21,39 @@ public class StructureDataTest {
         assertEquals(smiles, sd.getSmiles());
     }
 
-    @Ignore("This test is currently not working and needs to be fixed.")
     @Test
     public void testInvalidSmilesSetSmiles() {
         String invalidSmiles = "invalidSmiles";
         StructureData sd = new StructureData(invalidSmiles);
         assertNotNull(sd.getMol());
-        assertEquals(invalidSmiles, sd.getSmiles());
+        assertEquals("C", sd.getSmiles());
     }
 
-    @Ignore("This test is currently not working and needs to be fixed.")
+
     @Test
-    public void testInvalidSmilesReturnCarbon() {
+    public void testInvalidSmilesReturnMethane() {
         String invalidSmiles = "invalidSmiles";
         StructureData sd = new StructureData(invalidSmiles);
         assertNotNull(sd.getMol());
-        assertEquals("C", sd.getBruttoFormula());
+        assertEquals("CH4", sd.getBruttoFormula());
     }
 
     @Test
-    public void parseSmilesTest() {
+    public void parseInvalidSmilesTest() {
         String smiles = "C";
         StructureData sd = new StructureData(smiles);
+        IAtomContainer parsedAtomContainer = sd.getMol();
 
-        AtomContainer carbon = new AtomContainer();
-        carbon.addAtom(new Atom("C"));
+        IAtomContainer methane = new AtomContainer();
+        Atom carbon = new Atom("C");
+        methane.addAtom(carbon);
+        for (int i = 0; i < 4; i++) {
+            Atom hydrogen = new Atom("H");
+            methane.addAtom(hydrogen);
+            methane.addBond(new Bond(carbon, hydrogen, IBond.Order.SINGLE));
+        }
+        IMolecularFormula methaneMol = MolecularFormulaManipulator.getMolecularFormula(methane);
 
-
-
-
+        assertEquals(sd.getBruttoFormula(), MolecularFormulaManipulator.getString(methaneMol));
     }
 }

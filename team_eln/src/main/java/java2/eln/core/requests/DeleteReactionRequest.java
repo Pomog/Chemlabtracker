@@ -1,9 +1,9 @@
 package java2.eln.core.requests;
 
-public class DelReactionRequest {
+public class DeleteReactionRequest {
     private final String code;
 
-    public DelReactionRequest(String code) {
+    public DeleteReactionRequest(String code) {
         this.code = code;
     }
 

@@ -9,6 +9,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerComparator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FindReactionsByMainProductService {
     private final DatabaseIM databaseIM;
@@ -18,16 +19,11 @@ public class FindReactionsByMainProductService {
     }
     public FindReactionsByMainProductResponse execute (FindReactionsByMainProductRequest findReactionsByMainProductRequest){
         StructureData searchedSubstance = findReactionsByMainProductRequest.getSearchedSubstance();
-        List<ReactionData> searchingResults = new ArrayList<>();
         AtomContainerComparator comparator = new AtomContainerComparator();
 
-        for (ReactionData reactionData : databaseIM.getAllReactions()) {
-            int comparatorResult =
-                    comparator.compare(searchedSubstance.getMol(), reactionData.getMainProduct().getMol());
-            if (comparatorResult == 0){
-                searchingResults.add(reactionData);
-            }
-        }
+        List<ReactionData> searchingResults = databaseIM.getAllReactions().stream()
+                .filter(reactionData -> comparator.compare(searchedSubstance.getMol(), reactionData.getMainProduct().getMol()) == 0)
+                .collect(Collectors.toList());
 
         return new FindReactionsByMainProductResponse(searchingResults);
     }

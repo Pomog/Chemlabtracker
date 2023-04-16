@@ -9,6 +9,13 @@ import java.util.Optional;
 
 public class AddReactionValidator {
 
+    public List<CoreError> validate(AddReactionRequest request) {
+        List<CoreError> errors = new ArrayList<>();
+        codeValidate(request).ifPresent(errors::add);
+        nameValidate(request).ifPresent(errors::add);
+        return errors;
+    }
+
     private Optional<CoreError> codeValidate (AddReactionRequest addReactionRequest){
         return (addReactionRequest.getCode() == null || addReactionRequest.getCode().isBlank())
                 ? Optional.of(new CoreError("Reaction Code", "Must not be empty!"))
@@ -18,12 +25,5 @@ public class AddReactionValidator {
         return (addReactionRequest.getName() == null || addReactionRequest.getName().isBlank())
                 ? Optional.of(new CoreError("Reaction Name", "Must not be empty!"))
                 : Optional.empty();
-    }
-
-    public List<CoreError> validate(AddReactionRequest request) {
-        List<CoreError> errors = new ArrayList<>();
-        codeValidate(request).ifPresent(errors::add);
-        nameValidate(request).ifPresent(errors::add);
-        return errors;
     }
 }

@@ -5,18 +5,18 @@ import java2.eln.core.responses.errorPattern.CoreResponse;
 
 import java.util.List;
 
-public class DelReactionResponse extends CoreResponse {
+public class DeleteReactionResponse extends CoreResponse {
     private boolean delResult;
 
     public boolean getDelResult() {
         return delResult;
     }
 
-    public DelReactionResponse(List<CoreError> errors) {
+    public DeleteReactionResponse(List<CoreError> errors) {
         super(errors);
     }
 
-    public DelReactionResponse(boolean delResult) {
+    public DeleteReactionResponse(boolean delResult) {
         this.delResult = delResult;
     }
 }
