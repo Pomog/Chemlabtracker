@@ -9,21 +9,29 @@ import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.requests.guest.SignUpRequest;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.requests.manager.ChangeItemDataRequest;
+import shop.core.requests.shared.SearchItemRequest;
 import shop.core.requests.shared.SignInRequest;
 import shop.core.requests.shared.SignOutRequest;
 import shop.core.responses.customer.AddItemToCartResponse;
 import shop.core.responses.guest.SignUpResponse;
 import shop.core.responses.manager.AddItemToShopResponse;
 import shop.core.responses.manager.ChangeItemDataResponse;
+import shop.core.responses.shared.SearchItemResponse;
 import shop.core.responses.shared.SignInResponse;
 import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.actions.customer.AddItemToCartService;
 import shop.core.services.actions.guest.SignUpService;
 import shop.core.services.actions.manager.AddItemToShopService;
 import shop.core.services.actions.manager.ChangeItemDataService;
+import shop.core.services.actions.shared.SearchItemService;
 import shop.core.services.actions.shared.SignInService;
 import shop.core.services.actions.shared.SignOutService;
 import shop.core.support.CurrentUserId;
+import shop.core.support.ordering.OrderingRule;
+import shop.core.support.paging.PagingRule;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public class AcceptanceTest {
 
@@ -31,6 +39,11 @@ public class AcceptanceTest {
     private final ApplicationContext applicationContext = applicationContextSetup.setupApplicationContext();
 
     protected AcceptanceTest() {
+    }
+
+    protected SearchItemResponse executeSearchItem(String itemName, String price, List<OrderingRule> orderingRules, PagingRule pagingRule) {
+        SearchItemRequest request = new SearchItemRequest(itemName, price, orderingRules, pagingRule);
+        return getSearchItemService().execute(request);
     }
 
     protected AddItemToCartResponse executeAddItemToCart(String itemName, String orderedQuantity) {
@@ -69,12 +82,21 @@ public class AcceptanceTest {
         getDatabase().accessUserDatabase().save(customer);
     }
 
+    protected void addItem(String name, BigDecimal price, Integer availableQuantity) {
+        Item item = new Item(name, price, availableQuantity);
+        getDatabase().accessItemDatabase().save(item);
+    }
+
     protected Database getDatabase() {
         return applicationContext.getBean(Database.class);
     }
 
     protected CurrentUserId getCurrentUserId() {
         return applicationContext.getBean(CurrentUserId.class);
+    }
+
+    private SearchItemService getSearchItemService() {
+        return applicationContext.getBean(SearchItemService.class);
     }
 
     private AddItemToCartService getAddItemToCartService() {
