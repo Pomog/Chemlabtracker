@@ -1,6 +1,6 @@
-package java2.fitness_app.users.domain;
+package java2.fitness_app.users.core.domain;
 
-import java2.fitness_app.users.domain.Subscription;
+import java2.fitness_app.users.core.domain.Subscription;
 
 public class TrialSubscription extends Subscription {
 

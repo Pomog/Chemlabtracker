@@ -1,4 +1,4 @@
-package java2.fitness_app.users.domain;
+package java2.fitness_app.users.core.domain;
 
 public abstract class Subscription {
 
