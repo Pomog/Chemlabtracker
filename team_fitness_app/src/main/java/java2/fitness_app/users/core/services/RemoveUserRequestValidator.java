@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RemoveUserValidator {
+public class RemoveUserRequestValidator {
 
 
     public List<CoreError> validate (RemoveUserRequest request){

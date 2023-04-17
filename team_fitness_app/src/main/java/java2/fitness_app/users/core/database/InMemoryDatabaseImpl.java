@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class InMemoryDatabaseImpl implements Database {
 
-    private Long nextId = 1L;
+    private static Long nextId = 1L;
 
     public List<User> users = new ArrayList<>();
 
