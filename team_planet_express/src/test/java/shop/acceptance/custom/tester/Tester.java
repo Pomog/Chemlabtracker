@@ -1,35 +1,23 @@
-package shop.acceptance.custom;
+package shop.acceptance.custom.tester;
 
 import shop.ApplicationContext;
 import shop.core.database.Database;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.cart_item.CartItem;
-import shop.core.domain.item.Item;
-import shop.core.responses.customer.ListCartItemsResponse;
-import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.support.CurrentUserId;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ServiceChecker {
-    private final ApplicationContext applicationContext;
-
-    public ServiceChecker(ApplicationContext applicationContext) {
+public abstract class Tester {
+    protected final ApplicationContext applicationContext;
+    public Tester(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
-
-    protected void checkItemInCart(ListCartItemsResponse listCartItemsResponse, String itemName, Integer quantity) {
-        Optional<Item> itemOptional = getDatabase().accessItemDatabase().getAllItems().stream()
-                .filter(item -> item.getName().equals(itemName)).findFirst();
-        assertTrue(itemOptional.isPresent());
-        assertTrue(listCartItemsResponse.getCartItems().stream()
-                .anyMatch(item -> item.getItemId().equals(itemOptional.get().getId()) && item.getOrderedQuantity().equals(quantity)));
-    }
-
-    protected void compareCartItem(String itemName, int quantity) {
+    protected Tester checkItemInCart(String itemName, Integer quantity){
         Optional<Cart> cart = getDatabase().accessCartDatabase().findOpenCartForUserId(getCurrentUserId().getValue());
         assertTrue(cart.isPresent());
         Optional<CartItem> cartItem = getDatabase().accessCartItemDatabase().findByCartIdAndItemId(
@@ -37,15 +25,19 @@ public class ServiceChecker {
                 getDatabase().accessItemDatabase().findByName(itemName).get().getId()
         );
         assertTrue(cartItem.isPresent());
-        assertTrue(cartItem.get().getItemId() != quantity);
+        assertEquals(quantity, cartItem.get().getOrderedQuantity());
+        return this;
     }
 
-    protected void checkItemInListShop(ListShopItemsResponse listShopItemsResponse, String itemName, int quantity) {
-        assertTrue(listShopItemsResponse.getShopItems().stream()
+    protected Tester checkItemInShop(String itemName, int quantity) {
+        assertTrue(getDatabase().accessItemDatabase().getAllItems().stream()
                 .anyMatch(item -> item.getName().equals(itemName) && item.getAvailableQuantity() == quantity));
+        return this;
+
     }
 
-    public void NotItemInCart(String itemName) {
+
+    protected Tester notItemInCart(String itemName) {
         Optional<Cart> cart = getDatabase().accessCartDatabase().findOpenCartForUserId(getCurrentUserId().getValue());
         if (cart.isPresent()) {
             Optional<CartItem> cartItem = getDatabase().accessCartItemDatabase().findByCartIdAndItemId(
@@ -54,13 +46,15 @@ public class ServiceChecker {
             );
             assertTrue(cartItem.isEmpty());
         }
+        return this;
+
     }
 
-    private Database getDatabase() {
+    protected Database getDatabase() {
         return applicationContext.getBean(Database.class);
     }
 
-    private CurrentUserId getCurrentUserId() {
+    protected CurrentUserId getCurrentUserId() {
         return applicationContext.getBean(CurrentUserId.class);
     }
 }
