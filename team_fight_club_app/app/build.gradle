@@ -1,0 +1,11 @@
+dependencies {
+    testImplementation('junit:junit:4.13.2')
+    implementation project(':team_fight_club_app:core')
+    implementation project(':team_fight_club_app:in')
+    implementation project(':team_fight_club_app:out')
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.0.5'
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+
+}

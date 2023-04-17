@@ -4,8 +4,10 @@ import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.services.validators.AddReactionValidator;
 import java2.eln.domain.ReactionData;
 import java2.eln.domain.StructureData;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class AddReactionValidatorTest {
 
@@ -15,7 +17,7 @@ public class AddReactionValidatorTest {
                 new AddReactionRequest("TP1", "The Friedel-Crafts acylation", "team_eln/data/demoReaction1.txt");
         AddReactionValidator addReactionValidator =
                 new AddReactionValidator();
-        Assert.assertTrue(addReactionValidator.validate(addReactionRequest).isEmpty());
+        assertTrue(addReactionValidator.validate(addReactionRequest).isEmpty());
     }
     @Test
     public void testNotEmptyCode() {
@@ -23,11 +25,11 @@ public class AddReactionValidatorTest {
                 new AddReactionRequest("TP1", "", "team_eln/data/demoReaction1.txt");
         AddReactionValidator addReactionValidator =
                 new AddReactionValidator();
-        Assert.assertFalse(addReactionValidator.validate(addReactionRequest).isEmpty());
-        Assert.assertEquals("Reaction Name",
+        assertFalse(addReactionValidator.validate(addReactionRequest).isEmpty());
+        assertEquals("Reaction Name",
                 addReactionValidator.validate(addReactionRequest).get(0).getField()
         );
-        Assert.assertEquals("Must not be empty!",
+        assertEquals("Must not be empty!",
                 addReactionValidator.validate(addReactionRequest).get(0).getMessage()
         );
     }
@@ -37,11 +39,11 @@ public class AddReactionValidatorTest {
                 new AddReactionRequest("", "The Friedel-Crafts acylation", "team_eln/data/demoReaction1.txt");
         AddReactionValidator addReactionValidator =
                 new AddReactionValidator();
-        Assert.assertFalse(addReactionValidator.validate(addReactionRequest).isEmpty());
-        Assert.assertEquals("Reaction Code",
+        assertFalse(addReactionValidator.validate(addReactionRequest).isEmpty());
+        assertEquals("Reaction Code",
                 addReactionValidator.validate(addReactionRequest).get(0).getField()
         );
-        Assert.assertEquals("Must not be empty!",
+        assertEquals("Must not be empty!",
                 addReactionValidator.validate(addReactionRequest).get(0).getMessage()
         );
     }
