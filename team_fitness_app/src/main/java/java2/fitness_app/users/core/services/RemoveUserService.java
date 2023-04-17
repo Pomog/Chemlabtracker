@@ -11,9 +11,9 @@ import java.util.List;
 public class RemoveUserService {
 
     private Database database;
-    private RemoveUserValidator validator;
+    private RemoveUserRequestValidator validator;
 
-    public RemoveUserService(Database database, RemoveUserValidator validator) {
+    public RemoveUserService(Database database, RemoveUserRequestValidator validator) {
         this.database = database;
         this.validator = validator;
     }

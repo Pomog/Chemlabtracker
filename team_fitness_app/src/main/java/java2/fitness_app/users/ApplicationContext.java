@@ -17,7 +17,7 @@ public class ApplicationContext {
 
         beans.put(AddUserRequestValidator.class, new AddUserRequestValidator());
         beans.put(LoginUserRequestValidator.class, new LoginUserRequestValidator());
-        beans.put(RemoveUserValidator.class, new RemoveUserValidator());
+        beans.put(RemoveUserRequestValidator.class, new RemoveUserRequestValidator());
 
         beans.put(AddUserService.class, new AddUserService(
                 getBean(Database.class),
@@ -29,7 +29,7 @@ public class ApplicationContext {
 
         beans.put(RemoveUserService.class, new RemoveUserService(
                 getBean(Database.class),
-                getBean(RemoveUserValidator.class)));
+                getBean(RemoveUserRequestValidator.class)));
 
         beans.put(GetAllUsersService.class, new GetAllUsersService(getBean(Database.class)));
 

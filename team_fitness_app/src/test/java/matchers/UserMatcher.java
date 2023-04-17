@@ -3,6 +3,7 @@ import org.mockito.ArgumentMatcher;
 import java2.fitness_app.users.core.domain.User;
 
 public class UserMatcher implements ArgumentMatcher<User> {
+
     private String username;
     private String password;
 
