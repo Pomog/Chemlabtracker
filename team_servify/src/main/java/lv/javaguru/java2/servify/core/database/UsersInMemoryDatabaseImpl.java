@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servify.core.database;
 
+import lv.javaguru.java2.servify.dependency_injection.DIComponent;
 import lv.javaguru.java2.servify.domain.UserEntity;
 import lv.javaguru.java2.servify.domain.UserType;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class UsersInMemoryDatabaseImpl implements UsersDatabase {
 
     private long nextId = 0L;

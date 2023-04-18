@@ -3,18 +3,16 @@ package lv.javaguru.java2.servify.console_ui.detail;
 import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.services.detail.GetAllDetailsService;
 import lv.javaguru.java2.servify.core.services.detail.RemoveDetailService;
+import lv.javaguru.java2.servify.dependency_injection.DIComponent;
+import lv.javaguru.java2.servify.dependency_injection.DIDependency;
 
 import java.util.Scanner;
 
+@DIComponent
 public class RemoveDetailUIAction implements UIAction {
 
-    private RemoveDetailService removeDetailService;
-    private GetAllDetailsService getAllDetailsService;
-
-    public RemoveDetailUIAction(RemoveDetailService removeDetailService, GetAllDetailsService getAllDetailsService) {
-        this.removeDetailService = removeDetailService;
-        this.getAllDetailsService = getAllDetailsService;
-    }
+    @DIDependency private RemoveDetailService removeDetailService;
+    @DIDependency private GetAllDetailsService getAllDetailsService;
 
     @Override
     public void execute() {
