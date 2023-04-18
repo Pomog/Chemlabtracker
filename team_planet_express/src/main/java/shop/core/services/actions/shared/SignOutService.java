@@ -5,7 +5,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.shared.SignOutRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.shared.SignOutResponse;
-import shop.core.services.user.UserRecord;
+import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.shared.SignOutValidator;
 
@@ -28,9 +28,9 @@ public class SignOutService {
         if (!errors.isEmpty()) {
             return new SignOutResponse(errors);
         }
-        UserRecord userRecord = new UserRecord(UserRole.GUEST.getDefaultName(), BLANK, BLANK, UserRole.GUEST);
+        UserCreationData userCreationData = new UserCreationData(UserRole.GUEST.getDefaultName(), BLANK, BLANK, UserRole.GUEST);
         User newUser = userService.findGuestWithOpenCart().orElseGet(
-                () -> userService.createUser(userRecord));
+                () -> userService.createUser(userCreationData));
         request.getUserId().setValue(newUser.getId());
         return new SignOutResponse();
     }

@@ -12,8 +12,9 @@ import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.CurrentUserId;
+import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,8 +48,8 @@ class SignUpValidatorTest {
     void shouldValidateNameIsPresent() {
         when(mockRequest.getName()).thenReturn("name");
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("name", "name", "Name");
-        verify(mockInputStringValidator).validateIsPresent(record);
+        verify(mockInputStringValidator)
+                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("name", "name", "Name")));
     }
 
     @Test
@@ -56,8 +57,8 @@ class SignUpValidatorTest {
         when(mockRequest.getLoginName()).thenReturn("login name");
         when(mockDatabase.accessUserDatabase()).thenReturn(mockUserDatabase);
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("login name", "login", "Login name");
-        verify(mockInputStringValidator).validateIsPresent(record);
+        verify(mockInputStringValidator)
+                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("login name", "login", "Login name")));
     }
 
     @Test
@@ -77,8 +78,8 @@ class SignUpValidatorTest {
     void shouldValidatePasswordIsPresent() {
         when(mockRequest.getPassword()).thenReturn("password");
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("password", "password", "Password");
-        verify(mockInputStringValidator).validateIsPresent(record);
+        verify(mockInputStringValidator)
+                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("password", "password", "Password")));
     }
 
     @Test
@@ -94,12 +95,11 @@ class SignUpValidatorTest {
 
     @Test
     void shouldReturnMultipleErrors() {
-        when(mockInputStringValidator.validateIsPresent(any(InputStringValidatorRecord.class))).thenReturn(Optional.of(mockCoreError));
+        when(mockInputStringValidator.validateIsPresent(any(InputStringValidatorData.class))).thenReturn(Optional.of(mockCoreError));
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.size() > 1);
     }
 
-    //TODO integration test ?
     @Test
     void shouldReturnNoErrorsForValidInput() {
         List<CoreError> errors = validator.validate(mockRequest);

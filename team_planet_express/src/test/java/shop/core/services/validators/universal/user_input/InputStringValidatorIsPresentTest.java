@@ -16,40 +16,40 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class InputStringValidatorIsPresentTest {
 
-    @Mock private InputStringValidatorRecord mockRecord;
+    @Mock private InputStringValidatorData mockRecord;
 
     @InjectMocks private InputStringValidator validator;
 
     @Test
     void shouldReturnErrorForNullValue() {
-        when(mockRecord.value()).thenReturn(null);
-        when(mockRecord.field()).thenReturn("field");
-        when(mockRecord.valueName()).thenReturn("Field");
+        when(mockRecord.getValue()).thenReturn(null);
+        when(mockRecord.getField()).thenReturn("field");
+        when(mockRecord.getValueName()).thenReturn("Field");
         Optional<CoreError> error = validator.validateIsPresent(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
     void shouldReturnErrorForBlankValue() {
-        when(mockRecord.value()).thenReturn("");
-        when(mockRecord.field()).thenReturn("field");
-        when(mockRecord.valueName()).thenReturn("Field");
+        when(mockRecord.getValue()).thenReturn("");
+        when(mockRecord.getField()).thenReturn("field");
+        when(mockRecord.getValueName()).thenReturn("Field");
         Optional<CoreError> error = validator.validateIsPresent(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
     void shouldReturnErrorForEmptyValue() {
-        when(mockRecord.value()).thenReturn(" ");
-        when(mockRecord.field()).thenReturn("field");
-        when(mockRecord.valueName()).thenReturn("Field");
+        when(mockRecord.getValue()).thenReturn(" ");
+        when(mockRecord.getField()).thenReturn("field");
+        when(mockRecord.getValueName()).thenReturn("Field");
         Optional<CoreError> error = validator.validateIsPresent(mockRecord);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
     void shouldReturnNoErrorForValidValue() {
-        when(mockRecord.value()).thenReturn("field");
+        when(mockRecord.getValue()).thenReturn("field");
         Optional<CoreError> error = validator.validateIsPresent(mockRecord);
         assertTrue(error.isEmpty());
     }

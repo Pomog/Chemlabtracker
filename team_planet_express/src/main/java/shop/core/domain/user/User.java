@@ -2,8 +2,6 @@ package shop.core.domain.user;
 
 import lombok.Data;
 
-import java.util.Objects;
-
 @Data
 public class User {
 
@@ -18,19 +16,6 @@ public class User {
         this.login = login;
         this.password = password;
         this.userRole = userRole;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(name, user.name) && Objects.equals(password, user.password) && userRole == user.userRole;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, password, userRole);
     }
 
     @Override

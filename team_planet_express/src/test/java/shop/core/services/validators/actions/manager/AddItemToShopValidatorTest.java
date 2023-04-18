@@ -11,7 +11,8 @@ import shop.core.domain.item.Item;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,8 +38,8 @@ class AddItemToShopValidatorTest {
         when(mockRequest.getItemName()).thenReturn("name");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("name", "name", "Item name");
-        verify(mockInputStringValidator).validateIsPresent(record);
+        verify(mockInputStringValidator)
+                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("name", "name", "Item name")));
     }
 
     @Test
@@ -58,31 +59,32 @@ class AddItemToShopValidatorTest {
     void shouldValidatePrice() {
         when(mockRequest.getPrice()).thenReturn("100.10");
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("100.10", "price", "Price");
-        verify(mockInputStringValidator).validateIsPresent(record);
-        verify(mockInputStringValidator).validateIsNumber(record);
-        verify(mockInputStringValidator).validateIsNotNegative(record);
+        InputStringValidatorDataMatcher matcher =
+                new InputStringValidatorDataMatcher("100.10", "price", "Price");
+        verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNotNegative(argThat(matcher));
     }
 
     @Test
     void shouldValidateQuantity() {
         when(mockRequest.getAvailableQuantity()).thenReturn("10");
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("10", "quantity", "Quantity");
-        verify(mockInputStringValidator).validateIsPresent(record);
-        verify(mockInputStringValidator).validateIsNumber(record);
-        verify(mockInputStringValidator).validateIsNotNegative(record);
-        verify(mockInputStringValidator).validateIsNotDecimal(record);
+        InputStringValidatorDataMatcher matcher =
+                new InputStringValidatorDataMatcher("10", "quantity", "Quantity");
+        verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNotNegative(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNotDecimal(argThat(matcher));
     }
 
     @Test
     void shouldReturnMultipleErrors() {
-        when(mockInputStringValidator.validateIsPresent(any(InputStringValidatorRecord.class))).thenReturn(Optional.of(mockCoreError));
+        when(mockInputStringValidator.validateIsPresent(any(InputStringValidatorData.class))).thenReturn(Optional.of(mockCoreError));
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.size() > 1);
     }
 
-    //TODO integration test ?
     @Test
     void shouldReturnNoErrorsForValidInput() {
         List<CoreError> errors = validator.validate(mockRequest);

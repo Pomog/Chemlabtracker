@@ -6,7 +6,7 @@ import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.services.fake.fake_item_generator.HardcodedItemGeneratorImpl;
-import shop.core.services.user.UserRecord;
+import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.support.CurrentUserId;
 
@@ -33,9 +33,9 @@ public class ApplicationContextSetup {
 
     private void setupDefaultUser(ApplicationContext applicationContext) {
         UserService userService = applicationContext.getBean(UserService.class);
-        UserRecord userRecord = new UserRecord(UserRole.GUEST.getDefaultName(), BLANK, BLANK, UserRole.GUEST);
+        UserCreationData userCreationData = new UserCreationData(UserRole.GUEST.getDefaultName(), BLANK, BLANK, UserRole.GUEST);
         User currentUser = userService.findGuestWithOpenCart().orElseGet(
-                () -> userService.createUser(userRecord));
+                () -> userService.createUser(userCreationData));
         CurrentUserId currentUserId = applicationContext.getBean(CurrentUserId.class);
         currentUserId.setValue(currentUser.getId());
     }

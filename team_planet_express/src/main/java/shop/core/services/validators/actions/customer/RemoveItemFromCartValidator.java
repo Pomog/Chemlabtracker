@@ -9,7 +9,7 @@ import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class RemoveItemFromCartValidator {
     }
 
     private void validateItemName(String itemName, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(itemName, FIELD_NAME, VALUE_NAME_ITEM);
+        InputStringValidatorData record = new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         validateItemNameInShop(itemName).ifPresent(errors::add);
     }
