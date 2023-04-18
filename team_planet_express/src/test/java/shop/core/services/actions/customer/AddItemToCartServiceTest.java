@@ -9,12 +9,12 @@ import shop.core.database.CartItemDatabase;
 import shop.core.database.Database;
 import shop.core.database.ItemDatabase;
 import shop.core.domain.cart.Cart;
-import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.services.validators.actions.customer.AddItemToCartValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.support.CurrentUserId;
+import shop.matchers.CartItemMatcher;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -51,7 +51,7 @@ class AddItemToCartServiceTest {
         when(mockCartItemDatabase.findByCartIdAndItemId(1L, 1L)).thenReturn(Optional.empty());
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         service.execute(mockRequest);
-        verify(mockCartItemDatabase).save(new CartItem(1L, 1L, 10));
+        verify(mockCartItemDatabase).save(argThat(new CartItemMatcher(1L, 1L, 10)));
     }
 
     @Test

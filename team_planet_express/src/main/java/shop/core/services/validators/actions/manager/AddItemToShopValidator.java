@@ -4,7 +4,7 @@ import shop.core.database.Database;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,20 +37,20 @@ public class AddItemToShopValidator {
     }
 
     private void validateItemName(String itemName, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(itemName, FIELD_NAME, VALUE_NAME_ITEM);
+        InputStringValidatorData record = new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         validateItemNameDoesNotAlreadyExist(itemName).ifPresent(errors::add);
     }
 
     private void validatePrice(String price, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(price, FIELD_PRICE, VALUE_NAME_PRICE);
+        InputStringValidatorData record = new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
         inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
     }
 
     private void validateQuantity(String availableQuantity, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
+        InputStringValidatorData record = new InputStringValidatorData(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
         inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);

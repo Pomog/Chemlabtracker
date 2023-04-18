@@ -5,7 +5,7 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.guest.SignUpResponse;
-import shop.core.services.user.UserRecord;
+import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.guest.SignUpValidator;
 
@@ -29,8 +29,8 @@ public class SignUpService {
         String name = request.getName();
         String loginName = request.getLoginName();
         String password = request.getPassword();
-        UserRecord userRecord = new UserRecord(name, loginName, password, UserRole.CUSTOMER);
-        User createdUser = userService.createUser(userRecord);
+        UserCreationData userCreationData = new UserCreationData(name, loginName, password, UserRole.CUSTOMER);
+        User createdUser = userService.createUser(userCreationData);
         request.getUserId().setValue(createdUser.getId());
         return new SignUpResponse(createdUser);
     }

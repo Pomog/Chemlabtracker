@@ -7,7 +7,7 @@ import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,13 +51,13 @@ public class AddItemToCartValidator {
     }
 
     private void validateItemName(String itemName, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(itemName, FIELD_NAME, VALUE_NAME_ITEM);
+        InputStringValidatorData record = new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         validateItemNameExistsInShop(itemName).ifPresent(errors::add);
     }
 
     private void validateQuantity(String orderedQuantity, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(orderedQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
+        InputStringValidatorData record = new InputStringValidatorData(orderedQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
         inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
         inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
         inputStringValidator.validateIsGreaterThanZero(record).ifPresent(errors::add);

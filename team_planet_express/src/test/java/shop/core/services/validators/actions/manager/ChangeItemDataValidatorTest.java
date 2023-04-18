@@ -12,7 +12,8 @@ import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -40,11 +41,12 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getItemId()).thenReturn("1");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("1", "id", "Item id");
-        verify(mockInputStringValidator).validateIsPresent(record);
-        verify(mockInputStringValidator).validateIsNumber(record);
-        verify(mockInputStringValidator).validateIsNotNegative(record);
-        verify(mockInputStringValidator).validateIsNotDecimal(record);
+        InputStringValidatorDataMatcher matcher =
+                new InputStringValidatorDataMatcher("1", "id", "Item id");
+        verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNotNegative(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNotDecimal(argThat(matcher));
     }
 
     @Test
@@ -67,9 +69,10 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getNewPrice()).thenReturn("10.5");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("10.5", "price", "Price");
-        verify(mockInputStringValidator).validateIsNumber(record);
-        verify(mockInputStringValidator).validateIsNotNegative(record);
+        InputStringValidatorDataMatcher matcher =
+                new InputStringValidatorDataMatcher("10.5", "price", "Price");
+        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNotNegative(argThat(matcher));
     }
 
     @Test
@@ -78,10 +81,11 @@ class ChangeItemDataValidatorTest {
         when(mockRequest.getNewAvailableQuantity()).thenReturn("5");
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("5", "quantity", "Quantity");
-        verify(mockInputStringValidator).validateIsNumber(record);
-        verify(mockInputStringValidator).validateIsNotNegative(record);
-        verify(mockInputStringValidator).validateIsNotDecimal(record);
+        InputStringValidatorDataMatcher matcher =
+                new InputStringValidatorDataMatcher("5", "quantity", "Quantity");
+        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNotNegative(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNotDecimal(argThat(matcher));
     }
 
     @Test
@@ -104,7 +108,7 @@ class ChangeItemDataValidatorTest {
 
     @Test
     void shouldReturnMultipleErrors() {
-        when(mockInputStringValidator.validateIsNotNegative(any(InputStringValidatorRecord.class))).thenReturn(Optional.of(mockCoreError));
+        when(mockInputStringValidator.validateIsNotNegative(any(InputStringValidatorData.class))).thenReturn(Optional.of(mockCoreError));
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.size() > 1);
     }

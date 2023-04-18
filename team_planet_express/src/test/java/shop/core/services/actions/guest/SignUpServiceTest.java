@@ -10,10 +10,11 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.guest.SignUpResponse;
-import shop.core.services.user.UserRecord;
+import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.guest.SignUpValidator;
 import shop.core.support.CurrentUserId;
+import shop.matchers.UserCreationDataMatcher;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +45,7 @@ class SignUpServiceTest {
     @Test
     void shouldReturnNoErrorsForValidRequest() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockUserService.createUser(any(UserRecord.class))).thenReturn(mockUser);
+        when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
         when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         SignUpResponse response = service.execute(mockRequest);
         assertNull(response.getErrors());
@@ -56,17 +57,17 @@ class SignUpServiceTest {
         when(mockRequest.getName()).thenReturn("name");
         when(mockRequest.getLoginName()).thenReturn("login");
         when(mockRequest.getPassword()).thenReturn("password");
-        when(mockUserService.createUser(any(UserRecord.class))).thenReturn(mockUser);
+        when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
         when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         service.execute(mockRequest);
-        UserRecord record = new UserRecord("name", "login", "password", UserRole.CUSTOMER);
-        verify(mockUserService).createUser(record);
+        verify(mockUserService)
+                .createUser(argThat(new UserCreationDataMatcher("name", "login", "password", UserRole.CUSTOMER)));
     }
 
     @Test
     void shouldUpdateCurrentUserId() {
         when(mockValidator.validate(mockRequest)).thenReturn(Collections.emptyList());
-        when(mockUserService.createUser(any(UserRecord.class))).thenReturn(mockUser);
+        when(mockUserService.createUser(any(UserCreationData.class))).thenReturn(mockUser);
         when(mockUser.getId()).thenReturn(1L);
         when(mockRequest.getUserId()).thenReturn(mockCurrentUserId);
         service.execute(mockRequest);

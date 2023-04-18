@@ -11,6 +11,7 @@ import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.AddItemToShopResponse;
 import shop.core.services.actions.manager.AddItemToShopService;
+import shop.matchers.AddItemToShopRequestMatcher;
 
 import java.util.List;
 
@@ -43,7 +44,8 @@ class AddItemToShopUIActionTest {
     void shouldCallService() {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("name", "100.10", "10");
         action.execute();
-        verify(mockAddItemToShopService).execute(new AddItemToShopRequest("name", "100.10", "10"));
+        verify(mockAddItemToShopService)
+                .execute(argThat(new AddItemToShopRequestMatcher("name", "100.10", "10")));
     }
 
     @Test
