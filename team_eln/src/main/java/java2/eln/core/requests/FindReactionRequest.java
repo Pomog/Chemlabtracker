@@ -11,6 +11,15 @@ public class FindReactionRequest {
    private final String name;
    private final StructureData startingMaterial;
    private final Double yield;
+    private String orderBy;
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
 
     public FindReactionRequest(String code, String name, StructureData startingMaterial, Double yield) {
         this.code = code;
@@ -31,7 +40,7 @@ public class FindReactionRequest {
         return startingMaterial;
     }
 
-    public double getFormattedYield() {
+    public Double getFormattedYield() {
         if (yield != null) {
             DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
             symbols.setDecimalSeparator('.');

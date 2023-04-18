@@ -68,7 +68,7 @@ public class StructureData {
     public void smilesConverter() {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         SmilesParser parser = new SmilesParser(builder);
-        if (smiles.isBlank()) {
+        if (smiles == null || smiles.isBlank()) {
             setSmiles("C");
             setMethaneAsStructure();
             return;
