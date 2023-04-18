@@ -1,5 +1,6 @@
 package java2.fitness_app.users.core.domain;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class User {
@@ -8,10 +9,16 @@ public class User {
     private final String username;
     private final String password;
 
+    LocalDate endOfSubscriptionDate;
+    Subscription subscription;
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.subscription = subscription.TRAIL;
+        this.endOfSubscriptionDate = LocalDate.now().plusDays(30);
     }
+
 
     public Long getId() {
         return id;
@@ -48,5 +55,13 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 '}';
+    }
+
+    public boolean hasAccessToPremiumFeatures() {
+        if (subscription == Subscription.PREMIUM) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
