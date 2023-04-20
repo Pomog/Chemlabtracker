@@ -6,18 +6,18 @@ import shop.core.responses.CoreError;
 import shop.core.responses.shared.SignInResponse;
 import shop.core.services.validators.actions.shared.SignInValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
+@DIComponent
 public class SignInService {
 
-    private final SignInValidator validator;
-    private final DatabaseAccessValidator databaseAccessValidator;
-
-    public SignInService(SignInValidator validator, DatabaseAccessValidator databaseAccessValidator) {
-        this.validator = validator;
-        this.databaseAccessValidator = databaseAccessValidator;
-    }
+    @DIDependency
+    private SignInValidator validator;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
 
     public SignInResponse execute(SignInRequest request) {
         List<CoreError> errors = validator.validate(request);

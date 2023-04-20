@@ -4,16 +4,16 @@ import shop.core.database.Database;
 import shop.core.domain.cart.Cart;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.Optional;
 
+@DIComponent
 public class UserService {
 
-    private final Database database;
-
-    public UserService(Database database) {
-        this.database = database;
-    }
+    @DIDependency
+    private Database database;
 
     public User createUser(UserRecord userRecord) {
         User createdUser = database.accessUserDatabase()

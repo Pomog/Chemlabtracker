@@ -5,20 +5,20 @@ import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.ChangeItemDataResponse;
 import shop.core.services.validators.actions.manager.ChangeItemDataValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+@DIComponent
 public class ChangeItemDataService {
 
-    private final Database database;
-    private final ChangeItemDataValidator validator;
-
-    public ChangeItemDataService(Database database, ChangeItemDataValidator validator) {
-        this.database = database;
-        this.validator = validator;
-    }
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private ChangeItemDataValidator validator;
 
     public ChangeItemDataResponse execute(ChangeItemDataRequest request) {
         List<CoreError> errors = validator.validate(request);

@@ -1,6 +1,5 @@
 package shop.acceptance;
 
-import shop.ApplicationContext;
 import shop.core.database.Database;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
@@ -9,6 +8,8 @@ import shop.core.services.fake.fake_item_generator.HardcodedItemGeneratorImpl;
 import shop.core.services.user.UserRecord;
 import shop.core.services.user.UserService;
 import shop.core.support.CurrentUserId;
+import shop.dependency_injection.ApplicationContext;
+import shop.dependency_injection.DIApplicationContextBuilder;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class ApplicationContextSetup {
     public static final String BLANK = "";
 
     public ApplicationContext setupApplicationContext() {
-        ApplicationContext applicationContext = new ApplicationContext();
+        ApplicationContext applicationContext = new DIApplicationContextBuilder().build("shop");
         createFakeItems(applicationContext);
         setupDefaultUser(applicationContext);
         return applicationContext;

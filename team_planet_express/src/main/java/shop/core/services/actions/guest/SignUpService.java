@@ -8,18 +8,18 @@ import shop.core.responses.guest.SignUpResponse;
 import shop.core.services.user.UserRecord;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.guest.SignUpValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
+@DIComponent
 public class SignUpService {
 
-    private final SignUpValidator validator;
-    private final UserService userService;
-
-    public SignUpService(SignUpValidator validator, UserService userService) {
-        this.validator = validator;
-        this.userService = userService;
-    }
+    @DIDependency
+    private SignUpValidator validator;
+    @DIDependency
+    private UserService userService;
 
     public SignUpResponse execute(SignUpRequest request) {
         List<CoreError> errors = validator.validate(request);

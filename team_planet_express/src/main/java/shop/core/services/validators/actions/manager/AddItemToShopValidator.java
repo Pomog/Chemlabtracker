@@ -5,11 +5,14 @@ import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class AddItemToShopValidator {
 
     private static final String FIELD_NAME = "name";
@@ -20,13 +23,10 @@ public class AddItemToShopValidator {
     private static final String VALUE_NAME_QUANTITY = "Quantity";
     private static final String ERROR_ITEM_EXISTS = "Error: Item with this name already exists.";
 
-    private final Database database;
-    private final InputStringValidator inputStringValidator;
-
-    public AddItemToShopValidator(Database database, InputStringValidator inputStringValidator) {
-        this.database = database;
-        this.inputStringValidator = inputStringValidator;
-    }
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private InputStringValidator inputStringValidator;
 
     public List<CoreError> validate(AddItemToShopRequest request) {
         List<CoreError> errors = new ArrayList<>();

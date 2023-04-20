@@ -5,10 +5,12 @@ import shop.core.services.exception.InternalSystemCollapseException;
 import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
 import shop.core.support.ordering.OrderingRule;
+import shop.dependency_injection.DIComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@DIComponent
 public class OrderingRuleValidator {
 
     public List<CoreError> validate(OrderingRule orderingRule) {

@@ -8,20 +8,20 @@ import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.user.UserRecord;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.shared.SignOutValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
+@DIComponent
 public class SignOutService {
 
     public static final String BLANK = "";
 
-    private final SignOutValidator validator;
-    private final UserService userService;
-
-    public SignOutService(SignOutValidator validator, UserService userService) {
-        this.validator = validator;
-        this.userService = userService;
-    }
+    @DIDependency
+    private SignOutValidator validator;
+    @DIDependency
+    private UserService userService;
 
     public SignOutResponse execute(SignOutRequest request) {
         List<CoreError> errors = validator.validate(request);
