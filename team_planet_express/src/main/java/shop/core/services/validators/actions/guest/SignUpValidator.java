@@ -42,19 +42,22 @@ public class SignUpValidator {
     }
 
     private void validateName(String name, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(name, FIELD_NAME, VALUE_NAME_NAME);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(name, FIELD_NAME, VALUE_NAME_NAME);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
     }
 
     private void validateLoginName(String loginName, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN_NAME);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN_NAME);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validateLoginNameDoesNotAlreadyExist(loginName).ifPresent(errors::add);
     }
 
     private void validatePassword(String password, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validatePasswordLength(password).ifPresent(errors::add);
     }
 

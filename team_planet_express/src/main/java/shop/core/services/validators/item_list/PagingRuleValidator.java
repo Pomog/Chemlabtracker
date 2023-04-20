@@ -34,11 +34,10 @@ public class PagingRuleValidator {
     }
 
     private void validatePageSize(String pageSize, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(pageSize, FIELD_PAGE_SIZE, VALUE_NAME_PAGE_SIZE);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsGreaterThanZero(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotDecimal(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(pageSize, FIELD_PAGE_SIZE, VALUE_NAME_PAGE_SIZE);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+        errors.addAll(inputStringValidator.validateIsNumberGreaterThanZeroNotDecimal(inputStringValidatorData));
     }
 
 }

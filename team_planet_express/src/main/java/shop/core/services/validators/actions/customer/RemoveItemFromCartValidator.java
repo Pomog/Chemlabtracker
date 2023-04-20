@@ -50,8 +50,9 @@ public class RemoveItemFromCartValidator {
     }
 
     private void validateItemName(String itemName, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validateItemNameInShop(itemName).ifPresent(errors::add);
     }
 

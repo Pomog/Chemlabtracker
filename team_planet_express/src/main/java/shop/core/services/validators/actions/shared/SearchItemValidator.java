@@ -34,9 +34,9 @@ public class SearchItemValidator {
     }
 
     private void validatePrice(String price, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
+        errors.addAll(inputStringValidator.validateIsNumberNotNegative(inputStringValidatorData));
     }
 
     private void validateOrderingIfPresent(SearchItemRequest request, List<CoreError> errors) {

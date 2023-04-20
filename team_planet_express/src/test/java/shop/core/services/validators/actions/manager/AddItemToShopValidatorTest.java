@@ -62,8 +62,7 @@ class AddItemToShopValidatorTest {
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("100.10", "price", "Price");
         verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNotNegative(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNumberNotNegative(argThat(matcher));
     }
 
     @Test
@@ -73,9 +72,7 @@ class AddItemToShopValidatorTest {
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("10", "quantity", "Quantity");
         verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNotNegative(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNotDecimal(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNumberNotNegativeNotDecimal(argThat(matcher));
     }
 
     @Test

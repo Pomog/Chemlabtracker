@@ -45,14 +45,16 @@ public class SignInValidator {
     }
 
     private void validateLoginName(String loginName, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validateLoginNameExists(loginName).ifPresent(errors::add);
     }
 
     private void validatePassword(String password, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
     }
 
     private Optional<CoreError> validatePasswordMatches(SignInRequest request) {

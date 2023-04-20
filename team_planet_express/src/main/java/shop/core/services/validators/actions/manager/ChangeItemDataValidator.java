@@ -48,27 +48,25 @@ public class ChangeItemDataValidator {
     }
 
     private void validateId(String id, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(id, FIELD_ID, VALUE_NAME_ID);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotDecimal(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(id, FIELD_ID, VALUE_NAME_ID);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+        errors.addAll(inputStringValidator.validateIsNumberNotNegativeNotDecimal(inputStringValidatorData));
         if (errors.isEmpty()) {
             validateIdExistsInShop(id).ifPresent(errors::add);
         }
     }
 
     private void validatePrice(String price, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
+        errors.addAll(inputStringValidator.validateIsNumberNotNegative(inputStringValidatorData));
     }
 
     private void validateQuantity(String availableQuantity, List<CoreError> errors) {
-        InputStringValidatorData record = new InputStringValidatorData(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotDecimal(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
+        errors.addAll(inputStringValidator.validateIsNumberNotNegativeNotDecimal(inputStringValidatorData));
     }
 
     private Optional<CoreError> validateDuplicate(ChangeItemDataRequest request) {

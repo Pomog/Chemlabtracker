@@ -44,9 +44,7 @@ class ChangeItemDataValidatorTest {
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("1", "id", "Item id");
         verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNotNegative(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNotDecimal(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNumberNotNegativeNotDecimal(argThat(matcher));
     }
 
     @Test
@@ -71,8 +69,7 @@ class ChangeItemDataValidatorTest {
         validator.validate(mockRequest);
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("10.5", "price", "Price");
-        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNotNegative(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNumberNotNegative(argThat(matcher));
     }
 
     @Test
@@ -83,9 +80,7 @@ class ChangeItemDataValidatorTest {
         validator.validate(mockRequest);
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("5", "quantity", "Quantity");
-        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNotNegative(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNotDecimal(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNumberNotNegativeNotDecimal(argThat(matcher));
     }
 
     @Test
@@ -108,7 +103,7 @@ class ChangeItemDataValidatorTest {
 
     @Test
     void shouldReturnMultipleErrors() {
-        when(mockInputStringValidator.validateIsNotNegative(any(InputStringValidatorData.class))).thenReturn(Optional.of(mockCoreError));
+        when(mockInputStringValidator.validateIsNumberNotNegativeNotDecimal(any(InputStringValidatorData.class))).thenReturn(List.of(mockCoreError));
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.size() > 1);
     }

@@ -16,113 +16,113 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class InputStringValidatorIsNumberTest {
 
-    @Mock private InputStringValidatorData mockRecord;
+    @Mock private InputStringValidatorData mockInputStringValidatorData;
 
     @InjectMocks private InputStringValidator validator;
 
     @Test
     void shouldReturnErrorForLetters() {
-        when(mockRecord.getValue()).thenReturn("abc");
-        when(mockRecord.getField()).thenReturn("field");
-        when(mockRecord.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("abc");
+        when(mockInputStringValidatorData.getField()).thenReturn("field");
+        when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
     void shouldReturnErrorForNonNumberValue() {
-        when(mockRecord.getValue()).thenReturn("#&fml");
-        when(mockRecord.getField()).thenReturn("field");
-        when(mockRecord.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("#&fml");
+        when(mockInputStringValidatorData.getField()).thenReturn("field");
+        when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
     void shouldReturnErrorForBorkedNumber() {
-        when(mockRecord.getValue()).thenReturn("0-23.0040");
-        when(mockRecord.getField()).thenReturn("field");
-        when(mockRecord.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("0-23.0040");
+        when(mockInputStringValidatorData.getField()).thenReturn("field");
+        when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
     void shouldReturnErrorForCharacterMess() {
-        when(mockRecord.getValue()).thenReturn("132#re01-dd");
-        when(mockRecord.getField()).thenReturn("field");
-        when(mockRecord.getValueName()).thenReturn("Field");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("132#re01-dd");
+        when(mockInputStringValidatorData.getField()).thenReturn("field");
+        when(mockInputStringValidatorData.getValueName()).thenReturn("Field");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertCorrectErrorIsPresent(error);
     }
 
     @Test
     void shouldReturnNoErrorForPositiveNumber() {
-        when(mockRecord.getValue()).thenReturn("10");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("10");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnNoErrorForPositiveNumberWithLeadingZeros() {
-        when(mockRecord.getValue()).thenReturn("0010");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("0010");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnNoErrorForNegativeNumber() {
-        when(mockRecord.getValue()).thenReturn("-10");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("-10");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnNoErrorForNegativeNumberWithLeadingZeros() {
-        when(mockRecord.getValue()).thenReturn("-00010");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("-00010");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnNoErrorForZero() {
-        when(mockRecord.getValue()).thenReturn("0");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("0");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnNoErrorForMultipleZeros() {
-        when(mockRecord.getValue()).thenReturn("0000");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("0000");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnNoErrorForPositiveDecimalNumber() {
-        when(mockRecord.getValue()).thenReturn("10.21");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("10.21");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnNoErrorForPositiveDecimalNumberWithLeadingZeros() {
-        when(mockRecord.getValue()).thenReturn("010.21");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("010.21");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnNoErrorForNegativeDecimalNumber() {
-        when(mockRecord.getValue()).thenReturn("-10.21");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("-10.21");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertTrue(error.isEmpty());
     }
 
     @Test
     void shouldReturnNoErrorForNegativeDecimalNumberWithLeadingZeros() {
-        when(mockRecord.getValue()).thenReturn("-010.21");
-        Optional<CoreError> error = validator.validateIsNumber(mockRecord);
+        when(mockInputStringValidatorData.getValue()).thenReturn("-010.21");
+        Optional<CoreError> error = validator.validateIsNumber(mockInputStringValidatorData);
         assertTrue(error.isEmpty());
     }
 

@@ -50,9 +50,7 @@ class PagingRuleValidatorTest {
         InputStringValidatorDataMatcher matcher =
                 new InputStringValidatorDataMatcher("10", "page_size", "Page size");
         verify(mockInputStringValidator).validateIsPresent(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNumber(argThat(matcher));
-        verify(mockInputStringValidator).validateIsGreaterThanZero(argThat(matcher));
-        verify(mockInputStringValidator).validateIsNotDecimal(argThat(matcher));
+        verify(mockInputStringValidator).validateIsNumberGreaterThanZeroNotDecimal(argThat(matcher));
     }
 
 }

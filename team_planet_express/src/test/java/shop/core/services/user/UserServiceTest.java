@@ -39,8 +39,9 @@ class UserServiceTest {
         when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
         when(mockUserDatabase.save(any(User.class))).thenReturn(mockUser);
         when(mockUser.getId()).thenReturn(1L);
-        UserCreationData record = new UserCreationData("Name", "login name", "password", UserRole.GUEST);
-        service.createUser(record);
+        UserCreationData userCreationData =
+                new UserCreationData("Name", "login name", "password", UserRole.GUEST);
+        service.createUser(userCreationData);
         verify(mockUserDatabase)
                 .save(argThat(new UserMatcher("Name", "login name", "password", UserRole.GUEST)));
         verify(mockCartDatabase)
