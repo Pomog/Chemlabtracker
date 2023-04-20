@@ -1,5 +1,6 @@
 package shop;
 
+import org.apache.log4j.BasicConfigurator;
 import shop.console_ui.UIMenu;
 import shop.core.database.Database;
 import shop.core.domain.user.User;
@@ -14,10 +15,12 @@ import shop.dependency_injection.DIApplicationContextBuilder;
 public class ShopApplication {
 
     private static final String BLANK = "";
-    private static ApplicationContext applicationContext =
-            new DIApplicationContextBuilder().build("shop");
 
     public static void main(String[] args) {
+
+        BasicConfigurator.configure();
+
+        ApplicationContext applicationContext = new DIApplicationContextBuilder().build("shop");
 
         new FakeDatabaseInitializer(applicationContext.getBean(Database.class)).initialize();
 
