@@ -4,19 +4,16 @@ import lv.javaguru.java2.servify.core.database.UsersDatabase;
 import lv.javaguru.java2.servify.core.requests.user.AddUserRequest;
 import lv.javaguru.java2.servify.core.responses.user.AddUserResponse;
 import lv.javaguru.java2.servify.core.responses.CoreError;
+import lv.javaguru.java2.servify.dependency_injection.DIComponent;
+import lv.javaguru.java2.servify.dependency_injection.DIDependency;
 import lv.javaguru.java2.servify.domain.UserEntity;
 
 import java.util.List;
 
+@DIComponent
 public class AddUserService {
-    private UsersDatabase userDB;
-    private AddUserValidator validator;
-
-    public AddUserService(UsersDatabase userDB,
-                          AddUserValidator validator) {
-        this.userDB = userDB;
-        this.validator = validator;
-    }
+    @DIDependency private UsersDatabase userDB;
+    @DIDependency private AddUserValidator validator;
 
     public AddUserResponse execute(AddUserRequest request) {
         List<CoreError> errors = validator.validate(request);

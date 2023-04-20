@@ -4,15 +4,14 @@ import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.requests.user.SetUserNotActiveRequest;
 import lv.javaguru.java2.servify.core.responses.user.SetUserNotActiveResponse;
 import lv.javaguru.java2.servify.core.services.user.SetUserNotActiveService;
+import lv.javaguru.java2.servify.dependency_injection.DIComponent;
+import lv.javaguru.java2.servify.dependency_injection.DIDependency;
 
 import java.util.Scanner;
 
+@DIComponent
 public class SetUserNotActiveUIAction implements UIAction {
-    private SetUserNotActiveService setUserNotActiveService;
-
-    public SetUserNotActiveUIAction(SetUserNotActiveService setUserNotActiveService) {
-        this.setUserNotActiveService = setUserNotActiveService;
-    }
+    @DIDependency private SetUserNotActiveService setUserNotActiveService;
 
     @Override
     public void execute() {

@@ -3,13 +3,12 @@ package lv.javaguru.java2.servify.console_ui.user;
 import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.responses.user.GetAllUsersResponse;
 import lv.javaguru.java2.servify.core.services.user.GetAllUsersService;
+import lv.javaguru.java2.servify.dependency_injection.DIComponent;
+import lv.javaguru.java2.servify.dependency_injection.DIDependency;
 
+@DIComponent
 public class GetAllUsersUIAction implements UIAction {
-    private GetAllUsersService getAllUsersService;
-
-    public GetAllUsersUIAction(GetAllUsersService getAllUsersService) {
-        this.getAllUsersService = getAllUsersService;
-    }
+    @DIDependency private GetAllUsersService getAllUsersService;
 
     @Override
     public void execute() {

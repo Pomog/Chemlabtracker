@@ -4,17 +4,16 @@ import lv.javaguru.java2.servify.core.database.UsersDatabase;
 import lv.javaguru.java2.servify.core.requests.user.SetUserNotActiveRequest;
 import lv.javaguru.java2.servify.core.responses.CoreError;
 import lv.javaguru.java2.servify.core.responses.user.SetUserNotActiveResponse;
+import lv.javaguru.java2.servify.dependency_injection.DIComponent;
+import lv.javaguru.java2.servify.dependency_injection.DIDependency;
 import lv.javaguru.java2.servify.domain.FieldTitle;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@DIComponent
 public class SetUserNotActiveService {
-    private UsersDatabase userDB;
-
-    public SetUserNotActiveService(UsersDatabase userDB) {
-        this.userDB = userDB;
-    }
+    @DIDependency private UsersDatabase userDB;
 
     public SetUserNotActiveResponse execute(SetUserNotActiveRequest request) {
         if (request.getUserIdToSetInactive() == null) {

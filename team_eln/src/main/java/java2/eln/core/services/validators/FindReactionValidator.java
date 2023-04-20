@@ -13,6 +13,7 @@ public class FindReactionValidator {
     public List<CoreError> validate(FindReactionRequest request) {
         List<CoreError> errors = new ArrayList<>();
         allFieldsAreEmpty(request).ifPresent(errors::add);
+        invalidOrderBy(request).ifPresent(errors::add);
         return errors;
     }
 
@@ -33,7 +34,16 @@ public class FindReactionValidator {
         } else if (findReactionRequest.getYield() != 0 && findReactionRequest.getYield() != null) {
             return true;
         }
-        System.out.println("Searching parameters are empty");
         return false;
+    }
+
+    private Optional<CoreError> invalidOrderBy(FindReactionRequest findReactionRequest) {
+        String orderBy = findReactionRequest.getOrderBy();
+        if (orderBy != null && !orderBy.isEmpty()) {
+            if (!orderBy.equals("code") && !orderBy.equals("name") && !orderBy.equals("yield")) {
+                return Optional.of(new CoreError("orderBy", "Invalid value: " + orderBy));
+            }
+        }
+        return Optional.empty();
     }
 }
