@@ -2,14 +2,13 @@ package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.services.detail.GetAllDetailsService;
+import lv.javaguru.java2.servify.dependency_injection.DIComponent;
+import lv.javaguru.java2.servify.dependency_injection.DIDependency;
 
+@DIComponent
 public class GetAllDetailsUIAction implements UIAction {
 
-    private GetAllDetailsService getAllDetailsService;
-
-    public GetAllDetailsUIAction(GetAllDetailsService getAllDetailsService) {
-        this.getAllDetailsService = getAllDetailsService;
-    }
+    @DIDependency private GetAllDetailsService getAllDetailsService;
 
     @Override
     public void execute() {

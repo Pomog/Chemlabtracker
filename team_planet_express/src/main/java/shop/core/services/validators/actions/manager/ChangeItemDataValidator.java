@@ -6,7 +6,7 @@ import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.dependency_injection.DIComponent;
 import shop.dependency_injection.DIDependency;
 
@@ -48,38 +48,34 @@ public class ChangeItemDataValidator {
     }
 
     private void validateId(String id, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(id, FIELD_ID, VALUE_NAME_ID);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotDecimal(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(id, FIELD_ID, VALUE_NAME_ID);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+        errors.addAll(inputStringValidator.validateIsNumberNotNegativeNotDecimal(inputStringValidatorData));
         if (errors.isEmpty()) {
             validateIdExistsInShop(id).ifPresent(errors::add);
         }
     }
 
     private void validatePrice(String price, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(price, FIELD_PRICE, VALUE_NAME_PRICE);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
+        errors.addAll(inputStringValidator.validateIsNumberNotNegative(inputStringValidatorData));
     }
 
     private void validateQuantity(String availableQuantity, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotDecimal(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
+        errors.addAll(inputStringValidator.validateIsNumberNotNegativeNotDecimal(inputStringValidatorData));
     }
 
     private Optional<CoreError> validateDuplicate(ChangeItemDataRequest request) {
         Item originalItem = databaseAccessValidator.getItemById(Long.parseLong(request.getItemId()));
         String newItemName = setNewItemName(request, originalItem);
         BigDecimal newPrice = setNewPrice(request, originalItem);
-        Integer newAvailableQuantity = setNewQuantity(request, originalItem);
-        Item newItem = new Item(newItemName, newPrice, newAvailableQuantity);
         return (database.accessItemDatabase().getAllItems().stream()
                 .filter(item -> !originalItem.getId().equals(item.getId()))
-                .anyMatch(item -> item.equals(newItem)))
+                .anyMatch(item -> newItemName.equals(item.getName()) && newPrice.compareTo(item.getPrice()) == 0))
                 ? Optional.of(new CoreError(FIELD_BUTTON, ERROR_ITEM_EXISTS))
                 : Optional.empty();
     }
@@ -101,12 +97,6 @@ public class ChangeItemDataValidator {
         return (newValueExists(request.getNewPrice()))
                 ? new BigDecimal(request.getNewPrice()).setScale(2, RoundingMode.HALF_UP)
                 : originalItem.getPrice();
-    }
-
-    private Integer setNewQuantity(ChangeItemDataRequest request, Item originalItem) {
-        return (newValueExists(request.getNewAvailableQuantity()))
-                ? Integer.parseInt(request.getNewAvailableQuantity())
-                : originalItem.getAvailableQuantity();
     }
 
     private boolean newValueExists(String value) {

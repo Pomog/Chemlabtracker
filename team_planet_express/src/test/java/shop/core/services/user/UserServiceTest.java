@@ -9,9 +9,13 @@ import shop.core.database.CartDatabase;
 import shop.core.database.Database;
 import shop.core.database.UserDatabase;
 import shop.core.domain.cart.Cart;
+import shop.core.domain.cart.CartStatus;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
+import shop.matchers.CartMatcher;
+import shop.matchers.UserMatcher;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,10 +39,13 @@ class UserServiceTest {
         when(mockDatabase.accessCartDatabase()).thenReturn(mockCartDatabase);
         when(mockUserDatabase.save(any(User.class))).thenReturn(mockUser);
         when(mockUser.getId()).thenReturn(1L);
-        UserRecord record = new UserRecord("Name", "login name", "password", UserRole.GUEST);
-        service.createUser(record);
-        verify(mockUserDatabase).save(new User("Name", "login name", "password", UserRole.GUEST));
-        verify(mockCartDatabase).save(new Cart(1L));
+        UserCreationData userCreationData =
+                new UserCreationData("Name", "login name", "password", UserRole.GUEST);
+        service.createUser(userCreationData);
+        verify(mockUserDatabase)
+                .save(argThat(new UserMatcher("Name", "login name", "password", UserRole.GUEST)));
+        verify(mockCartDatabase)
+                .save(argThat(new CartMatcher(1L, CartStatus.OPEN, LocalDate.now())));
     }
 
     @Test

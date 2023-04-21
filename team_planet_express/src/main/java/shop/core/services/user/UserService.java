@@ -15,9 +15,9 @@ public class UserService {
     @DIDependency
     private Database database;
 
-    public User createUser(UserRecord userRecord) {
+    public User createUser(UserCreationData userCreationData) {
         User createdUser = database.accessUserDatabase()
-                .save(new User(userRecord.name(), userRecord.loginName(), userRecord.password(), userRecord.userRole()));
+                .save(new User(userCreationData.getName(), userCreationData.getLoginName(), userCreationData.getPassword(), userCreationData.getUserRole()));
         database.accessCartDatabase().save(new Cart(createdUser.getId()));
         return createdUser;
     }

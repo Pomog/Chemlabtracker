@@ -4,7 +4,7 @@ import shop.core.database.Database;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.dependency_injection.DIComponent;
 import shop.dependency_injection.DIDependency;
 
@@ -37,24 +37,24 @@ public class AddItemToShopValidator {
     }
 
     private void validateItemName(String itemName, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(itemName, FIELD_NAME, VALUE_NAME_ITEM);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validateItemNameDoesNotAlreadyExist(itemName).ifPresent(errors::add);
     }
 
     private void validatePrice(String price, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(price, FIELD_PRICE, VALUE_NAME_PRICE);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+        errors.addAll(inputStringValidator.validateIsNumberNotNegative(inputStringValidatorData));
     }
 
     private void validateQuantity(String availableQuantity, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotDecimal(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(availableQuantity, FIELD_QUANTITY, VALUE_NAME_QUANTITY);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+        errors.addAll(inputStringValidator.validateIsNumberNotNegativeNotDecimal(inputStringValidatorData));
     }
 
     private Optional<CoreError> validateItemNameDoesNotAlreadyExist(String itemName) {

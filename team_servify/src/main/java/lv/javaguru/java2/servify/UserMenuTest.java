@@ -9,28 +9,43 @@ import lv.javaguru.java2.servify.core.services.user.AddUserService;
 import lv.javaguru.java2.servify.core.services.user.AddUserValidator;
 import lv.javaguru.java2.servify.core.services.user.GetAllUsersService;
 import lv.javaguru.java2.servify.core.services.user.SetUserNotActiveService;
+import lv.javaguru.java2.servify.dependency_injection.ApplicationContext;
+import lv.javaguru.java2.servify.dependency_injection.DIApplicationContextBuilder;
+import lv.javaguru.java2.servify.dependency_injection.DIComponent;
+import lv.javaguru.java2.servify.dependency_injection.DIDependency;
 
 import java.util.Scanner;
 
+@DIComponent
 public class UserMenuTest {
-    public void start(UsersDatabase userDB) {
-        AddUserValidator addUserValidator = new AddUserValidator();
-        AddUserService addUserService = new AddUserService(userDB, addUserValidator);
-        AddUserUIAction addUserUIAction = new AddUserUIAction(addUserService);
-        GetAllUsersService getAllUsersService = new GetAllUsersService(userDB);
-        GetAllUsersUIAction getAllUsersUIAction = new GetAllUsersUIAction(getAllUsersService);
-        SetUserNotActiveService setUserNotActiveService = new SetUserNotActiveService(userDB);
-        SetUserNotActiveUIAction setUserNotActiveUIAction = new SetUserNotActiveUIAction(setUserNotActiveService);
-        ExitUIAction exitUIAction = new ExitUIAction();
+
+    @DIDependency private UsersDatabase usersDatabase;
+
+    public void execute() {
+
+        ApplicationContext applicationContext =
+                new DIApplicationContextBuilder().build("lv.javaguru.java2.servify");
 
         while (true) {
             printAdminMenu();
             int userChoice = getUserChoice();
             switch (userChoice) {
-                case 1 -> addUserUIAction.execute();
-                case 2 -> setUserNotActiveUIAction.execute();
-                case 3 -> getAllUsersUIAction.execute();
-                case 4 -> exitUIAction.execute();
+                case 1 -> {
+                    AddUserUIAction uiAction = applicationContext.getBean(AddUserUIAction.class);
+                    uiAction.execute();
+                }
+                case 2 -> {
+                    SetUserNotActiveUIAction uiAction = applicationContext.getBean(SetUserNotActiveUIAction.class);
+                    uiAction.execute();
+                }
+                case 3 -> {
+                    GetAllUsersUIAction uiAction = applicationContext.getBean(GetAllUsersUIAction.class);
+                    uiAction.execute();
+                }
+                case 4 -> {
+                    ExitUIAction uiAction = applicationContext.getBean(ExitUIAction.class);
+                    uiAction.execute();
+                }
             }
         }
     }

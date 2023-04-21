@@ -6,7 +6,7 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.dependency_injection.DIComponent;
 import shop.dependency_injection.DIDependency;
 
@@ -45,14 +45,16 @@ public class SignInValidator {
     }
 
     private void validateLoginName(String loginName, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validateLoginNameExists(loginName).ifPresent(errors::add);
     }
 
     private void validatePassword(String password, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
     }
 
     private Optional<CoreError> validatePasswordMatches(SignInRequest request) {
