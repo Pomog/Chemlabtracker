@@ -1,22 +1,28 @@
-package shop.console_ui;
+package shop.acceptance.console_ui;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import shop.core.database.Database;
-import shop.core.services.fake.FakeDatabaseInitializer;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import shop.acceptance.ApplicationContextSetup;
+import shop.console_ui.UIActionsList;
 import shop.core.support.CurrentUserId;
 import shop.dependency_injection.ApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 //TODO put this out of its misery, because it is some sort of an abominable integration test now
+@ExtendWith(MockitoExtension.class)
 class UIActionsListTest {
-    /*
-    private static final UIActionsList uiActionsList = new UIActionsList();
 
-    @BeforeAll
-    static void setupDatabase() {
-        new FakeDatabaseInitializer(uiActionsList.getApplicationContext().getBean(Database.class)).initialize();
+    private UIActionsList uiActionsList;
+    private CurrentUserId currentUserId;
+
+    @BeforeEach
+    void setupAppContext() {
+        ApplicationContext applicationContext = new ApplicationContextSetup().setupApplicationContext();
+        uiActionsList = applicationContext.getBean(UIActionsList.class);
+        currentUserId = applicationContext.getBean(CurrentUserId.class);
     }
 
     @Test
@@ -26,30 +32,26 @@ class UIActionsListTest {
 
     @Test
     void shouldReturn8ActionsForGuest() {
-        CurrentUserId currentUserId = uiActionsList.getApplicationContext().getBean(CurrentUserId.class);
         currentUserId.setValue(1L);
         assertEquals(9, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
     void shouldReturn7ActionsForCustomer() {
-        CurrentUserId currentUserId = uiActionsList.getApplicationContext().getBean(CurrentUserId.class);
         currentUserId.setValue(2L);
         assertEquals(8, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
     void shouldReturn4ActionsForManager() {
-        CurrentUserId currentUserId = uiActionsList.getApplicationContext().getBean(CurrentUserId.class);
         currentUserId.setValue(3L);
         assertEquals(5, uiActionsList.getUIActionsListForUserRole().size());
     }
 
     @Test
     void shouldReturn3ActionsForAdmin() {
-        CurrentUserId currentUserId = uiActionsList.getApplicationContext().getBean(CurrentUserId.class);
         currentUserId.setValue(4L);
         assertEquals(4, uiActionsList.getUIActionsListForUserRole().size());
-    }*/
+    }
 
 }
