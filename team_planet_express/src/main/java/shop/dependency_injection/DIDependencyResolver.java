@@ -50,7 +50,7 @@ class DIDependencyResolver {
     private void setupDIComponent(Object diInstance, Class diComponent) {
         Optional<Method> constructor = Arrays.stream(diComponent.getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(DIConstructor.class)).findFirst();
-        if(constructor.isPresent()){
+        if (constructor.isPresent()) {
             try {
                 constructor.get().invoke(diInstance);
             } catch (IllegalAccessException e) {

@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ApplicationContextSetup {
 
-    public static final String BLANK = "";
+    private static final String BLANK = "";
 
     public ApplicationContext setupApplicationContext() {
         ApplicationContext applicationContext = new DIApplicationContextBuilder().build("shop");

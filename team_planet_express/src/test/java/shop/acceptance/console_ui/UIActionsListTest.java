@@ -1,6 +1,6 @@
 package shop.acceptance.console_ui;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -15,11 +15,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 class UIActionsListTest {
 
-    private UIActionsList uiActionsList;
-    private CurrentUserId currentUserId;
+    static private UIActionsList uiActionsList;
+    static private CurrentUserId currentUserId;
 
-    @BeforeEach
-    void setupAppContext() {
+    @BeforeAll
+    static void setupAppContext() {
         ApplicationContext applicationContext = new ApplicationContextSetup().setupApplicationContext();
         uiActionsList = applicationContext.getBean(UIActionsList.class);
         currentUserId = applicationContext.getBean(CurrentUserId.class);

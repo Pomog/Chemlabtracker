@@ -8,9 +8,9 @@ import java.util.List;
 
 class ClassFinder {
 
-	public List<Class> findClassesInsidePackage(String packageName) {
-		Reflections reflections = new Reflections(packageName, new SubTypesScanner(false));
-		return new ArrayList<>(reflections.getSubTypesOf(Object.class));
-	}
+    public List<Class> findClassesInsidePackage(String packageName) {
+        Reflections reflections = new Reflections(packageName, new SubTypesScanner(false));
+        return new ArrayList<>(reflections.getSubTypesOf(Object.class));
+    }
 
 }

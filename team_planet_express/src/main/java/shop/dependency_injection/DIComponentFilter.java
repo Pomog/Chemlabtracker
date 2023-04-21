@@ -5,10 +5,10 @@ import java.util.stream.Collectors;
 
 class DIComponentFilter {
 
-	public List<Class> filter(List<Class> classes) {
-		return classes.stream()
-				.filter(cl -> cl.isAnnotationPresent(DIComponent.class))
-				.collect(Collectors.toList());
-	}
+    public List<Class> filter(List<Class> classes) {
+        return classes.stream()
+                .filter(cl -> cl.isAnnotationPresent(DIComponent.class))
+                .collect(Collectors.toList());
+    }
 
 }

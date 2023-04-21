@@ -6,6 +6,7 @@ import shop.dependency_injection.DIComponent;
 import shop.dependency_injection.DIDependency;
 
 import java.util.List;
+
 @DIComponent
 public class UIMenu {
 
@@ -15,8 +16,10 @@ public class UIMenu {
     private static final String PROMPT_TOPIC_ACTION = "an action number: ";
     private static final String ERROR_INVALID_ACTION_NUMBER = "Error: Please enter one of the menu numbers.";
 
-    @DIDependency private UIActionsList uiActionsList;
-    @DIDependency private DatabaseAccessValidator databaseAccessValidator;
+    @DIDependency
+    private UIActionsList uiActionsList;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
     @DIDependency
     private UserCommunication userCommunication;
 
