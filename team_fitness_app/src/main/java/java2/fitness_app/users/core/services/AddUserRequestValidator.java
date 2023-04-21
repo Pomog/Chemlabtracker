@@ -2,11 +2,13 @@ package java2.fitness_app.users.core.services;
 
 import java2.fitness_app.users.core.requests.AddUserRequest;
 import java2.fitness_app.users.core.responses.CoreError;
+import java2.fitness_app.users.dependency_injection.DIComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class AddUserRequestValidator {
     public List<CoreError> validate(AddUserRequest request) {
         List<CoreError> errors = new ArrayList<>();

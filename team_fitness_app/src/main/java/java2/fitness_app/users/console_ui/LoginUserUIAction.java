@@ -3,16 +3,16 @@ package java2.fitness_app.users.console_ui;
 import java2.fitness_app.users.core.requests.LoginUserRequest;
 import java2.fitness_app.users.core.responses.LoginUserResponse;
 import java2.fitness_app.users.core.services.LoginUserService;
+import java2.fitness_app.users.dependency_injection.DIComponent;
+import java2.fitness_app.users.dependency_injection.DIDependency;
 
 import java.util.Scanner;
 
+@DIComponent
 public class LoginUserUIAction implements UIAction {
 
-    private LoginUserService loginUserService;
+    @DIDependency private LoginUserService loginUserService;
 
-    public LoginUserUIAction(LoginUserService loginUserService) {
-        this.loginUserService = loginUserService;
-    }
 
     @Override
     public void execute() {

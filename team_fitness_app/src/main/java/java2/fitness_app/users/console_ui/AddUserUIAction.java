@@ -3,16 +3,16 @@ package java2.fitness_app.users.console_ui;
 import java2.fitness_app.users.core.requests.AddUserRequest;
 import java2.fitness_app.users.core.responses.AddUserResponse;
 import java2.fitness_app.users.core.services.AddUserService;
+import java2.fitness_app.users.dependency_injection.DIComponent;
+import java2.fitness_app.users.dependency_injection.DIDependency;
 
 import java.util.Scanner;
 
+@DIComponent
 public class AddUserUIAction implements UIAction {
 
-    private AddUserService addUserService;
+    @DIDependency private AddUserService addUserService;
 
-    public AddUserUIAction(AddUserService addUserService) {
-        this.addUserService = addUserService;
-    }
 
     @Override
     public void execute() {

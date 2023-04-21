@@ -3,16 +3,16 @@ package java2.fitness_app.users.console_ui;
 import java2.fitness_app.users.core.requests.RemoveUserRequest;
 import java2.fitness_app.users.core.responses.RemoveUserResponse;
 import java2.fitness_app.users.core.services.RemoveUserService;
+import java2.fitness_app.users.dependency_injection.DIComponent;
+import java2.fitness_app.users.dependency_injection.DIDependency;
 
 import java.util.Scanner;
 
+@DIComponent
 public class RemoveUserUIAction implements UIAction {
 
-    private RemoveUserService removeUserService;
+    @DIDependency private RemoveUserService removeUserService;
 
-    public RemoveUserUIAction(RemoveUserService removeUserService) {
-        this.removeUserService = removeUserService;
-    }
 
     @Override
     public void execute() {

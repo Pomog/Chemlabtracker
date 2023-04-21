@@ -1,16 +1,15 @@
 package java2.fitness_app.users;
 
-
+import java2.fitness_app.users.dependency_injection.ApplicationContext;
+import java2.fitness_app.users.dependency_injection.DIApplicationContextBuilder;
 import java2.fitness_app.users.console_ui.*;
-import java2.fitness_app.users.core.database.Database;
-import java2.fitness_app.users.core.database.InMemoryDatabaseImpl;
-import java2.fitness_app.users.core.services.*;
 
 import java.util.Scanner;
 
 public class UserListApplication {
 
-   private static ApplicationContext applicationContext = new ApplicationContext();
+    private static ApplicationContext applicationContext =
+            new DIApplicationContextBuilder().build("java2.fitness_app");
 
 
     public static void main(String[] args) {

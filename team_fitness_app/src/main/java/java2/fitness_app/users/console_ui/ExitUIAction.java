@@ -1,6 +1,9 @@
 package java2.fitness_app.users.console_ui;
 
-public class ExitUIAction implements UIAction{
+import java2.fitness_app.users.dependency_injection.DIComponent;
+
+@DIComponent
+public class ExitUIAction implements UIAction {
 
     @Override
     public void execute() {

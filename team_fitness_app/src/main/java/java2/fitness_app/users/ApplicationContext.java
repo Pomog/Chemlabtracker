@@ -19,24 +19,18 @@ public class ApplicationContext {
         beans.put(LoginUserRequestValidator.class, new LoginUserRequestValidator());
         beans.put(RemoveUserRequestValidator.class, new RemoveUserRequestValidator());
 
-        beans.put(AddUserService.class, new AddUserService(
-                getBean(Database.class),
-                getBean(AddUserRequestValidator.class)));
+        beans.put(AddUserService.class, new AddUserService());
 
-        beans.put(LoginUserService.class, new LoginUserService(
-                getBean(Database.class),
-                getBean(LoginUserRequestValidator.class)));
+        beans.put(LoginUserService.class, new LoginUserService());
 
-        beans.put(RemoveUserService.class, new RemoveUserService(
-                getBean(Database.class),
-                getBean(RemoveUserRequestValidator.class)));
+        beans.put(RemoveUserService.class, new RemoveUserService());
 
-        beans.put(GetAllUsersService.class, new GetAllUsersService(getBean(Database.class)));
+        beans.put(GetAllUsersService.class, new GetAllUsersService());
 
-        beans.put(AddUserUIAction.class, new AddUserUIAction(getBean(AddUserService.class)));
-        beans.put(LoginUserUIAction.class, new LoginUserUIAction(getBean(LoginUserService.class)));
-        beans.put(RemoveUserUIAction.class, new RemoveUserUIAction(getBean(RemoveUserService.class)));
-        beans.put(GetAllUsersUIAction.class, new GetAllUsersUIAction(getBean(GetAllUsersService.class)));
+        beans.put(AddUserUIAction.class, new AddUserUIAction());
+        beans.put(LoginUserUIAction.class, new LoginUserUIAction());
+        beans.put(RemoveUserUIAction.class, new RemoveUserUIAction());
+        beans.put(GetAllUsersUIAction.class, new GetAllUsersUIAction());
         beans.put(ExitUIAction.class, new ExitUIAction());
     }
 
