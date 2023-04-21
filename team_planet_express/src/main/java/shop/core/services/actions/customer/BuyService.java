@@ -8,21 +8,22 @@ import shop.core.responses.CoreError;
 import shop.core.responses.customer.BuyResponse;
 import shop.core.services.validators.actions.customer.BuyValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@DIComponent
 public class BuyService {
 
-    private final Database database;
-    private final BuyValidator validator;
-    private final DatabaseAccessValidator databaseAccessValidator;
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private BuyValidator validator;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
 
-    public BuyService(Database database, BuyValidator validator, DatabaseAccessValidator databaseAccessValidator) {
-        this.database = database;
-        this.validator = validator;
-        this.databaseAccessValidator = databaseAccessValidator;
-    }
 
     public BuyResponse execute(BuyRequest request) {
         List<CoreError> errors = validator.validate(request);

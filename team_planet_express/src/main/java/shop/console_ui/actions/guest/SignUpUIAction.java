@@ -7,7 +7,10 @@ import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.guest.SignUpResponse;
 import shop.core.services.actions.guest.SignUpService;
 import shop.core.support.CurrentUserId;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class SignUpUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Sign up";
@@ -19,15 +22,15 @@ public class SignUpUIAction extends UIAction {
     private static final String MESSAGE_USER_CREATED = "Welcome to the Planet Express crew, ";
     private static final String MESSAGE_EXCLAMATION = "!";
 
-    private final SignUpService signUpService;
-    private final CurrentUserId currentUserId;
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private SignUpService signUpService;
+    @DIDependency
+    private CurrentUserId currentUserId;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    public SignUpUIAction(SignUpService signUpService, CurrentUserId currentUserId, UserCommunication userCommunication) {
+    public SignUpUIAction() {
         super(ACTION_NAME, ACCESS_NUMBER);
-        this.signUpService = signUpService;
-        this.currentUserId = currentUserId;
-        this.userCommunication = userCommunication;
     }
 
     @Override

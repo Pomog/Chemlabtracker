@@ -1,6 +1,6 @@
 package shop.acceptance.custom.tester;
 
-import shop.ApplicationContext;
+import shop.dependency_injection.ApplicationContext;
 import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.services.actions.customer.AddItemToCartService;
 import shop.core.support.CurrentUserId;

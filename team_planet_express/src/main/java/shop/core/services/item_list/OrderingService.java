@@ -4,11 +4,13 @@ import shop.core.domain.item.Item;
 import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
 import shop.core.support.ordering.OrderingRule;
+import shop.dependency_injection.DIComponent;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class OrderingService {
 
     public List<Item> getOrderedItems(List<Item> items, List<OrderingRule> orderingRules) {

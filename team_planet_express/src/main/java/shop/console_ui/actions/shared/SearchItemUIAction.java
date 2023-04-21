@@ -10,9 +10,12 @@ import shop.core.responses.shared.SearchItemResponse;
 import shop.core.services.actions.shared.SearchItemService;
 import shop.core.support.ordering.OrderingRule;
 import shop.core.support.paging.PagingRule;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
+@DIComponent
 public class SearchItemUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Search item in the shop";
@@ -23,17 +26,17 @@ public class SearchItemUIAction extends UIAction {
     private static final String MESSAGE_NO_MATCH = "No items matched search parameters.";
     private static final String MESSAGE_SEARCH_RESULTS = "Search results:";
 
-    private final SearchItemService searchItemService;
-    private final OrderingUIElement orderingUIElement;
-    private final PagingUIElement pagingUIElement;
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private SearchItemService searchItemService;
+    @DIDependency
+    private OrderingUIElement orderingUIElement;
+    @DIDependency
+    private PagingUIElement pagingUIElement;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    public SearchItemUIAction(SearchItemService searchItemService, OrderingUIElement orderingUIElement, PagingUIElement pagingUIElement, UserCommunication userCommunication) {
+    public SearchItemUIAction() {
         super(ACTION_NAME, ACCESS_NUMBER);
-        this.searchItemService = searchItemService;
-        this.orderingUIElement = orderingUIElement;
-        this.pagingUIElement = pagingUIElement;
-        this.userCommunication = userCommunication;
     }
 
     @Override

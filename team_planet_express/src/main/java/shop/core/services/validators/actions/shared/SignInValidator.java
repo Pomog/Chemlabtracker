@@ -7,11 +7,14 @@ import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class SignInValidator {
 
     private static final String FIELD_LOGIN_NAME = "login";
@@ -21,17 +24,14 @@ public class SignInValidator {
     private static final String ERROR_LOGIN_NOT_EXISTS = "Error: User with this login does not exist.";
     private static final String ERROR_PASSWORD_INCORRECT = "Error: Password is incorrect.";
 
-    private final Database database;
-    private final CurrentUserIdValidator userIdValidator;
-    private final InputStringValidator inputStringValidator;
-    private final DatabaseAccessValidator databaseAccessValidator;
-
-    public SignInValidator(Database database, CurrentUserIdValidator userIdValidator, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
-        this.database = database;
-        this.userIdValidator = userIdValidator;
-        this.inputStringValidator = inputStringValidator;
-        this.databaseAccessValidator = databaseAccessValidator;
-    }
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private CurrentUserIdValidator userIdValidator;
+    @DIDependency
+    private InputStringValidator inputStringValidator;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
 
     public List<CoreError> validate(SignInRequest request) {
         userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());

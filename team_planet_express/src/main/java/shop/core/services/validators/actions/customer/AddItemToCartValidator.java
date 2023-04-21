@@ -8,11 +8,14 @@ import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class AddItemToCartValidator {
 
     private static final String FIELD_NAME = "name";
@@ -22,19 +25,17 @@ public class AddItemToCartValidator {
     private static final String ERROR_NO_SUCH_ITEM = "Error: No such item in the shop.";
     private static final String ERROR_NOT_ENOUGH_QUANTITY = "Error: Available quantity lower than ordered amount.";
 
-    private final Database database;
-    private final CurrentUserIdValidator userIdValidator;
-    private final CartValidator cartValidator;
-    private final InputStringValidator inputStringValidator;
-    private final DatabaseAccessValidator databaseAccessValidator;
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private CurrentUserIdValidator userIdValidator;
+    @DIDependency
+    private CartValidator cartValidator;
+    @DIDependency
+    private InputStringValidator inputStringValidator;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
 
-    public AddItemToCartValidator(Database database, CurrentUserIdValidator userIdValidator, CartValidator cartValidator, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
-        this.database = database;
-        this.userIdValidator = userIdValidator;
-        this.cartValidator = cartValidator;
-        this.inputStringValidator = inputStringValidator;
-        this.databaseAccessValidator = databaseAccessValidator;
-    }
 
     public List<CoreError> validate(AddItemToCartRequest request) {
         userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());

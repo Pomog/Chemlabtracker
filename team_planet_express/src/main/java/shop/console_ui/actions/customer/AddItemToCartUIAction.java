@@ -7,7 +7,10 @@ import shop.core.requests.customer.AddItemToCartRequest;
 import shop.core.responses.customer.AddItemToCartResponse;
 import shop.core.services.actions.customer.AddItemToCartService;
 import shop.core.support.CurrentUserId;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class AddItemToCartUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Add item to the cart";
@@ -17,15 +20,15 @@ public class AddItemToCartUIAction extends UIAction {
     private static final String PROMPT_TOPIC_QUANTITY = "quantity to be ordered: ";
     private static final String MESSAGE_ITEM_ADDED = "Item added to your cart.";
 
-    private final AddItemToCartService addItemToCartService;
-    private final CurrentUserId currentUserId;
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private AddItemToCartService addItemToCartService;
+    @DIDependency
+    private CurrentUserId currentUserId;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    public AddItemToCartUIAction(AddItemToCartService addItemToCartService, CurrentUserId currentUserId, UserCommunication userCommunication) {
+    public AddItemToCartUIAction() {
         super(ACTION_NAME, ACCESS_NUMBER);
-        this.addItemToCartService = addItemToCartService;
-        this.currentUserId = currentUserId;
-        this.userCommunication = userCommunication;
     }
 
     @Override

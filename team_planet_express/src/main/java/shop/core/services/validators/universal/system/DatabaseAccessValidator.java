@@ -6,14 +6,14 @@ import shop.core.domain.cart_item.CartItem;
 import shop.core.domain.item.Item;
 import shop.core.domain.user.User;
 import shop.core.services.exception.ServiceMissingDataException;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class DatabaseAccessValidator {
 
-    private final Database database;
-
-    public DatabaseAccessValidator(Database database) {
-        this.database = database;
-    }
+    @DIDependency
+    private Database database;
 
     public User getUserById(Long userId) {
         return database.accessUserDatabase().findById(userId)

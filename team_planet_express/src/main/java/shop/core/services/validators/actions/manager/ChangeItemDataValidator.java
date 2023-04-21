@@ -7,6 +7,8 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class ChangeItemDataValidator {
 
     private static final String FIELD_ID = "id";
@@ -26,15 +29,12 @@ public class ChangeItemDataValidator {
     private static final String ERROR_ID_NOT_EXISTS = "Error: Item with this id does not exist.";
     private static final String ERROR_ITEM_EXISTS = "Error: Exactly the same item already exists.";
 
-    private final Database database;
-    private final InputStringValidator inputStringValidator;
-    private final DatabaseAccessValidator databaseAccessValidator;
-
-    public ChangeItemDataValidator(Database database, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
-        this.database = database;
-        this.inputStringValidator = inputStringValidator;
-        this.databaseAccessValidator = databaseAccessValidator;
-    }
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private InputStringValidator inputStringValidator;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
 
     public List<CoreError> validate(ChangeItemDataRequest request) {
         List<CoreError> errors = new ArrayList<>();

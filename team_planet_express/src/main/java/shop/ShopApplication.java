@@ -8,14 +8,16 @@ import shop.core.services.fake.FakeDatabaseInitializer;
 import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.support.CurrentUserId;
+import shop.dependency_injection.ApplicationContext;
+import shop.dependency_injection.DIApplicationContextBuilder;
 
 public class ShopApplication {
 
-    public static final String BLANK = "";
+    private static final String BLANK = "";
 
     public static void main(String[] args) {
 
-        ApplicationContext applicationContext = new ApplicationContext();
+        ApplicationContext applicationContext = new DIApplicationContextBuilder().build("shop");
 
         new FakeDatabaseInitializer(applicationContext.getBean(Database.class)).initialize();
 

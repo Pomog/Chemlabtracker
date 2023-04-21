@@ -1,11 +1,13 @@
 package shop.core.services.validators.universal.user_input;
 
 import shop.core.responses.CoreError;
+import shop.dependency_injection.DIComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class InputStringValidator {
 
     //TODO was there a way to combine strings with params during runtime?

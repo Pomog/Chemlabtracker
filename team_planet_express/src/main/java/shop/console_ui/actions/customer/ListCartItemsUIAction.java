@@ -7,9 +7,12 @@ import shop.core.requests.customer.ListCartItemsRequest;
 import shop.core.responses.customer.ListCartItemsResponse;
 import shop.core.services.actions.customer.ListCartItemsService;
 import shop.core.support.CurrentUserId;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.math.BigDecimal;
 
+@DIComponent
 public class ListCartItemsUIAction extends UIAction {
 
     private static final String ACTION_NAME = "List cart items";
@@ -19,15 +22,15 @@ public class ListCartItemsUIAction extends UIAction {
     private static final String MESSAGE_CART_IS_EMPTY = "Your cart is empty.";
     private static final String MESSAGE_CART_TOTAL = "Your cart total is: ";
 
-    private final ListCartItemsService listCartItemsService;
-    private final CurrentUserId currentUserId;
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private ListCartItemsService listCartItemsService;
+    @DIDependency
+    private CurrentUserId currentUserId;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    public ListCartItemsUIAction(ListCartItemsService listCartItemsService, CurrentUserId currentUserId, UserCommunication userCommunication) {
+    public ListCartItemsUIAction() {
         super(ACTION_NAME, ACCESS_NUMBER);
-        this.listCartItemsService = listCartItemsService;
-        this.currentUserId = currentUserId;
-        this.userCommunication = userCommunication;
     }
 
     @Override
