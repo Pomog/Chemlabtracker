@@ -7,7 +7,10 @@ import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.responses.customer.RemoveItemFromCartResponse;
 import shop.core.services.actions.customer.RemoveItemFromCartService;
 import shop.core.support.CurrentUserId;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class RemoveItemFromCartUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Remove item from the cart";
@@ -16,16 +19,16 @@ public class RemoveItemFromCartUIAction extends UIAction {
     private static final String PROMPT_TOPIC_ITEM = "an item you wish to remove: ";
     private static final String MESSAGE_ITEM_REMOVED = "Item removed from your cart.";
 
-    private final RemoveItemFromCartService removeItemFromCartService;
-    private final CurrentUserId currentUserId;
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private RemoveItemFromCartService removeItemFromCartService;
+    @DIDependency
+    private CurrentUserId currentUserId;
+    @DIDependency
+    private UserCommunication userCommunication;
 
 
-    public RemoveItemFromCartUIAction(RemoveItemFromCartService removeItemFromCartService, CurrentUserId currentUserId, UserCommunication userCommunication) {
+    public RemoveItemFromCartUIAction() {
         super(ACTION_NAME, ACCESS_NUMBER);
-        this.removeItemFromCartService = removeItemFromCartService;
-        this.currentUserId = currentUserId;
-        this.userCommunication = userCommunication;
     }
 
     @Override

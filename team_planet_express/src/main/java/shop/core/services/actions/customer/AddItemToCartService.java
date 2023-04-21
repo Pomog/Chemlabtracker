@@ -9,21 +9,21 @@ import shop.core.responses.CoreError;
 import shop.core.responses.customer.AddItemToCartResponse;
 import shop.core.services.validators.actions.customer.AddItemToCartValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class AddItemToCartService {
 
-    private final Database database;
-    private final AddItemToCartValidator validator;
-    private final DatabaseAccessValidator databaseAccessValidator;
-
-    public AddItemToCartService(Database database, AddItemToCartValidator validator, DatabaseAccessValidator databaseAccessValidator) {
-        this.database = database;
-        this.validator = validator;
-        this.databaseAccessValidator = databaseAccessValidator;
-    }
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private AddItemToCartValidator validator;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
 
     public AddItemToCartResponse execute(AddItemToCartRequest request) {
         List<CoreError> errors = validator.validate(request);

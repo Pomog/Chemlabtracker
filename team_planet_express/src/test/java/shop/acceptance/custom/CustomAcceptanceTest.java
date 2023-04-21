@@ -1,6 +1,6 @@
 package shop.acceptance.custom;
 
-import shop.ApplicationContext;
+import shop.dependency_injection.ApplicationContext;
 import shop.acceptance.ApplicationContextSetup;
 import shop.acceptance.custom.tester.*;
 

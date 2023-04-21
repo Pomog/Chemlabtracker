@@ -55,6 +55,16 @@ public class ChangeItemDataAcceptanceTest extends AcceptanceTest {
         assertEquals("Error: Exactly the same item already exists.", errors.get(0).getMessage());
     }
 
+    @Test
+    void shouldReturnErrorForDuplicate2() {
+        addItem(/*11*/"Angry Norwegian Anchovies", new BigDecimal("249.99"), 1);
+        ChangeItemDataResponse changeItemDataResponse = executeChangeItemData("11", "Lightspeed Briefs", "", "");
+        assertTrue(changeItemDataResponse.hasErrors());
+        List<CoreError> errors = changeItemDataResponse.getErrors();
+        assertEquals(1, errors.size());
+        assertEquals("Error: Exactly the same item already exists.", errors.get(0).getMessage());
+    }
+
     private void assertCorrectItemChanges(Item item, String itemName, BigDecimal price, Integer quantity) {
         assertEquals(itemName, item.getName());
         assertEquals(price, item.getPrice());

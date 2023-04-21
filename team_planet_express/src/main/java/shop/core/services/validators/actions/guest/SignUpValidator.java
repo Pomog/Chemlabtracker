@@ -5,12 +5,15 @@ import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class SignUpValidator {
 
     private static final String FIELD_NAME = "name";
@@ -22,15 +25,12 @@ public class SignUpValidator {
     private static final String ERROR_LOGIN_EXISTS = "Error: User with this login name already exists.";
     private static final String ERROR_PASSWORD_SHORT = "Error: Password must be at least 3 characters long.";
 
-    private final Database database;
-    private final CurrentUserIdValidator userIdValidator;
-    private final InputStringValidator inputStringValidator;
-
-    public SignUpValidator(Database database, CurrentUserIdValidator userIdValidator, InputStringValidator inputStringValidator) {
-        this.database = database;
-        this.userIdValidator = userIdValidator;
-        this.inputStringValidator = inputStringValidator;
-    }
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private CurrentUserIdValidator userIdValidator;
+    @DIDependency
+    private InputStringValidator inputStringValidator;
 
     public List<CoreError> validate(SignUpRequest request) {
         userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
@@ -42,19 +42,22 @@ public class SignUpValidator {
     }
 
     private void validateName(String name, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(name, FIELD_NAME, VALUE_NAME_NAME);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(name, FIELD_NAME, VALUE_NAME_NAME);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
     }
 
     private void validateLoginName(String loginName, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN_NAME);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(loginName, FIELD_LOGIN_NAME, VALUE_NAME_LOGIN_NAME);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validateLoginNameDoesNotAlreadyExist(loginName).ifPresent(errors::add);
     }
 
     private void validatePassword(String password, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(password, FIELD_PASSWORD, VALUE_NAME_PASSWORD);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validatePasswordLength(password).ifPresent(errors::add);
     }
 

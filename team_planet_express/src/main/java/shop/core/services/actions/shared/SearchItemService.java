@@ -8,24 +8,24 @@ import shop.core.responses.shared.SearchItemResponse;
 import shop.core.services.item_list.OrderingService;
 import shop.core.services.item_list.PagingService;
 import shop.core.services.validators.actions.shared.SearchItemValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+@DIComponent
 public class SearchItemService {
 
-    private final Database database;
-    private final SearchItemValidator validator;
-    private final OrderingService orderingService;
-    private final PagingService pagingService;
-
-    public SearchItemService(Database database, SearchItemValidator validator, OrderingService orderingService, PagingService pagingService) {
-        this.database = database;
-        this.validator = validator;
-        this.orderingService = orderingService;
-        this.pagingService = pagingService;
-    }
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private SearchItemValidator validator;
+    @DIDependency
+    private OrderingService orderingService;
+    @DIDependency
+    private PagingService pagingService;
 
     public SearchItemResponse execute(SearchItemRequest request) {
         List<CoreError> errors = validator.validate(request);

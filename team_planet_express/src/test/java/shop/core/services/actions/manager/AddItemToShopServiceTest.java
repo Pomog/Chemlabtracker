@@ -7,11 +7,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.core.database.Database;
 import shop.core.database.ItemDatabase;
-import shop.core.domain.item.Item;
 import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.AddItemToShopResponse;
 import shop.core.services.validators.actions.manager.AddItemToShopValidator;
+import shop.matchers.ItemMatcher;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -19,6 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -59,7 +60,7 @@ class AddItemToShopServiceTest {
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         service.execute(mockRequest);
         verify(mockItemDatabase)
-                .save(new Item("name", new BigDecimal("100.10"), 10));
+                .save(argThat(new ItemMatcher("name", new BigDecimal("100.10"), 10)));
     }
 
     @Test
@@ -71,7 +72,7 @@ class AddItemToShopServiceTest {
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         service.execute(mockRequest);
         verify(mockItemDatabase)
-                .save(new Item("name", new BigDecimal("100.11"), 10));
+                .save(argThat(new ItemMatcher("name", new BigDecimal("100.11"), 10)));
     }
 
     @Test
@@ -83,7 +84,7 @@ class AddItemToShopServiceTest {
         when(mockDatabase.accessItemDatabase()).thenReturn(mockItemDatabase);
         service.execute(mockRequest);
         verify(mockItemDatabase)
-                .save(new Item("name", new BigDecimal("99.10"), 10));
+                .save(argThat(new ItemMatcher("name", new BigDecimal("99.10"), 10)));
     }
 
 }

@@ -5,25 +5,26 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.item_list.OrderingRuleValidator;
 import shop.core.services.validators.item_list.PagingRuleValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@DIComponent
 public class SearchItemValidator {
 
     private static final String FIELD_PRICE = "price";
     private static final String VALUE_NAME_PRICE = "Price";
 
-    private final InputStringValidator inputStringValidator;
-    private final OrderingRuleValidator orderingRuleValidator;
-    private final PagingRuleValidator pagingRuleValidator;
+    @DIDependency
+    private InputStringValidator inputStringValidator;
+    @DIDependency
+    private OrderingRuleValidator orderingRuleValidator;
+    @DIDependency
+    private PagingRuleValidator pagingRuleValidator;
 
-    public SearchItemValidator(InputStringValidator inputStringValidator, OrderingRuleValidator orderingRuleValidator, PagingRuleValidator pagingRuleValidator) {
-        this.inputStringValidator = inputStringValidator;
-        this.orderingRuleValidator = orderingRuleValidator;
-        this.pagingRuleValidator = pagingRuleValidator;
-    }
 
     public List<CoreError> validate(SearchItemRequest request) {
         List<CoreError> errors = new ArrayList<>();
@@ -34,9 +35,9 @@ public class SearchItemValidator {
     }
 
     private void validatePrice(String price, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(price, FIELD_PRICE, VALUE_NAME_PRICE);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotNegative(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(price, FIELD_PRICE, VALUE_NAME_PRICE);
+        errors.addAll(inputStringValidator.validateIsNumberNotNegative(inputStringValidatorData));
     }
 
     private void validateOrderingIfPresent(SearchItemRequest request, List<CoreError> errors) {

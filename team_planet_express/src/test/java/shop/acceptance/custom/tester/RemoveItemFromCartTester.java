@@ -1,6 +1,6 @@
 package shop.acceptance.custom.tester;
 
-import shop.ApplicationContext;
+import shop.dependency_injection.ApplicationContext;
 import shop.core.requests.customer.RemoveItemFromCartRequest;
 import shop.core.services.actions.customer.RemoveItemFromCartService;
 import shop.core.support.CurrentUserId;

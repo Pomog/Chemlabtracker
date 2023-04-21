@@ -4,21 +4,23 @@ import shop.console_ui.UserCommunication;
 import shop.console_ui.actions.UIAction;
 import shop.core.domain.user.UserRole;
 import shop.core.services.actions.admin.ChangeUserDataService;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class ChangeUserDataUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Change existing user data";
     private static final int ACCESS_NUMBER = UserRole.getAccessNumber(UserRole.ADMIN);
 
     private static final String MESSAGE_SUCCESS = "User data changed.";
+    @DIDependency
+    private ChangeUserDataService changeUserDataService;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    private final ChangeUserDataService changeUserDataService;
-    private final UserCommunication userCommunication;
-
-    public ChangeUserDataUIAction(ChangeUserDataService changeUserDataService, UserCommunication userCommunication) {
+    public ChangeUserDataUIAction() {
         super(ACTION_NAME, ACCESS_NUMBER);
-        this.changeUserDataService = changeUserDataService;
-        this.userCommunication = userCommunication;
     }
 
     @Override

@@ -6,7 +6,10 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.customer.ListShopItemsRequest;
 import shop.core.responses.customer.ListShopItemsResponse;
 import shop.core.services.actions.customer.ListShopItemsService;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class ListShopItemsUIAction extends UIAction {
 
     private static final String ACTION_NAME = "List items";
@@ -14,13 +17,13 @@ public class ListShopItemsUIAction extends UIAction {
 
     private static final String HEADER_TEXT = "Shop items:";
 
-    private final ListShopItemsService listShopItemsService;
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private ListShopItemsService listShopItemsService;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    public ListShopItemsUIAction(ListShopItemsService listShopItemsService, UserCommunication userCommunication) {
+    public ListShopItemsUIAction() {
         super(ACTION_NAME, ACCESS_NUMBER);
-        this.listShopItemsService = listShopItemsService;
-        this.userCommunication = userCommunication;
     }
 
     @Override
