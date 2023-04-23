@@ -1,4 +1,4 @@
-package java2.eln.dependency_injection.dependency_injection;
+package java2.eln.dependency_injection;
 
 import java.util.List;
 

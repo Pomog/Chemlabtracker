@@ -1,4 +1,4 @@
-package java2.eln.dependency_injection.dependency_injection;
+package java2.eln.dependency_injection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -27,7 +27,7 @@ class DIComponentCreator {
 				.findFirst();
 	}
 
-	private Object createInstanceUsingDefaultConstructor(Constructor defaultConstructor) {
+	Object createInstanceUsingDefaultConstructor(Constructor defaultConstructor) {
 		try {
 			return defaultConstructor.newInstance();
 		} catch (InstantiationException e) {

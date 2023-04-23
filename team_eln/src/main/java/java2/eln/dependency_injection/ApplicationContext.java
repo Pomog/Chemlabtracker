@@ -1,4 +1,4 @@
-package java2.eln.dependency_injection.dependency_injection;
+package java2.eln.dependency_injection;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,10 @@ import java.util.Map;
 public class ApplicationContext {
 
 	private Map<Class, Object> beans = new HashMap<>();
+
+	public Map<Class, Object> getBeans() {
+		return beans;
+	}
 
 	public ApplicationContext() { }
 
