@@ -11,7 +11,7 @@ public class FindReactionRequest {
    private final String name;
    private final StructureData startingMaterial;
    private final Double yield;
-    private String orderBy;
+   private String orderBy;
 
     public String getOrderBy() {
         return orderBy;
