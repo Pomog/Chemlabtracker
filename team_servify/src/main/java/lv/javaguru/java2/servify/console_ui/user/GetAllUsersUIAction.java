@@ -3,12 +3,12 @@ package lv.javaguru.java2.servify.console_ui.user;
 import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.responses.user.GetAllUsersResponse;
 import lv.javaguru.java2.servify.core.services.user.GetAllUsersService;
-import lv.javaguru.java2.servify.dependency_injection.DIComponent;
-import lv.javaguru.java2.servify.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@DIComponent
+@Component
 public class GetAllUsersUIAction implements UIAction {
-    @DIDependency private GetAllUsersService getAllUsersService;
+    @Autowired private GetAllUsersService getAllUsersService;
 
     @Override
     public void execute() {

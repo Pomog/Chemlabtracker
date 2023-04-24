@@ -2,13 +2,13 @@ package lv.javaguru.java2.servify.console_ui.detail;
 
 import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.services.detail.GetTotalPriceService;
-import lv.javaguru.java2.servify.dependency_injection.DIComponent;
-import lv.javaguru.java2.servify.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@DIComponent
+@Component
 public class GetTotalPriceUIAction implements UIAction {
 
-    @DIDependency private GetTotalPriceService getTotalPriceService;
+    @Autowired private GetTotalPriceService getTotalPriceService;
 
     @Override
     public void execute() {

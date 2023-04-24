@@ -1,30 +1,27 @@
 package lv.javaguru.java2.servify;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import lv.javaguru.java2.servify.config.DetailListConfiguration;
 import lv.javaguru.java2.servify.console_ui.user.AddUserUIAction;
 import lv.javaguru.java2.servify.console_ui.ExitUIAction;
 import lv.javaguru.java2.servify.console_ui.user.GetAllUsersUIAction;
 import lv.javaguru.java2.servify.console_ui.user.SetUserNotActiveUIAction;
 import lv.javaguru.java2.servify.core.database.UsersDatabase;
-import lv.javaguru.java2.servify.core.services.user.AddUserService;
-import lv.javaguru.java2.servify.core.services.user.AddUserValidator;
-import lv.javaguru.java2.servify.core.services.user.GetAllUsersService;
-import lv.javaguru.java2.servify.core.services.user.SetUserNotActiveService;
-import lv.javaguru.java2.servify.dependency_injection.ApplicationContext;
-import lv.javaguru.java2.servify.dependency_injection.DIApplicationContextBuilder;
-import lv.javaguru.java2.servify.dependency_injection.DIComponent;
-import lv.javaguru.java2.servify.dependency_injection.DIDependency;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@DIComponent
+@Component
 public class UserMenuTest {
 
-    @DIDependency private UsersDatabase usersDatabase;
+    @Autowired private UsersDatabase usersDatabase;
 
     public void execute() {
 
-        ApplicationContext applicationContext =
-                new DIApplicationContextBuilder().build("lv.javaguru.java2.servify");
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DetailListConfiguration.class);
 
         while (true) {
             printAdminMenu();

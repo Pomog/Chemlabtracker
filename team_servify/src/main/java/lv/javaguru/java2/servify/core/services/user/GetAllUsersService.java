@@ -2,15 +2,15 @@ package lv.javaguru.java2.servify.core.services.user;
 
 import lv.javaguru.java2.servify.core.database.UsersDatabase;
 import lv.javaguru.java2.servify.core.responses.user.GetAllUsersResponse;
-import lv.javaguru.java2.servify.dependency_injection.DIComponent;
-import lv.javaguru.java2.servify.dependency_injection.DIDependency;
 import lv.javaguru.java2.servify.domain.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@DIComponent
+@Component
 public class GetAllUsersService {
-    @DIDependency private UsersDatabase userDB;
+    @Autowired private UsersDatabase userDB;
 
     public GetAllUsersResponse execute() {
         List<UserEntity> users = userDB.getAllUsers();

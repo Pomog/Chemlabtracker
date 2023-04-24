@@ -4,16 +4,16 @@ import lv.javaguru.java2.servify.core.database.UsersDatabase;
 import lv.javaguru.java2.servify.core.requests.user.SetUserNotActiveRequest;
 import lv.javaguru.java2.servify.core.responses.CoreError;
 import lv.javaguru.java2.servify.core.responses.user.SetUserNotActiveResponse;
-import lv.javaguru.java2.servify.dependency_injection.DIComponent;
-import lv.javaguru.java2.servify.dependency_injection.DIDependency;
 import lv.javaguru.java2.servify.domain.FieldTitle;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@DIComponent
+@Component
 public class SetUserNotActiveService {
-    @DIDependency private UsersDatabase userDB;
+    @Autowired private UsersDatabase userDB;
 
     public SetUserNotActiveResponse execute(SetUserNotActiveRequest request) {
         if (request.getUserIdToSetInactive() == null) {

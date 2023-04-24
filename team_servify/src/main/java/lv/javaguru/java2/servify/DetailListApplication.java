@@ -1,20 +1,22 @@
 package lv.javaguru.java2.servify;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import lv.javaguru.java2.servify.config.DetailListConfiguration;
 import lv.javaguru.java2.servify.console_ui.*;
 import lv.javaguru.java2.servify.console_ui.detail.AddDetailUIAction;
 import lv.javaguru.java2.servify.console_ui.detail.GetAllDetailsUIAction;
 import lv.javaguru.java2.servify.console_ui.detail.GetTotalPriceUIAction;
 import lv.javaguru.java2.servify.console_ui.detail.RemoveDetailUIAction;
 import lv.javaguru.java2.servify.console_ui.user.AddUserUIAction;
-import lv.javaguru.java2.servify.dependency_injection.ApplicationContext;
-import lv.javaguru.java2.servify.dependency_injection.DIApplicationContextBuilder;
 
 import java.util.Scanner;
 
 class DetailListApplication {
 
     private static ApplicationContext applicationContext =
-            new DIApplicationContextBuilder().build("lv.javaguru.java2.servify");
+            new AnnotationConfigApplicationContext(DetailListConfiguration.class);
 
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
