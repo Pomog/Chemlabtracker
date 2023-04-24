@@ -3,15 +3,20 @@ package java2.eln.console_ui;
 import java2.eln.core.requests.DeleteReactionRequest;
 import java2.eln.core.responses.DeleteReactionResponse;
 import java2.eln.core.services.DelReactionService;
+import java2.eln.dependency_injection.DIComponent;
+import java2.eln.dependency_injection.DIDependency;
 
 import java.util.Scanner;
 
+@DIComponent
 public class DelReactionUIAction implements UIAction{
-    private final DelReactionService delReactionService;
 
-    public DelReactionUIAction(DelReactionService delReactionService) {
-        this.delReactionService = delReactionService;
-    }
+    @DIDependency
+    DelReactionService delReactionService;
+
+//    public DelReactionUIAction(DelReactionService delReactionService) {
+//        this.delReactionService = delReactionService;
+//    }
 
     @Override
     public void execute() {

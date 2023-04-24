@@ -1,9 +1,19 @@
 package java2.eln.core.requests;
 
+import java2.eln.dependency_injection.DIComponent;
+import java2.eln.dependency_injection.DIDependency;
+
+
 public class AddReactionRequest {
-    private final String code;
-    private final String name;
-    private final String filename;
+
+
+    String code;
+
+
+    String name;
+
+
+    String filename = "team_eln/data/demoReaction1.txt";
 
     public AddReactionRequest(String code, String name, String filename) {
         this.code = code;

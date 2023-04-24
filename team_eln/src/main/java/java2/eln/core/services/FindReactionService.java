@@ -6,6 +6,8 @@ import java2.eln.core.requests.Ordering;
 import java2.eln.core.responses.FindReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.services.validators.FindReactionValidator;
+import java2.eln.dependency_injection.DIComponent;
+import java2.eln.dependency_injection.DIDependency;
 import java2.eln.domain.ReactionData;
 import java2.eln.domain.StructureData;
 import org.jetbrains.annotations.NotNull;
@@ -14,14 +16,19 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@DIComponent
 public class FindReactionService {
-    private final DatabaseIM databaseIM;
-    private final FindReactionValidator findReactionValidator;
 
-    public FindReactionService(DatabaseIM databaseIM, FindReactionValidator findReactionValidator) {
-        this.databaseIM = databaseIM;
-        this.findReactionValidator = findReactionValidator;
-    }
+    @DIDependency
+    DatabaseIM databaseIM;
+
+    @DIDependency
+    FindReactionValidator findReactionValidator;
+
+//    public FindReactionService(DatabaseIM databaseIM, FindReactionValidator findReactionValidator) {
+//        this.databaseIM = databaseIM;
+//        this.findReactionValidator = findReactionValidator;
+//    }
 
     public FindReactionResponse execute (FindReactionRequest findReactionRequest) {
         List<CoreError> errors = findReactionValidator.validate(findReactionRequest);
