@@ -2,9 +2,12 @@ package shop.console_ui;
 
 import shop.console_ui.actions.UIAction;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
+@DIComponent
 public class UIMenu {
 
     private static final String LOGIN_MESSAGE = "\r\nHello, ";
@@ -13,15 +16,12 @@ public class UIMenu {
     private static final String PROMPT_TOPIC_ACTION = "an action number: ";
     private static final String ERROR_INVALID_ACTION_NUMBER = "Error: Please enter one of the menu numbers.";
 
-    private final UIActionsList uiActionsList;
-    private final DatabaseAccessValidator databaseAccessValidator;
-    private final UserCommunication userCommunication;
-
-    public UIMenu(UIActionsList uiActionsList, DatabaseAccessValidator databaseAccessValidator, UserCommunication userCommunication) {
-        this.uiActionsList = uiActionsList;
-        this.databaseAccessValidator = databaseAccessValidator;
-        this.userCommunication = userCommunication;
-    }
+    @DIDependency
+    private UIActionsList uiActionsList;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
+    @DIDependency
+    private UserCommunication userCommunication;
 
     public void startUI() {
         while (true) {

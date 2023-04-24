@@ -7,27 +7,28 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class BuyValidator {
 
     private static final String FIELD_NAME = "name";
     private static final String ERROR_CART_EMPTY = "Error: Your cart is empty.";
 
-    private final Database database;
-    private final CurrentUserIdValidator userIdValidator;
-    private final CartValidator cartValidator;
-    private final DatabaseAccessValidator databaseAccessValidator;
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private CurrentUserIdValidator userIdValidator;
+    @DIDependency
+    private CartValidator cartValidator;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
 
-    public BuyValidator(Database database, CurrentUserIdValidator userIdValidator, CartValidator cartValidator, DatabaseAccessValidator databaseAccessValidator) {
-        this.database = database;
-        this.userIdValidator = userIdValidator;
-        this.cartValidator = cartValidator;
-        this.databaseAccessValidator = databaseAccessValidator;
-    }
 
     public List<CoreError> validate(BuyRequest request) {
         userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());

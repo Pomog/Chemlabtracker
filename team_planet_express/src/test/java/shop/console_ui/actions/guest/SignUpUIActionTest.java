@@ -13,6 +13,7 @@ import shop.core.responses.CoreError;
 import shop.core.responses.guest.SignUpResponse;
 import shop.core.services.actions.guest.SignUpService;
 import shop.core.support.CurrentUserId;
+import shop.matchers.SignUpRequestMatcher;
 
 import java.util.List;
 
@@ -50,7 +51,8 @@ class SignUpUIActionTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("name", "login", "password");
         when(mockSignUpResponse.getUser()).thenReturn(mockUser);
         action.execute();
-        verify(mockSignUpService).execute(new SignUpRequest(mockCurrentUserId, "name", "login", "password"));
+        verify(mockSignUpService)
+                .execute(argThat(new SignUpRequestMatcher(mockCurrentUserId, "name", "login", "password")));
     }
 
     @Test

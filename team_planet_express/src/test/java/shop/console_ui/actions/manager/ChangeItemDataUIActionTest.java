@@ -11,6 +11,7 @@ import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.ChangeItemDataResponse;
 import shop.core.services.actions.manager.ChangeItemDataService;
+import shop.matchers.ChangeItemDataRequestMatcher;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ class ChangeItemDataUIActionTest {
         when(mockUserCommunication.requestInput(anyString())).thenReturn("1", "new name", "100.10", "10");
         action.execute();
         verify(mockChangeItemDataService)
-                .execute(new ChangeItemDataRequest("1", "new name", "100.10", "10"));
+                .execute(argThat(new ChangeItemDataRequestMatcher("1", "new name", "100.10", "10")));
     }
 
     @Test

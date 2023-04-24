@@ -3,7 +3,10 @@ package shop.console_ui.item_list;
 import shop.console_ui.UserCommunication;
 import shop.core.support.paging.PageNavigation;
 import shop.core.support.paging.PagingRule;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class PagingUIElement {
 
     private static final String PROMPT_TOPIC_PAGE_SIZE = "number of items to be displayed per page: ";
@@ -11,11 +14,8 @@ public class PagingUIElement {
     private static final String COMA = ", ";
     private static final String BLANK = " ";
 
-    private final UserCommunication userCommunication;
-
-    public PagingUIElement(UserCommunication userCommunication) {
-        this.userCommunication = userCommunication;
-    }
+    @DIDependency
+    private UserCommunication userCommunication;
 
     public PagingRule getPagingRule() {
         String pageSize = userCommunication.requestInput(PROMPT_TOPIC_PAGE_SIZE);

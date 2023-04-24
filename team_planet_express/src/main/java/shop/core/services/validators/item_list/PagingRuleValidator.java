@@ -3,22 +3,22 @@ package shop.core.services.validators.item_list;
 import shop.core.responses.CoreError;
 import shop.core.services.exception.InternalSystemCollapseException;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.paging.PagingRule;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@DIComponent
 public class PagingRuleValidator {
 
     private static final String FIELD_PAGE_SIZE = "page_size";
     private static final String VALUE_NAME_PAGE_SIZE = "Page size";
 
-    private final InputStringValidator inputStringValidator;
-
-    public PagingRuleValidator(InputStringValidator inputStringValidator) {
-        this.inputStringValidator = inputStringValidator;
-    }
+    @DIDependency
+    private InputStringValidator inputStringValidator;
 
     public List<CoreError> validate(PagingRule pagingRule) {
         List<CoreError> errors = new ArrayList<>();
@@ -34,11 +34,10 @@ public class PagingRuleValidator {
     }
 
     private void validatePageSize(String pageSize, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(pageSize, FIELD_PAGE_SIZE, VALUE_NAME_PAGE_SIZE);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNumber(record).ifPresent(errors::add);
-        inputStringValidator.validateIsGreaterThanZero(record).ifPresent(errors::add);
-        inputStringValidator.validateIsNotDecimal(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(pageSize, FIELD_PAGE_SIZE, VALUE_NAME_PAGE_SIZE);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
+        errors.addAll(inputStringValidator.validateIsNumberGreaterThanZeroNotDecimal(inputStringValidatorData));
     }
 
 }
