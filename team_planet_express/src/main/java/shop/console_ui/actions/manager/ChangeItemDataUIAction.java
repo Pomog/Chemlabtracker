@@ -6,7 +6,10 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.manager.ChangeItemDataRequest;
 import shop.core.responses.manager.ChangeItemDataResponse;
 import shop.core.services.actions.manager.ChangeItemDataService;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class ChangeItemDataUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Change existing item data";
@@ -19,13 +22,13 @@ public class ChangeItemDataUIAction extends UIAction {
     private static final String MESSAGE_INPUT_RULES = "Leave any field blank to keep current value.";
     private static final String MESSAGE_ITEM_CHANGED = "Item data changed.";
 
-    private final ChangeItemDataService changeItemDataService;
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private ChangeItemDataService changeItemDataService;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    public ChangeItemDataUIAction(ChangeItemDataService changeItemDataService, UserCommunication userCommunication) {
+    public ChangeItemDataUIAction() {
         super(ACTION_NAME, ACCESS_NUMBER);
-        this.changeItemDataService = changeItemDataService;
-        this.userCommunication = userCommunication;
     }
 
     @Override

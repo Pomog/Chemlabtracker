@@ -1,5 +1,8 @@
 package shop.core.database;
 
+import shop.dependency_injection.DIComponent;
+
+@DIComponent
 public class Database {
 
     private final UserDatabase userDatabase;

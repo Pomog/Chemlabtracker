@@ -6,20 +6,21 @@ import shop.core.requests.manager.AddItemToShopRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.manager.AddItemToShopResponse;
 import shop.core.services.validators.actions.manager.AddItemToShopValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+@DIComponent
 public class AddItemToShopService {
 
-    private final Database database;
-    private final AddItemToShopValidator validator;
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private AddItemToShopValidator validator;
 
-    public AddItemToShopService(Database database, AddItemToShopValidator validator) {
-        this.database = database;
-        this.validator = validator;
-    }
 
     public AddItemToShopResponse execute(AddItemToShopRequest request) {
         List<CoreError> errors = validator.validate(request);

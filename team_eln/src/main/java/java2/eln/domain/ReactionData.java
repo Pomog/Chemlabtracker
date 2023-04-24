@@ -29,6 +29,8 @@ public class ReactionData {
         return name;
     }
 
+
+
     public void addStartingMaterial (StructureData material){
         startingMaterials.add(material);
     }

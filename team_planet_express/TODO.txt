@@ -5,9 +5,7 @@ mega-error overhaul ?
 usercommunication to abstract uiaction
 sorting & paging to list items and cart
 validator tests for error catching
-yeet lombok @Data from domain, make @Getter
 check role permissions in actions
 duplicate in shop & acceptance setup
 listCartItem name of item
-numberValidator skips neg/dec for nonnumbers
-make matchers, fix equals to default
+yeet reflection from build.gradle after spring

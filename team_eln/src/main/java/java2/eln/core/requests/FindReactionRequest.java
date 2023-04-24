@@ -11,21 +11,26 @@ public class FindReactionRequest {
    private final String name;
    private final StructureData startingMaterial;
    private final Double yield;
-    private String orderBy;
 
-    public String getOrderBy() {
-        return orderBy;
-    }
-
-    public void setOrderBy(String orderBy) {
-        this.orderBy = orderBy;
-    }
+    private Ordering ordering;
 
     public FindReactionRequest(String code, String name, StructureData startingMaterial, Double yield) {
         this.code = code;
         this.name = name;
         this.startingMaterial = startingMaterial;
         this.yield = yield;
+    }
+
+    public FindReactionRequest(String code, String name, StructureData startingMaterial, Double yield, Ordering ordering) {
+        this.code = code;
+        this.name = name;
+        this.startingMaterial = startingMaterial;
+        this.yield = yield;
+        this.ordering = ordering;
+    }
+
+    public Ordering getOrdering() {
+        return ordering;
     }
 
     public String getCode() {

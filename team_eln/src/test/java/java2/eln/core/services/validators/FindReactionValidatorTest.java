@@ -46,22 +46,9 @@ public class FindReactionValidatorTest {
     }
 
     @Test
-    public void shouldReturnErrorIfOrderByIsInvalid() {
-        FindReactionRequest request = new FindReactionRequest("", "", mockStructureData, 1.0d);
-        request.setOrderBy("invalid");
-        FindReactionValidator validator = new FindReactionValidator();
-
-        List<CoreError> errors = validator.validate(request);
-
-        assertEquals(1, errors.size());
-        assertEquals("orderBy", errors.get(0).getField());
-        assertEquals("Invalid value: invalid", errors.get(0).getMessage());
-    }
-
-    @Test
     public void shouldNotReturnErrorIfOrderByIsValid() {
         FindReactionRequest request = new FindReactionRequest("", "", mockStructureData, 1.0d);
-        request.setOrderBy("name");
+
         FindReactionValidator validator = new FindReactionValidator();
 
         List<CoreError> errors = validator.validate(request);

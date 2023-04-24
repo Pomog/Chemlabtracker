@@ -4,11 +4,14 @@ import shop.console_ui.UserCommunication;
 import shop.core.support.ordering.OrderBy;
 import shop.core.support.ordering.OrderDirection;
 import shop.core.support.ordering.OrderingRule;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class OrderingUIElement {
 
     private static final String PROMPT_TOPIC_ORDER_BY_NAME = "\"Y\" if you wish to order by name: ";
@@ -16,11 +19,9 @@ public class OrderingUIElement {
     private static final String PROMPT_TOPIC_REVERSE_ORDERING_DIRECTION = "\"Y\" if you wish to sort in descending order: ";
     private static final String YES = "y";
 
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    public OrderingUIElement(UserCommunication userCommunication) {
-        this.userCommunication = userCommunication;
-    }
 
     public List<OrderingRule> getOrderingRules() {
         List<OrderingRule> orderingRules = new ArrayList<>();

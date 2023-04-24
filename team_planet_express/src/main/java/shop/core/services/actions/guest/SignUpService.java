@@ -5,21 +5,21 @@ import shop.core.domain.user.UserRole;
 import shop.core.requests.guest.SignUpRequest;
 import shop.core.responses.CoreError;
 import shop.core.responses.guest.SignUpResponse;
-import shop.core.services.user.UserRecord;
+import shop.core.services.user.UserCreationData;
 import shop.core.services.user.UserService;
 import shop.core.services.validators.actions.guest.SignUpValidator;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.List;
 
+@DIComponent
 public class SignUpService {
 
-    private final SignUpValidator validator;
-    private final UserService userService;
-
-    public SignUpService(SignUpValidator validator, UserService userService) {
-        this.validator = validator;
-        this.userService = userService;
-    }
+    @DIDependency
+    private SignUpValidator validator;
+    @DIDependency
+    private UserService userService;
 
     public SignUpResponse execute(SignUpRequest request) {
         List<CoreError> errors = validator.validate(request);
@@ -29,8 +29,8 @@ public class SignUpService {
         String name = request.getName();
         String loginName = request.getLoginName();
         String password = request.getPassword();
-        UserRecord userRecord = new UserRecord(name, loginName, password, UserRole.CUSTOMER);
-        User createdUser = userService.createUser(userRecord);
+        UserCreationData userCreationData = new UserCreationData(name, loginName, password, UserRole.CUSTOMER);
+        User createdUser = userService.createUser(userCreationData);
         request.getUserId().setValue(createdUser.getId());
         return new SignUpResponse(createdUser);
     }

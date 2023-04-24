@@ -1,6 +1,5 @@
 package shop.console_ui;
 
-import shop.ApplicationContext;
 import shop.console_ui.actions.UIAction;
 import shop.console_ui.actions.admin.ChangeUserDataUIAction;
 import shop.console_ui.actions.customer.*;
@@ -15,19 +14,25 @@ import shop.core.database.Database;
 import shop.core.domain.user.User;
 import shop.core.domain.user.UserRole;
 import shop.core.support.CurrentUserId;
+import shop.dependency_injection.ApplicationContext;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIConstructor;
+import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@DIComponent
 public class UIActionsList {
 
-    private final ApplicationContext applicationContext;
-    private final List<UIAction> uiActionsList;
+    @DIDependency
+    private ApplicationContext applicationContext;
+    private List<UIAction> uiActionsList;
 
-    public UIActionsList(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
+    @DIConstructor
+    public void initUIActionsList() {
         this.uiActionsList = createUIActionsList(applicationContext);
     }
 

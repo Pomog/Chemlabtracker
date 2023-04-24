@@ -9,12 +9,15 @@ import shop.core.services.validators.cart.CartValidator;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class RemoveItemFromCartValidator {
 
     private static final String FIELD_NAME = "name";
@@ -22,19 +25,16 @@ public class RemoveItemFromCartValidator {
     private static final String ERROR_NO_SUCH_ITEM_IN_CART = "Error: No such item in your cart.";
     private static final String ERROR_NO_SUCH_ITEM_IN_SHOP = "Error: No such item in the shop.";
 
-    private final Database database;
-    private final CurrentUserIdValidator userIdValidator;
-    private final CartValidator cartValidator;
-    private final InputStringValidator inputStringValidator;
-    private final DatabaseAccessValidator databaseAccessValidator;
-
-    public RemoveItemFromCartValidator(Database database, CurrentUserIdValidator userIdValidator, CartValidator cartValidator, InputStringValidator inputStringValidator, DatabaseAccessValidator databaseAccessValidator) {
-        this.database = database;
-        this.userIdValidator = userIdValidator;
-        this.cartValidator = cartValidator;
-        this.inputStringValidator = inputStringValidator;
-        this.databaseAccessValidator = databaseAccessValidator;
-    }
+    @DIDependency
+    private Database database;
+    @DIDependency
+    private CurrentUserIdValidator userIdValidator;
+    @DIDependency
+    private CartValidator cartValidator;
+    @DIDependency
+    private InputStringValidator inputStringValidator;
+    @DIDependency
+    private DatabaseAccessValidator databaseAccessValidator;
 
     public List<CoreError> validate(RemoveItemFromCartRequest request) {
         userIdValidator.validateCurrentUserIdIsPresent(request.getUserId());
@@ -50,8 +50,9 @@ public class RemoveItemFromCartValidator {
     }
 
     private void validateItemName(String itemName, List<CoreError> errors) {
-        InputStringValidatorRecord record = new InputStringValidatorRecord(itemName, FIELD_NAME, VALUE_NAME_ITEM);
-        inputStringValidator.validateIsPresent(record).ifPresent(errors::add);
+        InputStringValidatorData inputStringValidatorData =
+                new InputStringValidatorData(itemName, FIELD_NAME, VALUE_NAME_ITEM);
+        inputStringValidator.validateIsPresent(inputStringValidatorData).ifPresent(errors::add);
         validateItemNameInShop(itemName).ifPresent(errors::add);
     }
 

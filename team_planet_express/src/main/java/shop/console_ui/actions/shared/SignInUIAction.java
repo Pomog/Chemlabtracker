@@ -7,7 +7,10 @@ import shop.core.requests.shared.SignInRequest;
 import shop.core.responses.shared.SignInResponse;
 import shop.core.services.actions.shared.SignInService;
 import shop.core.support.CurrentUserId;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class SignInUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Sign in";
@@ -18,15 +21,15 @@ public class SignInUIAction extends UIAction {
     private static final String MESSAGE_LOGIN = "Welcome back, ";
     private static final String MESSAGE_EXCLAMATION = "!";
 
-    private final SignInService signInService;
-    private final CurrentUserId currentUserId;
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private SignInService signInService;
+    @DIDependency
+    private CurrentUserId currentUserId;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    public SignInUIAction(SignInService SignInService, CurrentUserId currentUserId, UserCommunication userCommunication) {
+    public SignInUIAction() {
         super(ACTION_NAME, ACCESS_NUM);
-        this.signInService = SignInService;
-        this.currentUserId = currentUserId;
-        this.userCommunication = userCommunication;
     }
 
     @Override

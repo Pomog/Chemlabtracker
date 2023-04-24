@@ -13,8 +13,9 @@ import shop.core.responses.CoreError;
 import shop.core.services.validators.universal.system.CurrentUserIdValidator;
 import shop.core.services.validators.universal.system.DatabaseAccessValidator;
 import shop.core.services.validators.universal.user_input.InputStringValidator;
-import shop.core.services.validators.universal.user_input.InputStringValidatorRecord;
+import shop.core.services.validators.universal.user_input.InputStringValidatorData;
 import shop.core.support.CurrentUserId;
+import shop.matchers.InputStringValidatorDataMatcher;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,8 +59,8 @@ class SignInValidatorTest {
         when(mockUserDatabase.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("login name", "login", "Login name");
-        verify(mockInputStringValidator).validateIsPresent(record);
+        verify(mockInputStringValidator)
+                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("login name", "login", "Login name")));
     }
 
     @Test
@@ -83,8 +84,8 @@ class SignInValidatorTest {
         when(mockUserDatabase.findByLoginName("login name")).thenReturn(Optional.of(mockUser));
         when(mockDatabaseAccessValidator.getUserByLoginName("login name")).thenReturn(mockUser);
         validator.validate(mockRequest);
-        InputStringValidatorRecord record = new InputStringValidatorRecord("password", "password", "Password");
-        verify(mockInputStringValidator).validateIsPresent(record);
+        verify(mockInputStringValidator)
+                .validateIsPresent(argThat(new InputStringValidatorDataMatcher("password", "password", "Password")));
     }
 
     @Test
@@ -105,7 +106,7 @@ class SignInValidatorTest {
 
     @Test
     void shouldReturnMultipleErrors() {
-        when(mockInputStringValidator.validateIsPresent(any(InputStringValidatorRecord.class))).thenReturn(Optional.of(mockCoreError));
+        when(mockInputStringValidator.validateIsPresent(any(InputStringValidatorData.class))).thenReturn(Optional.of(mockCoreError));
         List<CoreError> errors = validator.validate(mockRequest);
         assertTrue(errors.size() > 1);
     }

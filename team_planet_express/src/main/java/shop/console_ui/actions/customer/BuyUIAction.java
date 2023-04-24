@@ -7,7 +7,10 @@ import shop.core.requests.customer.BuyRequest;
 import shop.core.responses.customer.BuyResponse;
 import shop.core.services.actions.customer.BuyService;
 import shop.core.support.CurrentUserId;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class BuyUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Buy items in the cart";
@@ -15,15 +18,15 @@ public class BuyUIAction extends UIAction {
 
     private static final String MESSAGE_CART_IS_CLOSED = "Your cart is closed now.";
 
-    private final BuyService buyService;
-    private final CurrentUserId currentUserId;
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private BuyService buyService;
+    @DIDependency
+    private CurrentUserId currentUserId;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    public BuyUIAction(BuyService buyService, CurrentUserId currentUserId, UserCommunication userCommunication) {
+    public BuyUIAction() {
         super(ACTION_NAME, ACCESS_NUMBER);
-        this.buyService = buyService;
-        this.currentUserId = currentUserId;
-        this.userCommunication = userCommunication;
     }
 
     @Override

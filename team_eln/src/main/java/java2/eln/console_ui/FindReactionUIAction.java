@@ -4,16 +4,21 @@ import java2.eln.core.requests.FindReactionRequest;
 import java2.eln.core.responses.FindReactionResponse;
 import java2.eln.core.services.FindReactionService;
 import java2.eln.core.services.GetStructureFromSMILE;
+import java2.eln.dependency_injection.DIComponent;
+import java2.eln.dependency_injection.DIDependency;
 import java2.eln.domain.StructureData;
 
 import java.util.Scanner;
 
+@DIComponent
 public class FindReactionUIAction implements UIAction{
-    private final FindReactionService findReactionService;
 
-    public FindReactionUIAction(FindReactionService findReactionService) {
-        this.findReactionService = findReactionService;
-    }
+    @DIDependency
+    FindReactionService findReactionService;
+
+//    public FindReactionUIAction(FindReactionService findReactionService) {
+//        this.findReactionService = findReactionService;
+//    }
 
     @Override
     public void execute() {

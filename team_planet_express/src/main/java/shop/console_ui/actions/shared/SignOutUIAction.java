@@ -7,7 +7,10 @@ import shop.core.requests.shared.SignOutRequest;
 import shop.core.responses.shared.SignOutResponse;
 import shop.core.services.actions.shared.SignOutService;
 import shop.core.support.CurrentUserId;
+import shop.dependency_injection.DIComponent;
+import shop.dependency_injection.DIDependency;
 
+@DIComponent
 public class SignOutUIAction extends UIAction {
 
     private static final String ACTION_NAME = "Sign out";
@@ -15,15 +18,15 @@ public class SignOutUIAction extends UIAction {
 
     private static final String MESSAGE_SIGNED_OUT = "Signed out.";
 
-    private final SignOutService signOutService;
-    private final CurrentUserId currentUserId;
-    private final UserCommunication userCommunication;
+    @DIDependency
+    private SignOutService signOutService;
+    @DIDependency
+    private CurrentUserId currentUserId;
+    @DIDependency
+    private UserCommunication userCommunication;
 
-    public SignOutUIAction(SignOutService signOutService, CurrentUserId currentUserId, UserCommunication userCommunication) {
+    public SignOutUIAction() {
         super(ACTION_NAME, ACCESS_NUM);
-        this.signOutService = signOutService;
-        this.currentUserId = currentUserId;
-        this.userCommunication = userCommunication;
     }
 
     @Override

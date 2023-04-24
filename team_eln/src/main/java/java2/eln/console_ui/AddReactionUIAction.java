@@ -3,16 +3,20 @@ package java2.eln.console_ui;
 import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.responses.AddReactionResponse;
 import java2.eln.core.services.AddReactionService;
+import java2.eln.dependency_injection.DIComponent;
+import java2.eln.dependency_injection.DIDependency;
 
 import java.util.Scanner;
 
+@DIComponent
 public class AddReactionUIAction implements UIAction{
 
-    private final AddReactionService addReactionService;
+    @DIDependency
+    AddReactionService addReactionService;
 
-    public AddReactionUIAction(AddReactionService addReactionService) {
-        this.addReactionService = addReactionService;
-    }
+//    public AddReactionUIAction(AddReactionService addReactionService) {
+//        this.addReactionService = addReactionService;
+//    }
 
     @Override
     public void execute() {
