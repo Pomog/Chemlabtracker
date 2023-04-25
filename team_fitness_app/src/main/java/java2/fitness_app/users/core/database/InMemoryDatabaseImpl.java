@@ -1,7 +1,7 @@
 package java2.fitness_app.users.core.database;
 
 import java2.fitness_app.users.core.domain.User;
-import java2.fitness_app.users.dependency_injection.DIComponent;
+import java2.fitness_app.dependency_injection.DIComponent;
 
 import java.util.ArrayList;
 import java.util.List;

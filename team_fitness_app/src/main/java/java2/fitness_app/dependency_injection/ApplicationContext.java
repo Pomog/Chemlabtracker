@@ -1,4 +1,4 @@
-package java2.fitness_app.users.dependency_injection;
+package java2.fitness_app.dependency_injection;
 
 import java.util.HashMap;
 import java.util.Map;

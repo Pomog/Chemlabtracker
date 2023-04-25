@@ -1,7 +1,7 @@
 package java2.fitness_app.users;
 
-import java2.fitness_app.users.dependency_injection.ApplicationContext;
-import java2.fitness_app.users.dependency_injection.DIApplicationContextBuilder;
+import java2.fitness_app.dependency_injection.ApplicationContext;
+import java2.fitness_app.dependency_injection.DIApplicationContextBuilder;
 import java2.fitness_app.users.console_ui.*;
 
 import java.util.Scanner;
