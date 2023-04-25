@@ -4,14 +4,14 @@ import lv.javaguru.java2.servify.console_ui.UIAction;
 import lv.javaguru.java2.servify.core.requests.user.AddUserRequest;
 import lv.javaguru.java2.servify.core.responses.user.AddUserResponse;
 import lv.javaguru.java2.servify.core.services.user.AddUserService;
-import lv.javaguru.java2.servify.dependency_injection.DIComponent;
-import lv.javaguru.java2.servify.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@DIComponent
+@Component
 public class AddUserUIAction implements UIAction {
-    @DIDependency private AddUserService addUserService;
+    @Autowired private AddUserService addUserService;
 
     @Override
     public void execute() {

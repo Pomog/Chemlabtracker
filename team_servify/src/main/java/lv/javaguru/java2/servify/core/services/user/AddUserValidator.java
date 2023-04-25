@@ -2,14 +2,14 @@ package lv.javaguru.java2.servify.core.services.user;
 
 import lv.javaguru.java2.servify.core.requests.user.AddUserRequest;
 import lv.javaguru.java2.servify.core.responses.CoreError;
-import lv.javaguru.java2.servify.dependency_injection.DIComponent;
 import lv.javaguru.java2.servify.domain.FieldTitle;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@DIComponent
+@Component
 public class AddUserValidator {
     
     public List<CoreError> validate(AddUserRequest request) {

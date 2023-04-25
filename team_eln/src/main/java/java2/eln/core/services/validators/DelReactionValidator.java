@@ -3,17 +3,21 @@ package java2.eln.core.services.validators;
 import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.requests.DeleteReactionRequest;
 import java2.eln.core.responses.errorPattern.CoreError;
+import java2.eln.dependency_injection.DIComponent;
+import java2.eln.dependency_injection.DIDependency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class DelReactionValidator {
-    private final DatabaseIM databaseIM;
+    @DIDependency
+    DatabaseIM databaseIM;
 
-    public DelReactionValidator(DatabaseIM databaseIM) {
-        this.databaseIM = databaseIM;
-    }
+//    public DelReactionValidator(DatabaseIM databaseIM) {
+//        this.databaseIM = databaseIM;
+//    }
 
     private Optional<CoreError> codeValidate (DeleteReactionRequest deleteReactionRequest){
         return (deleteReactionRequest.getCode() == null || deleteReactionRequest.getCode().isBlank())

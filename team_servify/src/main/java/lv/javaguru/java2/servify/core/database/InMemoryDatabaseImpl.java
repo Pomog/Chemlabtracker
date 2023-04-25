@@ -1,13 +1,13 @@
 package lv.javaguru.java2.servify.core.database;
 
-import lv.javaguru.java2.servify.dependency_injection.DIComponent;
 import lv.javaguru.java2.servify.domain.Detail;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@DIComponent
+@Component
 public class InMemoryDatabaseImpl implements Database {
 
     private Long nextId = 1L;

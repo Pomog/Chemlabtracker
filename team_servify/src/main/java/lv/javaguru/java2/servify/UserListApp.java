@@ -1,24 +1,20 @@
 package lv.javaguru.java2.servify;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import lv.javaguru.java2.servify.config.DetailListConfiguration;
 import lv.javaguru.java2.servify.console_ui.*;
 import lv.javaguru.java2.servify.console_ui.user.AddUserUIAction;
 import lv.javaguru.java2.servify.console_ui.user.GetAllUsersUIAction;
 import lv.javaguru.java2.servify.console_ui.user.SetUserNotActiveUIAction;
-import lv.javaguru.java2.servify.core.database.UsersDatabase;
-import lv.javaguru.java2.servify.core.database.UsersInMemoryDatabaseImpl;
-import lv.javaguru.java2.servify.core.services.user.AddUserService;
-import lv.javaguru.java2.servify.core.services.user.AddUserValidator;
-import lv.javaguru.java2.servify.core.services.user.GetAllUsersService;
-import lv.javaguru.java2.servify.core.services.user.SetUserNotActiveService;
-import lv.javaguru.java2.servify.dependency_injection.ApplicationContext;
-import lv.javaguru.java2.servify.dependency_injection.DIApplicationContextBuilder;
 
 import java.util.Scanner;
 
 public class UserListApp {
 
     private static ApplicationContext applicationContext =
-            new DIApplicationContextBuilder().build("lv.javaguru.java2.servify");
+            new AnnotationConfigApplicationContext(DetailListConfiguration.class);
 
     public static void main(String[] args) {
 

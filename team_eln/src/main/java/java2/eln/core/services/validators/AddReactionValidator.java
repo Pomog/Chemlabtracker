@@ -2,11 +2,13 @@ package java2.eln.core.services.validators;
 
 import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.responses.errorPattern.CoreError;
+import java2.eln.dependency_injection.DIComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class AddReactionValidator {
 
     public List<CoreError> validate(AddReactionRequest request) {

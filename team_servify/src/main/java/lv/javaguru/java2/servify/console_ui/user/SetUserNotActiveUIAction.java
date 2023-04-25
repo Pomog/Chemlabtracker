@@ -6,12 +6,14 @@ import lv.javaguru.java2.servify.core.responses.user.SetUserNotActiveResponse;
 import lv.javaguru.java2.servify.core.services.user.SetUserNotActiveService;
 import lv.javaguru.java2.servify.dependency_injection.DIComponent;
 import lv.javaguru.java2.servify.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@DIComponent
+@Component
 public class SetUserNotActiveUIAction implements UIAction {
-    @DIDependency private SetUserNotActiveService setUserNotActiveService;
+    @Autowired private SetUserNotActiveService setUserNotActiveService;
 
     @Override
     public void execute() {

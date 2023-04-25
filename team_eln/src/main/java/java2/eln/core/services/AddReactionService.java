@@ -5,18 +5,25 @@ import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.responses.AddReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.services.validators.AddReactionValidator;
+import java2.eln.dependency_injection.DIComponent;
+import java2.eln.dependency_injection.DIDependency;
 import java2.eln.domain.ReactionData;
 
 import java.util.List;
 
+@DIComponent
 public class AddReactionService {
-    private final DatabaseIM databaseIM;
-    private final AddReactionValidator validator;
 
-    public AddReactionService(DatabaseIM databaseIM, AddReactionValidator validator) {
-        this.databaseIM = databaseIM;
-        this.validator = validator;
-    }
+    @DIDependency
+    DatabaseIM databaseIM;
+
+    @DIDependency
+    AddReactionValidator validator;
+
+//    public AddReactionService(DatabaseIM databaseIM, AddReactionValidator validator) {
+//        this.databaseIM = databaseIM;
+//        this.validator = validator;
+//    }
 
      public AddReactionResponse execute(AddReactionRequest addReactionRequest) {
         List<CoreError> errors = validator.validate(addReactionRequest);

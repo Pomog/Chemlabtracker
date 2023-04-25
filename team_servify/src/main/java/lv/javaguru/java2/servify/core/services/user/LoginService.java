@@ -1,12 +1,12 @@
 package lv.javaguru.java2.servify.core.services.user;
 
 import lv.javaguru.java2.servify.core.database.UsersDatabase;
-import lv.javaguru.java2.servify.dependency_injection.DIComponent;
-import lv.javaguru.java2.servify.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@DIComponent
+@Component
 public class LoginService {
-    @DIDependency private UsersDatabase userDB;
+    @Autowired private UsersDatabase userDB;
 
     public boolean checkCredentials(String email, String password) {
         return true;

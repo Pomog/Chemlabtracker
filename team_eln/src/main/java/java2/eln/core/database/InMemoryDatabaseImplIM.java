@@ -1,11 +1,15 @@
 package java2.eln.core.database;
 
+import java2.eln.dependency_injection.DIComponent;
+import java2.eln.dependency_injection.DIDependency;
 import java2.eln.domain.ReactionData;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@DIComponent
 public class InMemoryDatabaseImplIM implements DatabaseIM {
+
     public List<ReactionData> reactions = new ArrayList<>();
 
     @Override
