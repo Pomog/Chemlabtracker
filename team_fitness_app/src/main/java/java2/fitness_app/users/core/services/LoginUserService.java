@@ -5,18 +5,19 @@ import java2.fitness_app.users.core.domain.User;
 import java2.fitness_app.users.core.requests.LoginUserRequest;
 import java2.fitness_app.users.core.responses.CoreError;
 import java2.fitness_app.users.core.responses.LoginUserResponse;
+import java2.fitness_app.users.dependency_injection.DIComponent;
+import java2.fitness_app.users.dependency_injection.DIDependency;
 
 import java.util.List;
 
+@DIComponent
 public class LoginUserService {
 
+    @DIDependency
     private Database database;
+    @DIDependency
     private LoginUserRequestValidator validator;
 
-    public LoginUserService(Database database, LoginUserRequestValidator validator) {
-        this.database = database;
-        this.validator = validator;
-    }
 
     public LoginUserResponse execute(LoginUserRequest request) {
         List<CoreError> errors = validator.validate(request);

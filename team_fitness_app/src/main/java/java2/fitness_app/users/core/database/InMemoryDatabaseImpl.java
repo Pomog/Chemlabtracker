@@ -1,11 +1,13 @@
 package java2.fitness_app.users.core.database;
 
 import java2.fitness_app.users.core.domain.User;
+import java2.fitness_app.users.dependency_injection.DIComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@DIComponent
 public class InMemoryDatabaseImpl implements Database {
 
     private static Long nextId = 1L;

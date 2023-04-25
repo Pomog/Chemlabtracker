@@ -5,18 +5,19 @@ import java2.fitness_app.users.core.responses.CoreError;
 import java2.fitness_app.users.core.responses.RemoveUserResponse;
 import java2.fitness_app.users.core.domain.User;
 import java2.fitness_app.users.core.requests.RemoveUserRequest;
+import java2.fitness_app.users.dependency_injection.DIComponent;
+import java2.fitness_app.users.dependency_injection.DIDependency;
 
 import java.util.List;
 
+@DIComponent
 public class RemoveUserService {
 
+    @DIDependency
     private Database database;
+    @DIDependency
     private RemoveUserRequestValidator validator;
 
-    public RemoveUserService(Database database, RemoveUserRequestValidator validator) {
-        this.database = database;
-        this.validator = validator;
-    }
 
     public RemoveUserResponse execute(RemoveUserRequest request) {
         List<CoreError> errors = validator.validate(request);
