@@ -5,8 +5,8 @@ import java2.fitness_app.users.core.responses.CoreError;
 import java2.fitness_app.users.core.responses.RemoveUserResponse;
 import java2.fitness_app.users.core.domain.User;
 import java2.fitness_app.users.core.requests.RemoveUserRequest;
-import java2.fitness_app.users.dependency_injection.DIComponent;
-import java2.fitness_app.users.dependency_injection.DIDependency;
+import java2.fitness_app.dependency_injection.DIComponent;
+import java2.fitness_app.dependency_injection.DIDependency;
 
 import java.util.List;
 
