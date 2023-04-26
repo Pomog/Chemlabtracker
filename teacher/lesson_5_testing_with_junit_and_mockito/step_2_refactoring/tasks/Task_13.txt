@@ -1,2 +1,0 @@
-Создайте класс SearchBooksRequestFieldValidatorTest
-и напишите юнит тесты для класса SearchBooksRequestFieldValidator.

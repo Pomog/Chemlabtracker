@@ -1,4 +1,0 @@
-После добавления в класс SearchBooksRequestValidator конструктора
-с параметром PagingValidator наш продакшен код перестал компилироваться.
-
-Добавьте создание PagingValidator в класс BookListApplication.
