@@ -7,14 +7,16 @@ import java2.fitness_app.users.core.responses.CoreError;
 import java2.fitness_app.users.core.domain.User;
 import java2.fitness_app.dependency_injection.DIComponent;
 import java2.fitness_app.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@DIComponent
+@Component
 public class AddUserService {
 
-    @DIDependency private Database database;
-    @DIDependency private AddUserRequestValidator validator;
+    @Autowired private Database database;
+    @Autowired private AddUserRequestValidator validator;
 
 
     public AddUserResponse execute(AddUserRequest request) {

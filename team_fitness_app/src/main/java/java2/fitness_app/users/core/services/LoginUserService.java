@@ -7,16 +7,16 @@ import java2.fitness_app.users.core.responses.CoreError;
 import java2.fitness_app.users.core.responses.LoginUserResponse;
 import java2.fitness_app.dependency_injection.DIComponent;
 import java2.fitness_app.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@DIComponent
+@Component
 public class LoginUserService {
 
-    @DIDependency
-    private Database database;
-    @DIDependency
-    private LoginUserRequestValidator validator;
+    @Autowired private Database database;
+    @Autowired private LoginUserRequestValidator validator;
 
 
     public LoginUserResponse execute(LoginUserRequest request) {

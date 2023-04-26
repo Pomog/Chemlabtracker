@@ -5,13 +5,15 @@ import java2.fitness_app.users.core.responses.AddUserResponse;
 import java2.fitness_app.users.core.services.AddUserService;
 import java2.fitness_app.dependency_injection.DIComponent;
 import java2.fitness_app.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@DIComponent
+@Component
 public class AddUserUIAction implements UIAction {
 
-    @DIDependency private AddUserService addUserService;
+    @Autowired private AddUserService addUserService;
 
 
     @Override

@@ -5,13 +5,15 @@ import java2.fitness_app.users.core.responses.RemoveUserResponse;
 import java2.fitness_app.users.core.services.RemoveUserService;
 import java2.fitness_app.dependency_injection.DIComponent;
 import java2.fitness_app.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@DIComponent
+@Component
 public class RemoveUserUIAction implements UIAction {
 
-    @DIDependency private RemoveUserService removeUserService;
+    @Autowired private RemoveUserService removeUserService;
 
 
     @Override

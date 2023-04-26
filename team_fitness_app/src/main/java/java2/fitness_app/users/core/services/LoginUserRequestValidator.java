@@ -3,12 +3,13 @@ package java2.fitness_app.users.core.services;
 import java2.fitness_app.users.core.responses.CoreError;
 import java2.fitness_app.users.core.requests.LoginUserRequest;
 import java2.fitness_app.dependency_injection.DIComponent;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@DIComponent
+@Component
 public class LoginUserRequestValidator {
 
     public List<CoreError> validate(LoginUserRequest request) {

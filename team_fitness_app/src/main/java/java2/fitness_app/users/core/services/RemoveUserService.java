@@ -7,16 +7,16 @@ import java2.fitness_app.users.core.domain.User;
 import java2.fitness_app.users.core.requests.RemoveUserRequest;
 import java2.fitness_app.dependency_injection.DIComponent;
 import java2.fitness_app.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@DIComponent
+@Component
 public class RemoveUserService {
 
-    @DIDependency
-    private Database database;
-    @DIDependency
-    private RemoveUserRequestValidator validator;
+    @Autowired private Database database;
+    @Autowired private RemoveUserRequestValidator validator;
 
 
     public RemoveUserResponse execute(RemoveUserRequest request) {

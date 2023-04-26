@@ -5,11 +5,13 @@ import java2.fitness_app.users.core.responses.GetAllUsersResponse;
 import java2.fitness_app.users.core.services.GetAllUsersService;
 import java2.fitness_app.dependency_injection.DIComponent;
 import java2.fitness_app.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@DIComponent
+@Component
 public class GetAllUsersUIAction implements UIAction {
 
-    @DIDependency private GetAllUsersService getUsersService;
+    @Autowired private GetAllUsersService getUsersService;
 
     @Override
     public void execute() {
