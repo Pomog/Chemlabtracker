@@ -31,3 +31,6 @@ This project aims to develop an electronic laboratory notebook using Java to rec
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
+# Sponsorship
+![GitHub Sponsors](https://img.shields.io/github/sponsors/Pomog?label=Sponsors&style=social)
+
