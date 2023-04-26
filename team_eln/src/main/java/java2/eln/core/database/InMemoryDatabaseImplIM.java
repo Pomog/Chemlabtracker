@@ -1,7 +1,6 @@
 package java2.eln.core.database;
 
 import java2.eln.dependency_injection.DIComponent;
-import java2.eln.dependency_injection.DIDependency;
 import java2.eln.domain.ReactionData;
 
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ public class InMemoryDatabaseImplIM implements DatabaseIM {
         return reactions.stream()
                 .anyMatch(reaction -> reaction.getCode().equals(reactionCode));
     }
-
 
 }
 
