@@ -1,6 +1,7 @@
 # Electronic Laboratory Notebook for Organic Chemistry
 
 [![Facebook Page](https://img.shields.io/badge/Facebook-Visit-blue)](https://www.facebook.com/profile.php?id=100091069952840)
+![build](https://github.com/Pomog/Chemlabtracker/actions/workflows/build.yaml/badge.svg)
 
 
 This project aims to develop an electronic laboratory notebook using Java to record and analyze experimental data in organic chemistry. In addition, we aim to create a system that can calculate various properties of organic substances, providing a comprehensive solution for research in this field.
