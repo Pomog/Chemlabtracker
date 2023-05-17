@@ -4,16 +4,16 @@ import java2.eln.core.requests.FindReactionRequest;
 import java2.eln.core.responses.FindReactionResponse;
 import java2.eln.core.services.FindReactionService;
 import java2.eln.core.services.GetStructureFromSMILE;
-import java2.eln.dependency_injection.DIComponent;
-import java2.eln.dependency_injection.DIDependency;
-import java2.eln.domain.StructureData;
+import java2.eln.core.domain.StructureData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@DIComponent
+@Component
 public class FindReactionUIAction implements UIAction{
 
-    @DIDependency
+    @Autowired
     FindReactionService findReactionService;
 
 //    public FindReactionUIAction(FindReactionService findReactionService) {

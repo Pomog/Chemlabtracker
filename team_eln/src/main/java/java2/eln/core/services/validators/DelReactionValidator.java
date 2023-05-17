@@ -3,16 +3,16 @@ package java2.eln.core.services.validators;
 import java2.eln.core.database.DatabaseIM;
 import java2.eln.core.requests.DeleteReactionRequest;
 import java2.eln.core.responses.errorPattern.CoreError;
-import java2.eln.dependency_injection.DIComponent;
-import java2.eln.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@DIComponent
+@Component
 public class DelReactionValidator {
-    @DIDependency
+    @Autowired
     DatabaseIM databaseIM;
 
 //    public DelReactionValidator(DatabaseIM databaseIM) {

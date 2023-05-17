@@ -2,13 +2,13 @@ package java2.eln.core.responses;
 
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.responses.errorPattern.CoreResponse;
-import java2.eln.domain.ReactionData;
+import java2.eln.core.domain.ReactionData;
 
 import java.util.List;
 
-/**
- * A response object that encapsulates the result of adding a reaction to the system.
- */
+     /**
+     * A response object that encapsulates the result of adding a reaction to the system.
+     */
 public class AddReactionResponse extends CoreResponse {
     /**
      * The reaction data that was added to the system.

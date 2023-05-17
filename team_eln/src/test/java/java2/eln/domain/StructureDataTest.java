@@ -1,5 +1,6 @@
 package java2.eln.domain;
 
+import java2.eln.core.domain.StructureData;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;

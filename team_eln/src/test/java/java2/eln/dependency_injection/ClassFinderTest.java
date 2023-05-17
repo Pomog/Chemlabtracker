@@ -17,9 +17,7 @@ class ClassFinderTest {
         ClassFinder finder = new ClassFinder();
         List<Class> classes = finder.findClassesInsidePackage(packageName);
 
-        classes.forEach(aClass -> {
-            System.out.println(aClass.getName());
-        });
+        classes.forEach(aClass -> System.out.println(aClass.getName()));
 
         String message = String.format("The number of classes in the package \"%s\" is %d.", packageName, classes.size());
         System.out.println(message);

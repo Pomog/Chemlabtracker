@@ -5,18 +5,18 @@ import java2.eln.core.requests.DeleteReactionRequest;
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.responses.DeleteReactionResponse;
 import java2.eln.core.services.validators.DelReactionValidator;
-import java2.eln.dependency_injection.DIComponent;
-import java2.eln.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@DIComponent
+@Component
 public class DelReactionService {
 
-    @DIDependency
+    @Autowired
     DatabaseIM databaseIM;
 
-    @DIDependency
+    @Autowired
     DelReactionValidator delReactionValidator;
 
 //    public DelReactionService(DatabaseIM databaseIM, DelReactionValidator delReactionValidator) {

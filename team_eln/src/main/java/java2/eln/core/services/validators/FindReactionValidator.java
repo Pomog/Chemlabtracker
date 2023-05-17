@@ -3,14 +3,14 @@ package java2.eln.core.services.validators;
 import java2.eln.core.requests.FindReactionRequest;
 import java2.eln.core.requests.Ordering;
 import java2.eln.core.responses.errorPattern.CoreError;
-import java2.eln.dependency_injection.DIComponent;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@DIComponent
+@Component
 public class FindReactionValidator {
 
     public List<CoreError> validate(FindReactionRequest request) {

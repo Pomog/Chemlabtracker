@@ -1,6 +1,6 @@
 package demo;
 
-import java2.eln.domain.StructureData;
+import java2.eln.core.domain.StructureData;
 
 public class StructureDataDemo {
     public static void main(String[] args) {

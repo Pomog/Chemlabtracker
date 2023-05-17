@@ -5,8 +5,8 @@ import java2.eln.core.requests.FindReactionRequest;
 import java2.eln.core.responses.FindReactionResponse;
 import java2.eln.core.responses.errorPattern.CoreError;
 import java2.eln.core.services.validators.FindReactionValidator;
-import java2.eln.domain.ReactionData;
-import java2.eln.domain.StructureData;
+import java2.eln.core.domain.ReactionData;
+import java2.eln.core.domain.StructureData;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

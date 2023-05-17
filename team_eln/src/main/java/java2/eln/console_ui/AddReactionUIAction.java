@@ -3,15 +3,15 @@ package java2.eln.console_ui;
 import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.responses.AddReactionResponse;
 import java2.eln.core.services.AddReactionService;
-import java2.eln.dependency_injection.DIComponent;
-import java2.eln.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@DIComponent
+@Component
 public class AddReactionUIAction implements UIAction{
 
-    @DIDependency
+    @Autowired
     AddReactionService addReactionService;
 
 //    public AddReactionUIAction(AddReactionService addReactionService) {

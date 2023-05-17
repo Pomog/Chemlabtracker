@@ -3,7 +3,7 @@ package java2.eln.core.services.validators;
 
 import java2.eln.core.requests.FindReactionRequest;
 import java2.eln.core.responses.errorPattern.CoreError;
-import java2.eln.domain.StructureData;
+import java2.eln.core.domain.StructureData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

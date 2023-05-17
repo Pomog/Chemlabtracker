@@ -2,8 +2,8 @@ package java2.eln.core.services;
 
 import java2.eln.core.requests.AddReactionRequest;
 import java2.eln.core.services.validators.AddReactionValidator;
-import java2.eln.domain.ReactionData;
-import java2.eln.domain.StructureData;
+import java2.eln.core.domain.ReactionData;
+import java2.eln.core.domain.StructureData;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,6 +1,6 @@
 package java2.eln.core.services;
 
-import java2.eln.domain.StructureData;
+import java2.eln.core.domain.StructureData;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

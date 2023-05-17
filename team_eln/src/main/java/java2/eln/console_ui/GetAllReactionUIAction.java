@@ -3,13 +3,13 @@ package java2.eln.console_ui;
 import java2.eln.core.requests.GetAllReactionsRequest;
 import java2.eln.core.responses.GetAllReactionsResponse;
 import java2.eln.core.services.GetAllReactionsService;
-import java2.eln.dependency_injection.DIComponent;
-import java2.eln.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@DIComponent
+@Component
 public class GetAllReactionUIAction implements UIAction{
 
-    @DIDependency
+    @Autowired
     GetAllReactionsService getAllReactionsService;
 
 //    public GetAllReactionUIAction(GetAllReactionsService getAllReactionsService) {

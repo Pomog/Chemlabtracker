@@ -1,6 +1,6 @@
 package demo;
 
-import java2.eln.domain.ReactionData;
+import java2.eln.core.domain.ReactionData;
 import java2.eln.core.services.CreateConditionDataFromFile;
 import java2.eln.core.services.CreateStructureFromFile;
 

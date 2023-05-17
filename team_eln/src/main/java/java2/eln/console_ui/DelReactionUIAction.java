@@ -3,15 +3,15 @@ package java2.eln.console_ui;
 import java2.eln.core.requests.DeleteReactionRequest;
 import java2.eln.core.responses.DeleteReactionResponse;
 import java2.eln.core.services.DelReactionService;
-import java2.eln.dependency_injection.DIComponent;
-import java2.eln.dependency_injection.DIDependency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@DIComponent
+@Component
 public class DelReactionUIAction implements UIAction{
 
-    @DIDependency
+    @Autowired
     DelReactionService delReactionService;
 
 //    public DelReactionUIAction(DelReactionService delReactionService) {
